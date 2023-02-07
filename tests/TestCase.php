@@ -2,9 +2,9 @@
 
 namespace Codedor\Attachments\Tests;
 
+use Codedor\Attachments\Providers\AttachmentServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Codedor\Attachments\Providers\AttachmentServiceProvider;
 
 class TestCase extends Orchestra
 {
