@@ -13,11 +13,11 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('attachments', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->ulid('id')->primary();
             $table->string('name');
             $table->string('extension');
             $table->string('mime_type');
-            $table->string('md5');
+            $table->string('md5')->unique();
             $table->string('type');
             $table->unsignedBigInteger('size');
             $table->unsignedBigInteger('width')->nullable();

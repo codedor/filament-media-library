@@ -2,6 +2,7 @@
 
 namespace Codedor\Attachments\Http\Livewire;
 
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -17,7 +18,16 @@ class UploadModal extends Component
             $attachment->save();
         }
 
-        dd($this->attachments);
+        $this->dispatchBrowserEvent('close-modal', [
+            'id' => 'attachment::upload-modal',
+        ]);
+
+        Notification::make()
+            ->title(__('attachment.uploaded'))
+            ->success()
+            ->send();
+
+        $this->emit('laravel-attachment::update-library');
     }
 
     public function render()
