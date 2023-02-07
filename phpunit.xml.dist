@@ -38,5 +38,6 @@
     </logging>
     <php>
         <server name="APP_KEY" value="base64:gyYUYe7i1ZP/FmyJU9V4ayylzEGhTnMCgeZi77FOliA="/>
+        <server name="db_connection" value="sqlite"/>
     </php>
 </phpunit>

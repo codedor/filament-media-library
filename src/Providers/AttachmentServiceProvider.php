@@ -3,8 +3,10 @@
 namespace Codedor\Attachments\Providers;
 
 use Codedor\Attachments\Http\Livewire\UploadModal;
+use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;
 use Filament\PluginServiceProvider;
+use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
 use Spatie\LaravelPackageTools\Package;
 
@@ -28,6 +30,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
             ->hasMigrations([
                 'create_attachments_table',
             ])
+            ->runsMigrations()
             ->hasViews('laravel-attachments');
     }
 
@@ -38,6 +41,8 @@ class AttachmentServiceProvider extends PluginServiceProvider
         foreach ($this->livewireComponents as $key => $livewireComponent) {
             Livewire::component("{$this->packageName()}::$key", $livewireComponent);
         }
+
+        UploadedFile::mixin(new UploadedFileMixin());
     }
 
     public function packageName(): string
