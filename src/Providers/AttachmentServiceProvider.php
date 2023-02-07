@@ -2,17 +2,24 @@
 
 namespace Codedor\Attachments\Providers;
 
+use Codedor\Attachments\Pages\Library;
+use Filament\PluginServiceProvider;
 use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class AttachmentServiceProvider extends PackageServiceProvider
+class AttachmentServiceProvider extends PluginServiceProvider
 {
+    protected array $pages = [
+        Library::class,
+    ];
+
     public function configurePackage(Package $package): void
     {
         $package
-            ->name('skeleton')
+            ->name('laravel-attachments')
             ->setBasePath(__DIR__ . '/../')
-            ->hasConfigFile()
-            ->hasMigration('create_package_table');
+            ->hasMigrations([
+                'create_attachments_table',
+            ])
+            ->hasViews('laravel-attachments');
     }
 }
