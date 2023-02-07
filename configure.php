@@ -205,7 +205,7 @@ foreach ($files as $file) {
     match (true) {
         str_contains($file, determineSeparator('src/Providers/SkeletonServiceProvider.php')) => rename($file, determineSeparator('./src/Providers/' . $className . 'ServiceProvider.php')),
         str_contains($file, determineSeparator('config/skeleton.php')) => rename($file, determineSeparator('./config/' . $packageSlugWithoutPrefix . '.php')),
-                str_contains($file, determineSeparator('database/migrations/create_package_table.php')) => rename($file, determineSeparator('./database/migrations/create_' . title_snake($packageSlugWithoutPrefix) . '_table.php')),
+        str_contains($file, determineSeparator('database/migrations/create_package_table.php')) => rename($file, determineSeparator('./database/migrations/create_' . title_snake($packageSlugWithoutPrefix) . '_table.php')),
         str_contains($file, 'README.md') => remove_readme_paragraphs($file),
         default => [],
     };
