@@ -1,15 +1,15 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "codedor/laravel-attachments",
+    "description": "Attachments package for Filament",
     "keywords": [
-        ":vendor_name",
+        "codedor",
         "laravel",
-        ":package_slug"
+        "laravel-attachments"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/codedor/laravel-attachments",
     "license": "MIT",
     "require": {
-        "php": "^8.0",
+        "php": "^8.2",
         "illuminate/contracts": "^9.0",
         "spatie/laravel-package-tools": "^1.12"
     },
@@ -26,19 +26,19 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Codedor\\Attachments\\": "src",
+            "Codedor\\Attachments\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Codedor\\Attachments\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\Providers\\SkeletonServiceProvider"
+                "Codedor\\Attachments\\Providers\\AttachmentServiceProvider"
             ]
         }
     },

@@ -1,11 +1,11 @@
 <?php
 
-namespace VendorName\Skeleton\Providers;
+namespace Codedor\Attachments\Providers;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class AttachmentServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
