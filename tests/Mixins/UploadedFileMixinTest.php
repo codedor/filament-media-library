@@ -1,5 +1,6 @@
 <?php
 
+use Codedor\Attachments\Entities\Dimension;
 use Codedor\Attachments\Models\Attachment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -65,4 +66,25 @@ it('can save an image on default other disk', function () {
     $attachment = Attachment::first();
 
     Storage::disk($disk)->assertExists($attachment->directory());
+});
+
+it('does a check if file is an image', function () {
+    $file = UploadedFile::fake()->image('test.jpg', 100, 100);
+    expect($file->isImage())->toBeTrue();
+
+    $file = UploadedFile::fake()->create(
+        'file.pdf',
+        100,
+        'application/pdf'
+    );
+    expect($file->isImage())->toBeFalse();
+});
+
+it('returns the dimensions', function () {
+    $file = UploadedFile::fake()->image('test.jpg', 100, 100);
+
+    expect($file->dimensions())
+        ->toBeInstanceOf(Dimension::class)
+        ->height->toBe(100)
+        ->width->toBe(100);
 });

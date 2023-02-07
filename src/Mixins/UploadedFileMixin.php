@@ -59,7 +59,7 @@ class UploadedFileMixin
     public function isImage()
     {
         return function () {
-            return Validator::make(['data' => $this,], ['data' => 'image',])->passes();
+            return Validator::make(['data' => $this,], ['data' => 'image'])->passes();
         };
     }
 
