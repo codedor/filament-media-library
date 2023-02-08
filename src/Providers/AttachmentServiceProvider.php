@@ -2,9 +2,11 @@
 
 namespace Codedor\Attachments\Providers;
 
+use Codedor\Attachments\Http\Livewire\CreateTagModal;
 use Codedor\Attachments\Http\Livewire\UploadModal;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;
+use Codedor\Attachments\Resources\AttachmentTagResource;
 use Filament\PluginServiceProvider;
 use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
@@ -16,6 +18,10 @@ class AttachmentServiceProvider extends PluginServiceProvider
 
     protected array $pages = [
         Library::class,
+    ];
+
+    protected array $resources = [
+        AttachmentTagResource::class,
     ];
 
     protected array $livewireComponents = [
@@ -30,6 +36,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
             ->hasConfigFile('laravel-attachments')
             ->hasMigrations([
                 'create_attachments_table',
+                'create_attachment_tags_table',
             ])
             ->runsMigrations()
             ->hasViews('laravel-attachments');

@@ -1,5 +1,5 @@
 <x-filament::page>
-    <x-filament::modal id="laravel-attachment::upload-modal">
+    <x-filament::modal id="laravel-attachment::upload-attachment-modal">
         @livewire('laravel-attachments::upload-modal')
     </x-filament::modal>
 

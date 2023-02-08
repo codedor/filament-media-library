@@ -3,8 +3,12 @@
 namespace Codedor\Attachments\Pages;
 
 use Codedor\Attachments\Models\Attachment;
+use Codedor\Attachments\Models\AttachmentTag;
+use Codedor\Attachments\Resources\AttachmentTagResource;
 use Filament\Pages\Actions\Action;
+use Filament\Pages\Actions\CreateAction;
 use Filament\Pages\Page;
+use Filament\Resources\Form;
 
 class Library extends Page
 {
@@ -28,10 +32,19 @@ class Library extends Page
     {
         return [
             Action::make('openUploadModal')
-                ->label(__('attachment.open upload modal'))
+                ->label(__('attachment.upload attachment'))
                 ->action(fn() => $this->dispatchBrowserEvent('open-modal', [
-                    'id' => 'laravel-attachment::upload-modal',
+                    'id' => 'laravel-attachment::upload-attachment-modal',
                 ])),
+
+            CreateAction::make()
+                ->authorize(AttachmentTagResource::canCreate())
+                ->model(AttachmentTag::class)
+                ->form(
+                    AttachmentTagResource::form(Form::make())
+                        ->columns(2)
+                        ->getSchema()
+                ),
         ];
     }
 
