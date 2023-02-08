@@ -1,12 +1,13 @@
 <x-filament::page>
-    <x-filament::modal id="attachment::upload-modal">
+    <x-filament::modal id="laravel-attachment::upload-modal">
         @livewire('laravel-attachments::upload-modal')
     </x-filament::modal>
 
-
     @foreach($attachments as $attachment)
         <div class="max-w-sm rounded overflow-hidden shadow-lg">
-            <img class="w-full" src="{{ $attachment->url() }}" alt="{{ $attachment->name }}">
+            @if($attachment->type === 'image')
+                <img class="w-full" src="{{ $attachment->url() }}" alt="{{ $attachment->name }}">
+            @endif
             <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2">{{ $attachment->name }}</div>
                 <p class="text-gray-700 text-base">

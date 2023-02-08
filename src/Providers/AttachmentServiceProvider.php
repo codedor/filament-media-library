@@ -27,6 +27,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
         $package
             ->name(self::PACKAGE_NAME)
             ->setBasePath(__DIR__ . '/../')
+            ->hasConfigFile('laravel-attachments')
             ->hasMigrations([
                 'create_attachments_table',
             ])

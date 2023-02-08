@@ -10,6 +10,11 @@ class Dimension
     public function __construct(
         public string $path
     ) {
-        [$this->height, $this->width] = getimagesize($path);
+        [$this->height, $this->width] = @getimagesize($path);
+    }
+
+    public static function for(string $path): self
+    {
+        return new self($path);
     }
 }

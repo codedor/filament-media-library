@@ -19,7 +19,7 @@ class UploadModal extends Component
         }
 
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'attachment::upload-modal',
+            'id' => 'laravel-attachment::upload-modal',
         ]);
 
         Notification::make()

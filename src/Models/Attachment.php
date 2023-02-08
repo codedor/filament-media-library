@@ -3,7 +3,7 @@
 namespace Codedor\Attachments\Models;
 
 use Codedor\Attachments\Database\Factories\AttachmentFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 class Attachment extends Model
 {
     use HasFactory;
-    use HasUlids;
+    use HasUuids;
 
     protected $keyType = 'string';
 

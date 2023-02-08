@@ -80,7 +80,7 @@ it('does a check if file is an image', function () {
     expect($file->isImage())->toBeFalse();
 });
 
-it('returns the dimensions', function () {
+it('returns the dimensions for an image', function () {
     $file = UploadedFile::fake()->image('test.jpg', 100, 100);
 
     expect($file->dimensions())
@@ -88,3 +88,24 @@ it('returns the dimensions', function () {
         ->height->toBe(100)
         ->width->toBe(100);
 });
+
+it('returns no dimensions if mimetype is image/svg+xml', function () {
+    $file = UploadedFile::fake()->create('test.svg', 10, 'image/svg+xml');
+
+    expect($file->dimensions())
+        ->toBeNull();
+});
+
+it('returns no dimensions if mimetype is image/svg', function () {
+    $file = UploadedFile::fake()->create('test.svg', 10, 'image/svg');
+
+    expect($file->dimensions())
+        ->toBeNull();
+});
+
+it('returns right file type', function ($type, $extension) {
+    $file = UploadedFile::fake()->create("test.$extension");
+
+    expect($file->fileType())
+        ->toBe($type);
+})->with('filetypes');

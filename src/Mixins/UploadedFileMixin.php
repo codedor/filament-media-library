@@ -20,7 +20,7 @@ class UploadedFileMixin
                 'extension' => $this->getClientOriginalExtension(),
                 'mime_type' => $this->getMimeType(),
                 'md5' => $this->getMd5(),
-                'type' => 'image',
+                'type' => $this->fileType(),
                 'size' => $this->getSize(),
                 'width' => $dimensions?->width,
                 'height' => $dimensions?->height,
@@ -48,11 +48,13 @@ class UploadedFileMixin
     public function dimensions()
     {
         return function (): Dimension|null {
-            if (! $this->isImage()) {
+            if (
+                ! $this->isImage() ||
+                in_array($this->getMimeType(), ['image/svg+xml', 'image/svg'])) {
                 return null;
             }
 
-            return new Dimension($this->path());
+            return Dimension::for($this->path());
         };
     }
 
@@ -69,6 +71,19 @@ class UploadedFileMixin
             $path = $this->getRealPath();
 
             return md5_file($path);
+        };
+    }
+
+    public function fileType()
+    {
+        return function (): string {
+            foreach (config('laravel-attachments.extensions', []) as $type => $extensions) {
+                if (in_array($this->getClientOriginalExtension(), $extensions)) {
+                    return $type;
+                }
+            }
+
+            return 'other';
         };
     }
 }
