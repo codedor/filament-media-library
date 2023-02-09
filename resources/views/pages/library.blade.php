@@ -3,6 +3,8 @@
         @livewire('laravel-attachments::upload-modal')
     </x-filament::modal>
 
+    <input wire:model.debounce.500ms="search" type="search" placeholder="{{ __('laravel-attachment.search') }}">
+
     @foreach($attachments as $attachment)
         <div class="max-w-sm rounded overflow-hidden shadow-lg">
             @if($attachment->type === 'image')
@@ -33,4 +35,6 @@
             </div>
         </div>
     @endforeach
+
+    {{ $attachments->links() }}
 </x-filament::page>

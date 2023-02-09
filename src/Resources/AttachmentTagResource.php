@@ -4,6 +4,7 @@ namespace Codedor\Attachments\Resources;
 
 use Codedor\Attachments\Models\AttachmentTag;
 use Codedor\Attachments\Resources\AttachmentTagResource\Pages\ManageAttachmentTags;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -23,6 +24,9 @@ class AttachmentTagResource extends Resource
                 TextInput::make('title')
                     ->label(__('laravel-attachment.tag title'))
                     ->required(),
+
+                Select::make('parent')
+                    ->relationship('parent', 'title'),
             ]);
     }
 
@@ -31,6 +35,7 @@ class AttachmentTagResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\TextColumn::make('parent.title'),
             ])
             ->filters([
                 //

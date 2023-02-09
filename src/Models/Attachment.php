@@ -3,6 +3,7 @@
 namespace Codedor\Attachments\Models;
 
 use Codedor\Attachments\Database\Factories\AttachmentFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -30,6 +31,15 @@ class Attachment extends Model
     protected static function newFactory()
     {
         return AttachmentFactory::new();
+    }
+
+    public function scopeSearch(Builder $query, string $search = ''): Builder
+    {
+        if (! $search) {
+            return $query;
+        }
+
+        return $query->where('name', 'like', "%$search%");
     }
 
     public function url(): string
