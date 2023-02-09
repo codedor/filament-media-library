@@ -5,6 +5,7 @@ namespace Codedor\Attachments\Pages;
 use Codedor\Attachments\Models\Attachment;
 use Codedor\Attachments\Models\AttachmentTag;
 use Codedor\Attachments\Resources\AttachmentTagResource;
+use Filament\Notifications\Notification;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\Actions\CreateAction;
 use Filament\Pages\Page;
@@ -28,6 +29,24 @@ class Library extends Page
     protected static function getNavigationLabel(): string
     {
         return __('attachment.dashboard navigation title');
+    }
+
+    public function deleteAttachment($id)
+    {
+        $attachment = Attachment::find($id);
+
+        if (! $attachment) {
+            return;
+        }
+
+        $attachment->delete();
+
+        Notification::make("laravel-attachment::attachment-deleted-$attachment->id")
+            ->body(__('laravel-attachment.deleted attachment :name', [
+                'name' => $attachment->name,
+            ]))
+            ->success()
+            ->send();
     }
 
     public function updatingSearch()

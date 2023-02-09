@@ -28,6 +28,21 @@ class Attachment extends Model
         'name',
     ];
 
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function (Attachment $attachment) {
+            Storage::disk($attachment->disk)->deleteDirectory($attachment->directory());
+        });
+    }
+
+    public function directory(): string
+    {
+        return "attachments/{$this->{$this->getKeyName()}}";
+    }
+
     protected static function newFactory()
     {
         return AttachmentFactory::new();
@@ -46,11 +61,6 @@ class Attachment extends Model
     {
         return Storage::disk($this->disk)
             ->url($this->directory() . '/' . $this->filename());
-    }
-
-    public function directory(): string
-    {
-        return "attachments/{$this->{$this->getKeyName()}}";
     }
 
     public function filename(): string
