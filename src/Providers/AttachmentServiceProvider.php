@@ -2,7 +2,6 @@
 
 namespace Codedor\Attachments\Providers;
 
-use Codedor\Attachments\Http\Livewire\CreateTagModal;
 use Codedor\Attachments\Http\Livewire\UploadModal;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;

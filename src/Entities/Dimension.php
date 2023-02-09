@@ -5,6 +5,7 @@ namespace Codedor\Attachments\Entities;
 class Dimension
 {
     public int $height;
+
     public int $width;
 
     public function __construct(

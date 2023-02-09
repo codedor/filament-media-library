@@ -16,6 +16,7 @@ class Library extends Page
     use WithPagination;
 
     protected static ?string $navigationIcon = 'heroicon-o-paper-clip';
+
     protected static string $view = 'laravel-attachments::pages.library';
     public $search = '';
     protected $queryString = [

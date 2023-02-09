@@ -1,4 +1,5 @@
 <?php
+
 dataset('filetypes', [
     ['image', 'jpg'],
     ['image', 'jpeg'],
