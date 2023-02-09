@@ -13,7 +13,9 @@ use Filament\Resources\Form;
 class Library extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-paper-clip';
+
     protected static string $view = 'laravel-attachments::pages.library';
+
     protected $listeners = ['laravel-attachment::update-library' => '$refresh'];
 
     protected static function getNavigationLabel(): string
@@ -33,7 +35,7 @@ class Library extends Page
         return [
             Action::make('openUploadModal')
                 ->label(__('attachment.upload attachment'))
-                ->action(fn() => $this->dispatchBrowserEvent('open-modal', [
+                ->action(fn () => $this->dispatchBrowserEvent('open-modal', [
                     'id' => 'laravel-attachment::upload-attachment-modal',
                 ])),
 
