@@ -42,6 +42,8 @@ class UploadedFileMixin
                 $this,
                 $attachment->filename()
             );
+
+            return $attachment;
         };
     }
 

@@ -2,7 +2,7 @@
     <div x-data="{
         search: @entangle('search')
     }">
-        <x-filament::modal id="laravel-attachment::upload-attachment-modal">
+        <x-filament::modal id="laravel-attachment::upload-attachment-modal" width="full">
             @livewire('laravel-attachments::upload-modal')
         </x-filament::modal>
 

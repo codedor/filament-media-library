@@ -5,7 +5,7 @@ namespace Codedor\Attachments\Pages;
 use Codedor\Attachments\Models\Attachment;
 use Codedor\Attachments\Models\AttachmentTag;
 use Codedor\Attachments\Resources\AttachmentTagResource;
-use Filament\Notifications\Notification;
+use Exception;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\Actions\CreateAction;
 use Filament\Pages\Page;
@@ -37,20 +37,7 @@ class Library extends Page
 
     public function deleteAttachment($id)
     {
-        $attachment = Attachment::find($id);
-
-        if (! $attachment) {
-            return;
-        }
-
-        $attachment->delete();
-
-        Notification::make("laravel-attachment::attachment-deleted-$attachment->id")
-            ->body(__('laravel-attachment.deleted attachment :name', [
-                'name' => $attachment->name,
-            ]))
-            ->success()
-            ->send();
+        throw new Exception('Not implemented yet');
     }
 
     public function updatingSearch()
@@ -72,7 +59,7 @@ class Library extends Page
         return [
             Action::make('openUploadModal')
                 ->label(__('attachment.upload attachment'))
-                ->action(fn () => $this->dispatchBrowserEvent('open-modal', [
+                ->action(fn() => $this->dispatchBrowserEvent('open-modal', [
                     'id' => 'laravel-attachment::upload-attachment-modal',
                 ])),
 

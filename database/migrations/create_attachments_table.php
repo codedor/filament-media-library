@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -24,6 +23,9 @@ return new class extends Migration
             $table->unsignedBigInteger('width')->nullable();
             $table->unsignedBigInteger('height')->nullable();
             $table->string('disk');
+            $table->json('translated_name')->nullable();
+            $table->json('alt')->nullable();
+            $table->json('caption')->nullable();
             $table->timestamps();
         });
     }

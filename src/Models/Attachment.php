@@ -26,6 +26,9 @@ class Attachment extends Model
         'height',
         'disk',
         'name',
+        'translated_name',
+        'alt',
+        'caption',
     ];
 
 
