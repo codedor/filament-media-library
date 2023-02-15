@@ -125,7 +125,7 @@ class UploadModal extends Component implements HasForms
                             ->label(__('laravel-attachment::tags'))
                             ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
                             ->searchable()
-                            ->getSearchResultsUsing(fn(string $search) => AttachmentTag::where('title', 'like', "%$search%")->limit(50)->pluck('title', 'id')),
+                            ->getSearchResultsUsing(fn (string $search) => AttachmentTag::where('title', 'like', "%$search%")->limit(50)->pluck('title', 'id')),
                     ])
                     ->collapsible()
                     ->collapsed(! $this->firstCollabsible)
