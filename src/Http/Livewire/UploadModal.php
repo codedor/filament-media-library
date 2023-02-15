@@ -4,8 +4,10 @@ namespace Codedor\Attachments\Http\Livewire;
 
 use Closure;
 use Codedor\Attachments\Models\Attachment;
+use Codedor\Attachments\Models\AttachmentTag;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -33,6 +35,7 @@ class UploadModal extends Component implements HasForms
 
     public function submit(): void
     {
+        dd($this->form->getState());
         collect($this->form->getState()['attachmentMetaData'] ?? [])
             ->each(function ($data, $md5) {
                 Attachment::query()->where('md5', $md5)->update([
@@ -117,6 +120,11 @@ class UploadModal extends Component implements HasForms
                             ->dehydrateStateUsing(fn($state) => Str::slug($state)),
                         TextInput::make("attachmentMetaData.$md5.alt"),
                         TextInput::make("attachmentMetaData.$md5.caption"),
+                        Select::make("attachmentMetaData.$md5.tags")
+                            ->label(__('laravel-attachment::tags'))
+                            ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
+                            ->searchable()
+                            ->getSearchResultsUsing(fn(string $search) => AttachmentTag::where('title', 'like', "%$search%")->limit(50)->pluck('title', 'id')),
                     ])
                     ->collapsible()
                     ->collapsed($this->firstCollabsible ? false : true)
