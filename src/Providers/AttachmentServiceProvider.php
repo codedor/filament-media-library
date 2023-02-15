@@ -36,6 +36,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
             ->hasMigrations([
                 'create_attachments_table',
                 'create_attachment_tags_table',
+                'create_attachment_attachment_tags_table',
             ])
             ->runsMigrations()
             ->hasViews('laravel-attachments');

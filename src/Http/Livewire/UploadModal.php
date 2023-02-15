@@ -2,7 +2,6 @@
 
 namespace Codedor\Attachments\Http\Livewire;
 
-use Closure;
 use Codedor\Attachments\Models\Attachment;
 use Codedor\Attachments\Models\AttachmentTag;
 use Filament\Forms\Components\FileUpload;
@@ -22,9 +21,8 @@ class UploadModal extends Component implements HasForms
     use InteractsWithForms;
 
     public $attachments = [];
-
-    public $attachmentMetaData = [];
-
+    public $meta = [];
+    protected bool $isCachingForms = false;
     protected bool $firstCollabsible = true;
 
     protected $listeners = ['laravel-attachment::refresh-upload-modal' => '$refresh'];
@@ -36,14 +34,24 @@ class UploadModal extends Component implements HasForms
 
     public function submit(): void
     {
-        dd($this->form->getState());
-        collect($this->form->getState()['attachmentMetaData'] ?? [])
+        collect($this->meta)
             ->each(function ($data, $md5) {
-                Attachment::query()->where('md5', $md5)->update([
+                /** @var Attachment $attachment */
+                $attachment = Attachment::query()
+                    ->where('md5', $md5)
+                    ->first();
+
+                if (! $attachment) {
+                    return;
+                }
+
+                $attachment->update([
                     'translated_name' => json_encode($data['filename']),
                     'alt' => json_encode($data['alt']),
                     'caption' => json_encode($data['caption']),
                 ]);
+
+                $attachment->tags()->sync($data['tags']);
             });
 
         $this->dispatchBrowserEvent('close-modal', [
@@ -88,22 +96,6 @@ class UploadModal extends Component implements HasForms
                     ->multiple()
                     ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
                         return $file->save();
-                    })
-                    ->afterStateUpdated(function (Closure $get, Closure $set, $state) {
-                        if (filled($state)) {
-                            collect($state)
-                                ->each(function (TemporaryUploadedFile $file) use ($set) {
-                                    $md5 = md5_file($file->getRealPath());
-                                    $set(
-                                        "attachmentMetaData.$md5.filename",
-                                        Str::replace(
-                                            ".{$file->getClientOriginalExtension()}",
-                                            '',
-                                            $file->getClientOriginalName()
-                                        )
-                                    );
-                                });
-                        }
                     }),
             ]);
     }
@@ -114,18 +106,36 @@ class UploadModal extends Component implements HasForms
             ->map(function (TemporaryUploadedFile $upload) {
                 $md5 = md5_file($upload->getRealPath());
 
+                $this->meta[$md5] = [
+                    'filename' => $this->meta[$md5]['filename'] ?? Str::replace(
+                            ".{$upload->getClientOriginalExtension()}",
+                            '',
+                            $upload->getClientOriginalName()
+                        ),
+                    'alt' => $this->meta[$md5]['alt'] ?? null,
+                    'caption' => $this->meta[$md5]['caption'] ?? null,
+                    'tags' => $this->meta[$md5]['tags'] ?? null,
+                ];
+
                 $section = Section::make($upload->getClientOriginalName())
                     ->schema([
-                        TextInput::make("attachmentMetaData.$md5.filename")
+                        TextInput::make("meta.$md5.filename")
                             ->suffix('.' . $upload->getClientOriginalExtension())
-                            ->dehydrateStateUsing(fn ($state) => Str::slug($state)),
-                        TextInput::make("attachmentMetaData.$md5.alt"),
-                        TextInput::make("attachmentMetaData.$md5.caption"),
-                        Select::make("attachmentMetaData.$md5.tags")
+                            ->dehydrateStateUsing(fn($state) => Str::slug($state))
+                            ->reactive(),
+
+                        TextInput::make("meta.$md5.alt")
+                            ->reactive(),
+
+                        TextInput::make("meta.$md5.caption")
+                            ->reactive(),
+
+                        Select::make("meta.$md5.tags")
                             ->label(__('laravel-attachment::tags'))
                             ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
                             ->searchable()
-                            ->getSearchResultsUsing(fn(string $search) => AttachmentTag::where('title', 'like', "%$search%")->limit(50)->pluck('title', 'id')),
+                            ->reactive()
+                            ->multiple(),
                     ])
                     ->collapsible()
                     ->collapsed(! $this->firstCollabsible)
