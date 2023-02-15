@@ -127,7 +127,7 @@ class UploadModal extends Component implements HasForms
                             ->getSearchResultsUsing(fn(string $search) => AttachmentTag::where('title', 'like', "%$search%")->limit(50)->pluck('title', 'id')),
                     ])
                     ->collapsible()
-                    ->collapsed($this->firstCollabsible ? false : true)
+                    ->collapsed(! $this->firstCollabsible)
                     ->columns();
 
                 $this->firstCollabsible = false;
