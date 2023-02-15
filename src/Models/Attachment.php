@@ -31,7 +31,6 @@ class Attachment extends Model
         'caption',
     ];
 
-
     protected static function boot()
     {
         parent::boot();

@@ -22,6 +22,7 @@ class UploadModal extends Component implements HasForms
     use InteractsWithForms;
 
     public $attachments = [];
+
     public $attachmentMetaData = [];
 
     protected bool $firstCollabsible = true;
@@ -117,7 +118,7 @@ class UploadModal extends Component implements HasForms
                     ->schema([
                         TextInput::make("attachmentMetaData.$md5.filename")
                             ->suffix('.' . $upload->getClientOriginalExtension())
-                            ->dehydrateStateUsing(fn($state) => Str::slug($state)),
+                            ->dehydrateStateUsing(fn ($state) => Str::slug($state)),
                         TextInput::make("attachmentMetaData.$md5.alt"),
                         TextInput::make("attachmentMetaData.$md5.caption"),
                         Select::make("attachmentMetaData.$md5.tags")
