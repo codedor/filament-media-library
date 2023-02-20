@@ -21,8 +21,11 @@ class UploadModal extends Component implements HasForms
     use InteractsWithForms;
 
     public $attachments = [];
+
     public $meta = [];
+
     protected bool $isCachingForms = false;
+
     protected bool $firstCollabsible = true;
 
     protected $listeners = ['laravel-attachment::refresh-upload-modal' => '$refresh'];
@@ -108,10 +111,10 @@ class UploadModal extends Component implements HasForms
 
                 $this->meta[$md5] = [
                     'filename' => $this->meta[$md5]['filename'] ?? Str::replace(
-                            ".{$upload->getClientOriginalExtension()}",
-                            '',
-                            $upload->getClientOriginalName()
-                        ),
+                        ".{$upload->getClientOriginalExtension()}",
+                        '',
+                        $upload->getClientOriginalName()
+                    ),
                     'alt' => $this->meta[$md5]['alt'] ?? null,
                     'caption' => $this->meta[$md5]['caption'] ?? null,
                     'tags' => $this->meta[$md5]['tags'] ?? null,
@@ -121,7 +124,7 @@ class UploadModal extends Component implements HasForms
                     ->schema([
                         TextInput::make("meta.$md5.filename")
                             ->suffix('.' . $upload->getClientOriginalExtension())
-                            ->dehydrateStateUsing(fn($state) => Str::slug($state))
+                            ->dehydrateStateUsing(fn ($state) => Str::slug($state))
                             ->reactive(),
 
                         TextInput::make("meta.$md5.alt")
