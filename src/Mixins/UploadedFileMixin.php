@@ -3,47 +3,45 @@
 namespace Codedor\Attachments\Mixins;
 
 use Codedor\Attachments\Entities\Dimension;
-use Codedor\Attachments\Models\Attachment;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
 
 class UploadedFileMixin
 {
     public function save()
     {
         return function (string $disk = 'public') {
-            /** @var Dimension $dimensions */
-            $dimensions = $this->dimensions();
 
-            $data = [
-                'extension' => $this->getClientOriginalExtension(),
-                'mime_type' => $this->getMimeType(),
-                'md5' => $this->getMd5(),
-                'type' => $this->fileType(),
-                'size' => $this->getSize(),
-                'width' => $dimensions?->width,
-                'height' => $dimensions?->height,
-                'disk' => $disk,
-                'name' => Str::replace(
-                    ".{$this->getClientOriginalExtension()}",
-                    '',
-                    $this->getClientOriginalName()
-                ),
-            ];
-
-            /** @var \Codedor\Attachments\Models\Attachment $attachment */
-            $attachment = Attachment::firstOrCreate([
-                'md5' => $data['md5'],
-            ], $data);
-
-            Storage::disk($disk)->putFileAs(
-                $attachment->directory(),
-                $this,
-                $attachment->filename()
-            );
-
-            return $attachment;
+//            /** @var Dimension $dimensions */
+//            $dimensions = $this->dimensions();
+//
+//            $data = [
+//                'extension' => $this->getClientOriginalExtension(),
+//                'mime_type' => $this->getMimeType(),
+//                'md5' => $this->getMd5(),
+//                'type' => $this->fileType(),
+//                'size' => $this->getSize(),
+//                'width' => $dimensions?->width,
+//                'height' => $dimensions?->height,
+//                'disk' => $disk,
+//                'name' => Str::replace(
+//                    ".{$this->getClientOriginalExtension()}",
+//                    '',
+//                    $this->getClientOriginalName()
+//                ),
+//            ];
+//
+//            /** @var \Codedor\Attachments\Models\Attachment $attachment */
+//            $attachment = Attachment::firstOrCreate([
+//                'md5' => $data['md5'],
+//            ], $data);
+//
+//            Storage::disk($disk)->putFileAs(
+//                $attachment->directory(),
+//                $this,
+//                $attachment->filename()
+//            );
+//
+//            return $attachment;
         };
     }
 

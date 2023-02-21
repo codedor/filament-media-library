@@ -2,6 +2,7 @@
 
 namespace Codedor\Attachments\Providers;
 
+use Codedor\Attachments\Collections\Formats;
 use Codedor\Attachments\Http\Livewire\Picker;
 use Codedor\Attachments\Http\Livewire\UploadModal;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
@@ -58,5 +59,12 @@ class AttachmentServiceProvider extends PluginServiceProvider
     public function packageName(): string
     {
         return self::PACKAGE_NAME;
+    }
+
+    public function registeringPackage()
+    {
+        $this->app->singleton(Formats::class, function () {
+            return new Formats();
+        });
     }
 }
