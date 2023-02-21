@@ -2,6 +2,7 @@
 
 namespace Codedor\Attachments\Providers;
 
+use Codedor\Attachments\Http\Livewire\Picker;
 use Codedor\Attachments\Http\Livewire\UploadModal;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;
@@ -25,6 +26,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
 
     protected array $livewireComponents = [
         'upload-modal' => UploadModal::class,
+        'picker' => Picker::class,
     ];
 
     public function configurePackage(Package $package): void
