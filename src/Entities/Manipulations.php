@@ -100,18 +100,34 @@ class Manipulations
         return $this;
     }
 
-    public function cropWithFocal(int $width, int $height, int $x, int $y, float $zoom = 1): static
+    public function cropWithFocal(int $width, int $height, int $xPercentage, int $yPercentage, float $zoom = 1): static
     {
         $this->width($width);
         $this->height($height);
 
-        $this->manipulations['fit'] = "crop-$x-$y-$zoom";
+        if ($xPercentage < 0 || $xPercentage > 100) {
+            throw ArgumentException::invalid('x percentage', $xPercentage);
+        }
+
+        if ($yPercentage < 0 || $yPercentage > 100) {
+            throw ArgumentException::invalid('y percentage', $yPercentage);
+        }
+
+        if ($zoom < 0 || $zoom > 10) {
+            throw ArgumentException::invalid('zoom', $zoom);
+        }
+
+        $this->manipulations['fit'] = "crop-$xPercentage-$yPercentage-$zoom";
 
         return $this;
     }
 
     public function width(int $width): static
     {
+        if ($width < 0) {
+            throw ArgumentException::invalid('width', $width);
+        }
+
         $this->manipulations['width'] = $width;
 
         return $this;
@@ -119,6 +135,10 @@ class Manipulations
 
     public function height(int $height): static
     {
+        if ($height < 0) {
+            throw ArgumentException::invalid('height', $height);
+        }
+
         $this->manipulations['height'] = $height;
 
         return $this;
@@ -133,6 +153,14 @@ class Manipulations
 
     public function fit(string $method, int $width, int $height): static
     {
+        if (! $this->validate('crop', $method)) {
+            throw ArgumentException::invalid(
+                'crop',
+                $method,
+                $this->getValidationOptions('crop')
+            );
+        }
+
         $this->width($width);
         $this->height($height);
         $this->manipulations['fit'] = $method;
@@ -191,6 +219,14 @@ class Manipulations
 
     public function filter(string $filter): static
     {
+        if (! $this->validate('filter', $filter)) {
+            throw ArgumentException::invalid(
+                'filter',
+                $filter,
+                $this->getValidationOptions('filter')
+            );
+        }
+
         $this->manipulations['filter'] = $filter;
 
         return $this;
@@ -205,6 +241,14 @@ class Manipulations
 
     public function border(int $width, string $color, string $type = self::BORDER_OVERLAY): static
     {
+        if (! $this->validate('border', $type)) {
+            throw ArgumentException::invalid(
+                'border',
+                $type,
+                $this->getValidationOptions('border')
+            );
+        }
+
         $this->manipulations['border'] = "$width,$color,$type";
 
         return $this;
@@ -219,6 +263,14 @@ class Manipulations
 
     public function format(string $format): static
     {
+        if (! $this->validate('format', $format)) {
+            throw ArgumentException::invalid(
+                'format',
+                $format,
+                $this->getValidationOptions('format')
+            );
+        }
+
         $this->manipulations['format'] = $format;
 
         return $this;
