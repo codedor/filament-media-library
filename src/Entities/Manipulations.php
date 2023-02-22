@@ -4,6 +4,10 @@ namespace Codedor\Attachments\Entities;
 
 use Codedor\Attachments\Enums\Flip;
 use Codedor\Attachments\Enums\Orientation;
+use Codedor\Attachments\Exceptions\ArgumentException;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
+use ReflectionClass;
 
 class Manipulations
 {
@@ -49,30 +53,48 @@ class Manipulations
     public const FILTER_GREYSCALE = 'greyscale';
     public const FILTER_SEPIA = 'sepia';
 
-    public const UNIT_PIXELS = 'px';
-    public const UNIT_PERCENT = '%';
-
-    public const POSITION_TOP_LEFT = 'top-left';
-    public const POSITION_TOP = 'top';
-    public const POSITION_TOP_RIGHT = 'top-right';
-    public const POSITION_LEFT = 'left';
-    public const POSITION_CENTER = 'center';
-    public const POSITION_RIGHT = 'right';
-    public const POSITION_BOTTOM_LEFT = 'bottom-left';
-    public const POSITION_BOTTOM = 'bottom';
-    public const POSITION_BOTTOM_RIGHT = 'bottom-right';
-
     protected array $manipulations = [];
 
     public function orientation(string $orientation): static
     {
+        if (! $this->validate('orientation', $orientation)) {
+            throw ArgumentException::invalid(
+                'orientation',
+                $orientation,
+                $this->getValidationOptions('orientation')
+            );
+        }
+
         $this->manipulations['orientation'] = $orientation;
 
         return $this;
     }
 
+    protected function validate(string $manipulation, string $value): bool
+    {
+        return $this->getValidationOptions($manipulation)
+            ->search($value);
+    }
+
+    protected function getValidationOptions(string $manipulation): Collection
+    {
+        return collect((new ReflectionClass(static::class))
+            ->getConstants())
+            ->reject(function ($value, $key) use ($manipulation) {
+                return ! Str::startsWith($key, Str::upper($manipulation));
+            });
+    }
+
     public function flip(string $flip): static
     {
+        if (! $this->validate('flip', $flip)) {
+            throw ArgumentException::invalid(
+                'orientation',
+                $flip,
+                $this->getValidationOptions('flip')
+            );
+        }
+
         $this->manipulations['flip'] = $flip;
 
         return $this;
@@ -80,16 +102,10 @@ class Manipulations
 
     public function cropWithFocal(int $width, int $height, int $x, int $y, float $zoom = 1): static
     {
-        $this->crop("crop-$x-$y-$zoom", $width, $height);
-
-        return $this;
-    }
-
-    public function crop(string $method, int $width, int $height): static
-    {
         $this->width($width);
         $this->height($height);
-        $this->manipulations['crop'] = $method;
+
+        $this->manipulations['fit'] = "crop-$x-$y-$zoom";
 
         return $this;
     }
@@ -104,6 +120,13 @@ class Manipulations
     public function height(int $height): static
     {
         $this->manipulations['height'] = $height;
+
+        return $this;
+    }
+
+    public function crop(int $width, int $height, int $x, int $y): static
+    {
+        $this->manipulations['crop'] = "$width,$height,$x,$y";
 
         return $this;
     }
@@ -199,5 +222,10 @@ class Manipulations
         $this->manipulations['format'] = $format;
 
         return $this;
+    }
+
+    public function all(): array
+    {
+        return $this->manipulations;
     }
 }

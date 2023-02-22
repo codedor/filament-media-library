@@ -4,6 +4,7 @@ namespace Codedor\Attachments\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
+use Codedor\Attachments\Entities\Manipulations;
 use Codedor\Attachments\Providers\AttachmentServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
@@ -16,6 +17,8 @@ use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
 class TestCase extends Orchestra
 {
+    public Manipulations $manipulations;
+
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
