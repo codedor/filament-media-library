@@ -36,9 +36,9 @@ class AttachmentServiceProvider extends PluginServiceProvider
             ->setBasePath(__DIR__ . '/../')
             ->hasConfigFile('laravel-attachments')
             ->hasMigrations([
-                'create_attachments_table',
-                'create_attachment_tags_table',
-                'create_attachment_attachment_tags_table',
+                '2022_08_03_120355_create_attachments_table',
+                '2022_08_03_120356_create_attachment_tags_table',
+                '2022_08_03_120357_create_attachment_attachment_tags_table',
             ])
             ->runsMigrations()
             ->hasViews('laravel-attachments');

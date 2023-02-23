@@ -12,21 +12,19 @@ class Picker extends Component
 
     public array $selectedAttachments = [];
 
-    public $search = '';
+    public string $statePath;
 
-    protected $queryString = [
-        'search' => ['except' => '', 'as' => 's'],
-    ];
+    public string $search = '';
 
-    protected $listeners = ['modal-closed' => 'test'];
+    public bool $multiple = false;
 
-    public function toggle(string $id)
+    public function selectAttachments()
     {
-        if (in_array($id, $this->selectedAttachments)) {
-            $this->selectedAttachments = array_diff($this->selectedAttachments, [$id]);
-        } else {
-            $this->selectedAttachments[] = $id;
-        }
+        $this->dispatchBrowserEvent("laravel-attachment::picked-{$this->statePath}", [
+             'value' => $this->multiple
+                ? $this->selectedAttachments
+                : $this->selectedAttachments[0] ?? null,
+        ]);
     }
 
     public function render()
@@ -41,10 +39,5 @@ class Picker extends Component
     public function updatingSearch()
     {
         $this->resetPage();
-    }
-
-    public function getQueryString()
-    {
-        return [];
     }
 }

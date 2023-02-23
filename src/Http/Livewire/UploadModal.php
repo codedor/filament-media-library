@@ -98,6 +98,7 @@ class UploadModal extends Component implements HasForms
                     ->required()
                     ->multiple()
                     ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
+                        // TODO: code does not pass here, tmp fix in getAttachmentInformationStep()
                         return $file->save();
                     }),
             ]);
@@ -108,6 +109,9 @@ class UploadModal extends Component implements HasForms
         $collapsibles = collect($this->attachments)
             ->map(function (TemporaryUploadedFile $upload) {
                 $md5 = md5_file($upload->getRealPath());
+
+                // TODO: temp fix for above ->saveUploadedFileUsing() issue
+                $upload->save();
 
                 $this->meta[$md5] = [
                     'filename' => $this->meta[$md5]['filename'] ?? Str::replace(
