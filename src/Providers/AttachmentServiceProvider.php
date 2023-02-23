@@ -7,6 +7,7 @@ use Codedor\Attachments\Http\Livewire\UploadModal;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;
 use Codedor\Attachments\Resources\AttachmentTagResource;
+use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Illuminate\Http\UploadedFile;
 use Livewire\Livewire;
@@ -53,6 +54,15 @@ class AttachmentServiceProvider extends PluginServiceProvider
         }
 
         UploadedFile::mixin(new UploadedFileMixin());
+    }
+
+    public function boot()
+    {
+        parent::boot();
+
+        Filament::serving(function () {
+            Filament::registerStyles([__DIR__ . '/../../dist/css/laravel-media.css']);
+        });
     }
 
     public function packageName(): string

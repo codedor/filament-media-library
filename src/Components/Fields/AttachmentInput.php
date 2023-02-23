@@ -8,6 +8,7 @@ use Filament\Forms\Components\Field;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 
@@ -21,9 +22,15 @@ class AttachmentInput extends Field implements HasForms
 
     public bool|Closure $multiple = false;
 
+    public Closure $attachmentsListQuery;
+
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->attachmentsListQuery(function () {
+            return Attachment::orderBy('id', 'desc')->get();
+        });
 
         // Don't save the relationship if the field is not multiple
         $this->dehydrated(function (self $component): bool {
@@ -35,11 +42,7 @@ class AttachmentInput extends Field implements HasForms
                 return;
             }
 
-            $state = Collection::wrap($state ?? []);
-
-            $component->getRelationship()->sync(
-                $state->toArray()
-            );
+            $component->getRelationship()->sync($state ?? []);
         });
 
         $this->registerListeners([
@@ -90,5 +93,17 @@ class AttachmentInput extends Field implements HasForms
     public function getRelationship(): BelongsToMany
     {
         return $this->getModelInstance()->{$this->getName()}();
+    }
+
+    public function attachmentsListQuery(Closure $query): static
+    {
+        $this->attachmentsListQuery = $query;
+
+        return $this;
+    }
+
+    public function getAttachmentsList()
+    {
+        return $this->evaluate($this->attachmentsListQuery);
     }
 }
