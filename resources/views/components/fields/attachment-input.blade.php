@@ -11,43 +11,42 @@
     :required="$isRequired()"
     :state-path="$getStatePath()"
 >
+    @php
+        $attachments = $getPickedAttachments();
+    @endphp
+
     <div x-data="{
         state: $wire.entangle(@js($getStatePath())),
-        startState: @js($getPickedAttachments()->pluck('id')->toArray()),
-        selected: [],
+        selected: @js($attachments->pluck('id')->toArray()),
+        startSelected: [],
         multiple: @js($isMultiple()),
         pickerModalID: 'laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}',
-        search: '',
+        init () {
+            this.startSelected = Alpine.raw(this.selected) || []
+        },
         openPicker () {
-            this.selected = Alpine.raw(this.startState)
+            this.selected = Alpine.raw(this.startSelected) || []
 
             $dispatch('open-modal', { id: this.pickerModalID })
         },
         closePicker () {
             $dispatch('close-modal', { id: this.pickerModalID })
         },
-        selectMultiple () {
+        selectAttachment () {
             this.updateState()
             this.closePicker()
         },
         remove (id) {
             this.selected = this.selected.filter((item) => item !== id)
-
             this.updateState()
         },
         updateState () {
+            // Update the state, since it does not have defer, it will reload the fields
             this.state = this.multiple ? [...this.selected] : this.selected[0]
-            this.startState = Alpine.raw(this.state)
+            this.startSelected = Alpine.raw(this.selected) || []
         },
     }">
-        @php
-            $attachments = $getPickedAttachments();
-        @endphp
-
-        <div
-            wire:loading.remove
-            class="flex flex-col gap-2"
-        >
+        <div class="flex flex-col gap-4" wire:loading.class="opacity-50">
             <div class="flex flex-col gap-2">
                 @foreach ($attachments as $attachment)
                     <div class="flex gap-4 p-2 border rounded-lg bg-white">
@@ -121,10 +120,11 @@
                                 id="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
                                 key="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
                                 type="checkbox"
-                                x-model="selected"
                                 value="{{ $attachment->id }}"
                                 class="hidden"
-                                x-on:change="multiple ? null : (updateState() || closePicker())"
+
+                                x-on:change="multiple ? null : selectAttachment()"
+                                x-model="selected"
                             >
 
                             <label
@@ -143,7 +143,7 @@
                     {{-- {{ $attachmentList->links() }} --}}
 
                     @if ($isMultiple())
-                        <div x-on:click="selectMultiple()">
+                        <div x-on:click="selectAttachment()">
                             {{ __('laravel_attachment.select') }}
                         </div>
                     @endif

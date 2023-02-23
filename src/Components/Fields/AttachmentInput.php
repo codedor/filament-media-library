@@ -75,7 +75,9 @@ class AttachmentInput extends Field implements HasForms
             return collect();
         }
 
-        return Attachment::whereIn('id', Arr::wrap($state))->get();
+        return Attachment::whereIn('id', Arr::wrap($state))
+            ->orderBy('id', 'desc') // TODO: global scope?
+            ->get();
     }
 
     public function multiple(bool|Closure $multiple = true): static
