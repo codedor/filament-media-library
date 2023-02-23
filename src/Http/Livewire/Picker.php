@@ -21,9 +21,9 @@ class Picker extends Component
     public function selectAttachments()
     {
         $this->dispatchBrowserEvent("laravel-attachment::picked-{$this->statePath}", [
-             'value' => $this->multiple
-                ? $this->selectedAttachments
-                : $this->selectedAttachments[0] ?? null,
+            'value' => $this->multiple
+               ? $this->selectedAttachments
+               : $this->selectedAttachments[0] ?? null,
         ]);
     }
 
