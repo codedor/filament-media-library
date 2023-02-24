@@ -5,7 +5,6 @@ namespace Codedor\Attachments\Pages;
 use Codedor\Attachments\Models\Attachment;
 use Codedor\Attachments\Models\AttachmentTag;
 use Codedor\Attachments\Resources\AttachmentTagResource;
-use Exception;
 use Filament\Notifications\Notification;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\Actions\CreateAction;
