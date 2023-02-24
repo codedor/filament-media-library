@@ -21,34 +21,32 @@ class AttachmentInput extends Field implements HasForms
 
     public bool|Closure $multiple = false;
 
+    public Closure $attachmentsListQuery;
+
     public function setUp(): void
     {
         parent::setUp();
 
-        // Don't save the relationship if the field is not multiple
-        $this->dehydrated(function (self $component): bool {
-            return ! $component->isMultiple();
+        $this->attachmentsListQuery(function () {
+            return Attachment::orderBy('id', 'desc')->get();
         });
+
+        // Don't save the relationship if the field is not multiple
+        $this->dehydrated($this->isMultiple());
 
         $this->saveRelationshipsUsing(static function (self $component, $state) {
             if (! $component->isMultiple()) {
                 return;
             }
 
-            $state = Collection::wrap($state ?? []);
+            // If the state is null, it means that the field has not been touched (and the state was never set)
+            // So we don't want to sync the relationship, because it would remove all the existing attachments
+            if ($state === null) {
+                return;
+            }
 
-            $component->getRelationship()->sync(
-                $state->toArray()
-            );
+            $component->getRelationship()->sync($state ?? []);
         });
-
-        $this->registerListeners([
-            // 'laravel-attachment::picked' => [
-            //     function (self $component, string $statePath): void {
-            //         dd($component);
-            //     },
-            // ],
-        ]);
     }
 
     public function setPickedAttachments(array|Collection $attachments): void
@@ -72,7 +70,9 @@ class AttachmentInput extends Field implements HasForms
             return collect();
         }
 
-        return Attachment::whereIn('id', Arr::wrap($state))->get();
+        return Attachment::whereIn('id', Arr::wrap($state))
+            ->orderBy('id', 'desc') // TODO: global scope?
+            ->get();
     }
 
     public function multiple(bool|Closure $multiple = true): static
@@ -90,5 +90,17 @@ class AttachmentInput extends Field implements HasForms
     public function getRelationship(): BelongsToMany
     {
         return $this->getModelInstance()->{$this->getName()}();
+    }
+
+    public function attachmentsListQuery(Closure $query): static
+    {
+        $this->attachmentsListQuery = $query;
+
+        return $this;
+    }
+
+    public function getAttachmentsList()
+    {
+        return $this->evaluate($this->attachmentsListQuery);
     }
 }
