@@ -50,20 +50,15 @@
             <div class="flex flex-col gap-2">
                 @foreach ($attachments as $attachment)
                     <div class="flex gap-4 p-2 border rounded-lg bg-white">
-                        <div
-                            style="background-image: url('{{ $attachment->url() }}')"
-                            key="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                            class="
-                                flex relative w-32 aspect-square rounded-lg overflow-hidden
-                                bg-center bg-contain bg-no-repeat bg-gray-100 border
-                            "
-                        >
-                            <button
-                                x-on:click.prevent="remove('{{ $attachment->id }}')"
-                                class="absolute top-2 right-2"
-                            >
-                                <x-heroicon-o-x class="w-5 h-5" />
-                            </button>
+                        <div class="w-32">
+                            <x-laravel-attachments::attachment :$attachment>
+                                <button
+                                    x-on:click.prevent="remove('{{ $attachment->id }}')"
+                                    class="absolute top-2 right-2"
+                                >
+                                    <x-heroicon-o-x class="w-5 h-5" />
+                                </button>
+                            </x-laravel-attachments::attachment>
                         </div>
 
                         <div class="flex">
@@ -100,55 +95,57 @@
 
         <x-filament::modal
             id="laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}"
-            width="full"
+            width="6xl"
         >
-            <div>
-                {{-- <div>
-                    <input wire:model.debounce.500ms="search" type="search" placeholder="{{ __('laravel_attachment.search') }}">
-                    <button @click="search = ''">{{ __('laravel_attachment.clear filter') }}</button>
-                    filters
-                </div> --}}
+            <x-filament::modal.heading>
+                {{ __('laravel_attachment.select attachment') }}
+            </x-filament::modal.heading>
+            {{-- <div>
+                <input wire:model.debounce.500ms="search" type="search" placeholder="{{ __('laravel_attachment.search') }}">
+                <button @click="search = ''">{{ __('laravel_attachment.clear filter') }}</button>
+                filters
+            </div> --}}
 
-                <div>
-                    @php
-                        $attachmentList = $getAttachmentsList();
-                    @endphp
+            @php
+                $attachmentList = $getAttachmentsList();
+            @endphp
 
-                    <div class="grid grid-cols-8 gap-2">
-                        @foreach($attachmentList as $attachment)
-                            <input
-                                id="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                                key="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                                type="checkbox"
-                                value="{{ $attachment->id }}"
-                                class="hidden"
+            <div class="grid grid-cols-8 gap-2">
+                @foreach($attachmentList as $attachment)
+                    <input
+                        id="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
+                        key="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
+                        type="checkbox"
+                        value="{{ $attachment->id }}"
+                        class="hidden"
 
-                                x-on:change="multiple ? null : selectAttachment()"
-                                x-model="selected"
-                            >
+                        x-on:change="multiple ? null : selectAttachment()"
+                        x-model="selected"
+                    >
 
-                            <label
-                                for="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                                x-bind:class="{'border': selected.includes(@js($attachment->id))}"
-                                class="block"
-                            >
-                                <img
-                                    key="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                                    src="{{ $attachment->url() }}"
-                                >
-                            </label>
-                        @endforeach
-                    </div>
-
-                    {{-- {{ $attachmentList->links() }} --}}
-
-                    @if ($isMultiple())
-                        <div x-on:click="selectAttachment()">
-                            {{ __('laravel_attachment.select') }}
-                        </div>
-                    @endif
-                </div>
+                    <label
+                        for="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
+                        x-bind:class="{'border': selected.includes(@js($attachment->id))}"
+                        class="block"
+                    >
+                        <x-laravel-attachments::attachment :$attachment />
+                    </label>
+                @endforeach
             </div>
+
+            {{-- {{ $attachmentList->links() }} --}}
+
+            @if ($isMultiple())
+                <x-filament::modal.actions>
+                    <x-filament::button color="secondary" x-on:click.prevent="closePicker()">
+                        {{ __('laravel_attachment.cancel') }}
+                    </x-filament::button>
+
+                    <x-filament::button x-on:click.prevent="selectAttachment()">
+                        {{ __('laravel_attachment.select these attachments') }}
+                    </x-filament::button>
+                </x-filament::modal.actions>
+            @endif
         </x-filament::modal>
 
         <x-filament::modal

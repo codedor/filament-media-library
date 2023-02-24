@@ -32,25 +32,21 @@ class AttachmentInput extends Field implements HasForms
         });
 
         // Don't save the relationship if the field is not multiple
-        $this->dehydrated(function (self $component): bool {
-            return ! $component->isMultiple();
-        });
+        $this->dehydrated($this->isMultiple());
 
         $this->saveRelationshipsUsing(static function (self $component, $state) {
             if (! $component->isMultiple()) {
                 return;
             }
 
+            // If the state is null, it means that the field has not been touched (and the state was never set)
+            // So we don't want to sync the relationship, because it would remove all the existing attachments
+            if ($state === null) {
+                return;
+            }
+
             $component->getRelationship()->sync($state ?? []);
         });
-
-        $this->registerListeners([
-            // 'laravel-attachment::picked' => [
-            //     function (self $component, string $statePath): void {
-            //         dd($component);
-            //     },
-            // ],
-        ]);
     }
 
     public function setPickedAttachments(array|Collection $attachments): void

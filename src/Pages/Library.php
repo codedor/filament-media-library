@@ -6,6 +6,7 @@ use Codedor\Attachments\Models\Attachment;
 use Codedor\Attachments\Models\AttachmentTag;
 use Codedor\Attachments\Resources\AttachmentTagResource;
 use Exception;
+use Filament\Notifications\Notification;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\Actions\CreateAction;
 use Filament\Pages\Page;
@@ -22,6 +23,8 @@ class Library extends Page
 
     public $search = '';
 
+    public null|string $attachmentToDelete = null;
+
     protected $queryString = [
         'search' => ['except' => '', 'as' => 's'],
     ];
@@ -35,9 +38,14 @@ class Library extends Page
         return __('attachment.dashboard navigation title');
     }
 
-    public function deleteAttachment($id)
+    public function deleteAttachment()
     {
-        throw new Exception('Not implemented yet');
+        Attachment::find($this->attachmentToDelete)?->delete();
+
+        Notification::make()
+            ->title(__('laravel_attachment.deleted successfully'))
+            ->success()
+            ->send();
     }
 
     public function updatingSearch()
