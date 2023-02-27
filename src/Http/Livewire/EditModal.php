@@ -4,13 +4,11 @@ namespace Codedor\Attachments\Http\Livewire;
 
 use Codedor\Attachments\Models\Attachment;
 use Codedor\Attachments\Models\AttachmentTag;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class EditModal extends Component implements HasForms
