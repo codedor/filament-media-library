@@ -45,7 +45,7 @@ class AttachmentInput extends Field implements HasForms
                 return;
             }
 
-            $component->getRelationship()->sync($state ?? []);
+            $component->getRelationship()->sync($state);
         });
     }
 

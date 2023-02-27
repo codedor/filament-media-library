@@ -10,13 +10,28 @@
                 $wire.set('attachmentToDelete', id)
                 $dispatch('open-modal', { id: 'laravel-attachment::delete-attachment-modal' })
             },
+            openEditModal (id) {
+                $dispatch('open-modal', { id: 'laravel-attachment::edit-attachment-modal' })
+                $wire.emit('laravel-attachment::open-edit-attachment-modal', id)
+            },
+            closeEditModal () {
+                $wire.emit('laravel-attachment::close-edit-attachment-modal')
+            },
         }"
     >
         <x-filament::modal id="laravel-attachment::upload-attachment-modal" width="full">
             @livewire('laravel-attachments::upload-modal')
         </x-filament::modal>
 
-        <x-laravel-attachments::modals.delete-attachment />
+        @include('laravel-attachments::livewire.delete-modal')
+
+        <x-filament::modal
+            id="laravel-attachment::edit-attachment-modal"
+            x-on:modal-closed="closeEditModal()"
+            width="4xl"
+        >
+            @livewire('laravel-attachments::edit-modal')
+        </x-filament::modal>
 
         <div class="w-full flex justify-between">
             <div class="flex flex-col gap-1 w-1/3">
@@ -80,6 +95,7 @@
                     <div class="flex justify-end gap-2">
                         <div
                             class="p-1 bg-gray-100 border rounded-lg cursor-pointer hover:bg-gray-200"
+                            x-on:click="openEditModal('{{ $attachment->id }}')"
                         >
                             <x-heroicon-s-pencil class="w-4 h-4" />
                         </div>

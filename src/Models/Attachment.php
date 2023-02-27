@@ -68,7 +68,7 @@ class Attachment extends Model
 
     public function filename(): string
     {
-        return "$this->name.$this->extension";
+        return "{$this->name}.{$this->extension}";
     }
 
     public function tags(): BelongsToMany

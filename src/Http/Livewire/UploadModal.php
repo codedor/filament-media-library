@@ -26,7 +26,7 @@ class UploadModal extends Component implements HasForms
 
     protected bool $isCachingForms = false;
 
-    protected bool $firstCollabsible = true;
+    protected bool $firstCollapsable = true;
 
     protected $listeners = ['laravel-attachment::refresh-upload-modal' => '$refresh'];
 
@@ -106,7 +106,7 @@ class UploadModal extends Component implements HasForms
 
     protected function getAttachmentInformationStep(): Wizard\Step
     {
-        $collapsibles = collect($this->attachments)
+        $collapsableTabs = collect($this->attachments)
             ->map(function (TemporaryUploadedFile $upload) {
                 $md5 = md5_file($upload->getRealPath());
 
@@ -145,16 +145,16 @@ class UploadModal extends Component implements HasForms
                             ->multiple(),
                     ])
                     ->collapsible()
-                    ->collapsed(! $this->firstCollabsible)
+                    ->collapsed(! $this->firstCollapsable)
                     ->columns();
 
-                $this->firstCollabsible = false;
+                $this->firstCollapsable = false;
 
                 return $section;
             });
 
         return Wizard\Step::make(__('laravel-attachment::attachment information step title'))
             ->description(__('laravel-attachment::attachment information step intro'))
-            ->schema($collapsibles->flatten()->toArray());
+            ->schema($collapsableTabs->flatten()->toArray());
     }
 }

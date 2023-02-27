@@ -2,15 +2,14 @@
 
 namespace Codedor\Attachments\Providers;
 
-use Codedor\Attachments\Http\Livewire\Picker;
-use Codedor\Attachments\Http\Livewire\UploadModal;
+use Codedor\Attachments\Http\Livewire;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;
 use Codedor\Attachments\Resources\AttachmentTagResource;
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Illuminate\Http\UploadedFile;
-use Livewire\Livewire;
+use Livewire\Livewire as LivewireCore;
 use Spatie\LaravelPackageTools\Package;
 
 class AttachmentServiceProvider extends PluginServiceProvider
@@ -26,8 +25,9 @@ class AttachmentServiceProvider extends PluginServiceProvider
     ];
 
     protected array $livewireComponents = [
-        'upload-modal' => UploadModal::class,
-        'picker' => Picker::class,
+        'upload-modal' => Livewire\UploadModal::class,
+        'edit-modal' => Livewire\EditModal::class,
+        'picker' => Livewire\Picker::class,
     ];
 
     public function configurePackage(Package $package): void
@@ -50,7 +50,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
         parent::packageBooted();
 
         foreach ($this->livewireComponents as $key => $livewireComponent) {
-            Livewire::component("{$this->packageName()}::$key", $livewireComponent);
+            LivewireCore::component("{$this->packageName()}::$key", $livewireComponent);
         }
 
         UploadedFile::mixin(new UploadedFileMixin());
