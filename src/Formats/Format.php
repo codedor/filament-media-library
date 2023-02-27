@@ -1,7 +1,8 @@
 <?php
 
-namespace Codedor\Attachments\Entities;
+namespace Codedor\Attachments\Formats;
 
+use Codedor\Attachments\Entities\Manipulations;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 
@@ -29,10 +30,10 @@ abstract class Format implements Arrayable
         ];
     }
 
+    abstract public function definition(): Manipulations;
+
     public function description(): string
     {
         return $this->description;
     }
-
-    abstract public function definition(): Manipulations;
 }

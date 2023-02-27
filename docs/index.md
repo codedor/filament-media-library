@@ -75,11 +75,11 @@ This configuration can be adjusted as desired.
 
 ## Formats
 
-### Registering the models
+### Register models
 
 Formats are defined by model.
 
-Any model that contains formats should be registered. These can be added with
+Any model that contains formats should be registered. These can be added with the Models facade.
 
 ```php
 use Codedor\Attachments\Facades\Formats;
@@ -90,3 +90,34 @@ public function boot()
     Models::add([BlogPost::class]);
 }
 ```
+
+### Creating formats
+
+Create a new PHP class that extends the `Codedor\Attachments\Formats\Format` class.
+
+```php
+<?php
+
+use Codedor\Attachments\Entities\Manipulations;
+
+class Hero extends Format
+{
+    protected string $description = 'This format is used for hero images';
+    
+    public function definition(): Manipulations
+    {
+        return $this->manipulations()
+            ->blur(3)
+            ...;    
+    }
+}
+```
+
+#### Format definition
+
+The manipulations object has predefined methods that will perform manipulations on an image.
+
+These manipulations are based of Glide. A reference can be found in
+the [Glide docs](https://glide.thephpleague.com/2.0/api/quick-reference/)
+
+### Registering formats

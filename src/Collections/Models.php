@@ -2,24 +2,36 @@
 
 namespace Codedor\Attachments\Collections;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
-class Models extends Collection
+class Models
 {
-    public function add($item = null)
+    public function __construct(
+        protected Collection $models
+    ) {
+    }
+
+    public function all(): Collection
     {
-        if (! $item) {
+        return $this->models;
+    }
+
+    public function add($item)
+    {
+        if (! $this->modelIsRegisterable($item)) {
             return $this;
         }
 
-        if (is_array($item)) {
-            foreach ($item as $model) {
-                parent::add($model);
-            }
-        } else {
-            parent::add($item);
-        }
+        $this->models->add($item);
+        \Codedor\Attachments\Facades\Formats::registerForModel($item);
 
         return $this;
+    }
+
+    protected function modelIsRegisterable(string $model): bool
+    {
+        return ! (! is_subclass_of($model, Model::class) ||
+            ! method_exists($model, 'getFormats'));
     }
 }
