@@ -10,7 +10,6 @@ class UploadedFileMixin
     public function save()
     {
         return function (string $disk = 'public') {
-
 //            /** @var Dimension $dimensions */
 //            $dimensions = $this->dimensions();
 //

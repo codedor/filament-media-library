@@ -2,8 +2,6 @@
 
 namespace Codedor\Attachments\Entities;
 
-use Codedor\Attachments\Enums\Flip;
-use Codedor\Attachments\Enums\Orientation;
 use Codedor\Attachments\Exceptions\ArgumentException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -12,45 +10,73 @@ use ReflectionClass;
 class Manipulations
 {
     public const CROP_TOP_LEFT = 'crop-top-left';
+
     public const CROP_TOP = 'crop-top';
+
     public const CROP_TOP_RIGHT = 'crop-top-right';
+
     public const CROP_LEFT = 'crop-left';
+
     public const CROP_CENTER = 'crop-center';
+
     public const CROP_RIGHT = 'crop-right';
+
     public const CROP_BOTTOM_LEFT = 'crop-bottom-left';
+
     public const CROP_BOTTOM = 'crop-bottom';
+
     public const CROP_BOTTOM_RIGHT = 'crop-bottom-right';
 
     public const ORIENTATION_AUTO = 'auto';
+
     public const ORIENTATION_0 = 0;
+
     public const ORIENTATION_90 = 90;
+
     public const ORIENTATION_180 = 180;
+
     public const ORIENTATION_270 = 270;
 
     public const FLIP_HORIZONTALLY = 'h';
+
     public const FLIP_VERTICALLY = 'v';
+
     public const FLIP_BOTH = 'both';
 
     public const FIT_CONTAIN = 'contain';
+
     public const FIT_MAX = 'max';
+
     public const FIT_FILL = 'fill';
+
     public const FIT_FILL_MAX = 'fill-max';
+
     public const FIT_STRETCH = 'stretch';
+
     public const FIT_CROP = 'crop';
 
     public const BORDER_OVERLAY = 'overlay';
+
     public const BORDER_SHRINK = 'shrink';
+
     public const BORDER_EXPAND = 'expand';
 
     public const FORMAT_JPG = 'jpg';
+
     public const FORMAT_PJPG = 'pjpg';
+
     public const FORMAT_PNG = 'png';
+
     public const FORMAT_GIF = 'gif';
+
     public const FORMAT_WEBP = 'webp';
+
     public const FORMAT_AVIF = 'avif';
+
     public const FORMAT_TIFF = 'tiff';
 
     public const FILTER_GREYSCALE = 'greyscale';
+
     public const FILTER_SEPIA = 'sepia';
 
     protected array $manipulations = [];
