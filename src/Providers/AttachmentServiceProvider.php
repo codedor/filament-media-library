@@ -3,6 +3,7 @@
 namespace Codedor\Attachments\Providers;
 
 use Codedor\Attachments\Collections\Formats;
+use Codedor\Attachments\Facades\Models;
 use Codedor\Attachments\Http\Livewire\Picker;
 use Codedor\Attachments\Http\Livewire\UploadModal;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
@@ -65,6 +66,10 @@ class AttachmentServiceProvider extends PluginServiceProvider
     {
         $this->app->singleton(Formats::class, function () {
             return new Formats();
+        });
+
+        $this->app->singleton(Models::class, function () {
+            return new Models();
         });
     }
 }
