@@ -12,9 +12,9 @@ class Formats extends Collection
 {
     public function all(): self
     {
-        Models::reject(fn($class) => ! is_subclass_of($class, Model::class))
-            ->reject(fn($class) => ! method_exists($class, 'getFormats'))
-            ->map(fn($class) => $class::getFormats($this));
+        Models::reject(fn ($class) => ! is_subclass_of($class, Model::class))
+            ->reject(fn ($class) => ! method_exists($class, 'getFormats'))
+            ->map(fn ($class) => $class::getFormats($this));
 
         return $this;
     }
