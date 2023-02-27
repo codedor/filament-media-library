@@ -9,7 +9,7 @@ class Formats extends Collection
     public function registerForModel(string $model): static
     {
         $this->put($model, $model::getFormats(new Collection()));
-
+        
         return $this;
     }
 }
