@@ -32,7 +32,9 @@
         closePicker () {
             $dispatch('close-modal', { id: this.pickerModalID })
         },
-        selectAttachment () {
+        selectAttachment (id = null) {
+            (id) ? this.selected = [id] : null
+
             this.updateState()
             this.closePicker()
         },
@@ -44,6 +46,8 @@
             // Update the state, since it does not have defer, it will reload the fields
             this.state = this.multiple ? [...this.selected] : this.selected[0]
             this.startSelected = Alpine.raw(this.selected) || []
+
+            $wire.emit('refresh-attachments-picker')
         },
     }">
         <div class="flex flex-col gap-4" wire:loading.class="opacity-50">
@@ -62,9 +66,11 @@
                         </div>
 
                         <div class="flex">
-                            {{ $attachment->name }}
-
-                            {{-- TODO: format specifics --}}
+                            <ul>
+                                <li class="font-bold">{{ $attachment->translated_name }}</li>
+                                <li>Width: {{ $attachment->width }}px</li>
+                                <li>Height: {{ $attachment->height }}px</li>
+                            </ul>
                         </div>
                     </div>
                 @endforeach
@@ -75,7 +81,7 @@
                     <button
                         type="button"
                         class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
-                        x-on:click="$dispatch('open-modal', {
+                        x-on:click.prevent="$dispatch('open-modal', {
                             id: 'laravel-attachment::upload-attachment-modal-{{ $getStatePath() }}'
                         })"
                     >
@@ -85,7 +91,7 @@
                     <button
                         type="button"
                         class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-black shadow focus:ring-white bg-white hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
-                        x-on:click="openPicker()"
+                        x-on:click.prevent="openPicker()"
                     >
                         {{ __('laravel_attachment.select existing media') }}
                     </button>
@@ -93,60 +99,12 @@
             @endif
         </div>
 
-        <x-filament::modal
-            id="laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}"
-            width="6xl"
-        >
-            <x-filament::modal.heading>
-                {{ __('laravel_attachment.select attachment') }}
-            </x-filament::modal.heading>
-            {{-- <div>
-                <input wire:model.debounce.500ms="search" type="search" placeholder="{{ __('laravel_attachment.search') }}">
-                <button @click="search = ''">{{ __('laravel_attachment.clear filter') }}</button>
-                filters
-            </div> --}}
-
-            @php
-                $attachmentList = $getAttachmentsList();
-            @endphp
-
-            <div class="grid grid-cols-8 gap-2">
-                @foreach($attachmentList as $attachment)
-                    <input
-                        id="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                        key="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                        type="checkbox"
-                        value="{{ $attachment->id }}"
-                        class="hidden"
-
-                        x-on:change="multiple ? null : selectAttachment()"
-                        x-model="selected"
-                    >
-
-                    <label
-                        for="attachment-{{ $getStatePath() }}-{{ $attachment->id }}"
-                        x-bind:class="{'border': selected.includes(@js($attachment->id))}"
-                        class="block"
-                    >
-                        <x-laravel-attachments::attachment :$attachment />
-                    </label>
-                @endforeach
-            </div>
-
-            {{-- {{ $attachmentList->links() }} --}}
-
-            @if ($isMultiple())
-                <x-filament::modal.actions>
-                    <x-filament::button color="secondary" x-on:click.prevent="closePicker()">
-                        {{ __('laravel_attachment.cancel') }}
-                    </x-filament::button>
-
-                    <x-filament::button x-on:click.prevent="selectAttachment()">
-                        {{ __('laravel_attachment.select these attachments') }}
-                    </x-filament::button>
-                </x-filament::modal.actions>
-            @endif
-        </x-filament::modal>
+        <livewire:laravel-attachments::picker
+            wire:key="picker-{{ $getStatePath() }}"
+            :state-path="$getStatePath()"
+            :attachments-list="$getAttachmentsList()->pluck('id')->toArray()"
+            :is-multiple="$isMultiple()"
+        />
 
         <x-filament::modal
             id="laravel-attachment::upload-attachment-modal-{{ $getStatePath() }}"

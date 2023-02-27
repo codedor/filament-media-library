@@ -49,9 +49,9 @@ class UploadModal extends Component implements HasForms
                 }
 
                 $attachment->update([
-                    'translated_name' => json_encode($data['filename']),
-                    'alt' => json_encode($data['alt']),
-                    'caption' => json_encode($data['caption']),
+                    'translated_name' => $data['filename'],
+                    'alt' => $data['alt'],
+                    'caption' => $data['caption'],
                 ]);
 
                 $attachment->tags()->sync($data['tags']);
@@ -69,6 +69,10 @@ class UploadModal extends Component implements HasForms
         $this->emit('laravel-attachment::update-library');
 
         $this->form->fill();
+
+        $this->dispatchBrowserEvent('close-modal', [
+            'id' => 'laravel-attachment::edit-attachment-modal',
+        ]);
     }
 
     public function render()

@@ -31,9 +31,6 @@ class AttachmentInput extends Field implements HasForms
             return Attachment::orderBy('id', 'desc')->get();
         });
 
-        // Don't save the relationship if the field is not multiple
-        $this->dehydrated($this->isMultiple());
-
         $this->saveRelationshipsUsing(static function (self $component, $state) {
             if (! $component->isMultiple()) {
                 return;

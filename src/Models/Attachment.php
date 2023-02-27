@@ -9,11 +9,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Translatable\HasTranslations;
 
 class Attachment extends Model
 {
     use HasFactory;
     use HasUuids;
+    use HasTranslations;
 
     protected $keyType = 'string';
 
@@ -27,6 +29,12 @@ class Attachment extends Model
         'height',
         'disk',
         'name',
+        'translated_name',
+        'alt',
+        'caption',
+    ];
+
+    protected $translatable = [
         'translated_name',
         'alt',
         'caption',

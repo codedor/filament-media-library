@@ -9,11 +9,13 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
+use Filament\Resources\Concerns\Translatable;
 use Livewire\Component;
 
 class EditModal extends Component implements HasForms
 {
     use InteractsWithForms;
+    use Translatable;
 
     public null|Attachment $attachment = null;
 
@@ -39,7 +41,7 @@ class EditModal extends Component implements HasForms
         }
 
         $this->form->fill(['fields' => [
-            'filename' => $this->attachment->name,
+            'translated_name' => $this->attachment->translated_name,
             'alt' => $this->attachment->alt,
             'caption' => $this->attachment->caption,
             'tags' => $this->attachment->tags->pluck('id')->toArray(),
@@ -76,7 +78,7 @@ class EditModal extends Component implements HasForms
         }
 
         return [
-            TextInput::make('fields.translated_filename'),
+            TextInput::make('fields.translated_name'),
 
             TextInput::make('fields.alt'),
 

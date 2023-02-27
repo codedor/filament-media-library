@@ -75,7 +75,7 @@
             @foreach($attachments as $attachment)
                 <div class="p-2 rounded-lg overflow-hidden shadow-lg bg-white flex flex-col gap-2">
                     <p class="font-bold text-center w-full text-sm">
-                        {{ Str::limit($attachment->name, 15) }}
+                        {{ Str::limit($attachment->translated_name, 15) }}
                     </p>
 
                     @if($attachment->type === 'image')

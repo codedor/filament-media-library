@@ -3,41 +3,80 @@
 namespace Codedor\Attachments\Http\Livewire;
 
 use Codedor\Attachments\Models\Attachment;
+use Codedor\Attachments\Models\AttachmentTag;
+use Filament\Forms\Components as Fields;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class Picker extends Component
+class Picker extends Component implements HasForms
 {
+    use InteractsWithForms;
     use WithPagination;
-
-    public array $selectedAttachments = [];
 
     public string $statePath;
 
-    public string $search = '';
+    public bool $isMultiple;
 
-    public bool $multiple = false;
+    public array $attachmentsList;
 
-    public function selectAttachments()
-    {
-        $this->dispatchBrowserEvent("laravel-attachment::picked-{$this->statePath}", [
-            'value' => $this->multiple
-               ? $this->selectedAttachments
-               : $this->selectedAttachments[0] ?? null,
-        ]);
-    }
+    public array $filters = [
+        'query' => '',
+        'tags' => [],
+    ];
+
+    protected $listeners = [
+        'refresh-attachments-picker' => '$refresh',
+    ];
 
     public function render()
     {
+        $attachments = Attachment::whereIn('id', $this->attachmentsList)
+            ->when(filled($this->filters['query']), function ($query) {
+                $query->where('name', 'like', "%{$this->filters['query']}%");
+            })
+            ->when(filled($this->filters['tags']), function ($query) {
+                $query->whereHas('tags', function ($query) {
+                    $query->whereIn('id', $this->filters['tags']);
+                });
+            })
+            ->paginate(18);
+
         return view('laravel-attachments::livewire.picker', [
-            'attachments' => Attachment::query()
-                ->search($this->search)
-                ->paginate(18),
+            'attachments' => $attachments,
         ]);
     }
 
-    public function updatingSearch()
+    public function updatedFilters()
     {
         $this->resetPage();
+    }
+
+    public function resetFilters()
+    {
+        $this->filters = [
+            'query' => '',
+            'tags' => [],
+        ];
+    }
+
+    protected function getFormSchema(): array
+    {
+        return [
+            Fields\Grid::make(2)->schema([
+                Fields\TextInput::make('filters.query')
+                    ->placeholder(__('laravel-attachments::filters search'))
+                    ->disableLabel(true)
+                    ->reactive(),
+
+                Fields\Select::make('filters.tags')
+                    ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
+                    ->disableLabel(true)
+                    ->searchable()
+                    ->multiple()
+                    ->reactive(),
+            ]),
+        ];
     }
 }
