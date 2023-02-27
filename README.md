@@ -1,58 +1,43 @@
-# :package_description
+# Laravel Attachments For Filament
 
-## <!--delete-->
+Introducing "Laravel Media Library", a comprehensive package that simplifies the management of file uploads and media
+files in your Laravel application.
 
-This repo can be used to scaffold a Laravel package. Follow these steps to get started:
+This package provides a fluent and intuitive API that allows you to seamlessly integrate file uploads into your Laravel
+application. You can easily define the accepted file formats, set upload limits, and specify storage locations for your
+media files. The package also includes a simple and elegant user interface for managing your media library, making it
+easy to organize, search, and retrieve your files.
 
-1. Press the "Use template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run "php ./configure.php" to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
+With Laravel Media Library, you can upload and manage any type of media file, including images, videos, audio files, and
+documents. You can also add metadata to your files, such as titles, descriptions, and tags, making it easy to search and
+filter your media library.
 
----
+The package provides a robust set of features, including automatic file resizing, image manipulation, and thumbnail
+generation. You can easily create custom transformations for your images, and even define presets that can be applied to
+multiple images at once.
 
-<!--/delete-->
-
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+Laravel Media Library is also highly customizable, with a flexible configuration system that allows you to tailor the
+package to your specific needs. Whether you're building a simple blog or a complex web application, Laravel Media
+Library provides a simple and elegant solution for managing your media files.
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require :vendor_slug/:package_slug
+composer require codedor/laravel-attachments
 ```
 
-You can publish and run the migrations with:
+Publish the assets with:
 
 ```bash
-php artisan vendor:publish --tag=":package_slug-migrations"
+php artisan vendor:publish --provider "Codedor\Attachments\Providers\AttachmentServiceProvider"
+```
+
+Run the migrations with:
+
+```bash
 php artisan migrate
-```
-
-You can publish the config file with:
-
-```bash
-php artisan vendor:publish --tag=":package_slug-config"
-```
-
-This is the contents of the published config file:
-
-```php
-return [
-];
-```
-
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag=":package_slug-views"
-```
-
-## Usage
-
-```php
-$variable = new Codedor\Attachments();
-echo $variable->echoPhrase('Hello, VendorName!');
 ```
 
 ## Documentation
