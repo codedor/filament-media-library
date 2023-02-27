@@ -14,7 +14,7 @@ abstract class Format implements Arrayable
 
     public function __construct(
         protected string $column
-    ){
+    ) {
         $this->manipulations = new Manipulations();
     }
 
