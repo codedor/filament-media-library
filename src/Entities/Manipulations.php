@@ -153,11 +153,11 @@ class Manipulations
 
     public function fit(string $method, int $width, int $height): static
     {
-        if (! $this->validate('crop', $method)) {
+        if (! $this->validate('fit', $method)) {
             throw ArgumentException::invalid(
-                'crop',
+                'fit',
                 $method,
-                $this->getValidationOptions('crop')
+                $this->getValidationOptions('fit')
             );
         }
 

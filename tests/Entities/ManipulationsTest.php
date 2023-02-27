@@ -43,15 +43,12 @@ it('adds fit manipulation', function ($location) {
             'fit' => $location,
         ]);
 })->with([
-    'crop-top-left',
-    'crop-top',
-    'crop-top-right',
-    'crop-left',
-    'crop-center',
-    'crop-right',
-    'crop-bottom-left',
-    'crop-bottom',
-    'crop-bottom-right',
+    'contain',
+    'max',
+    'fill',
+    'fill-max',
+    'stretch',
+    'crop',
 ]);
 
 it('adds crop with focal manipulation', function () {
