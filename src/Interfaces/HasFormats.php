@@ -2,7 +2,6 @@
 
 namespace Codedor\Attachments\Interfaces;
 
-use Codedor\Attachments\Collections\Formats;
 use Illuminate\Support\Collection;
 
 interface HasFormats
