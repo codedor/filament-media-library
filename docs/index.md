@@ -77,17 +77,21 @@ This configuration can be adjusted as desired.
 
 ### Register models
 
-Formats are defined by model.
+Any model that contains formats should be registered and implement the `Codedor\Attachments\Interfaces\HasFormats`
+interface.
 
-Any model that contains formats should be registered. These can be added with the Models facade.
+Models can be registered via the `Codedor\Attachments\Facades\Models` facade.
 
 ```php
-use Codedor\Attachments\Facades\Formats;
+use App\Models\BlogPost;
+use App\Models\NewsItem;
+use Codedor\Attachments\Facades\Models;
 
 public function boot()
 {
     ...
-    Models::add([BlogPost::class]);
+    Models::add(BlogPost::class)
+        ->add(NewsItem::class);
 }
 ```
 
@@ -97,6 +101,8 @@ Create a new PHP class that extends the `Codedor\Attachments\Formats\Format` cla
 
 ```php
 <?php
+
+namespace App\Formats;
 
 use Codedor\Attachments\Entities\Manipulations;
 
@@ -121,3 +127,7 @@ These manipulations are based of Glide. A reference can be found in
 the [Glide docs](https://glide.thephpleague.com/2.0/api/quick-reference/)
 
 ### Registering formats
+
+Formats are tightly coupled with models.
+
+

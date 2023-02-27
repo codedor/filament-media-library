@@ -12,14 +12,20 @@ abstract class Format implements Arrayable
 
     protected string $description;
 
-    public function __construct()
-    {
+    public function __construct(
+        protected string $column
+    ){
         $this->manipulations = new Manipulations();
+    }
+
+    public static function make(string $column): static
+    {
+        return new static($column);
     }
 
     public function prefix(): string
     {
-        return Str::snake(class_basename(self::class));
+        return Str::snake(class_basename(static::class));
     }
 
     public function toArray()
