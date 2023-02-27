@@ -32,7 +32,13 @@ class Picker extends Component implements HasForms
 
     public function render()
     {
-        $attachments = Attachment::whereIn('id', $this->attachmentsList)
+        $ids = collect($this->attachmentsList)
+            ->map(fn ($id) => "'{$id}'")
+            ->join(',');
+
+        $attachments = Attachment::query()
+            ->orderByRaw("FIELD(id,{$ids})")
+            ->whereIn('id', $this->attachmentsList)
             ->when(filled($this->filters['query']), function ($query) {
                 $query->where('name', 'like', "%{$this->filters['query']}%");
             })

@@ -33,7 +33,8 @@
             $dispatch('close-modal', { id: this.pickerModalID })
         },
         selectAttachment (id = null) {
-            (id) ? this.selected = [id] : null
+            // Only one attachment can be selected if not multiple
+            id ? this.selected = [id] : null
 
             this.updateState()
             this.closePicker()
@@ -49,20 +50,50 @@
 
             $wire.emit('refresh-attachments-picker')
         },
+        reorder (event) {
+            const selected = Alpine.raw(this.selected)
+            const reorderedRow = selected.splice(event.oldIndex, 1)[0]
+
+            selected.splice(event.newIndex, 0, reorderedRow)
+            this.selected = selected
+
+            this.updateState()
+        }
     }">
         <div class="flex flex-col gap-4" wire:loading.class="opacity-50">
-            <div class="flex flex-col gap-2">
+            <div
+                class="flex flex-col gap-2"
+                @if ($isMultiple())
+                    x-sortable
+                    x-on:end="reorder($event)"
+                @endif
+            >
                 @foreach ($attachments as $attachment)
-                    <div class="flex gap-4 p-2 border rounded-lg bg-white">
-                        <div class="w-32">
-                            <x-laravel-attachments::attachment :$attachment>
-                                <button
-                                    x-on:click.prevent="remove('{{ $attachment->id }}')"
-                                    class="absolute top-2 right-2"
-                                >
-                                    <x-heroicon-o-x class="w-5 h-5" />
-                                </button>
-                            </x-laravel-attachments::attachment>
+                    <div
+                        class="flex gap-4 p-2 border rounded-lg bg-white"
+                        x-sortable-item="{{ $attachment->id }}"
+                    >
+                        <div
+                            x-sortable-handle
+                            @class([
+                                'cursor-move' => $isMultiple(),
+                                'flex gap-2 items-center justify-center text-gray-400',
+                            ])
+                        >
+                            @if ($isMultiple())
+                                <x-heroicon-o-selector class="w-5 h-5" />
+                            @endif
+
+                            <div class="w-32">
+                                <x-laravel-attachments::attachment :$attachment>
+                                    <button
+                                        x-on:click.prevent="remove('{{ $attachment->id }}')"
+                                        class="absolute top-2 right-2"
+                                    >
+                                        <x-heroicon-o-x class="w-5 h-5" />
+                                    </button>
+                                </x-laravel-attachments::attachment>
+                            </div>
                         </div>
 
                         <div class="flex">

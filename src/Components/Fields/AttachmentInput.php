@@ -21,6 +21,8 @@ class AttachmentInput extends Field implements HasForms
 
     public bool|Closure $multiple = false;
 
+    public null|string|Closure $sortField = null;
+
     public Closure $attachmentsListQuery;
 
     public function setUp(): void
@@ -28,7 +30,7 @@ class AttachmentInput extends Field implements HasForms
         parent::setUp();
 
         $this->attachmentsListQuery(function () {
-            return Attachment::orderBy('id', 'desc')->get();
+            return Attachment::latest()->get();
         });
 
         $this->saveRelationshipsUsing(static function (self $component, $state) {
@@ -42,7 +44,17 @@ class AttachmentInput extends Field implements HasForms
                 return;
             }
 
-            $component->getRelationship()->sync($state);
+            $state = Collection::wrap($state ?? []);
+            $sortField = $component->getSortField();
+
+            if (is_string($sortField)) {
+                $state = $state->mapWithKeys(function ($item, $index) use ($sortField) {
+                    return [$item => [$sortField => $index + 10000]];
+                });
+            }
+
+            $component->getRelationship()->detach();
+            $component->getRelationship()->sync($state->toArray());
         });
     }
 
@@ -67,8 +79,10 @@ class AttachmentInput extends Field implements HasForms
             return collect();
         }
 
+        $ids = collect($state)->map(fn ($id) => "'{$id}'")->join(',');
+
         return Attachment::whereIn('id', Arr::wrap($state))
-            ->orderBy('id', 'desc') // TODO: global scope?
+            ->orderByRaw("FIELD(id,{$ids})")
             ->get();
     }
 
@@ -99,5 +113,17 @@ class AttachmentInput extends Field implements HasForms
     public function getAttachmentsList()
     {
         return $this->evaluate($this->attachmentsListQuery);
+    }
+
+    public function sortField(string|Closure $sortField): static
+    {
+        $this->sortField = $sortField;
+
+        return $this;
+    }
+
+    public function getSortField(): null|string
+    {
+        return $this->evaluate($this->sortField);
     }
 }
