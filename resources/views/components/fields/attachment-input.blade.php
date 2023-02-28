@@ -59,7 +59,6 @@
                 this.state = [...this.state.filter((item) => item !== id)]
             }
 
-            console.log(this.state)
             this.updateState()
         },
         updateState () {
