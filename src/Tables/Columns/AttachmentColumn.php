@@ -24,10 +24,16 @@ class AttachmentColumn extends Column
             $state = Attachment::find($state);
         }
 
-        $state = Collection::wrap($state);
+        $state = Collection::wrap($state)->pluck('id');
+
+        if ($state->isEmpty()) {
+            return $state;
+        }
 
         // Fetch the items again, otherwise we'll not have access to all our data
-        return Attachment::whereIn('id', $state->pluck('id'))->get();
+        return Attachment::whereIn('id', $state)
+            ->orderByRaw('FIELD(id, ' . $state->map(fn ($id) => "'{$id}'")->implode(',') . ')')
+            ->get();
     }
 
     public function limit(int|Closure $limit): self

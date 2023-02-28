@@ -17,23 +17,38 @@
     @endif
 
     <div class="flex items-center items-center gap-2">
-        @foreach ($state->take($getLimit()) as $attachment)
-            <div class="w-16">
-                <x-laravel-attachments::attachment :$attachment />
-            </div>
-        @endforeach
-
-        @if ($state->count() > $getLimit())
+        @if ($state->isEmpty())
             <div class="w-16">
                 <div class="
                     flex relative w-full aspect-square rounded-lg border
                     border-dashed border-gray-300 items-center justify-center
-                    text-gray-500
+                    overflow-hidden relative
                 ">
-                    {{-- TODO: clickable to show all attachments that are linked --}}
-                    + {{ $state->count() - $getLimit() }}
+                    <div
+                        class="absolute w-full scale-x-150 bg-gray-100 -rotate-45"
+                        style="height: 3px"
+                    ></div>
                 </div>
             </div>
+        @else
+            @foreach ($state->take($getLimit()) as $attachment)
+                <div class="w-16">
+                    <x-laravel-attachments::attachment :$attachment />
+                </div>
+            @endforeach
+
+            @if ($state->count() > $getLimit())
+                <div class="w-16">
+                    <div class="
+                        flex relative w-full aspect-square rounded-lg border
+                        border-dashed border-gray-300 items-center justify-center
+                        text-gray-500
+                    ">
+                        {{-- TODO: clickable to show all attachments that are linked --}}
+                        + {{ $state->count() - $getLimit() }}
+                    </div>
+                </div>
+            @endif
         @endif
     </div>
 

@@ -77,6 +77,22 @@
   height: 1.25rem
 }
 
+.h-6 {
+  height: 1.5rem
+}
+
+.h-8 {
+  height: 2rem
+}
+
+.h-1 {
+  height: 0.25rem
+}
+
+.h-2 {
+  height: 0.5rem
+}
+
 .min-h-\[2rem\] {
   min-height: 2rem
 }
@@ -109,8 +125,33 @@
   width: 1.25rem
 }
 
+.w-6 {
+  width: 1.5rem
+}
+
 .w-full {
   width: 100%
+}
+
+.rotate-45 {
+  --tw-rotate: 45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.-rotate-45 {
+  --tw-rotate: -45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.scale-150 {
+  --tw-scale-x: 1.5;
+  --tw-scale-y: 1.5;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.scale-x-150 {
+  --tw-scale-x: 1.5;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
 .cursor-move {
@@ -169,6 +210,10 @@
   overflow: hidden
 }
 
+.rounded {
+  border-radius: 0.25rem
+}
+
 .rounded-lg {
   border-radius: 0.5rem
 }
@@ -190,6 +235,16 @@
   border-color: transparent
 }
 
+.border-gray-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(243 244 246 / var(--tw-border-opacity))
+}
+
+.border-gray-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(229 231 235 / var(--tw-border-opacity))
+}
+
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity))
@@ -198,6 +253,16 @@
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity))
+}
+
+.bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity))
 }
 
 .bg-contain {
@@ -263,21 +328,6 @@
   line-height: 1.25rem
 }
 
-.text-xs {
-  font-size: 0.75rem;
-  line-height: 1rem
-}
-
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem
-}
-
-.text-xl {
-  font-size: 1.25rem;
-  line-height: 1.75rem
-}
-
 .font-bold {
   font-weight: 700
 }
@@ -309,11 +359,6 @@
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity))
-}
-
-.text-gray-300 {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity))
 }
 
 .opacity-50 {
@@ -370,12 +415,9 @@
   background-color: rgb(229 231 235 / var(--tw-bg-opacity))
 }
 
-.hover\:underline:hover {
-  text-decoration-line: underline
-}
-
-.focus\:underline:focus {
-  text-decoration-line: underline
+.hover\:text-red-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity))
 }
 
 .focus\:ring-1:focus {
