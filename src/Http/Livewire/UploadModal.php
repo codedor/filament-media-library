@@ -40,9 +40,7 @@ class UploadModal extends Component implements HasForms
 
     public function submit(): void
     {
-        $this->emit('laravel-attachment::update-library');
-
-        $attachments = collect($this->meta)->map(function ($data, $md5) {
+        $attachments = collect($this->form->getState()['meta'])->map(function ($data, $md5) {
             /** @var Attachment $attachment */
             $attachment = Attachment::query()
                 ->where('md5', $md5)
@@ -113,7 +111,6 @@ class UploadModal extends Component implements HasForms
                     ->required()
                     ->multiple()
                     ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
-                        // TODO: code does not pass here, tmp fix in getAttachmentInformationStep()
                         return $file->save();
                     }),
             ]);
@@ -124,9 +121,6 @@ class UploadModal extends Component implements HasForms
         $collapsableTabs = collect($this->attachments)
             ->map(function (TemporaryUploadedFile $upload) {
                 $md5 = md5_file($upload->getRealPath());
-
-                // TODO: temp fix for above ->saveUploadedFileUsing() issue
-                $upload->save();
 
                 $this->meta[$md5] = [
                     'filename' => $this->meta[$md5]['filename'] ?? Str::replace(

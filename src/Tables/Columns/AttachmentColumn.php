@@ -32,7 +32,7 @@ class AttachmentColumn extends Column
 
     public function limit(int|Closure $limit): self
     {
-        $this->limit = ($limit === -1) ? PHP_INT_MAX : $limit;
+        $this->limit = ($limit === -1 ? PHP_INT_MAX : $limit);
 
         return $this;
     }
