@@ -19,20 +19,6 @@
             },
         }"
     >
-        <x-filament::modal id="laravel-attachment::upload-attachment-modal" width="full">
-            @livewire('laravel-attachments::upload-modal')
-        </x-filament::modal>
-
-        @include('laravel-attachments::livewire.delete-modal')
-
-        <x-filament::modal
-            id="laravel-attachment::edit-attachment-modal"
-            x-on:modal-closed="closeEditModal()"
-            width="4xl"
-        >
-            @livewire('laravel-attachments::edit-modal')
-        </x-filament::modal>
-
         <div class="w-full flex justify-between">
             <div class="flex flex-col gap-1 w-1/3">
                 <label for="search">{{ __('laravel-attachment.search filter label') }}</label>
@@ -118,4 +104,18 @@
             {{ $attachments->links() }}
         </div>
     </div>
+
+    <x-filament::modal id="laravel-attachment::upload-attachment-modal" width="full">
+        @livewire('laravel-attachments::upload-modal')
+    </x-filament::modal>
+
+    @include('laravel-attachments::livewire.delete-modal')
+
+    <x-filament::modal
+        id="laravel-attachment::edit-attachment-modal"
+        x-on:modal-closed="closeEditModal()"
+        width="4xl"
+    >
+        @livewire('laravel-attachments::edit-modal')
+    </x-filament::modal>
 </x-filament::page>

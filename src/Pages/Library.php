@@ -55,7 +55,7 @@ class Library extends Page
     protected function getViewData(): array
     {
         return [
-            'attachments' => Attachment::query()
+            'attachments' => Attachment::latest()
                 ->search($this->search)
                 ->paginate($this->perPage),
         ];

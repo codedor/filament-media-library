@@ -23,6 +23,15 @@
         pickerModalID: 'laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}',
         init () {
             this.startSelected = Alpine.raw(this.selected) || []
+
+            window.addEventListener('laravel-attachment::uploaded-images', (event) => {
+                if (event.detail.statePath !== '{{ $getStatePath() }}') {
+                    return
+                }
+
+                this.selected = [...this.selected, ...event.detail.attachments]
+                this.updateState()
+            })
         },
         openPicker () {
             this.selected = Alpine.raw(this.startSelected) || []
@@ -139,10 +148,11 @@
 
         <x-filament::modal
             id="laravel-attachment::upload-attachment-modal-{{ $getStatePath() }}"
-            width="full"
+            width="3xl"
         >
             <livewire:laravel-attachments::upload-modal
                 wire:key="upload-{{ $getStatePath() }}"
+                :state-path="$getStatePath()"
             />
         </x-filament::modal>
     </div>
