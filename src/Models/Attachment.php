@@ -49,11 +49,6 @@ class Attachment extends Model
         });
     }
 
-    public function directory(): string
-    {
-        return "attachments/{$this->{$this->getKeyName()}}";
-    }
-
     protected static function newFactory()
     {
         return AttachmentFactory::new();
@@ -74,13 +69,38 @@ class Attachment extends Model
             ->url($this->directory() . '/' . $this->filename());
     }
 
-    public function filename(): string
+    public function getFilenameAttribute(): string
     {
-        return "{$this->name}.{$this->extension}";
+        return "$this->name.$this->extension";
     }
 
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(AttachmentTag::class);
+    }
+
+    public function getRootDirectoryAttribute(): string
+    {
+        return 'attachments';
+    }
+
+    public function getDirectoryAttribute(): string
+    {
+        return "$this->root_directory/$this->id";
+    }
+
+    public function getFilePathAttribute(): string
+    {
+        return "$this->directory/$this->filename";
+    }
+
+    public function getAbsoluteDirectoryPathAttribute(): string
+    {
+        return Storage::disk($this->disk)->path($this->directory);
+    }
+
+    public function getAbsoluteFilePathAttribute(): string
+    {
+        return Storage::disk($this->disk)->path($this->file_path);
     }
 }

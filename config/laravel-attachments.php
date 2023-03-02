@@ -1,5 +1,7 @@
 <?php
 
+use Codedor\Attachments\Conversions\LocalConversion;
+
 return [
     'extensions' => [
         'image' => [
@@ -29,4 +31,5 @@ return [
             'ogg',
         ],
     ],
+    'conversion' => LocalConversion::class,
 ];

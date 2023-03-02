@@ -3,6 +3,8 @@
 namespace Codedor\Attachments\Providers;
 
 use Codedor\Attachments\Collections\Formats;
+use Codedor\Attachments\Conversions\Conversion;
+use Codedor\Attachments\Conversions\LocalConversion;
 use Codedor\Attachments\Facades\Models;
 use Codedor\Attachments\Http\Livewire;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
@@ -72,7 +74,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
         });
     }
 
-    public function registeringPackage()
+    public function packageRegistered(): void
     {
         $this->app->singleton(Formats::class, function () {
             return new Formats();
@@ -81,5 +83,13 @@ class AttachmentServiceProvider extends PluginServiceProvider
         $this->app->singleton(Models::class, function () {
             return new Models();
         });
+
+        $this->app->bind(
+            Conversion::class,
+            config(
+                'laravel-attachments.conversion',
+                LocalConversion::class
+            )
+        );
     }
 }

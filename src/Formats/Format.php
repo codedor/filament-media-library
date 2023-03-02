@@ -2,9 +2,10 @@
 
 namespace Codedor\Attachments\Formats;
 
-use Codedor\Attachments\Entities\Manipulations;
+use Codedor\Attachments\Conversions\Conversion;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
+use Spatie\Image\Manipulations;
 
 abstract class Format implements Arrayable
 {
@@ -25,7 +26,7 @@ abstract class Format implements Arrayable
 
     public function prefix(): string
     {
-        return Str::snake(class_basename(static::class));
+        return Str::snake(class_basename(static::class)) . '__';
     }
 
     public function toArray()
@@ -41,5 +42,10 @@ abstract class Format implements Arrayable
     public function description(): string
     {
         return $this->description;
+    }
+
+    public function conversion(): Conversion
+    {
+        return app(Conversion::class);
     }
 }
