@@ -5,7 +5,6 @@ namespace Codedor\Attachments\Models;
 use Codedor\Attachments\Database\Factories\AttachmentFactory;
 use Codedor\Attachments\Exceptions\FormatNotFound;
 use Codedor\Attachments\Facades\Formats;
-use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -51,6 +50,11 @@ class Attachment extends Model
         static::deleted(function (Attachment $attachment) {
             $attachment->getStorage()->deleteDirectory($attachment->directory());
         });
+    }
+
+    public function getStorage(): Filesystem
+    {
+        return Storage::disk($this->disk);
     }
 
     protected static function newFactory()
@@ -109,6 +113,7 @@ class Attachment extends Model
 
         if (! $format) {
             FormatNotFound::throw($name);
+
             return null;
         }
 
@@ -123,10 +128,5 @@ class Attachment extends Model
     public function getAbsoluteFilePathAttribute(): string
     {
         return $this->getStorage()->path($this->file_path);
-    }
-
-    public function getStorage(): Filesystem
-    {
-        return Storage::disk($this->disk);
     }
 }

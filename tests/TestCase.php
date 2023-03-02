@@ -4,7 +4,6 @@ namespace Codedor\Attachments\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-use Codedor\Attachments\Entities\Manipulations;
 use Codedor\Attachments\Providers\AttachmentServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
@@ -14,6 +13,8 @@ use Filament\Tables\TablesServiceProvider;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
+use Spatie\Image\Manipulations;
+use Spatie\Translatable\TranslatableServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -37,6 +38,7 @@ class TestCase extends Orchestra
             NotificationsServiceProvider::class,
             SupportServiceProvider::class,
             TablesServiceProvider::class,
+            TranslatableServiceProvider::class,
         ];
     }
 }

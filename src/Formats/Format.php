@@ -43,8 +43,6 @@ abstract class Format implements Arrayable
         ];
     }
 
-    abstract public function definition(): Manipulations;
-
     public function description(): string
     {
         return $this->description;
@@ -54,4 +52,6 @@ abstract class Format implements Arrayable
     {
         return app(Conversion::class);
     }
+
+    abstract public function definition(): Manipulations;
 }

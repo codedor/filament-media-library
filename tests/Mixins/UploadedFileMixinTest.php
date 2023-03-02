@@ -35,7 +35,7 @@ it('can save an image on default public disk', function () {
     /** @var Attachment $attachment */
     $attachment = Attachment::first();
 
-    Storage::disk('public')->assertExists($attachment->directory());
+    Storage::disk('public')->assertExists($attachment->directory);
 });
 
 it('can save an image on default other disk', function () {
@@ -65,7 +65,7 @@ it('can save an image on default other disk', function () {
     /** @var Attachment $attachment */
     $attachment = Attachment::first();
 
-    Storage::disk($disk)->assertExists($attachment->directory());
+    Storage::disk($disk)->assertExists($attachment->directory);
 });
 
 it('does a check if file is an image', function () {

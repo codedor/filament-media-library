@@ -11,7 +11,7 @@ it('returns the directory', function () {
         'id' => 1,
     ])->create();
 
-    expect($attachment->directory())
+    expect($attachment->directory)
         ->toBe('attachments/1');
 });
 
@@ -21,6 +21,6 @@ it('returns the filename', function () {
         'name' => 'test-file',
     ])->create();
 
-    expect($attachment->filename())
+    expect($attachment->filename)
         ->toBe("test-file.$attachment->extension");
 });
