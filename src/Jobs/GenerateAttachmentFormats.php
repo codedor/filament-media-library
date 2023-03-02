@@ -21,7 +21,8 @@ class GenerateAttachmentFormats implements ShouldQueue
     public function __construct(
         protected Attachment $attachment,
         protected Format $format
-    ) {}
+    ) {
+    }
 
     public function handle()
     {
