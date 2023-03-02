@@ -18,8 +18,8 @@ class GenerateAttachmentFormat implements ShouldQueue
     use SerializesModels;
 
     public function __construct(
-        protected Attachment $attachment,
-        protected Format $format
+        public Attachment $attachment,
+        public Format $format
     ) {
     }
 

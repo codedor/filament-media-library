@@ -1,16 +1,37 @@
 <?php
 
 use Codedor\Attachments\Entities\Dimension;
+use Codedor\Attachments\Facades\Models;
+use Codedor\Attachments\Jobs\GenerateAttachmentFormat;
 use Codedor\Attachments\Models\Attachment;
+use Codedor\Attachments\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;
 
 uses(RefreshDatabase::class);
 
+it('Dispatches format generation', function () {
+    Queue::fake();
+    Storage::fake('public');
+    Models::add(TestModel::class);
+
+    $file = UploadedFile::fake()->image('test.jpg', 100, 100);
+    $file->save();
+
+    /** @var Attachment $attachment */
+    $attachment = Attachment::first();
+
+    Queue::assertPushed(GenerateAttachmentFormat::class, function ($job) use ($attachment) {
+        return $job->attachment->id === $attachment->id && class_basename($job->format) === 'TestHero';
+    });
+});
+
 it('can save an image on default public disk', function () {
+    Queue::fake();
     Storage::fake('public');
 
     assertDatabaseCount(Attachment::class, 0);
@@ -36,9 +57,11 @@ it('can save an image on default public disk', function () {
     $attachment = Attachment::first();
 
     Storage::disk('public')->assertExists($attachment->directory);
+    Queue::assertNothingPushed();
 });
 
 it('can save an image on default other disk', function () {
+    Queue::fake();
     $disk = 'local';
 
     Storage::fake($disk);
@@ -66,6 +89,7 @@ it('can save an image on default other disk', function () {
     $attachment = Attachment::first();
 
     Storage::disk($disk)->assertExists($attachment->directory);
+    Queue::assertNothingPushed();
 });
 
 it('does a check if file is an image', function () {

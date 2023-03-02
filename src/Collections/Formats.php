@@ -24,8 +24,8 @@ class Formats extends Collection
 
     public function mapToKebab(): Collection
     {
-        return $this->flatten()->mapWithKeys(fn (Format $format) => [
-            Str::kebab(class_basename($format)) => $format
+        return $this->flatten()->mapWithKeys(fn(Format $format) => [
+            Str::kebab(class_basename($format)) => $format,
         ]);
     }
 
@@ -35,7 +35,7 @@ class Formats extends Collection
             ->each(function (Format $format) use ($attachment) {
                 dispatch(new GenerateAttachmentFormat(
                     attachment: $attachment,
-                    format:  $format
+                    format: $format
                 ));
             });
     }
