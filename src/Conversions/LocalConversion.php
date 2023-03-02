@@ -13,8 +13,11 @@ class LocalConversion implements Conversion
 {
     public function convert(Attachment $attachment, Format $format, bool $force = false)
     {
-        $formatPrefix = $format->prefix();
-        $formatName = $formatPrefix . $attachment->file_name;
+        if ($attachment->type !== 'image') {
+            return;
+        }
+
+        $formatName = $format->filename($attachment);
         $savePath = $attachment->absolute_directory_path . '/' . $formatName;
 
         if (array_key_exists('format', $format->definition()->toArray()[0])) {

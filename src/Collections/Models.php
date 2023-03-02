@@ -24,6 +24,7 @@ class Models
         }
 
         $this->models->add($item);
+
         \Codedor\Attachments\Facades\Formats::registerForModel($item);
 
         return $this;

@@ -3,6 +3,9 @@
 namespace Codedor\Attachments\Models;
 
 use Codedor\Attachments\Database\Factories\AttachmentFactory;
+use Codedor\Attachments\Exceptions\FormatNotFound;
+use Codedor\Attachments\Facades\Formats;
+use Exception;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -64,10 +67,10 @@ class Attachment extends Model
         return $query->where('name', 'like', "%$search%");
     }
 
-    public function url(): string
+    public function getUrlAttribute(): string
     {
         return $this->getStorage()
-            ->url($this->directory() . '/' . $this->filename());
+            ->url($this->directory . '/' . $this->filename);
     }
 
     public function getFilenameAttribute(): string
@@ -93,6 +96,23 @@ class Attachment extends Model
     public function getFilePathAttribute(): string
     {
         return "$this->directory/$this->filename";
+    }
+
+    public function getFormatOrOriginal(string $name): string
+    {
+        return $this->getFormat($name) ?: $this->url;
+    }
+
+    public function getFormat(string $name): string|null
+    {
+        $format = Formats::exists($name);
+
+        if (! $format) {
+            FormatNotFound::throw($name);
+            return null;
+        }
+
+        return $this->getStorage()->url("$this->directory/{$format->filename($this)}");
     }
 
     public function getAbsoluteDirectoryPathAttribute(): string

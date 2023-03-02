@@ -3,6 +3,7 @@
 namespace Codedor\Attachments\Formats;
 
 use Codedor\Attachments\Conversions\Conversion;
+use Codedor\Attachments\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
@@ -27,6 +28,11 @@ abstract class Format implements Arrayable
     public function prefix(): string
     {
         return Str::snake(class_basename(static::class)) . '__';
+    }
+
+    public function filename(Attachment $attachment): string
+    {
+        return $this->prefix() . $attachment->file_name;
     }
 
     public function toArray()
