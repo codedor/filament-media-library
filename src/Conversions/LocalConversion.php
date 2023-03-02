@@ -5,7 +5,6 @@ namespace Codedor\Attachments\Conversions;
 use Codedor\Attachments\Formats\Format;
 use Codedor\Attachments\Models\Attachment;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 
