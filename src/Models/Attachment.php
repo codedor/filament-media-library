@@ -3,6 +3,7 @@
 namespace Codedor\Attachments\Models;
 
 use Codedor\Attachments\Database\Factories\AttachmentFactory;
+use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,7 +46,7 @@ class Attachment extends Model
         parent::boot();
 
         static::deleted(function (Attachment $attachment) {
-            Storage::disk($attachment->disk)->deleteDirectory($attachment->directory());
+            $attachment->getStorage()->deleteDirectory($attachment->directory());
         });
     }
 
@@ -65,7 +66,7 @@ class Attachment extends Model
 
     public function url(): string
     {
-        return Storage::disk($this->disk)
+        return $this->getStorage()
             ->url($this->directory() . '/' . $this->filename());
     }
 
@@ -96,11 +97,16 @@ class Attachment extends Model
 
     public function getAbsoluteDirectoryPathAttribute(): string
     {
-        return Storage::disk($this->disk)->path($this->directory);
+        return $this->getStorage()->path($this->directory);
     }
 
     public function getAbsoluteFilePathAttribute(): string
     {
-        return Storage::disk($this->disk)->path($this->file_path);
+        return $this->getStorage()->path($this->file_path);
+    }
+
+    public function getStorage(): Filesystem
+    {
+        return Storage::disk($this->disk);
     }
 }

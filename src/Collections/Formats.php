@@ -3,6 +3,7 @@
 namespace Codedor\Attachments\Collections;
 
 use Codedor\Attachments\Formats\Format;
+use Codedor\Attachments\Jobs\GenerateAttachmentFormat;
 use Codedor\Attachments\Models\Attachment;
 use Illuminate\Support\Collection;
 
@@ -19,10 +20,10 @@ class Formats extends Collection
     {
         $this->flatten()
             ->each(function (Format $format) use ($attachment) {
-                $format->conversion()->convert(
+                dispatch(new GenerateAttachmentFormat(
                     attachment: $attachment,
-                    format: $format
-                );
+                    format:  $format
+                ));
             });
     }
 }

@@ -11,7 +11,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Spatie\Image\Image;
 
-class GenerateAttachmentFormats implements ShouldQueue
+class GenerateAttachmentFormat implements ShouldQueue
 {
     use Dispatchable;
     use InteractsWithQueue;
@@ -26,8 +26,9 @@ class GenerateAttachmentFormats implements ShouldQueue
 
     public function handle()
     {
-        $manipulator = Image::load($this->attachment->absolute_file_path);
-
-        dd($manipulator);
+        $this->format->conversion()->convert(
+            attachment: $this->attachment,
+            format: $this->format
+        );
     }
 }
