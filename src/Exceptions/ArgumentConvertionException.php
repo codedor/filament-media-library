@@ -3,7 +3,6 @@
 namespace Codedor\Attachments\Exceptions;
 
 use Exception;
-use Illuminate\Support\Collection;
 
 class ArgumentConvertionException extends Exception
 {
