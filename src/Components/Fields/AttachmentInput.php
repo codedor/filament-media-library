@@ -56,6 +56,14 @@ class AttachmentInput extends Field implements HasForms
             $component->getRelationship()->detach();
             $component->getRelationship()->sync($state->toArray());
         });
+
+        $this->dehydrateStateUsing(function (self $component, $state) {
+            if ($component->isMultiple()) {
+                return;
+            }
+
+            return $state[0] ?? null;
+        });
     }
 
     public function setPickedAttachments(array|Collection $attachments): void

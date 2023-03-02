@@ -21,13 +21,15 @@ class Picker extends Component implements HasForms
 
     public array $attachmentsList;
 
+    public array $selected = [];
+
     public array $filters = [
         'query' => '',
         'tags' => [],
     ];
 
     protected $listeners = [
-        'refresh-attachments-picker' => '$refresh',
+        'laravel-attachments::open-picker' => 'openPicker',
     ];
 
     public function render()
@@ -52,6 +54,15 @@ class Picker extends Component implements HasForms
         return view('laravel-attachments::livewire.picker', [
             'attachments' => $attachments,
         ]);
+    }
+
+    public function openPicker(array $params = [])
+    {
+        if (($params['statePath'] ?? '') !== $this->statePath) {
+            return;
+        }
+
+        $this->selected = $params['attachments'] ?? [];
     }
 
     public function updatedFilters()

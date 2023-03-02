@@ -24,42 +24,42 @@ class UploadModal extends Component implements HasForms
 
     public $meta = [];
 
+    public string $statePath = '';
+
     protected bool $isCachingForms = false;
 
     protected bool $firstCollapsable = true;
 
     protected $listeners = ['laravel-attachment::refresh-upload-modal' => '$refresh'];
 
-    public function mount()
+    public function mount(string $statePath = '')
     {
+        $this->statePath = $statePath;
         $this->form->fill();
     }
 
     public function submit(): void
     {
-        collect($this->form->getState()['meta'])
-            ->each(function ($data, $md5) {
-                /** @var Attachment $attachment */
-                $attachment = Attachment::query()
-                    ->where('md5', $md5)
-                    ->first();
+        $attachments = collect($this->form->getState()['meta'])->map(function ($data, $md5) {
+            /** @var Attachment $attachment */
+            $attachment = Attachment::query()
+                ->where('md5', $md5)
+                ->first();
 
-                if (! $attachment) {
-                    return;
-                }
+            if (! $attachment) {
+                return;
+            }
 
-                $attachment->update([
-                    'translated_name' => $data['filename'],
-                    'alt' => $data['alt'],
-                    'caption' => $data['caption'],
-                ]);
+            $attachment->update([
+                'translated_name' => $data['filename'],
+                'alt' => $data['alt'],
+                'caption' => $data['caption'],
+            ]);
 
-                $attachment->tags()->sync($data['tags']);
-            });
+            $attachment->tags()->sync($data['tags']);
 
-        $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'laravel-attachment::upload-attachment-modal',
-        ]);
+            return $attachment;
+        });
 
         Notification::make()
             ->title(__('attachment.uploaded'))
@@ -68,11 +68,20 @@ class UploadModal extends Component implements HasForms
 
         $this->emit('laravel-attachment::update-library');
 
-        $this->form->fill();
+        $this->dispatchBrowserEvent('laravel-attachment::uploaded-images', [
+            'statePath' => $this->statePath,
+            'attachments' => $attachments->pluck('id'),
+        ]);
+
+        $this->dispatchBrowserEvent('close-modal', [
+            'id' => 'laravel-attachment::upload-attachment-modal',
+        ]);
 
         $this->dispatchBrowserEvent('close-modal', [
             'id' => 'laravel-attachment::edit-attachment-modal',
         ]);
+
+        $this->form->fill();
     }
 
     public function render()

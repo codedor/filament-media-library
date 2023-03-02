@@ -16,54 +16,66 @@
     @endphp
 
     <div x-data="{
-        state: $wire.entangle(@js($getStatePath())),
-        selected: @js($attachments->pluck('id')->toArray()),
-        startSelected: [],
+        state: $wire.entangle(@js($getStatePath())).defer,
+        initial: @js($attachments->pluck('id')->toArray()),
         multiple: @js($isMultiple()),
         pickerModalID: 'laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}',
         init () {
-            this.startSelected = Alpine.raw(this.selected) || []
+            this.state = [...this.initial]
+
+            window.addEventListener('laravel-attachment::uploaded-images', (event) => {
+                if (event.detail.statePath !== '{{ $getStatePath() }}') {
+                    return
+                }
+
+                this.state = [...this.state, ...event.detail.attachments]
+                this.updateState()
+            })
+
+            window.addEventListener('laravel-attachment::picked-attachments', (event) => {
+                if (event.detail.statePath !== '{{ $getStatePath() }}') {
+                    return
+                }
+
+                this.state = [...event.detail.attachments]
+                this.updateState()
+            })
         },
         openPicker () {
-            this.selected = Alpine.raw(this.startSelected) || []
-
             $dispatch('open-modal', { id: this.pickerModalID })
+
+            $wire.emit('laravel-attachments::open-picker', {
+                statePath: '{{ $getStatePath() }}',
+                attachments: this.state || this.state || [],
+            })
         },
         closePicker () {
             $dispatch('close-modal', { id: this.pickerModalID })
         },
-        selectAttachment (id = null) {
-            // Only one attachment can be selected if not multiple
-            id ? this.selected = [id] : null
-
-            this.updateState()
-            this.closePicker()
-        },
         remove (id) {
-            this.selected = this.selected.filter((item) => item !== id)
+            if (! this.multiple) {
+                this.state = []
+            } else {
+                this.state = [...this.state.filter((item) => item !== id)]
+            }
+
             this.updateState()
         },
         updateState () {
-            // Update the state, since it does not have defer, it will reload the fields
-            this.state = this.multiple ? [...this.selected] : this.selected[0]
-            this.startSelected = Alpine.raw(this.selected) || []
-
-            $wire.emit('refresh-attachments-picker')
+            $wire.$refresh()
         },
         reorder (event) {
-            const selected = Alpine.raw(this.selected)
-            const reorderedRow = selected.splice(event.oldIndex, 1)[0]
+            const state = Alpine.raw(this.state)
+            const reorderedRow = state.splice(event.oldIndex, 1)[0]
 
-            selected.splice(event.newIndex, 0, reorderedRow)
-            this.selected = selected
-
-            this.updateState()
+            state.splice(event.newIndex, 0, reorderedRow)
+            this.state = [...state]
         }
     }">
         <div class="flex flex-col gap-4" wire:loading.class="opacity-50">
             <div
                 class="flex flex-col gap-2"
-                @if ($isMultiple())
+                @if ($isMultiple() && ! $isDisabled())
                     x-sortable
                     x-on:end="reorder($event)"
                 @endif
@@ -72,26 +84,32 @@
                     <div
                         class="flex gap-4 p-2 border rounded-lg bg-white"
                         x-sortable-item="{{ $attachment->id }}"
+                        wire:key="attachment-{{ $attachment->id }}-{{ $getStatePath() }}"
                     >
                         <div
                             x-sortable-handle
                             @class([
-                                'cursor-move' => $isMultiple(),
+                                'cursor-move' => ($isMultiple() && ! $isDisabled()),
                                 'flex gap-2 items-center justify-center text-gray-400',
                             ])
                         >
-                            @if ($isMultiple())
+                            @if ($isMultiple() && ! $isDisabled())
                                 <x-heroicon-o-selector class="w-5 h-5" />
                             @endif
 
                             <div class="w-32">
                                 <x-laravel-attachments::attachment :$attachment>
-                                    <button
-                                        x-on:click.prevent="remove('{{ $attachment->id }}')"
-                                        class="absolute top-2 right-2"
-                                    >
-                                        <x-heroicon-o-x class="w-5 h-5" />
-                                    </button>
+                                    @unless($isDisabled())
+                                        <button
+                                            x-on:click.prevent="remove('{{ $attachment->id }}')"
+                                            class="
+                                                absolute top-2 right-2 bg-white rounded
+                                                hover:text-red-500
+                                            "
+                                        >
+                                            <x-heroicon-o-trash class="p-1 w-6 h-6" />
+                                        </button>
+                                    @endunless
                                 </x-laravel-attachments::attachment>
                             </div>
                         </div>
@@ -107,7 +125,7 @@
                 @endforeach
             </div>
 
-            @if ($attachments->isEmpty() || $isMultiple())
+            @if (! $isDisabled() && ($attachments->isEmpty() || $isMultiple()))
                 <div class="flex gap-2">
                     <button
                         type="button"
@@ -130,20 +148,23 @@
             @endif
         </div>
 
-        <livewire:laravel-attachments::picker
-            wire:key="picker-{{ $getStatePath() }}"
-            :state-path="$getStatePath()"
-            :attachments-list="$getAttachmentsList()->pluck('id')->toArray()"
-            :is-multiple="$isMultiple()"
-        />
-
-        <x-filament::modal
-            id="laravel-attachment::upload-attachment-modal-{{ $getStatePath() }}"
-            width="full"
-        >
-            <livewire:laravel-attachments::upload-modal
-                wire:key="upload-{{ $getStatePath() }}"
+        @unless ($isDisabled())
+            <livewire:laravel-attachments::picker
+                wire:key="picker-{{ $getStatePath() }}"
+                :state-path="$getStatePath()"
+                :attachments-list="$getAttachmentsList()->pluck('id')->toArray()"
+                :is-multiple="$isMultiple()"
             />
-        </x-filament::modal>
+
+            <x-filament::modal
+                id="laravel-attachment::upload-attachment-modal-{{ $getStatePath() }}"
+                width="3xl"
+            >
+                <livewire:laravel-attachments::upload-modal
+                    wire:key="upload-{{ $getStatePath() }}"
+                    :state-path="$getStatePath()"
+                />
+            </x-filament::modal>
+        @endunless
     </div>
 </x-dynamic-component>
