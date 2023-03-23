@@ -12,6 +12,7 @@ class TestHero extends Format
     public function definition(): Manipulations
     {
         return $this->manipulations
-            ->fit(Manipulations::FIT_CROP, 100, 100);
+            ->fit(Manipulations::FIT_CROP, 100, 100)
+            ->sepia();
     }
 }

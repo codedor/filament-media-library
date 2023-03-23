@@ -4,16 +4,15 @@ namespace Codedor\Attachments\Conversions;
 
 use Codedor\Attachments\Formats\Format;
 use Codedor\Attachments\Models\Attachment;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 
 class LocalConversion implements Conversion
 {
-    public function convert(Attachment $attachment, Format $format, bool $force = false)
+    public function convert(Attachment $attachment, Format $format, bool $force = false): bool
     {
-        if ($attachment->type !== 'image') {
-            return;
+        if ($attachment->type !== 'image' || $attachment->extension === 'gif') {
+            return false;
         }
 
         $formatName = $format->filename($attachment);
@@ -27,12 +26,18 @@ class LocalConversion implements Conversion
             );
         }
 
-        if (! $force && File::exists($savePath)) {
-            return;
+        if (
+            ! $force &&
+            $attachment->getStorage()->exists("$attachment->id/$formatName")
+        ) {
+            return false;
         }
 
         Image::load($attachment->absolute_file_path)
             ->manipulate($format->definition())
             ->save($savePath);
+
+
+        return true;
     }
 }
