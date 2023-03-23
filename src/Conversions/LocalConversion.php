@@ -37,7 +37,6 @@ class LocalConversion implements Conversion
             ->manipulate($format->definition())
             ->save($savePath);
 
-
         return true;
     }
 }
