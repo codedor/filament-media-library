@@ -10,8 +10,6 @@ use Mockery\MockInterface;
 uses(RefreshDatabase::class);
 
 it('dispatches conversions for all formats', function () {
-
-
     $format = new TestHero('test');
 
     /** @var Attachment $attachment */
