@@ -48,7 +48,7 @@ class Attachment extends Model
         parent::boot();
 
         static::deleted(function (Attachment $attachment) {
-            $attachment->getStorage()->deleteDirectory($attachment->directory());
+            $attachment->getStorage()->deleteDirectory($attachment->directory);
         });
     }
 
