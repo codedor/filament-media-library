@@ -28,7 +28,7 @@ class LocalConversion implements Conversion
 
         if (
             ! $force &&
-            $attachment->getStorage()->exists("$attachment->id/$formatName")
+            $attachment->getStorage()->exists("$attachment->directory/$formatName")
         ) {
             return false;
         }

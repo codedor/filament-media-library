@@ -4,6 +4,7 @@ namespace Codedor\Attachments\Tests\TestModels;
 
 use Codedor\Attachments\Interfaces\HasFormats;
 use Codedor\Attachments\Tests\TestFormats\TestHero;
+use Codedor\Attachments\Tests\TestFormats\TestHeroWebp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
@@ -11,6 +12,7 @@ class TestModel extends Model implements HasFormats
 {
     public static function getFormats(Collection $formats): Collection
     {
-        return $formats->add(TestHero::make('test_id'));
+        return $formats->add(TestHero::make('test_id'))
+            ->add(TestHeroWebp::make('test_id'));
     }
 }

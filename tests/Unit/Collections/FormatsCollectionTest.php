@@ -9,7 +9,7 @@ it('registers model', function () {
         ->toBeInstanceOf(\Codedor\Attachments\Collections\Formats::class)
         ->toHaveKey(TestModel::class)
         ->first()
-        ->toHaveCount(1)
+        ->toHaveCount(2)
         ->first()
         ->first()
         ->toBeInstanceOf(TestHero::class);
@@ -37,5 +37,6 @@ it('returns collection with kebab keys', function () {
 
     expect(Formats::mapToKebab())
         ->toHaveKey('test-hero')
-        ->toHaveCount(1);
+        ->toHaveKey('test-hero-webp')
+        ->toHaveCount(2);
 });

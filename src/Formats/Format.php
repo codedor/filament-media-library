@@ -25,14 +25,14 @@ abstract class Format implements Arrayable
         return new static($column);
     }
 
-    public function prefix(): string
-    {
-        return Str::snake(class_basename(static::class)) . '__';
-    }
-
     public function filename(Attachment $attachment): string
     {
         return $this->prefix() . $attachment->file_name;
+    }
+
+    public function prefix(): string
+    {
+        return Str::snake(class_basename(static::class)) . '__';
     }
 
     public function toArray()
@@ -43,6 +43,8 @@ abstract class Format implements Arrayable
         ];
     }
 
+    abstract public function definition(): Manipulations;
+
     public function description(): string
     {
         return $this->description;
@@ -52,6 +54,4 @@ abstract class Format implements Arrayable
     {
         return app(Conversion::class);
     }
-
-    abstract public function definition(): Manipulations;
 }
