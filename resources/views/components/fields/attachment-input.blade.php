@@ -74,7 +74,7 @@
     }">
         <div class="flex flex-col gap-4" wire:loading.class="opacity-50">
             <div
-                class="flex flex-col gap-2"
+                class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
                 @if ($isMultiple() && ! $isDisabled())
                     x-sortable
                     x-on:end="reorder($event)"
@@ -82,7 +82,7 @@
             >
                 @foreach ($attachments as $attachment)
                     <div
-                        class="flex gap-4 p-2 border rounded-lg bg-white"
+                        class="flex flex-col"
                         x-sortable-item="{{ $attachment->id }}"
                         wire:key="attachment-{{ $attachment->id }}-{{ $getStatePath() }}"
                     >
@@ -90,49 +90,44 @@
                             x-sortable-handle
                             @class([
                                 'cursor-move' => ($isMultiple() && ! $isDisabled()),
-                                'flex gap-2 items-center justify-center text-gray-400',
+                                'flex-1 flex gap-2 items-center justify-center text-gray-900',
                             ])
                         >
                             @if ($isMultiple() && ! $isDisabled())
                                 <x-heroicon-o-selector class="w-5 h-5" />
                             @endif
 
-                            <div class="w-32">
-                                <x-laravel-attachments::attachment :$attachment>
-                                    @unless($isDisabled())
+                            <x-laravel-attachments::attachment
+                                :$attachment
+                                container-class="flex flex-col w-full h-full justify-end"
+                                {{-- TODO BE: Add formats used in this module --}}
+                                {{-- :formats="[['name' => 'test', 'width' => 100, 'height' => 100]]" --}}
+                            >
+                                @unless($isDisabled())
+                                    <button
+                                        x-on:click.prevent="remove('{{ $attachment->id }}')"
+                                        class="absolute top-1 right-1 bg-white rounded hover:text-red-700 hover:bg-gray-50 shadow-lg"
+                                    >
+                                        <x-heroicon-o-trash class="p-1 w-6 h-6" />
+                                    </button>
+
+                                    <div class="absolute right-1 bottom-1 left-1 flex justify-end gap-1">
+                                        {{-- TODO BE: Add cropper modal --}}
                                         <button
-                                            x-on:click.prevent="remove('{{ $attachment->id }}')"
-                                            class="absolute top-2 right-2 bg-white rounded hover:text-red-500"
+                                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
                                         >
-                                            <x-heroicon-o-trash class="p-1 w-6 h-6" />
+                                            <x-fas-crop-simple class="p-1.5 w-6 h-6" />
                                         </button>
 
-                                        <div class="absolute right-2 bottom-2 left-2 flex justify-end gap-1">
-                                            {{-- TODO BE: Add cropper modal --}}
-                                            <button
-                                                class=" bg-white rounded hover:text-primary-500"
-                                            >
-                                                <x-fas-crop-simple class="p-1 w-5 h-5" />
-                                            </button>
-
-                                            {{-- TODO BE: Add edit modal --}}
-                                            <button
-                                                class=" bg-white rounded hover:text-primary-500"
-                                            >
-                                                <x-heroicon-s-pencil class="p-1 w-6 h-6" />
-                                            </button>
-                                        </div>
-                                    @endunless
-                                </x-laravel-attachments::attachment>
-                            </div>
-                        </div>
-
-                        <div class="flex">
-                            <ul>
-                                <li class="font-bold">{{ $attachment->translated_name }}</li>
-                                <li>Width: {{ $attachment->width }}px</li>
-                                <li>Height: {{ $attachment->height }}px</li>
-                            </ul>
+                                        {{-- TODO BE: Add edit modal --}}
+                                        <button
+                                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
+                                        >
+                                            <x-heroicon-s-pencil class="p-1 w-6 h-6" />
+                                        </button>
+                                    </div>
+                                @endunless
+                            </x-laravel-attachments::attachment>
                         </div>
                     </div>
                 @endforeach
