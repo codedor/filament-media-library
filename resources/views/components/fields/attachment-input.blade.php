@@ -102,13 +102,26 @@
                                     @unless($isDisabled())
                                         <button
                                             x-on:click.prevent="remove('{{ $attachment->id }}')"
-                                            class="
-                                                absolute top-2 right-2 bg-white rounded
-                                                hover:text-red-500
-                                            "
+                                            class="absolute top-2 right-2 bg-white rounded hover:text-red-500"
                                         >
                                             <x-heroicon-o-trash class="p-1 w-6 h-6" />
                                         </button>
+
+                                        <div class="absolute right-2 bottom-2 left-2 flex justify-end gap-1">
+                                            {{-- TODO BE: Add cropper modal --}}
+                                            <button
+                                                class=" bg-white rounded hover:text-primary-500"
+                                            >
+                                                <x-fas-crop-simple class="p-1 w-5 h-5" />
+                                            </button>
+
+                                            {{-- TODO BE: Add edit modal --}}
+                                            <button
+                                                class=" bg-white rounded hover:text-primary-500"
+                                            >
+                                                <x-heroicon-s-pencil class="p-1 w-6 h-6" />
+                                            </button>
+                                        </div>
                                     @endunless
                                 </x-laravel-attachments::attachment>
                             </div>
@@ -126,7 +139,7 @@
             </div>
 
             @if (! $isDisabled() && ($attachments->isEmpty() || $isMultiple()))
-                <div class="flex gap-2">
+                <div class="flex flex-col gap-2 items-start">
                     <button
                         type="button"
                         class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
@@ -139,7 +152,7 @@
 
                     <button
                         type="button"
-                        class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-black shadow focus:ring-white bg-white hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
+                        class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-gray-800 bg-white border-gray-300 hover:bg-gray-50 focus:ring-primary-600 focus:text-primary-600 focus:bg-primary-50 focus:border-primary-600 filament-page-button-action"
                         x-on:click.prevent="openPicker()"
                     >
                         {{ __('laravel_attachment.select existing media') }}
