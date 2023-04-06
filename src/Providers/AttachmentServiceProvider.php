@@ -77,7 +77,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
     public function packageRegistered(): void
     {
         parent::packageRegistered();
-        
+
         $this->app->singleton(Formats::class, function () {
             return new Formats();
         });
