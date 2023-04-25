@@ -29,6 +29,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
     ];
 
     protected array $livewireComponents = [
+        'formatter-modal' => Livewire\FormatterModal::class,
         'upload-modal' => Livewire\UploadModal::class,
         'edit-modal' => Livewire\EditModal::class,
         'picker' => Livewire\Picker::class,
@@ -70,7 +71,14 @@ class AttachmentServiceProvider extends PluginServiceProvider
         parent::boot();
 
         Filament::serving(function () {
-            Filament::registerStyles([__DIR__ . '/../../dist/css/laravel-media.css']);
+            Filament::registerStyles([
+                __DIR__ . '/../../dist/css/laravel-media.css',
+                __DIR__ . '/../../dist/css/cropper.min.css',
+            ]);
+
+            Filament::registerScripts([
+                __DIR__ . '/../../dist/js/cropper.min.js',
+            ]);
         });
     }
 

@@ -10,6 +10,10 @@
                 $wire.set('attachmentToDelete', id)
                 $dispatch('open-modal', { id: 'laravel-attachment::delete-attachment-modal' })
             },
+            openFormatterModal (id) {
+                $dispatch('open-modal', { id: 'laravel-attachment::formatter-attachment-modal' })
+                $wire.emit('laravel-attachment::open-formatter-attachment-modal', id)
+            },
             openEditModal (id) {
                 $dispatch('open-modal', { id: 'laravel-attachment::edit-attachment-modal' })
                 $wire.emit('laravel-attachment::open-edit-attachment-modal', id)
@@ -37,7 +41,7 @@
 
             <div class="w-1/3"></div>
 
-            <button class="flex gap-2 items-end p-3 items-center" x-on:click="resetFilters()">
+            <button class="flex gap-2 p-3 items-center" x-on:click="resetFilters()">
                 <x-heroicon-o-x class="w-5 h-5" />
                 {{ __('laravel-attachment.clear filter') }}
             </button>
@@ -45,7 +49,7 @@
 
         <div
             wire:loading.flex
-            wire:target="search"
+            wire:target="search, nextPage, gotoPage, previousPage"
             class="w-full h-128 justify-center items-center"
         >
             <x-filament-support::loading-indicator
@@ -55,7 +59,7 @@
 
         <div
             wire:loading.remove
-            wire:target="search"
+            wire:target="search, nextPage, gotoPage, previousPage"
             class="grid grid-cols-6 gap-4"
         >
             @foreach($attachments as $attachment)
@@ -79,6 +83,13 @@
                     @endif
 
                     <div class="flex justify-end gap-2">
+                        <div
+                            class="p-1 bg-gray-100 border rounded-lg cursor-pointer hover:bg-gray-200"
+                            x-on:click="openFormatterModal('{{ $attachment->id }}')"
+                        >
+                            <x-heroicon-s-scissors class="w-4 h-4" />
+                        </div>
+
                         <div
                             class="p-1 bg-gray-100 border rounded-lg cursor-pointer hover:bg-gray-200"
                             x-on:click="openEditModal('{{ $attachment->id }}')"
@@ -105,17 +116,10 @@
         </div>
     </div>
 
-    <x-filament::modal id="laravel-attachment::upload-attachment-modal" width="full">
-        @livewire('laravel-attachments::upload-modal')
-    </x-filament::modal>
-
     @include('laravel-attachments::livewire.delete-modal')
 
-    <x-filament::modal
-        id="laravel-attachment::edit-attachment-modal"
-        x-on:modal-closed="closeEditModal()"
-        width="4xl"
-    >
-        @livewire('laravel-attachments::edit-modal')
-    </x-filament::modal>
+    {{-- Livewire modals --}}
+    @livewire('laravel-attachments::upload-modal')
+    @livewire('laravel-attachments::formatter-modal')
+    @livewire('laravel-attachments::edit-modal')
 </x-filament::page>

@@ -12,12 +12,17 @@ abstract class Format implements Arrayable
 {
     public Manipulations $manipulations;
 
+    protected string $name;
+
     protected string $description;
 
     public function __construct(
         protected string $column
     ) {
         $this->manipulations = new Manipulations();
+        $this->definition();
+
+        $this->name = Str::headline(class_basename(static::class));
     }
 
     public static function make(string $column): static
@@ -38,12 +43,39 @@ abstract class Format implements Arrayable
     public function toArray()
     {
         return [
-            'manipulations' => $this->definition(),
+            'key' => get_class($this),
+            'name' => $this->name(),
             'description' => $this->description(),
+            'manipulations' => $this->definition(),
         ];
     }
 
     abstract public function definition(): Manipulations;
+
+    public function name(): string
+    {
+        return $this->name;
+    }
+
+    public function argument(string $argument): mixed
+    {
+        return $this->manipulations->getManipulationArgument($argument);
+    }
+
+    public function width(): string
+    {
+        return $this->argument('width');
+    }
+
+    public function height(): string
+    {
+        return $this->argument('height');
+    }
+
+    public function aspectRatio(): string
+    {
+        return $this->width() / $this->height();
+    }
 
     public function description(): string
     {

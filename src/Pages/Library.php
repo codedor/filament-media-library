@@ -20,17 +20,19 @@ class Library extends Page
 
     protected static string $view = 'laravel-attachments::pages.library';
 
-    public $search = '';
+    public string $search = '';
 
     public null|string $attachmentToDelete = null;
+
+    protected int $perPage = 18;
 
     protected $queryString = [
         'search' => ['except' => '', 'as' => 's'],
     ];
 
-    protected int $perPage = 18;
-
-    protected $listeners = ['laravel-attachment::update-library' => '$refresh'];
+    protected $listeners = [
+        'laravel-attachment::update-library' => '$refresh',
+    ];
 
     protected static function getNavigationLabel(): string
     {
