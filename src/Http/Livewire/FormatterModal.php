@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class FormatterModal extends Component
 {
-    public null | string $currentFormatName = null;
+    public null|string $currentFormatName = null;
 
     public Attachment $attachment;
 
