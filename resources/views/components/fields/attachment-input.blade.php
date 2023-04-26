@@ -99,34 +99,39 @@
 
                             <x-laravel-attachments::attachment
                                 :$attachment
+                                :is-disabled="$isDisabled()"
                                 container-class="flex flex-col w-full h-full justify-end"
+                                :with-delete-button="true"
+                                delete-action="remove('{{ $attachment->id }}')"
                                 {{-- TODO BE: Add formats used in this module --}}
                                 {{-- :formats="[['name' => 'test', 'width' => 100, 'height' => 100]]" --}}
                             >
-                                @unless($isDisabled())
-                                    <button
+                                {{-- @unless($isDisabled()) --}}
+                                    {{-- <button
                                         x-on:click.prevent="remove('{{ $attachment->id }}')"
                                         class="absolute top-1 right-1 bg-white rounded hover:text-red-700 hover:bg-gray-50 shadow-lg"
                                     >
                                         <x-heroicon-o-trash class="p-1 w-6 h-6" />
-                                    </button>
+                                    </button> --}}
 
-                                    <div class="absolute right-1 bottom-1 left-1 flex justify-end gap-1">
+                                    {{-- <div class="absolute right-1 bottom-1 left-1 flex justify-end gap-1"> --}}
                                         {{-- TODO BE: Add cropper modal --}}
-                                        <button
+                                        {{-- <button
                                             class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
                                         >
-                                            <x-fas-crop-simple class="p-1.5 w-6 h-6" />
-                                        </button>
+                                            Crop --}}
+                                            {{-- TODO: Unable to locate a class or view for component [fas-crop-simple] --}}
+                                            {{-- <x-fas-crop-simple class="p-1.5 w-6 h-6" /> --}}
+                                        {{-- </button> --}}
 
                                         {{-- TODO BE: Add edit modal --}}
-                                        <button
+                                        {{-- <button
                                             class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
                                         >
                                             <x-heroicon-s-pencil class="p-1 w-6 h-6" />
-                                        </button>
-                                    </div>
-                                @endunless
+                                        </button> --}}
+                                    {{-- </div> --}}
+                                {{-- @endunless --}}
                             </x-laravel-attachments::attachment>
                         </div>
                     </div>

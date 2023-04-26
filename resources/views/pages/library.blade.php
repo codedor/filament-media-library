@@ -1,6 +1,6 @@
 <x-filament::page>
     <div
-        class="flex flex-col gap-8"
+        class="@container/main flex flex-col gap-8"
         x-data="{
             search: @entangle('search'),
             resetFilters () {
@@ -56,17 +56,23 @@
         <div
             wire:loading.remove
             wire:target="search"
-            class="grid grid-cols-6 gap-4"
+            class="grid @[0px]:grid-cols-2 @md:grid-cols-3 @xl:grid-cols-4 @3xl:grid-cols-5 @5xl:grid-cols-6 gap-4"
         >
             @foreach($attachments as $attachment)
                 <div class="p-2 rounded-lg overflow-hidden shadow-lg bg-white flex flex-col gap-2">
-                    <p class="font-bold text-center w-full text-sm">
+                    {{-- <p class="font-bold text-center w-full text-sm">
                         {{ Str::limit($attachment->translated_name, 15) }}
-                    </p>
+                    </p> --}}
 
-                    @if($attachment->type === 'image')
-                        <x-laravel-attachments::attachment :$attachment />
-                    @else
+                    {{-- @if($attachment->type === 'image') --}}
+                        <x-laravel-attachments::attachment
+                            :$attachment
+                            :with-delete-button="true"
+                            delete-action="openDeleteModal('{{ $attachment->id }}')"
+                            :with-edit-button="true"
+                            edit-action="openEditModal('{{ $attachment->id }}')"
+                        />
+                    {{-- @else
                         <div class="w-full aspect-square flex items-center justify-center bg-gray-100 border rounded-lg">
                             @if($attachment->type === 'document')
                                 <x-heroicon-o-document-text class="w-16 h-16 opacity-50" />
@@ -76,23 +82,7 @@
                                 <x-heroicon-o-question-mark-circle class="w-16 h-16 opacity-50" />
                             @endif
                         </div>
-                    @endif
-
-                    <div class="flex justify-end gap-2">
-                        <div
-                            class="p-1 bg-gray-100 border rounded-lg cursor-pointer hover:bg-gray-200"
-                            x-on:click="openEditModal('{{ $attachment->id }}')"
-                        >
-                            <x-heroicon-s-pencil class="w-4 h-4" />
-                        </div>
-
-                        <div
-                            class="p-1 bg-gray-100 border rounded-lg cursor-pointer hover:bg-gray-200 text-red-500"
-                            x-on:click="openDeleteModal('{{ $attachment->id }}')"
-                        >
-                            <x-heroicon-s-trash class="w-4 h-4" />
-                        </div>
-                    </div>
+                    @endif --}}
                 </div>
             @endforeach
         </div>

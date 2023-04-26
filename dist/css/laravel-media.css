@@ -10,20 +10,16 @@
   inset: 0px
 }
 
+.bottom-1 {
+  bottom: 0.25rem
+}
+
+.left-1 {
+  left: 0.25rem
+}
+
 .left-2 {
   left: 0.5rem
-}
-
-.right-2 {
-  right: 0.5rem
-}
-
-.top-2 {
-  top: 0.5rem
-}
-
-.bottom-2 {
-  bottom: 0.5rem
 }
 
 .right-1 {
@@ -34,12 +30,8 @@
   top: 0.25rem
 }
 
-.bottom-1 {
-  bottom: 0.25rem
-}
-
-.left-1 {
-  left: 0.25rem
+.top-2 {
+  top: 0.5rem
 }
 
 .z-10 {
@@ -52,10 +44,6 @@
 
 .z-50 {
   z-index: 50
-}
-
-.mb-3 {
-  margin-bottom: 0.75rem
 }
 
 .mb-2 {
@@ -94,10 +82,6 @@
   height: 4rem
 }
 
-.h-4 {
-  height: 1rem
-}
-
 .h-5 {
   height: 1.25rem
 }
@@ -118,10 +102,6 @@
   min-height: 2rem
 }
 
-.min-h-\[2\.25rem\] {
-  min-height: 2.25rem
-}
-
 .w-1\/3 {
   width: 33.333333%
 }
@@ -138,14 +118,6 @@
   width: 50%
 }
 
-.w-32 {
-  width: 8rem
-}
-
-.w-4 {
-  width: 1rem
-}
-
 .w-5 {
   width: 1.25rem
 }
@@ -160,6 +132,10 @@
 
 .flex-1 {
   flex: 1 1 0%
+}
+
+.flex-grow {
+  flex-grow: 1
 }
 
 .-rotate-45 {
@@ -180,12 +156,12 @@
   cursor: pointer
 }
 
-.grid-cols-6 {
-  grid-template-columns: repeat(6, minmax(0, 1fr))
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr))
 }
 
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr))
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr))
 }
 
 .flex-col {
@@ -228,17 +204,12 @@
   gap: 1rem
 }
 
-.gap-8 {
-  gap: 2rem
-}
-
 .gap-6 {
   gap: 1.5rem
 }
 
-.gap-x-6 {
-  -moz-column-gap: 1.5rem;
-       column-gap: 1.5rem
+.gap-8 {
+  gap: 2rem
 }
 
 .overflow-hidden {
@@ -275,14 +246,14 @@
   background-color: rgb(243 244 246 / var(--tw-bg-opacity))
 }
 
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity))
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
 .bg-contain {
@@ -301,28 +272,16 @@
   padding: 0.25rem
 }
 
+.p-1\.5 {
+  padding: 0.375rem
+}
+
 .p-2 {
   padding: 0.5rem
 }
 
 .p-3 {
   padding: 0.75rem
-}
-
-.p-1\.5 {
-  padding: 0.375rem
-}
-
-.p-0 {
-  padding: 0px
-}
-
-.p-0\.5 {
-  padding: 0.125rem
-}
-
-.p-4 {
-  padding: 1rem
 }
 
 .px-2 {
@@ -364,11 +323,6 @@
   line-height: 1.25rem
 }
 
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem
-}
-
 .font-bold {
   font-weight: 700
 }
@@ -377,29 +331,14 @@
   font-weight: 500
 }
 
-.text-black {
+.text-gray-300 {
   --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity))
-}
-
-.text-gray-400 {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity))
+  color: rgb(209 213 219 / var(--tw-text-opacity))
 }
 
 .text-gray-500 {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity))
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity))
-}
-
-.text-white {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
 .text-gray-800 {
@@ -412,9 +351,9 @@
   color: rgb(17 24 39 / var(--tw-text-opacity))
 }
 
-.text-gray-300 {
+.text-white {
   --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity))
+  color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
 .opacity-50 {
@@ -437,21 +376,6 @@
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
-}
-
-.shadow-gray-900 {
-  --tw-shadow-color: #111827;
-  --tw-shadow: var(--tw-shadow-colored)
-}
-
-.shadow-gray-900\/50 {
-  --tw-shadow-color: rgb(17 24 39 / 0.5);
-  --tw-shadow: var(--tw-shadow-colored)
-}
-
-.shadow-gray-200\/50 {
-  --tw-shadow-color: rgb(229 231 235 / 0.5);
-  --tw-shadow: var(--tw-shadow-colored)
 }
 
 .outline-none {
@@ -481,24 +405,18 @@
   transition-duration: 75ms
 }
 
-.hover\:bg-gray-200:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity))
+.\@container {
+  container-type: inline-size
+}
+
+.\@container\/main {
+  container-type: inline-size;
+  container-name: main
 }
 
 .hover\:bg-gray-50:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity))
-}
-
-.hover\:text-red-500:hover {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity))
-}
-
-.hover\:text-red-600:hover {
-  --tw-text-opacity: 1;
-  color: rgb(220 38 38 / var(--tw-text-opacity))
 }
 
 .hover\:text-red-700:hover {
@@ -535,9 +453,113 @@
   opacity: 0.7
 }
 
+@container (min-width: 0px) {
+  .\@\[0px\]\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+  }
+}
+
+@container main (min-width: 24rem) {
+  .\@sm\/main\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+}
+
+@container (min-width: 24rem) {
+  .\@sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+
+  .\@sm\:bg-red-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(239 68 68 / var(--tw-bg-opacity))
+  }
+}
+
+@container (min-width: 28rem) {
+  .\@md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr))
+  }
+}
+
+@container main (min-width: 32rem) {
+  .\@lg\/main\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
+  }
+}
+
+@container (min-width: 32rem) {
+  .\@lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
+  }
+
+  .\@lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+
+  .\@lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr))
+  }
+
+  .\@lg\:bg-red-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(239 68 68 / var(--tw-bg-opacity))
+  }
+}
+
+@container main (min-width: 36rem) {
+  .\@xl\/main\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr))
+  }
+}
+
+@container (min-width: 36rem) {
+  .\@xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr))
+  }
+
+  .\@xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+
+  .\@xl\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
+  }
+}
+
+@container (min-width: 42rem) {
+  .\@2xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr))
+  }
+
+  .\@2xl\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
+  }
+}
+
+@container (min-width: 48rem) {
+  .\@3xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr))
+  }
+
+  .\@3xl\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
+  }
+}
+
+@container (min-width: 64rem) {
+  .\@5xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr))
+  }
+}
+
 @media (min-width: 640px) {
   .sm\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr))
+  }
+
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
   }
 }
 
@@ -545,28 +567,20 @@
   .md\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr))
   }
-
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr))
-  }
 }
 
 @media (min-width: 1024px) {
-  .lg\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr))
-  }
-
   .lg\:grid-cols-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+
+  .lg\:grid-cols-5 {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
   }
 }
 
 @media (min-width: 1280px) {
-  .xl\:grid-cols-3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr))
-  }
-
-  .xl\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr))
+  .xl\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr))
   }
 }
