@@ -15,66 +15,69 @@
         $attachments = $getPickedAttachments();
     @endphp
 
-    <div x-data="{
-        state: $wire.entangle(@js($getStatePath())).defer,
-        initial: @js($attachments->pluck('id')->toArray()),
-        multiple: @js($isMultiple()),
-        pickerModalID: 'laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}',
-        init () {
-            this.state = [...this.initial]
+    <div
+        x-data="{
+            state: $wire.entangle(@js($getStatePath())).defer,
+            initial: @js($attachments->pluck('id')->toArray()),
+            multiple: @js($isMultiple()),
+            pickerModalID: 'laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}',
+            init () {
+                this.state = [...this.initial]
 
-            window.addEventListener('laravel-attachment::uploaded-images', (event) => {
-                if (event.detail.statePath !== '{{ $getStatePath() }}') {
-                    return
+                window.addEventListener('laravel-attachment::uploaded-images', (event) => {
+                    if (event.detail.statePath !== '{{ $getStatePath() }}') {
+                        return
+                    }
+
+                    this.state = [...this.state, ...event.detail.attachments]
+                    this.updateState()
+                })
+
+                window.addEventListener('laravel-attachment::picked-attachments', (event) => {
+                    if (event.detail.statePath !== '{{ $getStatePath() }}') {
+                        return
+                    }
+
+                    this.state = [...event.detail.attachments]
+                    this.updateState()
+                })
+            },
+            openPicker () {
+                $dispatch('open-modal', { id: this.pickerModalID })
+
+                $wire.emit('laravel-attachments::open-picker', {
+                    statePath: '{{ $getStatePath() }}',
+                    attachments: this.state || this.state || [],
+                })
+            },
+            closePicker () {
+                $dispatch('close-modal', { id: this.pickerModalID })
+            },
+            remove (id) {
+                if (! this.multiple) {
+                    this.state = []
+                } else {
+                    this.state = [...this.state.filter((item) => item !== id)]
                 }
 
-                this.state = [...this.state, ...event.detail.attachments]
                 this.updateState()
-            })
+            },
+            updateState () {
+                $wire.$refresh()
+            },
+            reorder (event) {
+                const state = Alpine.raw(this.state)
+                const reorderedRow = state.splice(event.oldIndex, 1)[0]
 
-            window.addEventListener('laravel-attachment::picked-attachments', (event) => {
-                if (event.detail.statePath !== '{{ $getStatePath() }}') {
-                    return
-                }
-
-                this.state = [...event.detail.attachments]
-                this.updateState()
-            })
-        },
-        openPicker () {
-            $dispatch('open-modal', { id: this.pickerModalID })
-
-            $wire.emit('laravel-attachments::open-picker', {
-                statePath: '{{ $getStatePath() }}',
-                attachments: this.state || this.state || [],
-            })
-        },
-        closePicker () {
-            $dispatch('close-modal', { id: this.pickerModalID })
-        },
-        remove (id) {
-            if (! this.multiple) {
-                this.state = []
-            } else {
-                this.state = [...this.state.filter((item) => item !== id)]
+                state.splice(event.newIndex, 0, reorderedRow)
+                this.state = [...state]
             }
-
-            this.updateState()
-        },
-        updateState () {
-            $wire.$refresh()
-        },
-        reorder (event) {
-            const state = Alpine.raw(this.state)
-            const reorderedRow = state.splice(event.oldIndex, 1)[0]
-
-            state.splice(event.newIndex, 0, reorderedRow)
-            this.state = [...state]
-        }
-    }">
-        <div class="flex flex-col gap-4" wire:loading.class="opacity-50">
+        }"
+        class="pt-3"
+    >
+        <div class="gallery-container flex flex-col gap-4" wire:loading.class="opacity-50">
             <div
-                class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+                class="gallery"
                 @if ($isMultiple() && ! $isDisabled())
                     x-sortable
                     x-on:end="reorder($event)"
@@ -103,36 +106,15 @@
                                 container-class="flex flex-col w-full h-full justify-end"
                                 :with-delete-button="true"
                                 delete-action="remove('{{ $attachment->id }}')"
+                                {{-- TODO BE: Add edit modal --}}
+                                :with-edit-button="true"
+                                {{-- edit-action="openEditModal('{{ $attachment->id }}')" --}}
+                                {{-- TODO BE: Add cropper modal --}}
+                                :with-crop-button="true"
+                                {{-- crop-action="openCropModal('{{ $attachment->id }}')" --}}
                                 {{-- TODO BE: Add formats used in this module --}}
                                 {{-- :formats="[['name' => 'test', 'width' => 100, 'height' => 100]]" --}}
-                            >
-                                {{-- @unless($isDisabled()) --}}
-                                    {{-- <button
-                                        x-on:click.prevent="remove('{{ $attachment->id }}')"
-                                        class="absolute top-1 right-1 bg-white rounded hover:text-red-700 hover:bg-gray-50 shadow-lg"
-                                    >
-                                        <x-heroicon-o-trash class="p-1 w-6 h-6" />
-                                    </button> --}}
-
-                                    {{-- <div class="absolute right-1 bottom-1 left-1 flex justify-end gap-1"> --}}
-                                        {{-- TODO BE: Add cropper modal --}}
-                                        {{-- <button
-                                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                                        >
-                                            Crop --}}
-                                            {{-- TODO: Unable to locate a class or view for component [fas-crop-simple] --}}
-                                            {{-- <x-fas-crop-simple class="p-1.5 w-6 h-6" /> --}}
-                                        {{-- </button> --}}
-
-                                        {{-- TODO BE: Add edit modal --}}
-                                        {{-- <button
-                                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                                        >
-                                            <x-heroicon-s-pencil class="p-1 w-6 h-6" />
-                                        </button> --}}
-                                    {{-- </div> --}}
-                                {{-- @endunless --}}
-                            </x-laravel-attachments::attachment>
+                            />
                         </div>
                     </div>
                 @endforeach
