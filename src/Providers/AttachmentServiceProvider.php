@@ -45,6 +45,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
                 '2022_08_03_120355_create_attachments_table',
                 '2022_08_03_120356_create_attachment_tags_table',
                 '2022_08_03_120357_create_attachment_attachment_tags_table',
+                '2023_04_27_120359_create_attachment_formats',
             ])
             ->runsMigrations()
             ->hasViews('laravel-attachments');

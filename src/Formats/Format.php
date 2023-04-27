@@ -47,6 +47,11 @@ abstract class Format implements Arrayable
             'name' => $this->name(),
             'description' => $this->description(),
             'manipulations' => $this->definition(),
+
+            // Formatter details
+            'width' => $this->width(),
+            'height' => $this->height(),
+            'aspectRatio' => $this->aspectRatio(),
         ];
     }
 

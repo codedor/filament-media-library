@@ -39,4 +39,9 @@ class Formats extends Collection
                 ));
             });
     }
+
+    public function findByKey(string $key): null|Format
+    {
+        return $this->flatten(1)->firstWhere(fn ($format) => get_class($format) === $key);
+    }
 }
