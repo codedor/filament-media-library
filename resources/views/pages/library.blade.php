@@ -37,7 +37,7 @@
 
                 <div class="w-1/3"></div>
 
-                <button class="flex gap-2 items-end p-3 items-center" x-on:click="resetFilters()">
+                <button class="flex gap-2 p-3 items-center" x-on:click="resetFilters()">
                     <x-heroicon-o-x class="w-5 h-5" />
                     {{ __('laravel-attachment.clear filter') }}
                 </button>
@@ -62,9 +62,7 @@
                     <div class="p-2 rounded-lg overflow-hidden shadow-lg bg-white flex flex-col gap-2">
                         <x-laravel-attachments::attachment
                             :$attachment
-                            :with-delete-button="true"
                             delete-action="openDeleteModal('{{ $attachment->id }}')"
-                            :with-edit-button="true"
                             edit-action="openEditModal('{{ $attachment->id }}')"
                         />
                     </div>

@@ -104,13 +104,10 @@
                                 :$attachment
                                 :is-disabled="$isDisabled()"
                                 container-class="flex flex-col w-full h-full justify-end"
-                                :with-delete-button="true"
                                 delete-action="remove('{{ $attachment->id }}')"
                                 {{-- TODO BE: Add edit modal --}}
-                                :with-edit-button="true"
                                 {{-- edit-action="openEditModal('{{ $attachment->id }}')" --}}
                                 {{-- TODO BE: Add cropper modal --}}
-                                :with-crop-button="true"
                                 {{-- crop-action="openCropModal('{{ $attachment->id }}')" --}}
                                 {{-- TODO BE: Add formats used in this module --}}
                                 {{-- :formats="[['name' => 'test', 'width' => 100, 'height' => 100]]" --}}
