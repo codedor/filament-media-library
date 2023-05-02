@@ -16,11 +16,11 @@
         </div>
     @endif
 
-    <div class="flex items-center items-center gap-2">
+    <div class="flex items-center gap-2">
         @if ($state->isEmpty())
             <div class="w-16">
                 <div class="
-                    flex relative w-full aspect-square rounded-lg border
+                    flex w-full aspect-square rounded-lg border
                     border-dashed border-gray-300 items-center justify-center
                     overflow-hidden relative
                 ">

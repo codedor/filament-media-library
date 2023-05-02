@@ -4,6 +4,7 @@
     width="4xl"
 >
     @if ($attachment)
+        {{-- TODO: translated name? what does that mean? difference with alt name? --}}
         <x-filament::modal.heading>
             {{ __('laravel-attachment.edit modal heading :name', [
                 'name' => $attachment->name,

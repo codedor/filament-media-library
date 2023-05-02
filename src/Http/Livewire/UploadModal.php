@@ -109,6 +109,7 @@ class UploadModal extends Component implements HasForms
                     ->reactive()
                     ->disableLabel()
                     ->required()
+                    // TODO BE: Make multiple dynamic
                     ->multiple()
                     ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
                         return $file->save();
