@@ -1,3 +1,137 @@
+*, ::before, ::after {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  
+}
+
+::backdrop {
+  --tw-border-spacing-x: 0;
+  --tw-border-spacing-y: 0;
+  --tw-translate-x: 0;
+  --tw-translate-y: 0;
+  --tw-rotate: 0;
+  --tw-skew-x: 0;
+  --tw-skew-y: 0;
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-pan-x:  ;
+  --tw-pan-y:  ;
+  --tw-pinch-zoom:  ;
+  --tw-scroll-snap-strictness: proximity;
+  --tw-ordinal:  ;
+  --tw-slashed-zero:  ;
+  --tw-numeric-figure:  ;
+  --tw-numeric-spacing:  ;
+  --tw-numeric-fraction:  ;
+  --tw-ring-inset:  ;
+  --tw-ring-offset-width: 0px;
+  --tw-ring-offset-color: #fff;
+  --tw-ring-color: rgb(59 130 246 / 0.5);
+  --tw-ring-offset-shadow: 0 0 #0000;
+  --tw-ring-shadow: 0 0 #0000;
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  --tw-blur:  ;
+  --tw-brightness:  ;
+  --tw-contrast:  ;
+  --tw-grayscale:  ;
+  --tw-hue-rotate:  ;
+  --tw-invert:  ;
+  --tw-saturate:  ;
+  --tw-sepia:  ;
+  --tw-drop-shadow:  ;
+  --tw-backdrop-blur:  ;
+  --tw-backdrop-brightness:  ;
+  --tw-backdrop-contrast:  ;
+  --tw-backdrop-grayscale:  ;
+  --tw-backdrop-hue-rotate:  ;
+  --tw-backdrop-invert:  ;
+  --tw-backdrop-opacity:  ;
+  --tw-backdrop-saturate:  ;
+  --tw-backdrop-sepia:  
+}
+
+.gallery-container {
+  container-type: inline-size;
+  container-name: gallery
+}
+
+.gallery {
+  display: grid;
+  gap: 1rem
+}
+
+@container gallery (min-width: 0px) {
+  .gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr))
+  }
+}
+
+@container gallery (min-width: 28rem) {
+  .gallery {
+    grid-template-columns: repeat(3, minmax(0, 1fr))
+  }
+}
+
+@container gallery (min-width: 36rem) {
+  .gallery {
+    grid-template-columns: repeat(4, minmax(0, 1fr))
+  }
+}
+
+@container gallery (min-width: 48rem) {
+  .gallery {
+    grid-template-columns: repeat(5, minmax(0, 1fr))
+  }
+}
+
+@container gallery (min-width: 64rem) {
+  .gallery {
+    grid-template-columns: repeat(6, minmax(0, 1fr))
+  }
+}
+
 .absolute {
   position: absolute
 }
@@ -7,22 +141,31 @@
 }
 
 .inset-0 {
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px
+  inset: 0px
 }
 
-.left-2 {
-  left: 0.5rem
+.bottom-1 {
+  bottom: 0.25rem
 }
 
-.right-2 {
-  right: 0.5rem
+.bottom-3 {
+  bottom: 0.75rem
 }
 
-.top-2 {
-  top: 0.5rem
+.left-1 {
+  left: 0.25rem
+}
+
+.left-3 {
+  left: 0.75rem
+}
+
+.right-1 {
+  right: 0.25rem
+}
+
+.top-1 {
+  top: 0.25rem
 }
 
 .z-10 {
@@ -37,6 +180,21 @@
   z-index: 50
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem
+}
+
+.mr-4 {
+  margin-right: 1rem
+}
+
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1
+}
+
 .block {
   display: block
 }
@@ -47,10 +205,6 @@
 
 .inline-flex {
   display: inline-flex
-}
-
-.grid {
-  display: grid
 }
 
 .hidden {
@@ -69,10 +223,6 @@
   height: 4rem
 }
 
-.h-4 {
-  height: 1rem
-}
-
 .h-5 {
   height: 1.25rem
 }
@@ -81,16 +231,12 @@
   height: 1.5rem
 }
 
-.h-8 {
-  height: 2rem
+.h-\[1em\] {
+  height: 1em
 }
 
-.h-1 {
-  height: 0.25rem
-}
-
-.h-2 {
-  height: 0.5rem
+.h-full {
+  height: 100%
 }
 
 .min-h-\[2rem\] {
@@ -113,14 +259,6 @@
   width: 50%
 }
 
-.w-32 {
-  width: 8rem
-}
-
-.w-4 {
-  width: 1rem
-}
-
 .w-5 {
   width: 1.25rem
 }
@@ -133,19 +271,16 @@
   width: 100%
 }
 
-.rotate-45 {
-  --tw-rotate: 45deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+.flex-1 {
+  flex: 1 1 0%
+}
+
+.flex-grow {
+  flex-grow: 1
 }
 
 .-rotate-45 {
   --tw-rotate: -45deg;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
-}
-
-.scale-150 {
-  --tw-scale-x: 1.5;
-  --tw-scale-y: 1.5;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }
 
@@ -162,12 +297,12 @@
   cursor: pointer
 }
 
-.grid-cols-6 {
-  grid-template-columns: repeat(6, minmax(0, 1fr))
-}
-
 .flex-col {
   flex-direction: column
+}
+
+.items-start {
+  align-items: flex-start
 }
 
 .items-end {
@@ -206,6 +341,10 @@
   gap: 2rem
 }
 
+.gap-y-6 {
+  row-gap: 1.5rem
+}
+
 .overflow-hidden {
   overflow: hidden
 }
@@ -235,34 +374,19 @@
   border-color: transparent
 }
 
-.border-gray-100 {
-  --tw-border-opacity: 1;
-  border-color: rgb(243 244 246 / var(--tw-border-opacity))
-}
-
-.border-gray-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(229 231 235 / var(--tw-border-opacity))
-}
-
 .bg-gray-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity))
 }
 
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
-}
-
-.bg-gray-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(209 213 219 / var(--tw-bg-opacity))
-}
-
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: rgb(229 231 235 / var(--tw-bg-opacity))
+}
+
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity))
 }
 
 .bg-contain {
@@ -279,6 +403,10 @@
 
 .p-1 {
   padding: 0.25rem
+}
+
+.p-1\.5 {
+  padding: 0.375rem
 }
 
 .p-2 {
@@ -319,8 +447,12 @@
   padding-bottom: 2rem
 }
 
-.text-center {
-  text-align: center
+.pr-4 {
+  padding-right: 1rem
+}
+
+.pt-3 {
+  padding-top: 0.75rem
 }
 
 .text-sm {
@@ -336,14 +468,9 @@
   font-weight: 500
 }
 
-.text-black {
+.text-gray-300 {
   --tw-text-opacity: 1;
-  color: rgb(0 0 0 / var(--tw-text-opacity))
-}
-
-.text-gray-400 {
-  --tw-text-opacity: 1;
-  color: rgb(156 163 175 / var(--tw-text-opacity))
+  color: rgb(209 213 219 / var(--tw-text-opacity))
 }
 
 .text-gray-500 {
@@ -351,9 +478,14 @@
   color: rgb(107 114 128 / var(--tw-text-opacity))
 }
 
-.text-red-500 {
+.text-gray-800 {
   --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity))
+  color: rgb(31 41 55 / var(--tw-text-opacity))
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity))
 }
 
 .text-white {
@@ -400,8 +532,20 @@
   transition-duration: 150ms
 }
 
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms
+}
+
 .transition-colors {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms
+}
+
+.transition-transform {
+  transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms
 }
@@ -410,14 +554,14 @@
   transition-duration: 75ms
 }
 
-.hover\:bg-gray-200:hover {
+.hover\:bg-gray-50:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity))
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity))
 }
 
-.hover\:text-red-500:hover {
+.hover\:text-red-700:hover {
   --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity))
+  color: rgb(185 28 28 / var(--tw-text-opacity))
 }
 
 .focus\:ring-1:focus {
@@ -447,4 +591,19 @@
 
 .disabled\:opacity-70:disabled {
   opacity: 0.7
+}
+
+.peer:checked ~ .peer-checked\:bg-gray-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity))
+}
+
+.peer:checked ~ .peer-checked\:p-2 {
+  padding: 0.5rem
+}
+
+.peer:checked ~ .peer-checked\:\[\&_\.media\]\:scale-90 .media {
+  --tw-scale-x: .9;
+  --tw-scale-y: .9;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
 }

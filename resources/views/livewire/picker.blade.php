@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <div class="relative" style="aspect-ratio: 2/1">
+        <div class="relative gallery-container" style="aspect-ratio: 2/1">
             @if ($attachments->isEmpty())
                 <div class="p-2">
                     {{ __('laravel_attachment.no attachments found') }}
@@ -60,11 +60,11 @@
                     />
                 </div>
 
-                <div class="grid grid-cols-6 gap-2">
+                <div class="gallery gap-y-6">
                     @foreach($attachments as $attachment)
                         <label
                             for="attachment-{{ $statePath }}-{{ $attachment->id }}"
-                            class="block aspect-square relative cursor-pointer"
+                            class="block relative cursor-pointer"
                         >
                             <input
                                 type="checkbox"
@@ -73,7 +73,7 @@
                                 value="{{ $attachment->id }}"
 
                                 @class([
-                                    'absolute top-2 left-2 z-10' => $isMultiple,
+                                    'absolute bottom-3 left-3 z-10 peer' => $isMultiple,
                                     'hidden' => ! $isMultiple,
                                 ])
 
@@ -81,7 +81,11 @@
                                 x-model="selected"
                             >
 
-                            <x-laravel-attachments::attachment :$attachment />
+                            <x-laravel-attachments::attachment
+                                :$attachment
+                                container-class="rounded-lg transition-all peer-checked:p-2 peer-checked:bg-gray-200 peer-checked:[&_.media]:scale-90"
+                                class="transition-transform"
+                            />
                         </label>
                     @endforeach
                 </div>
