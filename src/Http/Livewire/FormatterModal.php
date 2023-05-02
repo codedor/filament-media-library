@@ -11,14 +11,14 @@ class FormatterModal extends Component
 {
     public Attachment $attachment;
 
-    public null | array $modelFormats = null;
+    public null|array $modelFormats = null;
 
     protected $listeners = [
         'laravel-attachment::open-formatter-attachment-modal' => 'setAttachment',
         'cropped' => 'saveCrop',
     ];
 
-    public function setAttachment(string $uuid = '', null | array $formats = null)
+    public function setAttachment(string $uuid = '', null|array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
         $this->modelFormats = $formats;
