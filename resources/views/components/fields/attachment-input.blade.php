@@ -29,7 +29,12 @@
                         return
                     }
 
-                    this.state = [...this.state, ...event.detail.attachments]
+                    if (this.multiple) {
+                        this.state = [...this.state, ...event.detail.attachments]
+                    } else {
+                        this.state = event.detail.attachments[0] || null
+                    }
+
                     this.updateState()
                 })
 
@@ -60,16 +65,14 @@
                     this.state = [...this.state.filter((item) => item !== id)]
                 }
 
-                if (this.multiple) {
-                    this.state = [...this.state, ...event.detail.attachments]
-                } else {
-                    this.state = event.detail.attachments[0] || null
-                }
-
                 this.updateState()
             },
             updateState () {
                 $wire.$refresh()
+            },
+            openFormatterModal (id) {
+                $dispatch('open-modal', { id: 'laravel-attachment::formatter-attachment-modal' })
+                $wire.emit('laravel-attachment::open-formatter-attachment-modal', id, @js($getAllowedFormats()))
             },
             reorder (event) {
                 const state = Alpine.raw(this.state)
@@ -111,11 +114,12 @@
                                 :is-disabled="$isDisabled()"
                                 container-class="flex flex-col w-full h-full justify-end"
                                 delete-action="remove('{{ $attachment->id }}')"
-                                {{-- TODO BE: Add edit modal --}}
-                                {{-- edit-action="openEditModal('{{ $attachment->id }}')" --}}
-                                formatter-action="openFormatterModal('{{ $attachment->id }}')"
-                                {{-- TODO BE: Add formats used in this module --}}
-                                {{-- :formats="[['name' => 'test', 'width' => 100, 'height' => 100]]" --}}
+                                edit-action="openEditModal('{{ $attachment->id }}')"
+                                :formatter-action="
+                                    count($getAllowedFormats()) > 0
+                                        ? 'openFormatterModal(\'' . $attachment->id . '\')'
+                                        : null
+                                "
                             />
                         </div>
                     </div>
@@ -159,4 +163,9 @@
             />
         @endunless
     </div>
+
+    @once
+        @livewire('laravel-attachments::edit-modal')
+        @livewire('laravel-attachments::formatter-modal')
+    @endonce
 </x-dynamic-component>

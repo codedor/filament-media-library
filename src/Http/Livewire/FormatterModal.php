@@ -11,21 +11,31 @@ class FormatterModal extends Component
 {
     public Attachment $attachment;
 
+    public null | array $modelFormats = null;
+
     protected $listeners = [
         'laravel-attachment::open-formatter-attachment-modal' => 'setAttachment',
         'cropped' => 'saveCrop',
     ];
 
-    public function setAttachment(string $uuid = '')
+    public function setAttachment(string $uuid = '', null | array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
+        $this->modelFormats = $formats;
     }
 
     public function render()
     {
         $this->dispatchBrowserEvent('laravel-attachments::load-formatter');
 
-        $formats = Formats::mapToKebab()->map->toArray();
+        $formats = Formats::mapToKebab();
+
+        if (! is_null($this->modelFormats)) {
+            $formats = $formats->filter(fn ($format) => in_array(
+                get_class($format),
+                $this->modelFormats
+            ));
+        }
 
         $previousFormats = [];
         if (isset($this->attachment)) {
@@ -33,7 +43,7 @@ class FormatterModal extends Component
         }
 
         return view('laravel-attachments::livewire.formatter-modal', [
-            'formats' => $formats,
+            'formats' => $formats->map->toArray(),
             'previousFormats' => $previousFormats,
         ]);
     }

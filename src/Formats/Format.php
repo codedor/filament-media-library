@@ -62,6 +62,11 @@ abstract class Format implements Arrayable
         return $this->name;
     }
 
+    public function column(): string
+    {
+        return $this->column;
+    }
+
     public function argument(string $argument): mixed
     {
         return $this->manipulations->getManipulationArgument($argument);
