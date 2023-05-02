@@ -32,7 +32,9 @@ class Models
 
     protected function modelIsRegisterable(string $model): bool
     {
-        return ! (! is_subclass_of($model, Model::class) ||
-            ! method_exists($model, 'getFormats'));
+        return ! (
+            ! is_subclass_of($model, Model::class) ||
+            ! method_exists($model, 'getFormats')
+        );
     }
 }
