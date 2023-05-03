@@ -109,12 +109,12 @@ use Codedor\Attachments\Entities\Manipulations;
 class Hero extends Format
 {
     protected string $description = 'This format is used for hero images';
-    
+
     public function definition(): Manipulations
     {
         return $this->manipulations()
             ->blur(3)
-            ...;    
+            ...;
     }
 }
 ```
@@ -129,5 +129,3 @@ the [Glide docs](https://glide.thephpleague.com/2.0/api/quick-reference/)
 ### Registering formats
 
 Formats are tightly coupled with models.
-
-

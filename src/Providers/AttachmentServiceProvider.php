@@ -29,6 +29,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
     ];
 
     protected array $livewireComponents = [
+        'formatter-modal' => Livewire\FormatterModal::class,
         'upload-modal' => Livewire\UploadModal::class,
         'edit-modal' => Livewire\EditModal::class,
         'picker' => Livewire\Picker::class,
@@ -44,6 +45,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
                 '2022_08_03_120355_create_attachments_table',
                 '2022_08_03_120356_create_attachment_tags_table',
                 '2022_08_03_120357_create_attachment_attachment_tags_table',
+                '2023_04_27_120359_create_attachment_formats',
             ])
             ->runsMigrations()
             ->hasViews('laravel-attachments');
@@ -70,7 +72,14 @@ class AttachmentServiceProvider extends PluginServiceProvider
         parent::boot();
 
         Filament::serving(function () {
-            Filament::registerStyles([__DIR__ . '/../../dist/css/laravel-media.css']);
+            Filament::registerStyles([
+                __DIR__ . '/../../dist/css/laravel-media.css',
+                __DIR__ . '/../../dist/css/cropper.min.css',
+            ]);
+
+            Filament::registerScripts([
+                __DIR__ . '/../../dist/js/cropper.min.js',
+            ]);
         });
     }
 

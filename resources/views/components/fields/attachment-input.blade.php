@@ -29,7 +29,12 @@
                         return
                     }
 
-                    this.state = [...this.state, ...event.detail.attachments]
+                    if (this.multiple) {
+                        this.state = [...this.state, ...event.detail.attachments]
+                    } else {
+                        this.state = event.detail.attachments[0] || null
+                    }
+
                     this.updateState()
                 })
 
@@ -64,6 +69,10 @@
             },
             updateState () {
                 $wire.$refresh()
+            },
+            openFormatterModal (id) {
+                $dispatch('open-modal', { id: 'laravel-attachment::formatter-attachment-modal' })
+                $wire.emit('laravel-attachment::open-formatter-attachment-modal', id, @js($getAllowedFormats()))
             },
             reorder (event) {
                 const state = Alpine.raw(this.state)
@@ -105,12 +114,12 @@
                                 :is-disabled="$isDisabled()"
                                 container-class="flex flex-col w-full h-full justify-end"
                                 delete-action="remove('{{ $attachment->id }}')"
-                                {{-- TODO BE: Add edit modal --}}
-                                {{-- edit-action="openEditModal('{{ $attachment->id }}')" --}}
-                                {{-- TODO BE: Add cropper modal --}}
-                                {{-- crop-action="openCropModal('{{ $attachment->id }}')" --}}
-                                {{-- TODO BE: Add formats used in this module --}}
-                                {{-- :formats="[['name' => 'test', 'width' => 100, 'height' => 100]]" --}}
+                                edit-action="openEditModal('{{ $attachment->id }}')"
+                                :formatter-action="
+                                    count($getAllowedFormats()) > 0
+                                        ? 'openFormatterModal(\'' . $attachment->id . '\')'
+                                        : null
+                                "
                             />
                         </div>
                     </div>
@@ -123,7 +132,7 @@
                         type="button"
                         class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
                         x-on:click.prevent="$dispatch('open-modal', {
-                            id: 'laravel-attachment::upload-attachment-modal-{{ $getStatePath() }}'
+                            id: 'laravel-attachment::upload-attachment-modal{{ $getStatePath() }}'
                         })"
                     >
                         {{ __('laravel_attachment.upload attachment') }}
@@ -148,15 +157,15 @@
                 :is-multiple="$isMultiple()"
             />
 
-            <x-filament::modal
-                id="laravel-attachment::upload-attachment-modal-{{ $getStatePath() }}"
-                width="3xl"
-            >
-                <livewire:laravel-attachments::upload-modal
-                    wire:key="upload-{{ $getStatePath() }}"
-                    :state-path="$getStatePath()"
-                />
-            </x-filament::modal>
+            <livewire:laravel-attachments::upload-modal
+                wire:key="upload-{{ $getStatePath() }}"
+                :state-path="$getStatePath()"
+            />
         @endunless
     </div>
+
+    @once
+        @livewire('laravel-attachments::edit-modal')
+        @livewire('laravel-attachments::formatter-modal')
+    @endonce
 </x-dynamic-component>

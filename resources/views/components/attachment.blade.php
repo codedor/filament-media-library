@@ -5,7 +5,7 @@
     'isDisabled' => false,
     'deleteAction' => null,
     'editAction' => null,
-    'cropAction' => null,
+    'formatterAction' => null,
 ])
 
 <div @class(['flex flex-col h-full', $containerClass])>
@@ -81,14 +81,13 @@
             <div class="absolute right-1 bottom-1 left-1 flex justify-end gap-1">
                 {{ $slot }}
 
-                @if ($cropAction && $attachment->type === 'image')
-                    {{-- TODO BE: Add cropper modal --}}
+                @if ($formatterAction && $attachment->type === 'image')
                     <button
-                        x-on:click.prevent="{{ $cropAction }}"
+                        x-on:click.prevent="{{ $formatterAction }}"
                         type="button"
                         class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
                     >
-                        <x-fas-crop-simple class="p-1.5 w-6 h-6" />
+                        <x-heroicon-s-scissors class="p-1.5 w-6 h-6" />
                     </button>
                 @endif
 

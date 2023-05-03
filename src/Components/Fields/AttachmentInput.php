@@ -3,6 +3,7 @@
 namespace Codedor\Attachments\Components\Fields;
 
 use Closure;
+use Codedor\Attachments\Facades\Formats;
 use Codedor\Attachments\Models\Attachment;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -24,6 +25,8 @@ class AttachmentInput extends Field implements HasForms
     public null|string|Closure $sortField = null;
 
     public Closure $attachmentsListQuery;
+
+    public null|array $allowedFormats = null;
 
     public function setUp(): void
     {
@@ -133,5 +136,32 @@ class AttachmentInput extends Field implements HasForms
     public function getSortField(): null|string
     {
         return $this->evaluate($this->sortField);
+    }
+
+    public function allowedFormats(null|array $allowedFormats): static
+    {
+        $this->allowedFormats = $allowedFormats;
+
+        return $this;
+    }
+
+    public function getAllowedFormats(): null|array
+    {
+        $formats = $this->evaluate($this->allowedFormats);
+
+        // Get the model that we are editing/viewing
+        if (is_null($formats)) {
+            $model = $this->getModelInstance();
+            if ($model) {
+                $formats = $model->getFormats(collect())
+                    ->filter(fn ($format) => $format->column() === $this->statePath);
+            } else {
+                $formats = Formats::all();
+            }
+        }
+
+        return Collection::wrap($formats)
+            ->map(fn ($format) => is_string($format) ? $format : get_class($format))
+            ->toArray();
     }
 }

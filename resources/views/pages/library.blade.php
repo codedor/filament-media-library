@@ -9,6 +9,10 @@
                 $wire.set('attachmentToDelete', id)
                 $dispatch('open-modal', { id: 'laravel-attachment::delete-attachment-modal' })
             },
+            openFormatterModal (id) {
+                $dispatch('open-modal', { id: 'laravel-attachment::formatter-attachment-modal' })
+                $wire.emit('laravel-attachment::open-formatter-attachment-modal', id)
+            },
             openEditModal (id) {
                 $dispatch('open-modal', { id: 'laravel-attachment::edit-attachment-modal' })
                 $wire.emit('laravel-attachment::open-edit-attachment-modal', id)
@@ -64,6 +68,7 @@
                             :$attachment
                             delete-action="openDeleteModal('{{ $attachment->id }}')"
                             edit-action="openEditModal('{{ $attachment->id }}')"
+                            formatter-action="openFormatterModal('{{ $attachment->id }}')"
                         />
                     </div>
                 @endforeach
@@ -77,18 +82,11 @@
             </div>
         </div>
 
-        <x-filament::modal id="laravel-attachment::upload-attachment-modal" width="full">
+        @once
+            @include('laravel-attachments::livewire.delete-modal')
             @livewire('laravel-attachments::upload-modal')
-        </x-filament::modal>
-
-        @include('laravel-attachments::livewire.delete-modal')
-
-        <x-filament::modal
-            id="laravel-attachment::edit-attachment-modal"
-            x-on:modal-closed="closeEditModal()"
-            width="4xl"
-        >
             @livewire('laravel-attachments::edit-modal')
-        </x-filament::modal>
+            @livewire('laravel-attachments::formatter-modal')
+        @endonce
     </div>
 </x-filament::page>
