@@ -225,6 +225,30 @@
   margin-bottom: 0.25rem
 }
 
+.mt-5 {
+  margin-top: 1.25rem
+}
+
+.mt-4 {
+  margin-top: 1rem
+}
+
+.mt-3 {
+  margin-top: 0.75rem
+}
+
+.\!mt-5 {
+  margin-top: 1.25rem !important
+}
+
+.\!mt-10 {
+  margin-top: 2.5rem !important
+}
+
+.\!mt-8 {
+  margin-top: 2rem !important
+}
+
 .line-clamp-1 {
   overflow: hidden;
   display: -webkit-box;
@@ -290,6 +314,14 @@
 
 .h-\[70vh\] {
   height: 70vh
+}
+
+.h-3 {
+  height: 0.75rem
+}
+
+.h-4 {
+  height: 1rem
 }
 
 .max-h-full {
@@ -563,6 +595,10 @@
   padding: 0.75rem
 }
 
+.p-4 {
+  padding: 1rem
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem
@@ -825,6 +861,22 @@
     display: flex
   }
 
+  .max-lg\:aspect-\[\] {
+    aspect-ratio: 
+  }
+
+  .max-lg\:aspect-\[9\/16\] {
+    aspect-ratio: 9/16
+  }
+
+  .max-lg\:aspect-\[3\/4\] {
+    aspect-ratio: 3/4
+  }
+
+  .max-lg\:h-52 {
+    height: 13rem
+  }
+
   .max-lg\:w-1\/4 {
     width: 25%
   }
@@ -836,11 +888,23 @@
   .max-lg\:w-1\/3 {
     width: 33.333333%
   }
+
+  .max-lg\:w-1\/5 {
+    width: 20%
+  }
 }
 
 @media not all and (min-width: 768px) {
   .max-md\:flex {
     display: flex
+  }
+
+  .max-md\:h-52 {
+    height: 13rem
+  }
+
+  .max-md\:h-40 {
+    height: 10rem
   }
 
   .max-md\:w-1\/4 {
@@ -859,6 +923,10 @@
 @media not all and (min-width: 640px) {
   .max-sm\:w-1\/2 {
     width: 50%
+  }
+
+  .max-sm\:w-1\/3 {
+    width: 33.333333%
   }
 }
 
@@ -904,6 +972,22 @@
   .lg\:overflow-y-auto {
     overflow-y: auto
   }
+}
+
+.peer:checked ~ .peer-checked\:\[\&_\.attachment-tooltip\]\:scale-90 .attachment-tooltip {
+  --tw-scale-x: .9;
+  --tw-scale-y: .9;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))
+}
+
+.peer:checked ~ .peer-checked\:\[\&_\.attachment-tooltip\]\:text-gray-300 .attachment-tooltip {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity))
+}
+
+.peer:checked ~ .peer-checked\:\[\&_\.attachment-tooltip\]\:text-gray-400 .attachment-tooltip {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity))
 }
 
 .peer:checked ~ .peer-checked\:\[\&_\.media\]\:scale-90 .media {

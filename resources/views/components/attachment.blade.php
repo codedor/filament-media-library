@@ -6,6 +6,7 @@
     'deleteAction' => null,
     'editAction' => null,
     'formatterAction' => null,
+    'extendedTooltip' => false,
 ])
 
 <div @class(['flex flex-col h-full', $containerClass])>
@@ -16,21 +17,51 @@
         </p>
 
         {{-- Format tooltip --}}
-        @if ($attachment->type === 'image')
+        @if ($attachment->type === 'image' || $extendedTooltip)
             <div>
                 <template x-ref="attachment-tooltip-{{ $attachment->id }}">
-                    <div>
-                        <p class="text-sm font-bold">{{ __('laravel_attachment.formats') }}</p>
-                        <p class="text-sm">
-                            <ul>
-                                <li>{{ __('laravel_attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
+                    @if ($attachment->type === 'image' && !$extendedTooltip)
+                        <div>
+                            <p class="text-sm font-bold">{{ __('laravel_attachment.formats') }}</p>
+                            <p class="text-sm">
+                                <ul>
+                                    <li>{{ __('laravel_attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
 
-                                @foreach ($formats as $format)
-                                    <li>{{ $format->name }}: {{ $format->width }}px x {{ $format->height }}px</li>
-                                @endforeach
-                            </ul>
-                        </p>
-                    </div>
+                                    @foreach ($formats as $format)
+                                        <li>{{ $format->name }}: {{ $format->width }}px x {{ $format->height }}px</li>
+                                    @endforeach
+                                </ul>
+                            </p>
+                        </div>
+                    @else
+                        <div>
+                            <dl>
+                                <dt class="text-sm font-bold">{{ __('laravel_attachment.filename') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->filename }}</dd>
+
+                                <dt class="text-sm font-bold">{{ __('laravel_attachment.type') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->type }}</dd>
+
+                                <dt class="text-sm font-bold">{{ __('laravel_attachment.tags') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->tags->count() ? $attachment->tags->implode('title', ', ') : __('laravel_attachment.no tags for this attachment') }}</dd>
+
+                                {{-- TODO BE: Format size --}}
+                                <dt class="text-sm font-bold">{{ __('laravel_attachment.size') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->size }}</dd>
+
+                                {{-- TODO BE: Format date --}}
+                                <dt class="text-sm font-bold">{{ __('laravel_attachment.created at') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->created_at }}</dd>
+
+                                {{-- TODO BE: Format date --}}
+                                <dt class="text-sm font-bold">{{ __('laravel_attachment.updated at') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->updated_at }}</dd>
+
+                                <dt class="text-sm font-bold">{{ __('laravel_attachment.original format') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->width }}px x {{ $attachment->height }}px</dd>
+                            </dl>
+                        </div>
+                    @endif
                 </template>
 
                 <button x-tooltip="{
@@ -38,7 +69,7 @@
                     allowHTML: true,
                     appendTo: $root
                 }">
-                    <x-heroicon-o-information-circle class="h-[1em] text-gray-300" />
+                    <x-heroicon-o-information-circle class="h-[1em] text-gray-300 attachment-tooltip" />
                 </button>
             </div>
         @endif
@@ -73,6 +104,7 @@
                     x-on:click.prevent="{{ $deleteAction }}"
                     type="button"
                     class="absolute top-1 right-1 bg-white rounded hover:text-red-700 hover:bg-gray-50 shadow-lg"
+                    title="{{ __('laravel-attachment.delete attachment') }}"
                 >
                     <x-heroicon-o-trash class="p-1 w-6 h-6" />
                 </button>
@@ -86,6 +118,7 @@
                         x-on:click.prevent="{{ $formatterAction }}"
                         type="button"
                         class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
+                        title="{{ __('laravel-attachment.format attachment') }}"
                     >
                         <x-heroicon-s-scissors class="p-1.5 w-6 h-6" />
                     </button>
@@ -97,6 +130,7 @@
                         x-on:click.prevent="{{ $editAction }}"
                         type="button"
                         class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
+                        title="{{ __('laravel-attachment.edit attachment') }}"
                     >
                         <x-heroicon-s-pencil class="p-1 w-6 h-6" />
                     </button>

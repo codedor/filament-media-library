@@ -23,9 +23,11 @@
         id="laravel-attachment::attachment-picker-modal-{{ $statePath }}"
         width="6xl"
     >
-        <x-filament::modal.heading>
-            {{ __('laravel_attachment.select attachment') }}
-        </x-filament::modal.heading>
+        <x-slot name="header">
+            <x-filament::modal.heading>
+                {{ __('laravel_attachment.select attachment') }}
+            </x-filament::modal.heading>
+        </x-slot>
 
         <div class="flex gap-2">
             <div class="relative w-2/4 z-20">
@@ -45,7 +47,7 @@
             </div>
         </div>
 
-        <div class="relative gallery-container" style="aspect-ratio: 2/1">
+        <div @class(['relative gallery-container', '!mt-8' => $isMultiple])>
             @if ($attachments->isEmpty())
                 <div class="p-2">
                     {{ __('laravel_attachment.no attachments found') }}
@@ -83,8 +85,9 @@
 
                             <x-laravel-attachments::attachment
                                 :$attachment
-                                container-class="rounded-lg transition-all peer-checked:p-2 peer-checked:bg-gray-200 peer-checked:[&_.media]:scale-90"
+                                container-class="rounded-lg transition-all peer-checked:p-2 peer-checked:bg-gray-200 peer-checked:[&_.media]:scale-90 peer-checked:[&_.attachment-tooltip]:text-gray-400"
                                 class="transition-transform"
+                                :extendedTooltip="true"
                             />
                         </label>
                     @endforeach
@@ -92,20 +95,22 @@
             @endif
         </div>
 
-        <div class="flex justify-between">
+        <div class="!mt-5">
             {{ $attachments->links() }}
         </div>
 
         @if ($isMultiple)
-            <x-filament::modal.actions>
-                <x-filament::button color="secondary" x-on:click.prevent="closePicker()">
-                    {{ __('laravel_attachment.cancel') }}
-                </x-filament::button>
+            <x-slot name="footer">
+                <x-filament::modal.actions>
+                    <x-filament::button color="secondary" x-on:click.prevent="closePicker()">
+                        {{ __('laravel_attachment.cancel') }}
+                    </x-filament::button>
 
-                <x-filament::button x-on:click.prevent="selectAttachment()">
-                    {{ __('laravel_attachment.select these attachments') }}
-                </x-filament::button>
-            </x-filament::modal.actions>
+                    <x-filament::button x-on:click.prevent="selectAttachment()">
+                        {{ __('laravel_attachment.select these attachments') }}
+                    </x-filament::button>
+                </x-filament::modal.actions>
+            </x-slot>
         @endif
     </x-filament::modal>
 </div>
