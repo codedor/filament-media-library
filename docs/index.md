@@ -20,6 +20,8 @@ and lastly, run the migrations:
 php artisan migrate
 ```
 
+Follow the [Formats](##formats) section to create and use formats.
+
 ## Configuration
 
 The basic config file consists of the following contents:
@@ -142,3 +144,102 @@ public static function getFormats(Collection $formats): Collection
         ->add(...);
 }
 ```
+
+## Attachment model methods and attributes
+
+### Methods
+
+#### getStorage
+
+Retrieve the Filesystem of the attachment
+
+```php
+use Codedor\Attachments\Models\Attachment;
+
+/** @var Illuminate\Contracts\Filesystem $filesystem */
+$filesystem = Attachment::first()->getStorage();
+```
+
+#### getFormatOrOriginal
+
+Retrieve the url for the file of the given format. Returns the original file if the given format is not found.
+
+```php
+use Codedor\Attachments\Models\Attachment;
+
+/** @var string $url */
+$url = Attachment::first()->getFormatOrOriginal('hero');
+
+// https://example.com/storage/{root_directory}/{attachment_id}/{snaked_format_name}__{filename}
+// or
+// https://example.com/storage/{root_directory}/{attachment_id}/{filename}
+```
+
+#### getFormat
+
+Retrieve the url for the file of the given format. Returns null if the given format is not found.
+
+```php
+use Codedor\Attachments\Models\Attachment;
+
+/** @var string|null $url */
+$url = Attachment::first()->getFormat('hero');
+
+// https://example.com/storage/{root_directory}/{attachment_id}/{snaked_format_name}__{filename}
+```
+
+### Attributes
+
+#### url
+
+Retrieve the url to the original file
+
+```php
+use Codedor\Attachments\Models\Attachment;
+
+/** @var string $url */
+$url = Attachment::first()->url;
+
+// https://example.com/storage/{root_directory}/{attachment_id}/{filename}
+```
+
+#### filename
+
+Retrieve the filename with extension.
+
+```php
+use Codedor\Attachments\Models\Attachment;
+
+/** @var string $url */
+$url = Attachment::first()->filename;
+
+// image.jpeg
+```
+
+#### root_directory
+
+Retrieve the root directory in which the folder structure and files should be saved. This defaults to `attachments`
+
+#### directory
+
+Retrieve the relative path to the directory where all the formats and the original file is located.
+
+`{root_directory}/{attachment_id}`
+
+#### file_path
+
+Retrieve the relative path to the original file.
+
+`{root_directory}/{attachment_id}/{file_name}`
+
+#### absolute_directory_path
+
+Retrieve the full path to the attachment directory.
+
+`{path_to_storage_folder}/{root_directory}/{attachment_id}`
+
+#### absolute_file_path
+
+Retrieve the full path to the original file.
+
+`{path_to_storage_folder}/{root_directory}/{attachment_id}/{file_name}`
