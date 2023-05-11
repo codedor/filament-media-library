@@ -25,7 +25,7 @@ abstract class Format implements Arrayable
         $this->name = Str::headline(class_basename(static::class));
     }
 
-    public static function make(string $column): static
+    public static function make(string $column = ''): static
     {
         return new static($column);
     }

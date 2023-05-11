@@ -293,3 +293,17 @@ use Codedor\Attachments\Components\Fields\AttachmentInput;
 AttachmentInput::make('profile_image_id')
     ->multiple()
 ```
+
+### allowedFormats
+
+The allowed formats in the cropper are based on the `getFormats` method in the model.
+If you want to override this, you can use the `allowedFormats` method.
+
+```php
+use App\Formats\Hero;use Codedor\Attachments\Components\Fields\AttachmentInput;
+
+AttachmentInput::make('profile_image_id')
+    ->allowedFormats([
+        Hero::make()
+    ])
+```
