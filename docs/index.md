@@ -246,4 +246,28 @@ Retrieve the full path to the original file.
 
 ## Usage in Blade
 
+This package provides a `<x-laravel-attachments::picture />` component which will render the provided attachment with the given format. If no format is defined, the original attachment will be rendered.
+
+```php
+<x-laravel-attachments::picture
+    :attachment="$attachment"
+    format="thumb"
+    alt="alt text"
+    class="img"
+>
+    <p>Laravel attachments package!</p>
+</x-laravel-attachments::picture>
+```
+
+Will return
+
+```html
+<picture class="img">
+    <p>Laravel attachments package!</p>
+    <source type="{MIME_TYPE}" srcset="{{IMAGE_SRC}}" />
+    <img alt="alt text" src="{{IMAGE_SRC}}" />
+</picture>
+```
+
 ## Usage in Filament
+
