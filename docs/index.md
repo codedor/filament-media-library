@@ -271,3 +271,25 @@ Will return
 
 ## Usage in Filament
 
+### AttachmentInput
+
+This field will give the option to upload or select an already existing image.
+The ID will be stored in de column provided in the `make` method.
+
+```php
+use Codedor\Attachments\Components\Fields\AttachmentInput;
+
+AttachmentInput::make('profile_image_id')
+    ->label('Profile Image')
+```
+
+This field inherits the `Filament\Forms\Components\Field` class which means that this field can do all the things other fields can do too.
+
+### Multiple attachments
+
+```php
+use Codedor\Attachments\Components\Fields\AttachmentInput;
+
+AttachmentInput::make('profile_image_id')
+    ->multiple()
+```

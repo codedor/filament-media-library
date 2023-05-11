@@ -152,6 +152,7 @@ class AttachmentInput extends Field implements HasForms
         // Get the model that we are editing/viewing
         if (is_null($formats)) {
             $model = $this->getModelInstance();
+
             if ($model) {
                 $formats = $model->getFormats(collect())
                     ->filter(fn ($format) => $format->column() === $this->statePath);
