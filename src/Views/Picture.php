@@ -11,7 +11,8 @@ class Picture extends Component
         public Attachment $attachment,
         public ?string $format = null,
         public ?string $alt = null
-    ) {}
+    ) {
+    }
 
     public function render()
     {
