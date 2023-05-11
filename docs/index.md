@@ -28,9 +28,6 @@
     * [Multiple attachments](#multiple-attachments)
     * [allowedFormats](#allowedformats)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
-
 ## Installation
 
 First, install this package via composer:
