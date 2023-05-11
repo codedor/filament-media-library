@@ -9,9 +9,9 @@ class Picture extends Component
 {
     public function __construct(
         public Attachment $attachment,
-        public string $format
-    ) {
-    }
+        public ?string $format = null,
+        public ?string $alt = null
+    ) {}
 
     public function render()
     {

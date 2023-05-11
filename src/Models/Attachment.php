@@ -108,8 +108,12 @@ class Attachment extends Model
         return "{$this->directory}/{$this->filename}";
     }
 
-    public function getFormatOrOriginal(string $name): string
+    public function getFormatOrOriginal(?string $name): string
     {
+        if (! $name) {
+            return $this->url;
+        }
+
         return $this->getFormat($name) ?: $this->url;
     }
 
