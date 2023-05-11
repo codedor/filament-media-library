@@ -128,4 +128,17 @@ the [Glide docs](https://glide.thephpleague.com/2.0/api/quick-reference/)
 
 ### Registering formats
 
-Formats are tightly coupled with models.
+Formats are tightly coupled with models. This way, specific formats can be fetched per model to prevent overhead.
+
+#### Preparing your model
+
+A model should implement the `Codedor\Attachments\Interfaces\HasFormats` interface which contains the `getFormats`
+method.
+
+```php
+public static function getFormats(Collection $formats): Collection
+{
+    return $formats->add(Hero::make('attachment_id'))
+        ->add(...);
+}
+```
