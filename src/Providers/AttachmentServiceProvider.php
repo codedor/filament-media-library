@@ -10,9 +10,11 @@ use Codedor\Attachments\Http\Livewire;
 use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;
 use Codedor\Attachments\Resources\AttachmentTagResource;
+use Codedor\Attachments\Views\Picture;
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire as LivewireCore;
 use Spatie\LaravelPackageTools\Package;
 
@@ -38,9 +40,9 @@ class AttachmentServiceProvider extends PluginServiceProvider
     public function configurePackage(Package $package): void
     {
         $package
-            ->name(self::PACKAGE_NAME)
+            ->name($this->packageName())
             ->setBasePath(__DIR__ . '/../')
-            ->hasConfigFile('laravel-attachments')
+            ->hasConfigFile($this->packageName())
             ->hasMigrations([
                 '2022_08_03_120355_create_attachments_table',
                 '2022_08_03_120356_create_attachment_tags_table',
@@ -48,23 +50,34 @@ class AttachmentServiceProvider extends PluginServiceProvider
                 '2023_04_27_120359_create_attachment_formats',
             ])
             ->runsMigrations()
-            ->hasViews('laravel-attachments');
+            ->hasViews($this->packageName());
+    }
+
+    public function packageName(): string
+    {
+        return self::PACKAGE_NAME;
     }
 
     public function packageBooted(): void
     {
         parent::packageBooted();
 
-        foreach ($this->livewireComponents as $key => $livewireComponent) {
-            LivewireCore::component("{$this->packageName()}::$key", $livewireComponent);
-        }
+        $this->registerLivewireComponents();
+        $this->registerBladeComponents();
 
         UploadedFile::mixin(new UploadedFileMixin());
     }
 
-    public function packageName(): string
+    protected function registerLivewireComponents()
     {
-        return self::PACKAGE_NAME;
+        foreach ($this->livewireComponents as $key => $livewireComponent) {
+            LivewireCore::component("{$this->packageName()}::$key", $livewireComponent);
+        }
+    }
+
+    protected function registerBladeComponents()
+    {
+        Blade::component(Picture::class, "{$this->packageName()}::picture");
     }
 
     public function boot()
@@ -98,7 +111,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
         $this->app->bind(
             Conversion::class,
             config(
-                'laravel-attachments.conversion',
+                "{$this->packageName()}.conversion",
                 LocalConversion::class
             )
         );

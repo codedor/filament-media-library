@@ -243,3 +243,7 @@ Retrieve the full path to the attachment directory.
 Retrieve the full path to the original file.
 
 `{path_to_storage_folder}/{root_directory}/{attachment_id}/{file_name}`
+
+## Usage in Blade
+
+## Usage in Filament
