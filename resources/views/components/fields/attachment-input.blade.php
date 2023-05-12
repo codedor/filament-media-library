@@ -181,3 +181,9 @@
         @endunless
     </div>
 </x-dynamic-component>
+
+
+@once
+    @livewire('laravel-attachments::edit-modal')
+    @livewire('laravel-attachments::formatter-modal')
+@endonce
