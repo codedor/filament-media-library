@@ -139,4 +139,9 @@ class Attachment extends Model
     {
         return $this->getStorage()->path($this->file_path);
     }
+
+    public function getFormattedInMbSizeAttribute(): string
+    {
+        return round($this->size / 1000000, 2);
+    }
 }

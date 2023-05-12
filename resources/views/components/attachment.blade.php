@@ -65,17 +65,14 @@
                                 <dt class="text-sm font-bold">{{ __('laravel_attachment.tags') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->tags->count() ? $attachment->tags->implode('title', ', ') : __('laravel_attachment.no tags for this attachment') }}</dd>
 
-                                {{-- TODO BE: Format size --}}
                                 <dt class="text-sm font-bold">{{ __('laravel_attachment.size') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->size }}</dd>
+                                <dd class="mb-2 text-sm">{{ $attachment->formatted_in_mb_size }} MB</dd>
 
-                                {{-- TODO BE: Format date --}}
                                 <dt class="text-sm font-bold">{{ __('laravel_attachment.created at') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->created_at }}</dd>
+                                <dd class="mb-2 text-sm">{{ $attachment->created_at->format('d-m-Y') }}</dd>
 
-                                {{-- TODO BE: Format date --}}
                                 <dt class="text-sm font-bold">{{ __('laravel_attachment.updated at') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->updated_at }}</dd>
+                                <dd class="mb-2 text-sm">{{ $attachment->updated_at->format('d-m-Y') }}</dd>
 
                                 <dt class="text-sm font-bold">{{ __('laravel_attachment.original format') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->width }}px x {{ $attachment->height }}px</dd>
