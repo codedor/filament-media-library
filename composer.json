@@ -17,8 +17,7 @@
         "livewire/livewire": "^2.11",
         "spatie/image": "^2.2",
         "spatie/laravel-package-tools": "^1.12",
-        "spatie/laravel-translatable": "^6.3",
-        "owenvoke/blade-fontawesome": "^2.2"
+        "spatie/laravel-translatable": "^6.3"
     },
     "require-dev": {
         "laravel/pint": "^1.0",

@@ -92,9 +92,9 @@
                 class="gallery"
                 @if ($isMultiple() && ! $isDisabled())
                     x-sortable
-                    x-on:end="reorder($event)"
-                    x-on:start="dragging = true"
-                    :class="dragging ? 'gallery--dragging' : ''"
+                x-on:end="reorder($event)"
+                x-on:start="dragging = true"
+                :class="dragging ? 'gallery--dragging' : ''"
                 @endif
             >
                 @foreach ($attachments as $attachment)
@@ -111,7 +111,7 @@
                             ])
                         >
                             @if ($isMultiple() && ! $isDisabled())
-                                <x-far-arrows-up-down-left-right
+                                <x-attachments-arrows-out-cardinal-light
                                     class="sortable-icon absolute top-1/2 z-10 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity"
                                 />
                             @endif

@@ -29,13 +29,13 @@
                         <div>
                             <p class="text-sm font-bold">{{ __('laravel_attachment.formats') }}</p>
                             <p class="text-sm">
-                                <ul>
-                                    <li>{{ __('laravel_attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
+                            <ul>
+                                <li>{{ __('laravel_attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
 
-                                    @foreach ($formats as $format)
-                                        <li>{{ $format->name }}: {{ $format->width }}px x {{ $format->height }}px</li>
-                                    @endforeach
-                                </ul>
+                                @foreach ($formats as $format)
+                                    <li>{{ $format->name }}: {{ $format->width }}px x {{ $format->height }}px</li>
+                                @endforeach
+                            </ul>
                             </p>
                         </div>
                     @else
@@ -74,7 +74,7 @@
                     allowHTML: true,
                     appendTo: $root
                 }">
-                    <x-heroicon-o-information-circle class="h-[1em] text-gray-300 attachment-tooltip" />
+                    <x-heroicon-o-information-circle class="h-[1em] text-gray-300 attachment-tooltip"/>
                 </button>
             </div>
         @endif
@@ -94,11 +94,11 @@
         @if($attachment->type !== 'image')
             <div class="w-full aspect-square flex items-center justify-center bg-gray-100 rounded-lg">
                 @if($attachment->type === 'document')
-                    <x-heroicon-o-document-text class="w-16 h-16 opacity-50" />
+                    <x-heroicon-o-document-text class="w-16 h-16 opacity-50"/>
                 @elseif($attachment->type === 'video')
-                    <x-heroicon-o-video-camera class="w-16 h-16 opacity-50" />
+                    <x-heroicon-o-video-camera class="w-16 h-16 opacity-50"/>
                 @else
-                    <x-heroicon-o-question-mark-circle class="w-16 h-16 opacity-50" />
+                    <x-heroicon-o-question-mark-circle class="w-16 h-16 opacity-50"/>
                 @endif
             </div>
         @endif
@@ -113,7 +113,7 @@
                         class="bg-white rounded text-red-700 hover:text-white hover:bg-red-700 shadow-lg"
                         title="{{ $deleteButtonTitle }}"
                     >
-                        <x-heroicon-o-trash class="p-1 w-6 h-6" />
+                        <x-heroicon-o-trash class="p-1 w-6 h-6"/>
                     </button>
                 @endif
 
@@ -127,7 +127,7 @@
                             class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
                             title="{{ __('laravel-attachment.format attachment') }}"
                         >
-                            <x-far-crop-simple class="p-1 w-6 h-6" />
+                            <x-attachments-crop-regular class="p-1 w-6 h-6"/>
                         </button>
                     @endif
 
@@ -139,7 +139,7 @@
                             class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
                             title="{{ __('laravel-attachment.edit attachment') }}"
                         >
-                            <x-heroicon-s-pencil class="p-1 w-6 h-6" />
+                            <x-heroicon-s-pencil class="p-1 w-6 h-6"/>
                         </button>
                     @endif
                 </div>

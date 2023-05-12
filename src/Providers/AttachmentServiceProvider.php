@@ -2,6 +2,7 @@
 
 namespace Codedor\Attachments\Providers;
 
+use BladeUI\Icons\Factory;
 use Codedor\Attachments\Collections\Formats;
 use Codedor\Attachments\Conversions\Conversion;
 use Codedor\Attachments\Conversions\LocalConversion;
@@ -115,5 +116,12 @@ class AttachmentServiceProvider extends PluginServiceProvider
                 LocalConversion::class
             )
         );
+
+        $this->callAfterResolving(Factory::class, function (Factory $factory) {
+            $factory->add('attachments', [
+                'path' => __DIR__ . '/../../resources/svg',
+                'prefix' => 'attachments',
+            ]);
+        });
     }
 }

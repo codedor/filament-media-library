@@ -125,13 +125,13 @@
                             <x-filament::button x-on:click.prevent="window.cropper.scaleX(
                                 window.cropper.imageData.scaleX === -1 ? 1 : -1
                             )" title="{{ __('laravel-attachment.flip horizontally') }}">
-                                <x-icon-flip-horizontal class="h-4" />
+                                <x-attachments-flip-horizontal class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button x-on:click.prevent="window.cropper.scaleY(
                                 window.cropper.imageData.scaleY === -1 ? 1 : -1
                             )" title="{{ __('laravel-attachment.flip vertically') }}">
-                                <x-icon-flip-vertical class="h-4" />
+                                <x-attachments-flip-vertical class="h-4" />
                             </x-filament::button>
                         </div>
 
