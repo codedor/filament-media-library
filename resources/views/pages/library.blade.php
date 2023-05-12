@@ -8,18 +8,7 @@
             openDeleteModal (id) {
                 $wire.set('attachmentToDelete', id)
                 $dispatch('open-modal', { id: 'laravel-attachment::delete-attachment-modal' })
-            },
-            openFormatterModal (id) {
-                $dispatch('open-modal', { id: 'laravel-attachment::formatter-attachment-modal' })
-                $wire.emit('laravel-attachment::open-formatter-attachment-modal', id)
-            },
-            openEditModal (id) {
-                $dispatch('open-modal', { id: 'laravel-attachment::edit-attachment-modal' })
-                $wire.emit('laravel-attachment::open-edit-attachment-modal', id)
-            },
-            closeEditModal () {
-                $wire.emit('laravel-attachment::close-edit-attachment-modal')
-            },
+            }
         }"
     >
         <div class="gallery-container flex flex-col gap-8">
@@ -86,8 +75,6 @@
         @once
             @include('laravel-attachments::livewire.delete-modal')
             @livewire('laravel-attachments::upload-modal')
-            @livewire('laravel-attachments::edit-modal')
-            @livewire('laravel-attachments::formatter-modal')
         @endonce
     </div>
 </x-filament::page>

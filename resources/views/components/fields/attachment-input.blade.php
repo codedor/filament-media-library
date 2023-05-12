@@ -71,10 +71,6 @@
             updateState () {
                 $wire.$refresh()
             },
-            openFormatterModal (id) {
-                $dispatch('open-modal', { id: 'laravel-attachment::formatter-attachment-modal' })
-                $wire.emit('laravel-attachment::open-formatter-attachment-modal', id, @js($getAllowedFormats()))
-            },
             reorder (event) {
                 this.dragging = false
 
@@ -184,9 +180,4 @@
             />
         @endunless
     </div>
-
-    @once
-        @livewire('laravel-attachments::edit-modal')
-        @livewire('laravel-attachments::formatter-modal')
-    @endonce
 </x-dynamic-component>
