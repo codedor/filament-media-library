@@ -69,6 +69,7 @@
                             delete-action="openDeleteModal('{{ $attachment->id }}')"
                             edit-action="openEditModal('{{ $attachment->id }}')"
                             formatter-action="openFormatterModal('{{ $attachment->id }}')"
+                            :extendedTooltip="true"
                         />
                     </div>
                 @endforeach

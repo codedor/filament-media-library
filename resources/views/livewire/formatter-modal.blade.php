@@ -1,10 +1,15 @@
-<x-filament::modal id="laravel-attachment::formatter-attachment-modal" width="screen">
+<x-filament::modal
+    id="laravel-attachment::formatter-attachment-modal"
+    width="w-6xl"
+>
     @if ($attachment)
-        <x-filament::modal.heading>
-            {{ __('laravel-attachment.formatter modal heading :name', [
-                'name' => $attachment->name,
-            ]) }}
-        </x-filament::modal.heading>
+        <x-slot name="header">
+            <x-filament::modal.heading>
+                {{ __('laravel-attachment.formatter modal heading :name', [
+                    'name' => $attachment->name,
+                ]) }}
+            </x-filament::modal.heading>
+        </x-slot>
 
         <div
             class="py-8 w-full flex-col gap-2"
@@ -69,11 +74,12 @@
                     }
                 }
             }"
+            x-init="$watch('currentFormat', currentFormat => console.log(currentFormat.key))"
         >
             {{-- Actual formatter --}}
-            <div class="w-full flex gap-2">
-                <div class="w-3/5">
-                    <div style="width: 100%; height: 70vh">
+            <div class="w-full flex flex-col lg:flex-row gap-6">
+                <div class="lg:w-4/6 order-last lg:order-first">
+                    <div class="w-full h-[70vh]">
                         <img
                             src="{{ $attachment->url }}"
                             id="laravel-attachments::formatter"
@@ -82,65 +88,78 @@
                         >
                     </div>
 
-                    <div class="flex gap-2">
-                        <x-filament::button x-on:click.prevent="window.cropper.zoom(-0.1)">
-                            {{-- TODO: custom icon, not available in our heroicon version --}}
-                            zoom in
-                        </x-filament::button>
+                    <div class="flex gap-4 flex-wrap justify-center mt-2">
+                        <div class="flex gap-1">
+                            <x-filament::button
+                                x-on:click.prevent="window.cropper.zoom(-0.1)"
+                                title="{{ __('laravel-attachment.zoom in') }}"
+                            >
+                                <x-fas-magnifying-glass-plus class="h-4" />
+                            </x-filament::button>
 
-                        <x-filament::button x-on:click.prevent="window.cropper.zoom(0.1)">
-                            {{-- TODO: custom icon, not available in our heroicon version --}}
-                            zoom out
-                        </x-filament::button>
+                            <x-filament::button
+                                x-on:click.prevent="window.cropper.zoom(0.1)"
+                                title="{{ __('laravel-attachment.zoom out') }}"
+                            >
+                                <x-fas-magnifying-glass-minus class="h-4" />
+                            </x-filament::button>
+                        </div>
 
-                        <x-filament::button x-on:click.prevent="window.cropper.rotate(45)">
-                            {{-- TODO: custom icon, not available in our heroicon version --}}
-                            rotate right
-                        </x-filament::button>
+                        <div class="flex gap-1">
+                            <x-filament::button
+                                x-on:click.prevent="window.cropper.rotate(45)"
+                                title="{{ __('laravel-attachment.rotate 45 degrees clockwise') }}"
+                            >
+                                <x-fas-rotate-right class="h-4" />
+                            </x-filament::button>
 
-                        <x-filament::button x-on:click.prevent="window.cropper.rotate(-45)">
-                            {{-- TODO: custom icon, not available in our heroicon version --}}
-                            rotate left
-                        </x-filament::button>
+                            <x-filament::button
+                                x-on:click.prevent="window.cropper.rotate(-45)"
+                                title="{{ __('laravel-attachment.rotate 45 degrees counterclockwise') }}"
+                            >
+                                <x-fas-rotate-left class="h-4" />
+                            </x-filament::button>
+                        </div>
 
-                        <x-filament::button x-on:click.prevent="window.cropper.scaleX(
-                            window.cropper.imageData.scaleX === -1 ? 1 : -1
-                        )">
-                            {{-- TODO: custom icon, not available in our heroicon version --}}
-                            flip x
-                        </x-filament::button>
+                        <div class="flex gap-1">
+                            <x-filament::button x-on:click.prevent="window.cropper.scaleX(
+                                window.cropper.imageData.scaleX === -1 ? 1 : -1
+                            )" title="{{ __('laravel-attachment.flip horizontally') }}">
+                                <x-icon-flip-horizontal class="h-4" />
+                            </x-filament::button>
 
-                        <x-filament::button x-on:click.prevent="window.cropper.scaleY(
-                            window.cropper.imageData.scaleY === -1 ? 1 : -1
-                        )">
-                            {{-- TODO: custom icon, not available in our heroicon version --}}
-                            flip y
-                        </x-filament::button>
+                            <x-filament::button x-on:click.prevent="window.cropper.scaleY(
+                                window.cropper.imageData.scaleY === -1 ? 1 : -1
+                            )" title="{{ __('laravel-attachment.flip vertically') }}">
+                                <x-icon-flip-vertical class="h-4" />
+                            </x-filament::button>
+                        </div>
 
                         <x-filament::button x-on:click.prevent="window.cropper.reset()">
-                            {{-- TODO: custom icon, not available in our heroicon version --}}
-                            reset
+                            {{ __('laravel-attachment.reset format') }}
                         </x-filament::button>
                     </div>
                 </div>
 
                 {{-- Formats --}}
-                <div class="w-2/5">
-                    {{ $attachment->filename }}<br>
+                <div class="lg:w-2/6 gallery-container lg:h-[70vh] flex flex-col">
+                    <h3 class="text-lg font-bold mb-2">{{ $attachment->filename }}</h3>
 
-                    <span x-text="currentFormat.name"></span> -
-                    <span x-text="currentFormat.width"></span>px x
-                    <span x-text="currentFormat.height"></span>px
-                    <br>
+                    <p class="mb-1">
+                        <span x-text="currentFormat.name" class="font-bold"></span> -
+                        <span x-text="currentFormat.width"></span>px x
+                        <span x-text="currentFormat.height"></span>px
+                    </p>
 
-                    <span x-text="currentFormat.description"></span>
+                    <p x-text="currentFormat.description"></p>
 
-                    <hr>
+                    <hr class="my-6">
 
-                    <div class="grid grid-cols-3 gap-4 p-2">
+                    <div class="max-lg:flex max-md:h-40 max-lg:h-52 gallery overflow-x-auto lg:overflow-y-auto">
                         <template x-for="(format, key) in formats" :key="key">
                             <div
-                                class="flex flex-col gap-2 justify-between rounded-lg bg-gray-200 p-2"
+                                class="flex-shrink-0 max-lg:aspect-[3/4] flex flex-col gap-2 justify-between rounded-lg bg-gray-200 p-2"
+                                :class="{'ring-2 ring-primary-500 ring-inset': currentFormat.key === format.key}"
                                 x-on:click="setFormat(key)"
                             >
                                 <div class="w-full text-center">
@@ -151,9 +170,10 @@
                                     </p>
                                 </div>
 
-                                <div class="flex aspect-video items-center justify-center">
+                                <div class="flex aspect-square items-center justify-center">
                                     <div
-                                        class="bg-gray-400 w-full"
+                                        class="bg-gray-400"
+                                        :class="format.aspectRatio > 1 ? 'w-full' : 'h-full'"
                                         x-bind:style="'aspect-ratio: ' + format.aspectRatio"
                                     ></div>
                                 </div>
@@ -163,15 +183,17 @@
                 </div>
             </div>
 
-            <div class="w-full">
-                <x-filament::button color="secondary" x-on:click.prevent="close() && $wire.set('attachment', null)">
-                    {{ __('laravel-attachment.close modal') }}
-                </x-filament::button>
+            <x-slot name="footer">
+                <x-filament::modal.actions>
+                    <x-filament::button x-on:click.prevent="submit()">
+                        {{ __('laravel-attachment.save format') }}
+                    </x-filament::button>
 
-                <x-filament::button x-on:click.prevent="submit()">
-                    {{ __('laravel-attachment.save format') }}
-                </x-filament::button>
-            </div>
+                    <x-filament::button color="secondary" x-on:click.prevent="close() && $wire.set('attachment', null)">
+                        {{ __('laravel-attachment.close modal') }}
+                    </x-filament::button>
+                </x-filament::modal.actions>
+            </x-slot>
         </div>
 
         <div class="w-full justify-center py-8" wire:loading.flex>
