@@ -15,7 +15,7 @@ class AttachmentTagResource extends Resource
 {
     protected static ?string $model = AttachmentTag::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-collection';
+    protected static ?string $navigationIcon = 'heroicon-o-tag';
 
     public static function form(Form $form): Form
     {

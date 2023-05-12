@@ -4,20 +4,25 @@
     'formats' => [],
     'isDisabled' => false,
     'deleteAction' => null,
+    'deleteButtonTitle' => __('laravel-attachment.delete attachment'),
     'editAction' => null,
     'formatterAction' => null,
     'extendedTooltip' => false,
+    'showTitle' => true,
+    'showTooltip' => true
 ])
 
 <div @class(['flex flex-col h-full', $containerClass])>
     <div class="flex-grow flex justify-between gap-2">
         {{-- Title --}}
-        <p class="font-bold text-sm mb-2 line-clamp-1">
-            {{ $attachment->filename }}
-        </p>
+        @if ($showTitle)
+            <p class="font-bold text-sm mb-2 line-clamp-1 border-primary-600">
+                {{ $attachment->filename }}
+            </p>
+        @endif
 
         {{-- Format tooltip --}}
-        @if ($attachment->type === 'image' || $extendedTooltip)
+        @if ($showTooltip && ($attachment->type === 'image' || $extendedTooltip))
             <div>
                 <template x-ref="attachment-tooltip-{{ $attachment->id }}">
                     @if ($attachment->type === 'image' && !$extendedTooltip)
@@ -80,9 +85,10 @@
         @if($attachment->type === 'image')
             style="background-image: url('{{ $attachment->url }}')"
         @endif
+
         {{ $attributes->except(['slot', 'attachment'])->merge(['class' => '
-            flex relative w-full aspect-square rounded-lg overflow-hidden
-            bg-center bg-contain bg-no-repeat bg-gray-200 media
+            attachment-visual flex relative w-full aspect-square rounded-lg
+            overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 media
         ']) }}
     >
         @if($attachment->type !== 'image')
@@ -99,42 +105,44 @@
 
         {{-- Buttons --}}
         @unless($isDisabled)
-            @if ($deleteAction)
-                <button
-                    x-on:click.prevent="{{ $deleteAction }}"
-                    type="button"
-                    class="absolute top-1 right-1 bg-white rounded hover:text-red-700 hover:bg-gray-50 shadow-lg"
-                    title="{{ __('laravel-attachment.delete attachment') }}"
-                >
-                    <x-heroicon-o-trash class="p-1 w-6 h-6" />
-                </button>
-            @endif
-
-            <div class="absolute right-1 bottom-1 left-1 flex justify-end gap-1">
-                {{ $slot }}
-
-                @if ($formatterAction && $attachment->type === 'image')
+            <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3">
+                @if ($deleteAction)
                     <button
-                        x-on:click.prevent="{{ $formatterAction }}"
+                        x-on:click.prevent="{{ $deleteAction }}"
                         type="button"
-                        class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                        title="{{ __('laravel-attachment.format attachment') }}"
+                        class="bg-white rounded text-red-700 hover:text-white hover:bg-red-700 shadow-lg"
+                        title="{{ $deleteButtonTitle }}"
                     >
-                        <x-heroicon-s-scissors class="p-1.5 w-6 h-6" />
+                        <x-heroicon-o-trash class="p-1 w-6 h-6" />
                     </button>
                 @endif
 
-                @if ($editAction)
-                    {{-- TODO BE: Add edit modal --}}
-                    <button
-                        x-on:click.prevent="{{ $editAction }}"
-                        type="button"
-                        class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                        title="{{ __('laravel-attachment.edit attachment') }}"
-                    >
-                        <x-heroicon-s-pencil class="p-1 w-6 h-6" />
-                    </button>
-                @endif
+                <div class=" flex justify-end gap-1">
+                    {{ $slot }}
+
+                    @if ($formatterAction && $attachment->type === 'image')
+                        <button
+                            x-on:click.prevent="{{ $formatterAction }}"
+                            type="button"
+                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
+                            title="{{ __('laravel-attachment.format attachment') }}"
+                        >
+                            <x-far-crop-simple class="p-1 w-6 h-6" />
+                        </button>
+                    @endif
+
+                    @if ($editAction)
+                        {{-- TODO BE: Add edit modal --}}
+                        <button
+                            x-on:click.prevent="{{ $editAction }}"
+                            type="button"
+                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
+                            title="{{ __('laravel-attachment.edit attachment') }}"
+                        >
+                            <x-heroicon-s-pencil class="p-1 w-6 h-6" />
+                        </button>
+                    @endif
+                </div>
             </div>
         @endunless
     </div>
