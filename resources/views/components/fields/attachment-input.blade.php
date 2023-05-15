@@ -167,23 +167,26 @@
         </div>
 
         @unless ($isDisabled())
-            <livewire:laravel-attachments::picker
-                wire:key="picker-{{ $getStatePath() }}"
-                :state-path="$getStatePath()"
-                :attachments-list="$getAttachmentsList()->pluck('id')->toArray()"
-                :is-multiple="$isMultiple()"
-            />
+            <div class="overflow-hidden h-0">
+                <livewire:laravel-attachments::picker
+                    wire:key="picker-{{ $getStatePath() }}"
+                    :state-path="$getStatePath()"
+                    :attachments-list="$getAttachmentsList()->pluck('id')->toArray()"
+                    :is-multiple="$isMultiple()"
+                />
 
-            <livewire:laravel-attachments::upload-modal
-                wire:key="upload-{{ $getStatePath() }}"
-                :state-path="$getStatePath()"
-            />
+                <livewire:laravel-attachments::upload-modal
+                    wire:key="upload-{{ $getStatePath() }}"
+                    :state-path="$getStatePath()"
+                />
+            </div>
         @endunless
     </div>
 </x-dynamic-component>
 
-
 @once
-    @livewire('laravel-attachments::edit-modal')
-    @livewire('laravel-attachments::formatter-modal')
+    <div class="overflow-hidden h-0">
+        @livewire('laravel-attachments::edit-modal')
+        @livewire('laravel-attachments::formatter-modal')
+    </div>
 @endonce

@@ -16,6 +16,7 @@ class UploadedFileMixin
         return function (string $disk = 'public') {
             /** @var Dimension $dimensions */
             $dimensions = $this->dimensions();
+            dd($dimensions);
 
             $data = [
                 'extension' => $this->getClientOriginalExtension(),
@@ -23,8 +24,8 @@ class UploadedFileMixin
                 'md5' => $this->getMd5(),
                 'type' => $this->fileType(),
                 'size' => $this->getSize(),
-                'width' => $dimensions?->width,
-                'height' => $dimensions?->height,
+                'width' => $dimensions[0] ?? $dimensions?->width,
+                'height' => $dimensions[1] ?? $dimensions?->height,
                 'disk' => $disk,
                 'name' => Str::replace(
                     ".{$this->getClientOriginalExtension()}",

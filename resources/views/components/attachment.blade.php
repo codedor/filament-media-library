@@ -144,7 +144,6 @@
                     @endif
 
                     @if ($editAction)
-                        {{-- TODO BE: Add edit modal --}}
                         <button
                             x-on:click.prevent="{{ $editAction }}"
                             type="button"

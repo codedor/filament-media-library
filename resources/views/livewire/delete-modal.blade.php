@@ -12,7 +12,7 @@
     </x-slot>
 
     <x-filament::modal.actions :full-width="true">
-        <x-filament::button x-on:click.prevent="close()">
+        <x-filament::button color="secondary" x-on:click.prevent="close()">
             {{ __('laravel-attachment.cancel') }}
         </x-filament::button>
 
