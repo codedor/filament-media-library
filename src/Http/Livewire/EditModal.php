@@ -85,7 +85,7 @@ class EditModal extends Component implements HasForms
             TextInput::make('fields.caption'),
 
             Select::make('fields.tags')
-                ->label(__('filament_media::tags'))
+                ->label(__('filament_media.tags'))
                 ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
                 ->searchable()
                 ->multiple(),
