@@ -22,7 +22,7 @@ class AttachmentTagResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
-                    ->label(__('laravel-attachment.tag title'))
+                    ->label(__('filament_media.tag title'))
                     ->required(),
 
                 Select::make('parent')

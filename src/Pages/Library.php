@@ -36,7 +36,7 @@ class Library extends Page
 
     protected static function getNavigationLabel(): string
     {
-        return __('attachment.dashboard navigation title');
+        return __('filament_media.dashboard navigation title');
     }
 
     public function deleteAttachment()
@@ -44,7 +44,7 @@ class Library extends Page
         Attachment::find($this->attachmentToDelete)?->delete();
 
         Notification::make()
-            ->title(__('laravel_attachment.deleted successfully'))
+            ->title(__('filament_media.deleted successfully'))
             ->success()
             ->send();
     }
@@ -67,7 +67,7 @@ class Library extends Page
     {
         return [
             Action::make('openUploadModal')
-                ->label(__('laravel_attachment.upload attachment'))
+                ->label(__('filament_media.upload attachment'))
                 ->action(fn () => $this->dispatchBrowserEvent('open-modal', [
                     'id' => 'laravel-attachment::upload-attachment-modal',
                 ])),
@@ -85,6 +85,6 @@ class Library extends Page
 
     protected function getTitle(): string
     {
-        return __('attachment.dashboard title');
+        return __('filament_media.dashboard title');
     }
 }

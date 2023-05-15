@@ -4,7 +4,7 @@
     'formats' => [],
     'isDisabled' => false,
     'deleteAction' => null,
-    'deleteButtonTitle' => __('laravel-attachment.delete attachment'),
+    'deleteButtonTitle' => __('filament_media.delete attachment'),
     'editAction' => null,
     'formatterAction' => null,
     'extendedTooltip' => false,
@@ -42,10 +42,10 @@
                 <template x-ref="attachment-tooltip-{{ $attachment->id }}">
                     @if ($attachment->type === 'image' && !$extendedTooltip)
                         <div>
-                            <p class="text-sm font-bold">{{ __('laravel_attachment.formats') }}</p>
+                            <p class="text-sm font-bold">{{ __('filament_media.formats') }}</p>
                             <p class="text-sm">
                             <ul>
-                                <li>{{ __('laravel_attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
+                                <li>{{ __('filament_media.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
 
                                 @foreach ($formats as $format)
                                     <li>{{ $format->name }}: {{ $format->width }}px x {{ $format->height }}px</li>
@@ -56,25 +56,25 @@
                     @else
                         <div>
                             <dl>
-                                <dt class="text-sm font-bold">{{ __('laravel_attachment.filename') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament_media.filename') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->filename }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('laravel_attachment.type') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament_media.type') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->type }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('laravel_attachment.tags') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->tags->count() ? $attachment->tags->implode('title', ', ') : __('laravel_attachment.no tags for this attachment') }}</dd>
+                                <dt class="text-sm font-bold">{{ __('filament_media.tags') }}</dt>
+                                <dd class="mb-2 text-sm">{{ $attachment->tags->count() ? $attachment->tags->implode('title', ', ') : __('filament_media.no tags for this attachment') }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('laravel_attachment.size') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament_media.size') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->formatted_in_mb_size }} MB</dd>
 
-                                <dt class="text-sm font-bold">{{ __('laravel_attachment.created at') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament_media.created at') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->created_at->format('d-m-Y') }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('laravel_attachment.updated at') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament_media.updated at') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->updated_at->format('d-m-Y') }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('laravel_attachment.original format') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament_media.original format') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->width }}px x {{ $attachment->height }}px</dd>
                             </dl>
                         </div>
@@ -137,7 +137,7 @@
                             x-on:click.prevent="{{ $formatterAction }}"
                             type="button"
                             class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                            title="{{ __('laravel-attachment.format attachment') }}"
+                            title="{{ __('filament_media.format attachment') }}"
                         >
                             <x-attachments-crop-regular class="p-1 w-6 h-6"/>
                         </button>
@@ -148,7 +148,7 @@
                             x-on:click.prevent="{{ $editAction }}"
                             type="button"
                             class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                            title="{{ __('laravel-attachment.edit attachment') }}"
+                            title="{{ __('filament_media.edit attachment') }}"
                         >
                             <x-heroicon-s-pencil class="p-1 w-6 h-6"/>
                         </button>

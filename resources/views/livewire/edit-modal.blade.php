@@ -7,7 +7,7 @@
         {{-- TODO: translated name? what does that mean? difference with alt name? --}}
         <x-slot name="header">
             <x-filament::modal.heading>
-                {{ __('laravel-attachment.edit modal heading :name', [
+                {{ __('filament_media.edit modal heading :name', [
                     'name' => $attachment->name,
                 ]) }}
             </x-filament::modal.heading>
@@ -24,11 +24,11 @@
         <x-slot name="footer">
             <x-filament::modal.actions>
                 <x-filament::button color="secondary" x-on:click.prevent="close()">
-                    {{ __('laravel-attachment.cancel') }}
+                    {{ __('filament_media.cancel') }}
                 </x-filament::button>
 
                 <x-filament::button x-on:click.prevent="$wire.submit()">
-                    {{ __('laravel-attachment.confirm') }}
+                    {{ __('filament_media.confirm') }}
                 </x-filament::button>
             </x-filament::modal.actions>
         </x-slot>

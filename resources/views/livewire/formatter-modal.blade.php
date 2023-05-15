@@ -5,7 +5,7 @@
     @if ($attachment)
         <x-slot name="header">
             <x-filament::modal.heading>
-                {{ __('laravel-attachment.formatter modal heading :name', [
+                {{ __('filament_media.formatter modal heading :name', [
                     'name' => $attachment->name,
                 ]) }}
             </x-filament::modal.heading>
@@ -92,14 +92,14 @@
                         <div class="flex gap-1">
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.zoom(-0.1)"
-                                title="{{ __('laravel-attachment.zoom in') }}"
+                                title="{{ __('filament_media.zoom in') }}"
                             >
                                 <x-heroicon-o-zoom-in class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.zoom(0.1)"
-                                title="{{ __('laravel-attachment.zoom out') }}"
+                                title="{{ __('filament_media.zoom out') }}"
                             >
                                 <x-heroicon-o-zoom-out class="h-4" />
                             </x-filament::button>
@@ -108,14 +108,14 @@
                         <div class="flex gap-1">
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.rotate(45)"
-                                title="{{ __('laravel-attachment.rotate 45 degrees clockwise') }}"
+                                title="{{ __('filament_media.rotate 45 degrees clockwise') }}"
                             >
                                 {{-- <x-fas-rotate-right class="h-4" /> --}}
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.rotate(-45)"
-                                title="{{ __('laravel-attachment.rotate 45 degrees counterclockwise') }}"
+                                title="{{ __('filament_media.rotate 45 degrees counterclockwise') }}"
                             >
                                 {{-- <x-fas-rotate-left class="h-4" /> --}}
                             </x-filament::button>
@@ -124,19 +124,19 @@
                         <div class="flex gap-1">
                             <x-filament::button x-on:click.prevent="window.cropper.scaleX(
                                 window.cropper.imageData.scaleX === -1 ? 1 : -1
-                            )" title="{{ __('laravel-attachment.flip horizontally') }}">
+                            )" title="{{ __('filament_media.flip horizontally') }}">
                                 <x-attachments-flip-horizontal class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button x-on:click.prevent="window.cropper.scaleY(
                                 window.cropper.imageData.scaleY === -1 ? 1 : -1
-                            )" title="{{ __('laravel-attachment.flip vertically') }}">
+                            )" title="{{ __('filament_media.flip vertically') }}">
                                 <x-attachments-flip-vertical class="h-4" />
                             </x-filament::button>
                         </div>
 
                         <x-filament::button x-on:click.prevent="window.cropper.reset()">
-                            {{ __('laravel-attachment.reset format') }}
+                            {{ __('filament_media.reset format') }}
                         </x-filament::button>
                     </div>
                 </div>
@@ -186,11 +186,11 @@
             <x-slot name="footer">
                 <x-filament::modal.actions>
                     <x-filament::button x-on:click.prevent="window.dispatchEvent(new Event('laravel-attachments::submit-formatter'))">
-                        {{ __('laravel-attachment.save format') }}
+                        {{ __('filament_media.save format') }}
                     </x-filament::button>
 
                     <x-filament::button color="secondary" x-on:click.prevent="close() && $wire.set('attachment', null)">
-                        {{ __('laravel-attachment.close modal') }}
+                        {{ __('filament_media.close modal') }}
                     </x-filament::button>
                 </x-filament::modal.actions>
             </x-slot>

@@ -127,7 +127,7 @@
                                     group-hover:after:opacity-80
                                 "
                                 delete-action="remove('{{ $attachment->id }}')"
-                                delete-button-title="{{ __('laravel-attachment.remove attachment') }}"
+                                delete-button-title="{{ __('filament_media.remove attachment') }}"
                                 edit-action="openEditModal('{{ $attachment->id }}')"
                                 :formatter-action="
                                     count($getAllowedFormats()) > 0
@@ -151,7 +151,7 @@
                                 id: 'laravel-attachment::upload-attachment-modal{{ $getStatePath() }}'
                             })"
                         >
-                            {{ __('laravel_attachment.upload attachment') }}
+                            {{ __('filament_media.upload attachment') }}
                         </button>
 
                         <button
@@ -159,7 +159,7 @@
                             class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-gray-800 bg-white border-gray-300 hover:bg-gray-50 focus:ring-primary-600 focus:text-primary-600 focus:bg-primary-50 focus:border-primary-600 filament-page-button-action"
                             x-on:click.prevent="openPicker()"
                         >
-                            {{ __('laravel_attachment.select existing media') }}
+                            {{ __('filament_media.select existing media') }}
                         </button>
                     </div>
                 @endif

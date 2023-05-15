@@ -66,7 +66,7 @@ class EditModal extends Component implements HasForms
         ]);
 
         Notification::make()
-            ->title(__('attachment.successfully updated'))
+            ->title(__('filament_media.successfully updated'))
             ->success()
             ->send();
     }
@@ -85,7 +85,7 @@ class EditModal extends Component implements HasForms
             TextInput::make('fields.caption'),
 
             Select::make('fields.tags')
-                ->label(__('laravel-attachment::tags'))
+                ->label(__('filament_media::tags'))
                 ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
                 ->searchable()
                 ->multiple(),

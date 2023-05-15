@@ -62,7 +62,7 @@ class UploadModal extends Component implements HasForms
         });
 
         Notification::make()
-            ->title(__('attachment.uploaded'))
+            ->title(__('filament_media.uploaded'))
             ->success()
             ->send();
 
@@ -102,8 +102,8 @@ class UploadModal extends Component implements HasForms
 
     protected function getUploadStep(): Wizard\Step
     {
-        return Wizard\Step::make(__('laravel-attachment::upload step title'))
-            ->description(__('laravel-attachment::upload step intro'))
+        return Wizard\Step::make(__('filament_media::upload step title'))
+            ->description(__('filament_media::upload step intro'))
             ->schema([
                 FileUpload::make('attachments')
                     ->reactive()
@@ -148,7 +148,7 @@ class UploadModal extends Component implements HasForms
                             ->reactive(),
 
                         Select::make("meta.$md5.tags")
-                            ->label(__('laravel-attachment::tags'))
+                            ->label(__('filament_media::tags'))
                             ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
                             ->searchable()
                             ->reactive()
@@ -163,8 +163,8 @@ class UploadModal extends Component implements HasForms
                 return $section;
             });
 
-        return Wizard\Step::make(__('laravel-attachment::attachment information step title'))
-            ->description(__('laravel-attachment::attachment information step intro'))
+        return Wizard\Step::make(__('filament_media::attachment information step title'))
+            ->description(__('filament_media::attachment information step intro'))
             ->schema($collapsableTabs->flatten()->toArray());
     }
 }

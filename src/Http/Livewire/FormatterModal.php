@@ -68,7 +68,7 @@ class FormatterModal extends Component
         );
 
         Notification::make()
-            ->title(__('attachment.successfully formatted'))
+            ->title(__('filament_media.successfully formatted'))
             ->success()
             ->send();
     }

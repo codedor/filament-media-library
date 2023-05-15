@@ -4,7 +4,7 @@
 >
     <x-slot name="header">
         <x-filament::modal.heading>
-            {{ __('laravel-attachment.upload modal heading') }}
+            {{ __('filament_media.upload modal heading') }}
         </x-filament::modal.heading>
     </x-slot>
 
@@ -13,7 +13,7 @@
     <x-slot name="footer">
         <x-filament::modal.actions>
             <x-filament::button wire:click.prevent="submit" type="submit">
-                {{ __('laravel-attachment.submit') }}
+                {{ __('filament_media.submit') }}
             </x-filament::button>
         </x-filament::modal.actions>
     </x-slot>

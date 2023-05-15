@@ -83,7 +83,7 @@ class Picker extends Component implements HasForms
         return [
             Fields\Grid::make(2)->schema([
                 Fields\TextInput::make('filters.query')
-                    ->placeholder(__('laravel-attachments::filters search'))
+                    ->placeholder(__('filament_medias::filters search'))
                     ->disableLabel(true)
                     ->reactive(),
 

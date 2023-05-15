@@ -14,11 +14,11 @@
         <div class="gallery-container flex flex-col gap-8">
             <div class="w-full flex justify-between">
                 <div class="flex flex-col gap-1 w-1/3">
-                    <label for="search">{{ __('laravel-attachment.search filter label') }}</label>
+                    <label for="search">{{ __('filament_media.search filter label') }}</label>
                     <input
                         id="search"
                         wire:model.debounce.500ms="search"
-                        placeholder="{{ __('laravel-attachment.search') }}"
+                        placeholder="{{ __('filament_media.search') }}"
                         type="text"
                         class="
                             block w-full transition duration-75 rounded-lg shadow-sm outline-none
@@ -32,7 +32,7 @@
 
                 <button class="flex gap-2 p-3 items-center" x-on:click="resetFilters()">
                     <x-heroicon-o-x class="w-5 h-5" />
-                    {{ __('laravel-attachment.clear filter') }}
+                    {{ __('filament_media.clear filter') }}
                 </button>
             </div>
 

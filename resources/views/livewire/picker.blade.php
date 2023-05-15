@@ -25,7 +25,7 @@
     >
         <x-slot name="header">
             <x-filament::modal.heading>
-                {{ __('laravel_attachment.select attachment') }}
+                {{ __('filament_media.select attachment') }}
             </x-filament::modal.heading>
         </x-slot>
 
@@ -41,7 +41,7 @@
                         wire:click.prevent="resetFilters()"
                     >
                         <x-heroicon-o-x class="w-5 h-5" />
-                        {{ __('laravel_attachment.reset filters') }}
+                        {{ __('filament_media.reset filters') }}
                     </button>
                 @endif
             </div>
@@ -50,7 +50,7 @@
         <div @class(['relative gallery-container', '!mt-8' => $isMultiple])>
             @if ($attachments->isEmpty())
                 <div class="p-2">
-                    {{ __('laravel_attachment.no attachments found') }}
+                    {{ __('filament_media.no attachments found') }}
                 </div>
             @else
                 <div
@@ -103,11 +103,11 @@
             <x-slot name="footer">
                 <x-filament::modal.actions>
                     <x-filament::button color="secondary" x-on:click.prevent="closePicker()">
-                        {{ __('laravel_attachment.cancel') }}
+                        {{ __('filament_media.cancel') }}
                     </x-filament::button>
 
                     <x-filament::button x-on:click.prevent="selectAttachment()">
-                        {{ __('laravel_attachment.select these attachments') }}
+                        {{ __('filament_media.select these attachments') }}
                     </x-filament::button>
                 </x-filament::modal.actions>
             </x-slot>
