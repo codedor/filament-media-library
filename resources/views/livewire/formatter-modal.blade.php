@@ -26,6 +26,7 @@
 
                     this.loadFormatter()
                     window.addEventListener('laravel-attachments::load-formatter', () => this.loadFormatter())
+                    window.addEventListener('laravel-attachments::submit-formatter', () => this.submit())
                 },
                 loadFormatter () {
                     if (! this.currentFormat) {
@@ -74,7 +75,6 @@
                     }
                 }
             }"
-            x-init="$watch('currentFormat', currentFormat => console.log(currentFormat.key))"
         >
             {{-- Actual formatter --}}
             <div class="w-full flex flex-col lg:flex-row gap-6">
@@ -94,14 +94,14 @@
                                 x-on:click.prevent="window.cropper.zoom(-0.1)"
                                 title="{{ __('laravel-attachment.zoom in') }}"
                             >
-                                <x-fas-magnifying-glass-plus class="h-4" />
+                                <x-heroicon-o-zoom-in class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.zoom(0.1)"
                                 title="{{ __('laravel-attachment.zoom out') }}"
                             >
-                                <x-fas-magnifying-glass-minus class="h-4" />
+                                <x-heroicon-o-zoom-out class="h-4" />
                             </x-filament::button>
                         </div>
 
@@ -110,14 +110,14 @@
                                 x-on:click.prevent="window.cropper.rotate(45)"
                                 title="{{ __('laravel-attachment.rotate 45 degrees clockwise') }}"
                             >
-                                <x-fas-rotate-right class="h-4" />
+                                {{-- <x-fas-rotate-right class="h-4" /> --}}
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.rotate(-45)"
                                 title="{{ __('laravel-attachment.rotate 45 degrees counterclockwise') }}"
                             >
-                                <x-fas-rotate-left class="h-4" />
+                                {{-- <x-fas-rotate-left class="h-4" /> --}}
                             </x-filament::button>
                         </div>
 
@@ -185,7 +185,7 @@
 
             <x-slot name="footer">
                 <x-filament::modal.actions>
-                    <x-filament::button x-on:click.prevent="submit()">
+                    <x-filament::button x-on:click.prevent="window.dispatchEvent(new Event('laravel-attachments::submit-formatter'))">
                         {{ __('laravel-attachment.save format') }}
                     </x-filament::button>
 
