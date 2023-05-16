@@ -147,8 +147,8 @@
 
                     <p class="mb-1">
                         <span x-text="currentFormat.name" class="font-bold"></span> -
-                        <span x-text="currentFormat.width"></span>px x
-                        <span x-text="currentFormat.height"></span>px
+                        <span x-text="currentFormat.width || '...'"></span><span x-show="currentFormat.height">px</span> x
+                        <span x-text="currentFormat.height || '...'"></span><span x-show="currentFormat.height">px</span>
                     </p>
 
                     <p x-text="currentFormat.description"></p>
@@ -165,16 +165,24 @@
                                 <div class="w-full text-center">
                                     <p x-html="format.name"></p>
                                     <p>
-                                        <span x-text="format.width"></span> x
-                                        <span x-text="format.height"></span>
+                                        <span x-text="format.width || '...'"></span> x
+                                        <span x-text="format.height || '...'"></span>
                                     </p>
                                 </div>
 
                                 <div class="flex aspect-square items-center justify-center">
                                     <div
+                                        x-data="{
+                                            aspectRatio: !format.width ? 0.67 : !format.height ? 1.5 : format.aspectRatio
+                                        }"
                                         class="bg-gray-400"
-                                        :class="format.aspectRatio > 1 ? 'w-full' : 'h-full'"
-                                        x-bind:style="'aspect-ratio: ' + format.aspectRatio"
+                                        :class="{
+                                            'w-full': aspectRatio > 1,
+                                            'h-full': aspectRatio <= 1,
+                                            'relative format-preview--variable-width': !format.width,
+                                            'relative format-preview--variable-height': !format.height,
+                                        }"
+                                        x-bind:style="'aspect-ratio: ' + aspectRatio"
                                     ></div>
                                 </div>
                             </div>
