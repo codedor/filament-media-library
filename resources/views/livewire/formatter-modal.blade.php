@@ -94,14 +94,14 @@
                                 x-on:click.prevent="window.cropper.zoom(-0.1)"
                                 title="{{ __('filament_media.zoom in') }}"
                             >
-                                <x-heroicon-o-zoom-in class="h-4" />
+                                <x-heroicon-o-zoom-in class="h-5" />
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.zoom(0.1)"
                                 title="{{ __('filament_media.zoom out') }}"
                             >
-                                <x-heroicon-o-zoom-out class="h-4" />
+                                <x-heroicon-o-zoom-out class="h-5" />
                             </x-filament::button>
                         </div>
 
@@ -110,14 +110,14 @@
                                 x-on:click.prevent="window.cropper.rotate(45)"
                                 title="{{ __('filament_media.rotate 45 degrees clockwise') }}"
                             >
-                                {{-- <x-fas-rotate-right class="h-4" /> --}}
+                                <x-fas-rotate-right class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.rotate(-45)"
                                 title="{{ __('filament_media.rotate 45 degrees counterclockwise') }}"
                             >
-                                {{-- <x-fas-rotate-left class="h-4" /> --}}
+                                <x-fas-rotate-left class="h-4" />
                             </x-filament::button>
                         </div>
 
