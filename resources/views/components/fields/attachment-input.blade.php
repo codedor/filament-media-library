@@ -108,7 +108,7 @@
                         >
                             @if ($isMultiple() && ! $isDisabled())
                                 <x-attachments-arrows-out-cardinal-light
-                                    class="sortable-icon absolute top-1/2 z-10 w-6 h-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                                    class="sortable-icon absolute top-1/2 z-10 w-10 h-10 opacity-0 group-hover:opacity-100 transition-opacity"
                                 />
                             @endif
 

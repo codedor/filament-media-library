@@ -323,6 +323,14 @@
   height: 100%;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
+.h-12 {
+  height: 3rem;
+}
+
 .min-h-\[2rem\] {
   min-height: 2rem;
 }
@@ -353,6 +361,14 @@
 
 .w-full {
   width: 100%;
+}
+
+.w-8 {
+  width: 2rem;
+}
+
+.w-12 {
+  width: 3rem;
 }
 
 .flex-1 {
