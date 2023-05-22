@@ -35,7 +35,10 @@
         "psr-4": {
             "Codedor\\Attachments\\": "src",
             "Codedor\\Attachments\\Database\\Factories\\": "database/factories"
-        }
+        },
+        "files": [
+            "helpers/helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
