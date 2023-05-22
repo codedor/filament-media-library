@@ -8,7 +8,7 @@ if (! function_exists('get_placeholder_url_by_format')) {
         $height = 500;
         $name = 'test';
 
-        $text = urlencode("{$name}\r\n{$width} x {$height}");
+        $text = urlencode("{$name}\n{$width} x {$height}");
 
         return "https://via.placeholder.com/{$width}x{$height}/21348c/ffffff.webp?text={$text}";
     }

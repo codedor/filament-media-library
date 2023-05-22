@@ -1,7 +1,7 @@
 @props([
     'placeholder' => false,
     'image' => null,
-    'format' => null,
+    'format' => '',
     'formats' => [],
     'pictureClass' => '',
     'class' => '',
