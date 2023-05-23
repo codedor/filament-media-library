@@ -12,7 +12,6 @@
     'width' => '',
     'height' => '',
 ])
-@dump($placeholder)
 
 @if ($placeholder)
     <x-laravel-attachments::placeholder-picture

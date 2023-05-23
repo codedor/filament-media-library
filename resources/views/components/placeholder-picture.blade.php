@@ -14,15 +14,13 @@
         <source
             media="(max-width: {{ $breakpoint ?? '576' }}px)"
             type="image/webp"
-            {{-- TODO BE: Ik heb dit toegevoegd aan src/helpers.php, maar ik krijg:
-                "Call to undefined function get_placeholder_url_by_format()" --}}
-            {{-- srcset="{{ get_placeholder_url_by_format($mobileFormat) }}" --}}
+            srcset="{{ get_placeholder_url_by_format($mobileFormat) }}"
         >
     @endforeach
 
     <source
         type="image/webp"
-        {{-- srcset="{{ get_placeholder_url_by_format($format) }}" --}}
+        srcset="{{ get_placeholder_url_by_format($format) }}"
     >
 
     <img
@@ -31,7 +29,7 @@
             $class ?? 'img-fluid',
             'lazyload' => $lazyload,
         ])
-        {{-- src="{{ get_placeholder_url_by_format($format) }}" --}}
+        src="{{ get_placeholder_url_by_format($format) }}"
         width="{{ $width }}"
         height="{{ $height }}"
     >
