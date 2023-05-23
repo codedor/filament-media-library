@@ -37,7 +37,7 @@
             "Codedor\\Attachments\\Database\\Factories\\": "database/factories"
         },
         "files": [
-            "helpers/helpers.php"
+            "src/helpers.php"
         ]
     },
     "autoload-dev": {
