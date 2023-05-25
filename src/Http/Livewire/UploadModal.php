@@ -26,14 +26,17 @@ class UploadModal extends Component implements HasForms
 
     public string $statePath = '';
 
+    public bool $multiple = false;
+
     protected bool $isCachingForms = false;
 
     protected bool $firstCollapsable = true;
 
     protected $listeners = ['laravel-attachment::refresh-upload-modal' => '$refresh'];
 
-    public function mount(string $statePath = '')
+    public function mount(string $statePath = '', bool $multiple = true)
     {
+        $this->multiple = $multiple;
         $this->statePath = $statePath;
         $this->form->fill();
     }
@@ -102,18 +105,22 @@ class UploadModal extends Component implements HasForms
 
     protected function getUploadStep(): Wizard\Step
     {
+        $fileuploadField = FileUpload::make('attachments')
+            ->reactive()
+            ->disableLabel()
+            ->required()
+            ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
+                return $file->save();
+            });
+
+        if ($this->multiple) {
+            $fileuploadField = $fileuploadField->multiple();
+        }
+
         return Wizard\Step::make(__('filament_media.upload step title'))
             ->description(__('filament_media.upload step intro'))
             ->schema([
-                FileUpload::make('attachments')
-                    ->reactive()
-                    ->disableLabel()
-                    ->required()
-                    // TODO BE: Make multiple dynamic
-                    ->multiple()
-                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
-                        return $file->save();
-                    }),
+                $fileuploadField,
             ]);
     }
 
@@ -125,10 +132,10 @@ class UploadModal extends Component implements HasForms
 
                 $this->meta[$md5] = [
                     'filename' => $this->meta[$md5]['filename'] ?? Str::replace(
-                        ".{$upload->getClientOriginalExtension()}",
-                        '',
-                        $upload->getClientOriginalName()
-                    ),
+                            ".{$upload->getClientOriginalExtension()}",
+                            '',
+                            $upload->getClientOriginalName()
+                        ),
                     'alt' => $this->meta[$md5]['alt'] ?? null,
                     'caption' => $this->meta[$md5]['caption'] ?? null,
                     'tags' => $this->meta[$md5]['tags'] ?? null,
@@ -138,7 +145,7 @@ class UploadModal extends Component implements HasForms
                     ->schema([
                         TextInput::make("meta.$md5.filename")
                             ->suffix('.' . $upload->getClientOriginalExtension())
-                            ->dehydrateStateUsing(fn ($state) => Str::slug($state))
+                            ->dehydrateStateUsing(fn($state) => Str::slug($state))
                             ->reactive(),
 
                         TextInput::make("meta.$md5.alt")

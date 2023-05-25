@@ -12,6 +12,7 @@ use Codedor\Attachments\Mixins\UploadedFileMixin;
 use Codedor\Attachments\Pages\Library;
 use Codedor\Attachments\Resources\AttachmentTagResource;
 use Codedor\Attachments\Views\Picture;
+use Codedor\Attachments\Views\Placeholder;
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
 use Illuminate\Http\UploadedFile;
@@ -36,6 +37,11 @@ class AttachmentServiceProvider extends PluginServiceProvider
         'upload-modal' => Livewire\UploadModal::class,
         'edit-modal' => Livewire\EditModal::class,
         'picker' => Livewire\Picker::class,
+    ];
+
+    protected array $bladeComponents = [
+        Picture::class => 'picture',
+        Placeholder::class => 'placeholder-picture',
     ];
 
     public function configurePackage(Package $package): void
@@ -78,7 +84,9 @@ class AttachmentServiceProvider extends PluginServiceProvider
 
     protected function registerBladeComponents()
     {
-        Blade::component(Picture::class, "{$this->packageName()}::picture");
+        foreach ($this->bladeComponents as $class => $view) {
+            Blade::component($class, "{$this->packageName()}::$view");
+        }
     }
 
     public function boot()

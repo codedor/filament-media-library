@@ -1,14 +1,3 @@
-@props([
-    'pictureClass' => '',
-    'format' => '',
-    'formats' => '',
-    'alt' => '',
-    'lazyload' => true,
-    // TODO BE: get the width and height from the format
-    'width' => '',
-    'height' => '',
-])
-
 <picture class="{{ $pictureClass }}">
     @foreach ($formats as $breakpoint => $mobileFormat)
         <source

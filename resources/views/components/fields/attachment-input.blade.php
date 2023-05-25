@@ -175,9 +175,11 @@
                     :is-multiple="$isMultiple()"
                 />
 
+
                 <livewire:laravel-attachments::upload-modal
                     wire:key="upload-{{ $getStatePath() }}"
                     :state-path="$getStatePath()"
+                    :multiple="$isMultiple()"
                 />
             </div>
         @endunless
