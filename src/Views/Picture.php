@@ -30,6 +30,16 @@ class Picture extends Component
         $this->formatClass = Formats::exists($this->format);
     }
 
+    public function width(): string
+    {
+        return $this->formatClass ? $this->formatClass->width() : $this->image->width;
+    }
+
+    public function height(): string
+    {
+        return $this->formatClass ? $this->formatClass->height() : $this->image->height;
+    }
+
     public function render()
     {
         return $this->view('laravel-attachments::components.picture');

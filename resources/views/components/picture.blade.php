@@ -1,5 +1,5 @@
 @if ($placeholder)
-    <x-laravel-attachments::placeholder-picture
+    <x-laravel-attachments::placeholder
         :format="$format"
         :formats="$formats"
         :picture-class="$pictureClass"
@@ -41,8 +41,8 @@
                 'lazyload' => $lazyload,
             ])
             src="{{ $image->getFormatOrOriginal($format) }}"
-            width="{{ $formatClass ? $formatClass->width() : $image->width }}"
-            height="{{ $formatClass ? $formatClass->height() : $image->height }}"
+            width="{{ $width() }}"
+            height="{{ $height() }}"
         >
     </picture>
 @endif
