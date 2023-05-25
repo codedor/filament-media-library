@@ -14,13 +14,13 @@ class Picture extends Component
     public function __construct(
         public Attachment $image,
         public ?string $format = null,
-        public ?string $alt = null,
+        public string $alt = '',
         public bool $placeholder = false,
-        public $formats = [],
-        public $pictureClass = null,
-        public $class = null,
-        public $title = null,
-        public $lazyload = true,
+        public array $formats = [],
+        public string $pictureClass = '',
+        public string $class = '',
+        public string $title = '',
+        public bool $lazyload = true,
     ) {
         $this->getFormatClass();
     }

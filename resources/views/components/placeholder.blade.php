@@ -19,7 +19,7 @@
             'lazyload' => $lazyload,
         ])
         src="{{ get_placeholder_url_by_format($format) }}"
-        width="{{ $width }}"
-        height="{{ $height }}"
+        {{--        width="{{ $width }}"--}}
+        {{--        height="{{ $height }}"--}}
     >
 </picture>

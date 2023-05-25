@@ -41,7 +41,7 @@ class AttachmentServiceProvider extends PluginServiceProvider
 
     protected array $bladeComponents = [
         Picture::class => 'picture',
-        Placeholder::class => 'placeholder-picture',
+        Placeholder::class => 'placeholder',
     ];
 
     public function configurePackage(Package $package): void
