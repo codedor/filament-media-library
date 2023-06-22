@@ -62,7 +62,7 @@ class AttachmentInput extends Field implements HasForms
 
         $this->dehydrateStateUsing(function (self $component, $state) {
             if ($component->isMultiple()) {
-                return;
+                return json_encode($state);
             }
 
             return $state[0] ?? null;
