@@ -104,7 +104,6 @@ class AttachmentServiceProvider extends PluginServiceProvider
                 __DIR__ . '/../../dist/js/cropper.min.js',
             ]);
 
-
             Filament::registerRenderHook(
                 'body.end',
                 fn (): View => view(self::PACKAGE_NAME . '::components.modals')
