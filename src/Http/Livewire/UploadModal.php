@@ -77,7 +77,7 @@ class UploadModal extends Component implements HasForms
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'laravel-attachment::upload-attachment-modal',
+            'id' => 'laravel-attachment::upload-attachment-modal' . $this->statePath,
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [

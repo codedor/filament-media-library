@@ -1,6 +1,6 @@
 <x-filament::modal
     id="laravel-attachment::edit-attachment-modal"
-    x-on:modal-closed="closeEditModal()"
+    x-on:modal-closed="$wire.emit('laravel-attachment::close-edit-attachment-modal')"
     width="4xl"
 >
     @if ($attachment)

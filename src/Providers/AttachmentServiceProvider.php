@@ -15,6 +15,7 @@ use Codedor\Attachments\Views\Picture;
 use Codedor\Attachments\Views\Placeholder;
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire as LivewireCore;
@@ -102,6 +103,12 @@ class AttachmentServiceProvider extends PluginServiceProvider
             Filament::registerScripts([
                 __DIR__ . '/../../dist/js/cropper.min.js',
             ]);
+
+
+            Filament::registerRenderHook(
+                'body.end',
+                fn (): View => view(self::PACKAGE_NAME . '::components.modals')
+            );
         });
     }
 

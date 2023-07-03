@@ -175,7 +175,6 @@
                     :is-multiple="$isMultiple()"
                 />
 
-
                 <livewire:laravel-attachments::upload-modal
                     wire:key="upload-{{ $getStatePath() }}"
                     :state-path="$getStatePath()"
@@ -185,10 +184,3 @@
         @endunless
     </div>
 </x-dynamic-component>
-
-@once
-    <div class="overflow-hidden h-0">
-        @livewire('laravel-attachments::edit-modal')
-        @livewire('laravel-attachments::formatter-modal')
-    </div>
-@endonce

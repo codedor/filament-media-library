@@ -71,12 +71,5 @@
                 {{ $attachments->links() }}
             </div>
         </div>
-
-        @once
-            @include('laravel-attachments::livewire.delete-modal')
-            @livewire('laravel-attachments::upload-modal')
-            @livewire('laravel-attachments::edit-modal')
-            @livewire('laravel-attachments::formatter-modal')
-        @endonce
     </div>
 </x-filament::page>

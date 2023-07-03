@@ -30,7 +30,17 @@ class Picker extends Component implements HasForms
 
     protected $listeners = [
         'laravel-attachments::open-picker' => 'openPicker',
+        'laravel-attachment::update-library' => 'addToAttachmentList',
     ];
+
+    public function addToAttachmentList()
+    {
+        $this->attachmentsList = Attachment::latest()
+            ->pluck('id')
+            ->diff($this->attachmentsList)
+            ->merge($this->attachmentsList)
+            ->toArray();
+    }
 
     public function render()
     {
