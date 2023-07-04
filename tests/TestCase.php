@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Tests;
+namespace Codedor\MediaLibrary\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-use Codedor\Attachments\Providers\AttachmentServiceProvider;
+use Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
@@ -28,7 +28,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            AttachmentServiceProvider::class,
+            MediaLibraryServiceProvider::class,
             BladeCaptureDirectiveServiceProvider::class,
             BladeHeroiconsServiceProvider::class,
             BladeIconsServiceProvider::class,

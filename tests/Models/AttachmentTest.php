@@ -1,6 +1,6 @@
 <?php
 
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

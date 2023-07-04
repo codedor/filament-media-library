@@ -1,6 +1,6 @@
 <?php
 
-use Codedor\Attachments\Conversions\LocalConversion;
+use Codedor\MediaLibrary\Conversions\LocalConversion;
 
 return [
     'extensions' => [

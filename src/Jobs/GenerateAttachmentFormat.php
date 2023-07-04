@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Jobs;
+namespace Codedor\MediaLibrary\Jobs;
 
-use Codedor\Attachments\Formats\Format;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Formats\Format;
+use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;

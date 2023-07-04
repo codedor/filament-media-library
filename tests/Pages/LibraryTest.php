@@ -1,6 +1,6 @@
 <?php
 
-use Codedor\Attachments\Pages\Library;
+use Codedor\MediaLibrary\Pages\Library;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 

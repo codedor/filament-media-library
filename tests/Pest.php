@@ -1,5 +1,5 @@
 <?php
 
-use Codedor\Attachments\Tests\TestCase;
+use Codedor\MediaLibrary\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

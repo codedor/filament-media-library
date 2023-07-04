@@ -1,6 +1,6 @@
 <?php
 
-use Codedor\Attachments\Facades\Formats;
+use Codedor\MediaLibrary\Facades\Formats;
 
 if (! function_exists('get_placeholder_url_by_format')) {
     function get_placeholder_url_by_format($format)

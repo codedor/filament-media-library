@@ -1,10 +1,10 @@
 <?php
 
-use Codedor\Attachments\Entities\Dimension;
-use Codedor\Attachments\Facades\Models;
-use Codedor\Attachments\Jobs\GenerateAttachmentFormat;
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Entities\Dimension;
+use Codedor\MediaLibrary\Facades\Models;
+use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;

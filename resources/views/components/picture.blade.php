@@ -1,5 +1,5 @@
 @if ($placeholder)
-    <x-laravel-attachments::placeholder
+    <x-filament-media-library::placeholder
         :format="$format"
         :formats="$formats"
         :picture-class="$pictureClass"

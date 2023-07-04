@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\Attachments\Entities;
+namespace Codedor\MediaLibrary\Entities;
 
 class Dimension
 {

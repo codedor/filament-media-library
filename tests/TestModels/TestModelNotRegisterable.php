@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\Attachments\Tests\TestModels;
+namespace Codedor\MediaLibrary\Tests\TestModels;
 
 use Illuminate\Database\Eloquent\Model;
 

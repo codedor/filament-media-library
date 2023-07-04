@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Views;
+namespace Codedor\MediaLibrary\Views;
 
-use Codedor\Attachments\Facades\Formats;
-use Codedor\Attachments\Formats\Format;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Formats\Format;
+use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\View\Component;
 
 class Picture extends Component
@@ -42,6 +42,6 @@ class Picture extends Component
 
     public function render()
     {
-        return $this->view('laravel-attachments::components.picture');
+        return $this->view('filament-media-library::components.picture');
     }
 }

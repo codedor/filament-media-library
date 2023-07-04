@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Http\Livewire;
+namespace Codedor\MediaLibrary\Http\Livewire;
 
-use Codedor\Attachments\Facades\Formats;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
@@ -14,7 +14,7 @@ class FormatterModal extends Component
     public null|array $modelFormats = null;
 
     protected $listeners = [
-        'laravel-attachment::open-formatter-attachment-modal' => 'setAttachment',
+        'filament-media-library::open-formatter-attachment-modal' => 'setAttachment',
         'cropped' => 'saveCrop',
     ];
 
@@ -26,7 +26,7 @@ class FormatterModal extends Component
 
     public function render()
     {
-        $this->dispatchBrowserEvent('laravel-attachments::load-formatter');
+        $this->dispatchBrowserEvent('filament-media-library::load-formatter');
 
         $formats = Formats::mapToKebab();
 
@@ -42,7 +42,7 @@ class FormatterModal extends Component
             $previousFormats = $this->attachment->formats()->pluck('data', 'format');
         }
 
-        return view('laravel-attachments::livewire.formatter-modal', [
+        return view('filament-media-library::livewire.formatter-modal', [
             'formats' => $formats->map->toArray(),
             'previousFormats' => $previousFormats,
         ]);

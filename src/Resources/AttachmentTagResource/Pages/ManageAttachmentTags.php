@@ -1,8 +1,8 @@
 <?php
 
-namespace Codedor\Attachments\Resources\AttachmentTagResource\Pages;
+namespace Codedor\MediaLibrary\Resources\AttachmentTagResource\Pages;
 
-use Codedor\Attachments\Resources\AttachmentTagResource;
+use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ManageRecords;
 

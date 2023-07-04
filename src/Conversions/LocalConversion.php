@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Conversions;
+namespace Codedor\MediaLibrary\Conversions;
 
-use Codedor\Attachments\Formats\Format;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Formats\Format;
+use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 

@@ -1,5 +1,5 @@
 <x-filament::modal
-    id="laravel-attachment::upload-attachment-modal{{ $statePath }}"
+    id="filament-media-library::upload-attachment-modal{{ $statePath }}"
     width="4xl"
 >
     <x-slot name="header">

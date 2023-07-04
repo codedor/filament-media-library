@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Pages;
+namespace Codedor\MediaLibrary\Pages;
 
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Models\AttachmentTag;
-use Codedor\Attachments\Resources\AttachmentTagResource;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
+use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Notifications\Notification;
 use Filament\Pages\Actions\Action;
 use Filament\Pages\Actions\CreateAction;
@@ -18,7 +18,7 @@ class Library extends Page
 
     protected static ?string $navigationIcon = 'heroicon-o-paper-clip';
 
-    protected static string $view = 'laravel-attachments::pages.library';
+    protected static string $view = 'filament-media-library::pages.library';
 
     public string $search = '';
 
@@ -31,7 +31,7 @@ class Library extends Page
     ];
 
     protected $listeners = [
-        'laravel-attachment::update-library' => '$refresh',
+        'filament-media-library::update-library' => '$refresh',
     ];
 
     protected static function getNavigationLabel(): string
@@ -69,7 +69,7 @@ class Library extends Page
             Action::make('openUploadModal')
                 ->label(__('filament_media.upload attachment'))
                 ->action(fn () => $this->dispatchBrowserEvent('open-modal', [
-                    'id' => 'laravel-attachment::upload-attachment-modal',
+                    'id' => 'filament-media-library::upload-attachment-modal',
                 ])),
 
             CreateAction::make()

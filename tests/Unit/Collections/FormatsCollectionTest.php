@@ -1,12 +1,12 @@
 <?php
 
-use Codedor\Attachments\Facades\Formats;
-use Codedor\Attachments\Tests\TestFormats\TestHero;
-use Codedor\Attachments\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 
 it('registers model', function () {
     expect(Formats::registerForModel(TestModel::class))
-        ->toBeInstanceOf(\Codedor\Attachments\Collections\Formats::class)
+        ->toBeInstanceOf(\Codedor\MediaLibrary\Collections\Formats::class)
         ->toHaveKey(TestModel::class)
         ->first()
         ->toHaveCount(2)

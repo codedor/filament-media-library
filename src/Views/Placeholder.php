@@ -1,11 +1,11 @@
 <?php
 
-namespace Codedor\Attachments\Views;
+namespace Codedor\MediaLibrary\Views;
 
 class Placeholder extends Picture
 {
     public function render()
     {
-        return $this->view('laravel-attachments::components.placeholder');
+        return $this->view('filament-media-library::components.placeholder');
     }
 }

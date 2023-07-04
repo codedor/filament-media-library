@@ -1,8 +1,8 @@
 <?php
 
-namespace Codedor\Attachments\Database\Factories;
+namespace Codedor\MediaLibrary\Database\Factories;
 
-use Codedor\Attachments\Models\AttachmentTag;
+use Codedor\MediaLibrary\Models\AttachmentTag;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AttachmentTagFactory extends Factory

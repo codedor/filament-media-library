@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Http\Livewire;
+namespace Codedor\MediaLibrary\Http\Livewire;
 
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Models\AttachmentTag;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -32,7 +32,7 @@ class UploadModal extends Component implements HasForms
 
     protected bool $firstCollapsable = true;
 
-    protected $listeners = ['laravel-attachment::refresh-upload-modal' => '$refresh'];
+    protected $listeners = ['filament-media-library::refresh-upload-modal' => '$refresh'];
 
     public function mount(string $statePath = '', bool $multiple = true)
     {
@@ -69,19 +69,19 @@ class UploadModal extends Component implements HasForms
             ->success()
             ->send();
 
-        $this->emit('laravel-attachment::update-library');
+        $this->emit('filament-media-library::update-library');
 
-        $this->dispatchBrowserEvent('laravel-attachment::uploaded-images', [
+        $this->dispatchBrowserEvent('filament-media-library::uploaded-images', [
             'statePath' => $this->statePath,
             'attachments' => $attachments->pluck('id'),
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'laravel-attachment::upload-attachment-modal' . $this->statePath,
+            'id' => 'filament-media-library::upload-attachment-modal' . $this->statePath,
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'laravel-attachment::edit-attachment-modal',
+            'id' => 'filament-media-library::edit-attachment-modal',
         ]);
 
         $this->form->fill();
@@ -89,7 +89,7 @@ class UploadModal extends Component implements HasForms
 
     public function render()
     {
-        return view('laravel-attachments::livewire.upload-modal');
+        return view('filament-media-library::livewire.upload-modal');
     }
 
     protected function getFormSchema(): array

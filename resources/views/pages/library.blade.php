@@ -7,7 +7,7 @@
             },
             openDeleteModal (id) {
                 $wire.set('attachmentToDelete', id)
-                $dispatch('open-modal', { id: 'laravel-attachment::delete-attachment-modal' })
+                $dispatch('open-modal', { id: 'filament-media-library::delete-attachment-modal' })
             }
         }"
     >
@@ -53,7 +53,7 @@
             >
                 @foreach($attachments as $attachment)
                     <div class="p-2 rounded-lg overflow-hidden shadow-lg bg-white flex flex-col gap-2">
-                        <x-laravel-attachments::attachment
+                        <x-filament-media-library::attachment
                             :$attachment
                             delete-action="openDeleteModal('{{ $attachment->id }}')"
                             edit-action="openEditModal('{{ $attachment->id }}')"

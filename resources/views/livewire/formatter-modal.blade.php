@@ -1,5 +1,5 @@
 <x-filament::modal
-    id="laravel-attachment::formatter-attachment-modal"
+    id="filament-media-library::formatter-attachment-modal"
     width="w-6xl"
 >
     @if ($attachment)
@@ -14,7 +14,7 @@
         <div
             class="py-8 w-full flex-col gap-2"
             wire:loading.remove
-            wire:key="laravel-attachments::formatter-attachment-modal-{{ $attachment->id }}"
+            wire:key="filament-media-library::formatter-attachment-modal-{{ $attachment->id }}"
             x-data="{
                 formats: @js($formats),
                 previousFormats: @js($previousFormats),
@@ -25,8 +25,8 @@
                         || null
 
                     this.loadFormatter()
-                    window.addEventListener('laravel-attachments::load-formatter', () => this.loadFormatter())
-                    window.addEventListener('laravel-attachments::submit-formatter', () => this.submit())
+                    window.addEventListener('filament-media-library::load-formatter', () => this.loadFormatter())
+                    window.addEventListener('filament-media-library::submit-formatter', () => this.submit())
                 },
                 loadFormatter () {
                     if (! this.currentFormat) {
@@ -39,7 +39,7 @@
 
                     let previousData = this.previousFormats[this.currentFormat.key] || {}
 
-                    window.cropper = new Cropper(document.getElementById('laravel-attachments::formatter'), {
+                    window.cropper = new Cropper(document.getElementById('filament-media-library::formatter'), {
                         viewMode: 1,
                         dragMode: 'move',
                         aspectRatio: this.currentFormat.aspectRatio,
@@ -82,8 +82,8 @@
                     <div class="w-full h-[70vh]">
                         <img
                             src="{{ $attachment->url }}"
-                            id="laravel-attachments::formatter"
-                            wire:key="laravel-attachments::formatter-{{ $attachment->id }}"
+                            id="filament-media-library::formatter"
+                            wire:key="filament-media-library::formatter-{{ $attachment->id }}"
                             style="max-width: 100%; max-height: 70vh"
                         >
                     </div>
@@ -193,7 +193,7 @@
 
             <x-slot name="footer">
                 <x-filament::modal.actions>
-                    <x-filament::button x-on:click.prevent="window.dispatchEvent(new Event('laravel-attachments::submit-formatter'))">
+                    <x-filament::button x-on:click.prevent="window.dispatchEvent(new Event('filament-media-library::submit-formatter'))">
                         {{ __('filament_media.save format') }}
                     </x-filament::button>
 

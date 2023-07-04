@@ -21,11 +21,11 @@
             initial: @js($attachments->pluck('id')->toArray()),
             multiple: @js($isMultiple()),
             dragging: false,
-            pickerModalID: 'laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}',
+            pickerModalID: 'filament-media-library::attachment-picker-modal-{{ $getStatePath() }}',
             init () {
                 this.state = [...this.initial]
 
-                window.addEventListener('laravel-attachment::uploaded-images', (event) => {
+                window.addEventListener('filament-media-library::uploaded-images', (event) => {
                     if (event.detail.statePath !== '{{ $getStatePath() }}') {
                         return
                     }
@@ -39,7 +39,7 @@
                     this.updateState()
                 })
 
-                window.addEventListener('laravel-attachment::picked-attachments', (event) => {
+                window.addEventListener('filament-media-library::picked-attachments', (event) => {
                     if (event.detail.statePath !== '{{ $getStatePath() }}') {
                         return
                     }
@@ -51,7 +51,7 @@
             openPicker () {
                 $dispatch('open-modal', { id: this.pickerModalID })
 
-                $wire.emit('laravel-attachments::open-picker', {
+                $wire.emit('filament-media-library::open-picker', {
                     statePath: '{{ $getStatePath() }}',
                     attachments: this.state || this.state || [],
                 })
@@ -112,7 +112,7 @@
                                 />
                             @endif
 
-                            <x-laravel-attachments::attachment
+                            <x-filament-media-library::attachment
                                 :$attachment
                                 :is-disabled="$isDisabled()"
                                 container-class="flex flex-col w-full h-full justify-end transition-opacity"
@@ -168,14 +168,14 @@
 
         @unless ($isDisabled())
             <div class="overflow-hidden h-0">
-                <livewire:laravel-attachments::picker
+                <livewire:filament-media-library::picker
                     wire:key="picker-{{ $getStatePath() }}"
                     :state-path="$getStatePath()"
                     :attachments-list="$getAttachmentsList()->pluck('id')->toArray()"
                     :is-multiple="$isMultiple()"
                 />
 
-                <livewire:laravel-attachments::upload-modal
+                <livewire:filament-media-library::upload-modal
                     wire:key="upload-{{ $getStatePath() }}"
                     :state-path="$getStatePath()"
                     :multiple="$isMultiple()"

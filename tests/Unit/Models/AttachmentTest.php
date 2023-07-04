@@ -1,8 +1,8 @@
 <?php
 
-use Codedor\Attachments\Facades\Models;
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Facades\Models;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
