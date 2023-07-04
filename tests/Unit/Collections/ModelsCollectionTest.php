@@ -1,8 +1,8 @@
 <?php
 
-use Codedor\Attachments\Facades\Models;
-use Codedor\Attachments\Tests\TestModels\TestModel;
-use Codedor\Attachments\Tests\TestModels\TestModelNotRegisterable;
+use Codedor\MediaLibrary\Facades\Models;
+use Codedor\MediaLibrary\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Tests\TestModels\TestModelNotRegisterable;
 use Illuminate\Support\Collection;
 
 it('returns registered models', function () {
@@ -16,7 +16,7 @@ it('returns registered models', function () {
 
 it('does not register model if not registerable', function () {
     expect(Models::add(TestModelNotRegisterable::class))
-        ->toBeInstanceOf(\Codedor\Attachments\Collections\Models::class)
+        ->toBeInstanceOf(\Codedor\MediaLibrary\Collections\Models::class)
         ->all()
         ->toBeInstanceOf(Collection::class)
         ->toHaveCount(0);

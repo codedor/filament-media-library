@@ -1,14 +1,14 @@
-# Laravel Attachments For Filament
+# Media Library For Filament
 
-Introducing "Laravel Media Library", a comprehensive package that simplifies the management of file uploads and media
-files in your Laravel application.
+Introducing "Media Library", a comprehensive package that simplifies the management of file uploads and media
+files in your Laravel and Filament application.
 
 This package provides a fluent and intuitive API that allows you to seamlessly integrate file uploads into your Laravel
 application. You can easily define the accepted file formats, set upload limits, and specify storage locations for your
 media files. The package also includes a simple and elegant user interface for managing your media library, making it
 easy to organize, search, and retrieve your files.
 
-With Laravel Media Library, you can upload and manage any type of media file, including images, videos, audio files, and
+With Media Library, you can upload and manage any type of media file, including images, videos, audio files, and
 documents. You can also add metadata to your files, such as titles, descriptions, and tags, making it easy to search and
 filter your media library.
 
@@ -16,7 +16,7 @@ The package provides a robust set of features, including automatic file resizing
 generation. You can easily create custom transformations for your images, and even define presets that can be applied to
 multiple images at once.
 
-Laravel Media Library is also highly customizable, with a flexible configuration system that allows you to tailor the
+Media Library is also highly customizable, with a flexible configuration system that allows you to tailor the
 package to your specific needs. Whether you're building a simple blog or a complex web application, Laravel Media
 Library provides a simple and elegant solution for managing your media files.
 
@@ -25,13 +25,13 @@ Library provides a simple and elegant solution for managing your media files.
 You can install the package via composer:
 
 ```bash
-composer require codedor/laravel-attachments
+composer require codedor/filament-media-library
 ```
 
 Publish the assets with:
 
 ```bash
-php artisan vendor:publish --provider "Codedor\Attachments\Providers\AttachmentServiceProvider"
+php artisan vendor:publish --provider "Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider"
 ```
 
 Run the migrations with:

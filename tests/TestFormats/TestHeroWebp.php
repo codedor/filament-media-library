@@ -1,8 +1,8 @@
 <?php
 
-namespace Codedor\Attachments\Tests\TestFormats;
+namespace Codedor\MediaLibrary\Tests\TestFormats;
 
-use Codedor\Attachments\Formats\Format;
+use Codedor\MediaLibrary\Formats\Format;
 use Spatie\Image\Manipulations;
 
 class TestHeroWebp extends Format

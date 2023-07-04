@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Tables\Columns;
+namespace Codedor\MediaLibrary\Tables\Columns;
 
 use Closure;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\Concerns;
 use Illuminate\Support\Collection;
@@ -12,7 +12,7 @@ class AttachmentColumn extends Column
 {
     use Concerns\HasDescription;
 
-    protected string $view = 'laravel-attachments::components.columns.attachments-column';
+    protected string $view = 'filament-media-library::components.columns.attachments-column';
 
     public int|Closure $limit = 3;
 

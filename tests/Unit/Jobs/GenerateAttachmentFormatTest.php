@@ -1,9 +1,9 @@
 <?php
 
-use Codedor\Attachments\Conversions\Conversion;
-use Codedor\Attachments\Jobs\GenerateAttachmentFormat;
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Conversions\Conversion;
+use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery\MockInterface;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\Attachments\Collections;
+namespace Codedor\MediaLibrary\Collections;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -25,7 +25,7 @@ class Models
 
         $this->models->add($item);
 
-        \Codedor\Attachments\Facades\Formats::registerForModel($item);
+        \Codedor\MediaLibrary\Facades\Formats::registerForModel($item);
 
         return $this;
     }

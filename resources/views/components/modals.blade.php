@@ -1,5 +1,5 @@
-@include('laravel-attachments::livewire.delete-modal')
+@include('filament-media-library::livewire.delete-modal')
 
-@livewire('laravel-attachments::upload-modal')
-@livewire('laravel-attachments::edit-modal')
-@livewire('laravel-attachments::formatter-modal')
+@livewire('filament-media-library::upload-modal')
+@livewire('filament-media-library::edit-modal')
+@livewire('filament-media-library::formatter-modal')

@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\Attachments\Exceptions;
+namespace Codedor\MediaLibrary\Exceptions;
 
 use Exception;
 

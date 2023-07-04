@@ -4,7 +4,7 @@
         // Only one attachment can be selected if not multiple
         id ? this.selected = [id] : null
 
-        window.dispatchEvent(new CustomEvent('laravel-attachment::picked-attachments', {
+        window.dispatchEvent(new CustomEvent('filament-media-library::picked-attachments', {
             detail: {
                 statePath: '{{ $statePath }}',
                 attachments: this.selected,
@@ -15,12 +15,12 @@
     },
     closePicker () {
         $dispatch('close-modal', {
-            id: 'laravel-attachment::attachment-picker-modal-{{ $statePath }}'
+            id: 'filament-media-library::attachment-picker-modal-{{ $statePath }}'
         })
     },
 }">
     <x-filament::modal
-        id="laravel-attachment::attachment-picker-modal-{{ $statePath }}"
+        id="filament-media-library::attachment-picker-modal-{{ $statePath }}"
         width="6xl"
     >
         <x-slot name="header">
@@ -83,7 +83,7 @@
                                 x-model="selected"
                             >
 
-                            <x-laravel-attachments::attachment
+                            <x-filament-media-library::attachment
                                 :$attachment
                                 container-class="rounded-lg transition-all peer-checked:p-2 peer-checked:bg-gray-200 peer-checked:[&_.media]:scale-90 peer-checked:[&_.attachment-tooltip]:text-gray-400"
                                 class="transition-transform"

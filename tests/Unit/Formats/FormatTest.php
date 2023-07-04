@@ -1,9 +1,9 @@
 <?php
 
-use Codedor\Attachments\Conversions\LocalConversion;
-use Codedor\Attachments\Providers\AttachmentServiceProvider;
-use Codedor\Attachments\Tests\TestConversions\TestConversion;
-use Codedor\Attachments\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Conversions\LocalConversion;
+use Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider;
+use Codedor\MediaLibrary\Tests\TestConversions\TestConversion;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
 use Illuminate\Support\Facades\Config;
 
 it('returns default conversion', function () {
@@ -14,9 +14,9 @@ it('returns default conversion', function () {
 });
 
 it('returns defined conversion', function () {
-    Config::set('laravel-attachments.conversion', TestConversion::class);
+    Config::set('filament-media-library.conversion', TestConversion::class);
 
-    app(AttachmentServiceProvider::class, ['app' => app()])
+    app(MediaLibraryServiceProvider::class, ['app' => app()])
         ->packageRegistered();
 
     $format = new TestHero('test');

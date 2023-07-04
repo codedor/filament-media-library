@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Tests\TestModels;
+namespace Codedor\MediaLibrary\Tests\TestModels;
 
-use Codedor\Attachments\Interfaces\HasFormats;
-use Codedor\Attachments\Tests\TestFormats\TestHero;
-use Codedor\Attachments\Tests\TestFormats\TestHeroWebp;
+use Codedor\MediaLibrary\Interfaces\HasFormats;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Resources;
+namespace Codedor\MediaLibrary\Resources;
 
-use Codedor\Attachments\Models\AttachmentTag;
-use Codedor\Attachments\Resources\AttachmentTagResource\Pages\ManageAttachmentTags;
+use Codedor\MediaLibrary\Models\AttachmentTag;
+use Codedor\MediaLibrary\Resources\AttachmentTagResource\Pages\ManageAttachmentTags;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Form;
