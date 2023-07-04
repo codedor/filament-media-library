@@ -15,7 +15,7 @@
         "blade-ui-kit/blade-icons": "^1.5",
         "filament/filament": "^2.16",
         "filament/spatie-laravel-translatable-plugin": "^2.0",
-        "illuminate/contracts": "^9.0 || ^10.0",
+        "illuminate/contracts": "^10.0",
         "livewire/livewire": "^2.11",
         "owenvoke/blade-fontawesome": "^2.2",
         "spatie/image": "^2.2",
