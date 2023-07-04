@@ -2,7 +2,6 @@
 
 namespace Codedor\MediaLibrary\Mixins;
 
-use Codedor\MediaLibrary\Entities\Dimension;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +13,6 @@ class UploadedFileMixin
     public function save()
     {
         return function (string $disk = 'public') {
-            /** @var Dimension $dimensions */
             $dimensions = $this->dimensions();
 
             $data = [
@@ -23,8 +21,8 @@ class UploadedFileMixin
                 'md5' => $this->getMd5(),
                 'type' => $this->fileType(),
                 'size' => $this->getSize(),
-                'width' => $dimensions?->width,
-                'height' => $dimensions?->height,
+                'width' => $dimensions[0],
+                'height' => $dimensions[1],
                 'disk' => $disk,
                 'name' => Str::replace(
                     ".{$this->getClientOriginalExtension()}",
@@ -47,19 +45,6 @@ class UploadedFileMixin
             Formats::dispatchGeneration($attachment);
 
             return $attachment;
-        };
-    }
-
-    public function dimensions()
-    {
-        return function (): Dimension|null {
-            if (
-                ! $this->isImage() ||
-                in_array($this->getMimeType(), ['image/svg+xml', 'image/svg'])) {
-                return null;
-            }
-
-            return Dimension::for($this->path());
         };
     }
 
