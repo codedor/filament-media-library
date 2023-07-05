@@ -1,5 +1,5 @@
 <x-filament::modal
-    id="filament-media-library::upload-attachment-modal{{ $statePath }}"
+    id="filament-media-library::upload-attachment-modal"
     width="4xl"
 >
     <x-slot name="header">

@@ -72,4 +72,6 @@
             </div>
         </div>
     </div>
+
+    @include('filament-media-library::livewire.delete-modal')
 </x-filament::page>

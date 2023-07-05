@@ -1,4 +1,4 @@
-<x-filament::modal id="laravel-attachment::delete-attachment-modal" width="lg">
+<x-filament::modal id="filament-media-library::delete-attachment-modal" width="lg">
     <x-slot name="header">
         <x-filament::modal.heading>
             {{ __('filament_media.delete modal heading') }}

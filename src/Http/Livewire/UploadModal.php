@@ -32,7 +32,10 @@ class UploadModal extends Component implements HasForms
 
     protected bool $firstCollapsable = true;
 
-    protected $listeners = ['filament-media-library::refresh-upload-modal' => '$refresh'];
+    protected $listeners = [
+        'filament-media-library::refresh-upload-modal' => '$refresh',
+        'filament-media-library::open-upload-modal' => 'openUploadModal',
+    ];
 
     public function mount(string $statePath = '', bool $multiple = true)
     {
@@ -77,7 +80,7 @@ class UploadModal extends Component implements HasForms
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'filament-media-library::upload-attachment-modal' . $this->statePath,
+            'id' => 'filament-media-library::upload-attachment-modal',
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [
@@ -85,6 +88,12 @@ class UploadModal extends Component implements HasForms
         ]);
 
         $this->form->fill();
+    }
+
+    public function openUploadModal($data): void
+    {
+        $this->multiple = $data['multiple'] ?? false;
+        $this->statePath = $data['statePath'] ?? '';
     }
 
     public function render()
