@@ -21,8 +21,8 @@ class UploadedFileMixin
                 'md5' => $this->getMd5(),
                 'type' => $this->fileType(),
                 'size' => $this->getSize(),
-                'width' => $dimensions[0],
-                'height' => $dimensions[1],
+                'width' => $dimensions[0] ?? 0,
+                'height' => $dimensions[1] ?? 0,
                 'disk' => $disk,
                 'name' => Str::replace(
                     ".{$this->getClientOriginalExtension()}",

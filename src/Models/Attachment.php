@@ -144,4 +144,9 @@ class Attachment extends Model
     {
         return round($this->size / 1000000, 2);
     }
+
+    public function isImage(): bool
+    {
+        return $this->type === 'image';
+    }
 }

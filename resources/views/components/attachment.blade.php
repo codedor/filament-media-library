@@ -18,13 +18,6 @@
         openFormatterModal (id) {
             $dispatch('open-modal', { id: 'filament-media-library::formatter-attachment-modal' })
             $wire.emit('filament-media-library::open-formatter-attachment-modal', id)
-        },
-        openEditModal (id) {
-            $dispatch('open-modal', { id: 'filament-media-library::edit-attachment-modal' })
-            $wire.emit('filament-media-library::open-edit-attachment-modal', id)
-        },
-        closeEditModal () {
-            $wire.emit('filament-media-library::close-edit-attachment-modal')
         }
     }"
 >

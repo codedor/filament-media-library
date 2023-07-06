@@ -4,7 +4,10 @@ namespace Codedor\MediaLibrary\Http\Livewire;
 
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
+use Codedor\TranslatableTabs\Forms\TranslatableTabs;
+use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -19,6 +22,7 @@ use Livewire\TemporaryUploadedFile;
 class UploadModal extends Component implements HasForms
 {
     use InteractsWithForms;
+    use HasTranslations;
 
     public $attachments = [];
 
@@ -56,12 +60,7 @@ class UploadModal extends Component implements HasForms
                 return;
             }
 
-            $attachment->update([
-                'translated_name' => $data['filename'],
-                'alt' => $data['alt'],
-                'caption' => $data['caption'],
-            ]);
-
+            $attachment->update($this->mutateFormDataBeforeSave($data));
             $attachment->tags()->sync($data['tags']);
 
             return $attachment;
@@ -114,7 +113,7 @@ class UploadModal extends Component implements HasForms
 
     protected function getUploadStep(): Wizard\Step
     {
-        $fileuploadField = FileUpload::make('attachments')
+        $fileUploadField = FileUpload::make('attachments')
             ->reactive()
             ->disableLabel()
             ->required()
@@ -123,13 +122,13 @@ class UploadModal extends Component implements HasForms
             });
 
         if ($this->multiple) {
-            $fileuploadField = $fileuploadField->multiple();
+            $fileUploadField = $fileUploadField->multiple();
         }
 
         return Wizard\Step::make(__('filament_media.upload step title'))
             ->description(__('filament_media.upload step intro'))
             ->schema([
-                $fileuploadField,
+                $fileUploadField,
             ]);
     }
 
@@ -140,39 +139,40 @@ class UploadModal extends Component implements HasForms
                 $md5 = md5_file($upload->getRealPath());
 
                 $this->meta[$md5] = [
-                    'filename' => $this->meta[$md5]['filename'] ?? Str::replace(
-                        ".{$upload->getClientOriginalExtension()}",
-                        '',
-                        $upload->getClientOriginalName()
-                    ),
-                    'alt' => $this->meta[$md5]['alt'] ?? null,
-                    'caption' => $this->meta[$md5]['caption'] ?? null,
                     'tags' => $this->meta[$md5]['tags'] ?? null,
                 ];
 
                 $section = Section::make($upload->getClientOriginalName())
-                    ->schema([
-                        TextInput::make("meta.$md5.filename")
-                            ->suffix('.' . $upload->getClientOriginalExtension())
-                            ->dehydrateStateUsing(fn ($state) => Str::slug($state))
-                            ->reactive(),
-
-                        TextInput::make("meta.$md5.alt")
-                            ->reactive(),
-
-                        TextInput::make("meta.$md5.caption")
-                            ->reactive(),
-
-                        Select::make("meta.$md5.tags")
-                            ->label(__('filament_media.tags'))
-                            ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
-                            ->searchable()
-                            ->reactive()
-                            ->multiple(),
-                    ])
                     ->collapsible()
                     ->collapsed(! $this->firstCollapsable)
-                    ->columns();
+                    ->columns()
+                    ->schema([
+                        TranslatableTabs::make('Translations')
+                            ->statePath("meta.{$md5}")
+                            ->icon('heroicon-o-status-online')
+                            ->iconColor('success')
+                            ->columnSpan(['lg' => 2])
+                            ->defaultFields([
+                                Placeholder::make('name')
+                                    ->content(fn () => $upload->getClientOriginalName()),
+
+                                Select::make('tags')
+                                    ->label(__('filament_media.tags'))
+                                    ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
+                                    ->searchable()
+                                    ->multiple(),
+                            ])
+                            ->translatableFields(fn () => [
+                                // TextInput::make('translated_name')
+                                //     ->suffix('.' . $upload->getClientOriginalExtension())
+                                //     ->dehydrateStateUsing(fn ($state) => Str::slug($state)),
+
+                                TextInput::make('alt')
+                                    ->label('Alt text'),
+
+                                TextInput::make('caption'),
+                            ]),
+                    ]);
 
                 $this->firstCollapsable = false;
 
@@ -182,5 +182,10 @@ class UploadModal extends Component implements HasForms
         return Wizard\Step::make(__('filament_media.attachment information step title'))
             ->description(__('filament_media.attachment information step intro'))
             ->schema($collapsableTabs->flatten()->toArray());
+    }
+
+    protected function getModel()
+    {
+        return Attachment::class;
     }
 }

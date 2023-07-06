@@ -136,7 +136,10 @@
                                 "
                                 delete-action="remove('{{ $attachment->id }}')"
                                 delete-button-title="{{ __('filament_media.remove attachment') }}"
-                                edit-action="openEditModal('{{ $attachment->id }}')"
+                                edit-action="window.open(
+                                    '{{ \Codedor\MediaLibrary\Resources\AttachmentResource::getUrl('edit', $attachment) }}',
+                                    '_blank'
+                                )"
                                 :formatter-action="
                                     count($getAllowedFormats()) > 0
                                         ? 'openFormatterModal(\'' . $attachment->id . '\')'
