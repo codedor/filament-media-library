@@ -2,10 +2,8 @@
 
 namespace Codedor\MediaLibrary\Resources;
 
-use Codedor\BelongsToMany\Forms\Components\BelongsToManyInput;
-use Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
 use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\Models\AttachmentTag;
+use Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Placeholder;
@@ -86,7 +84,7 @@ class AttachmentResource extends Resource
                     TextInput::make('alt')->label('Alt text'),
                     TextInput::make('caption'),
                 ]),
-            ]);
+        ]);
     }
 
     public static function table(Table $table): Table
