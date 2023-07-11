@@ -1,4 +1,4 @@
-# Laravel Attachments for Filament
+# Media Library for Filament
 
 - [Installation](#installation)
 - [Configuration](#configuration)
@@ -33,13 +33,13 @@
 First, install this package via composer:
 
 ```bash
-composer require codedor/laravel-attachments
+composer require codedor/filament-media-library
 ```
 
 Then publish the assets with
 
 ```bash
-php artisan vendor:publish --provider "Codedor\Attachments\Providers\AttachmentServiceProvider"
+php artisan vendor:publish --provider "Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider"
 ```
 
 and lastly, run the migrations:
@@ -57,7 +57,7 @@ The basic config file consists of the following contents:
 ```php
 <?php
 
-use Codedor\Attachments\Facades\Models;
+use Codedor\MediaLibrary\Facades\Models;
 
 return [
     'extensions' => [
@@ -107,15 +107,15 @@ This configuration can be adjusted as desired.
 
 ### Register models
 
-Any model that contains formats should be registered and implement the `Codedor\Attachments\Interfaces\HasFormats`
+Any model that contains formats should be registered and implement the `Codedor\MediaLibrary\Interfaces\HasFormats`
 interface.
 
-Models can be registered via the `Codedor\Attachments\Facades\Models` facade.
+Models can be registered via the `Codedor\MediaLibrary\Facades\Models` facade.
 
 ```php
 use App\Models\BlogPost;
 use App\Models\NewsItem;
-use Codedor\Attachments\Facades\Models;
+use Codedor\MediaLibrary\Facades\Models;
 
 public function boot()
 {
@@ -127,14 +127,14 @@ public function boot()
 
 ### Creating formats
 
-Create a new PHP class that extends the `Codedor\Attachments\Formats\Format` class.
+Create a new PHP class that extends the `Codedor\MediaLibrary\Formats\Format` class.
 
 ```php
 <?php
 
 namespace App\Formats;
 
-use Codedor\Attachments\Entities\Manipulations;
+use Spatie\Image\Manipulations;
 
 class Hero extends Format
 {
@@ -162,7 +162,7 @@ Formats are tightly coupled with models. This way, specific formats can be fetch
 
 #### Preparing your model
 
-A model should implement the `Codedor\Attachments\Interfaces\HasFormats` interface which contains the `getFormats`
+A model should implement the `Codedor\MediaLibrary\Interfaces\HasFormats` interface which contains the `getFormats`
 method.
 
 ```php
@@ -182,7 +182,7 @@ public static function getFormats(Collection $formats): Collection
 Retrieve the Filesystem of the attachment
 
 ```php
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 
 /** @var Illuminate\Contracts\Filesystem $filesystem */
 $filesystem = Attachment::first()->getStorage();
@@ -193,7 +193,7 @@ $filesystem = Attachment::first()->getStorage();
 Retrieve the url for the file of the given format. Returns the original file if the given format is not found.
 
 ```php
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 
 /** @var string $url */
 $url = Attachment::first()->getFormatOrOriginal('hero');
@@ -208,7 +208,7 @@ $url = Attachment::first()->getFormatOrOriginal('hero');
 Retrieve the url for the file of the given format. Returns null if the given format is not found.
 
 ```php
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 
 /** @var string|null $url */
 $url = Attachment::first()->getFormat('hero');
@@ -223,7 +223,7 @@ $url = Attachment::first()->getFormat('hero');
 Retrieve the url to the original file
 
 ```php
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 
 /** @var string $url */
 $url = Attachment::first()->url;
@@ -236,7 +236,7 @@ $url = Attachment::first()->url;
 Retrieve the filename with extension.
 
 ```php
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Models\Attachment;
 
 /** @var string $url */
 $url = Attachment::first()->filename;
@@ -274,24 +274,24 @@ Retrieve the full path to the original file.
 
 ## Usage in Blade
 
-This package provides a `<x-laravel-attachments::picture />` component which will render the provided attachment with the given format. If no format is defined, the original attachment will be rendered.
+This package provides a `<x-filament-media-library::picture />` component which will render the provided attachment with the given format. If no format is defined, the original attachment will be rendered.
 
 ```php
-<x-laravel-attachments::picture
+<x-filament-media-library::picture
     :attachment="$attachment"
     format="thumb"
     alt="alt text"
     class="img"
 >
-    <p>Laravel attachments package!</p>
-</x-laravel-attachments::picture>
+    <p>Filament Media Library package!</p>
+</x-filament-media-library::picture>
 ```
 
 Will return
 
 ```html
 <picture class="img">
-    <p>Laravel attachments package!</p>
+    <p>Filament Media Library package!</p>
     <source type="{MIME_TYPE}" srcset="{{IMAGE_SRC}}" />
     <img alt="alt text" src="{{IMAGE_SRC}}" />
 </picture>
@@ -305,7 +305,7 @@ This field will give the option to upload or select an already existing image.
 The ID will be stored in de column provided in the `make` method.
 
 ```php
-use Codedor\Attachments\Components\Fields\AttachmentInput;
+use Codedor\MediaLibrary\Components\Fields\AttachmentInput;
 
 AttachmentInput::make('profile_image_id')
     ->label('Profile Image')
@@ -316,7 +316,7 @@ This field inherits the `Filament\Forms\Components\Field` class which means that
 ### Multiple attachments
 
 ```php
-use Codedor\Attachments\Components\Fields\AttachmentInput;
+use Codedor\MediaLibrary\Components\Fields\AttachmentInput;
 
 AttachmentInput::make('profile_image_id')
     ->multiple()
@@ -328,7 +328,8 @@ The allowed formats in the cropper are based on the `getFormats` method in the m
 If you want to override this, you can use the `allowedFormats` method.
 
 ```php
-use App\Formats\Hero;use Codedor\Attachments\Components\Fields\AttachmentInput;
+use App\Formats\Hero;
+use Codedor\MediaLibrary\Components\Fields\AttachmentInput;
 
 AttachmentInput::make('profile_image_id')
     ->allowedFormats([

@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Tests\TestConversions;
+namespace Codedor\MediaLibrary\Tests\TestConversions;
 
-use Codedor\Attachments\Conversions\Conversion;
-use Codedor\Attachments\Formats\Format;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Conversions\Conversion;
+use Codedor\MediaLibrary\Formats\Format;
+use Codedor\MediaLibrary\Models\Attachment;
 
 class TestConversion implements Conversion
 {

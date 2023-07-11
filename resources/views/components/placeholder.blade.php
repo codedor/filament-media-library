@@ -1,14 +1,3 @@
-@props([
-    'pictureClass' => '',
-    'format' => '',
-    'formats' => '',
-    'alt' => '',
-    'lazyload' => true,
-    // TODO BE: get the width and height from the format
-    'width' => '',
-    'height' => '',
-])
-
 <picture class="{{ $pictureClass }}">
     @foreach ($formats as $breakpoint => $mobileFormat)
         <source
@@ -30,7 +19,7 @@
             'lazyload' => $lazyload,
         ])
         src="{{ get_placeholder_url_by_format($format) }}"
-        width="{{ $width }}"
-        height="{{ $height }}"
+        width="{{ $width() }}"
+        height="{{ $height() }}"
     >
 </picture>

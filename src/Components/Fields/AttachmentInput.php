@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Components\Fields;
+namespace Codedor\MediaLibrary\Components\Fields;
 
 use Closure;
-use Codedor\Attachments\Facades\Formats;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -16,7 +16,7 @@ class AttachmentInput extends Field implements HasForms
 {
     use InteractsWithForms;
 
-    protected string $view = 'laravel-attachments::components.fields.attachment-input';
+    protected string $view = 'filament-media-library::components.fields.attachment-input';
 
     public array|Attachment $pickedAttachments = [];
 
@@ -62,7 +62,7 @@ class AttachmentInput extends Field implements HasForms
 
         $this->dehydrateStateUsing(function (self $component, $state) {
             if ($component->isMultiple()) {
-                return;
+                return json_encode($state);
             }
 
             return $state[0] ?? null;

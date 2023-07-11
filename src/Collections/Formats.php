@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Collections;
+namespace Codedor\MediaLibrary\Collections;
 
-use Codedor\Attachments\Formats\Format;
-use Codedor\Attachments\Jobs\GenerateAttachmentFormat;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Formats\Format;
+use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
+use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 

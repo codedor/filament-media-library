@@ -1,10 +1,13 @@
 <?php
 
-namespace Codedor\Attachments\Http\Livewire;
+namespace Codedor\MediaLibrary\Http\Livewire;
 
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Models\AttachmentTag;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
+use Codedor\TranslatableTabs\Forms\TranslatableTabs;
+use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -19,6 +22,7 @@ use Livewire\TemporaryUploadedFile;
 class UploadModal extends Component implements HasForms
 {
     use InteractsWithForms;
+    use HasTranslations;
 
     public $attachments = [];
 
@@ -26,14 +30,20 @@ class UploadModal extends Component implements HasForms
 
     public string $statePath = '';
 
+    public bool $multiple = false;
+
     protected bool $isCachingForms = false;
 
     protected bool $firstCollapsable = true;
 
-    protected $listeners = ['laravel-attachment::refresh-upload-modal' => '$refresh'];
+    protected $listeners = [
+        'filament-media-library::refresh-upload-modal' => '$refresh',
+        'filament-media-library::open-upload-modal' => 'openUploadModal',
+    ];
 
-    public function mount(string $statePath = '')
+    public function mount(string $statePath = '', bool $multiple = true)
     {
+        $this->multiple = $multiple;
         $this->statePath = $statePath;
         $this->form->fill();
     }
@@ -50,12 +60,7 @@ class UploadModal extends Component implements HasForms
                 return;
             }
 
-            $attachment->update([
-                'translated_name' => $data['filename'],
-                'alt' => $data['alt'],
-                'caption' => $data['caption'],
-            ]);
-
+            $attachment->update($this->mutateFormDataBeforeSave($data));
             $attachment->tags()->sync($data['tags']);
 
             return $attachment;
@@ -66,27 +71,33 @@ class UploadModal extends Component implements HasForms
             ->success()
             ->send();
 
-        $this->emit('laravel-attachment::update-library');
+        $this->emit('filament-media-library::update-library');
 
-        $this->dispatchBrowserEvent('laravel-attachment::uploaded-images', [
+        $this->dispatchBrowserEvent('filament-media-library::uploaded-images', [
             'statePath' => $this->statePath,
             'attachments' => $attachments->pluck('id'),
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'laravel-attachment::upload-attachment-modal',
+            'id' => 'filament-media-library::upload-attachment-modal',
         ]);
 
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'laravel-attachment::edit-attachment-modal',
+            'id' => 'filament-media-library::edit-attachment-modal',
         ]);
 
         $this->form->fill();
     }
 
+    public function openUploadModal($data): void
+    {
+        $this->multiple = $data['multiple'] ?? false;
+        $this->statePath = $data['statePath'] ?? '';
+    }
+
     public function render()
     {
-        return view('laravel-attachments::livewire.upload-modal');
+        return view('filament-media-library::livewire.upload-modal');
     }
 
     protected function getFormSchema(): array
@@ -102,18 +113,22 @@ class UploadModal extends Component implements HasForms
 
     protected function getUploadStep(): Wizard\Step
     {
+        $fileUploadField = FileUpload::make('attachments')
+            ->reactive()
+            ->disableLabel()
+            ->required()
+            ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
+                return $file->save();
+            });
+
+        if ($this->multiple) {
+            $fileUploadField = $fileUploadField->multiple();
+        }
+
         return Wizard\Step::make(__('filament_media.upload step title'))
             ->description(__('filament_media.upload step intro'))
             ->schema([
-                FileUpload::make('attachments')
-                    ->reactive()
-                    ->disableLabel()
-                    ->required()
-                    // TODO BE: Make multiple dynamic
-                    ->multiple()
-                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): Attachment {
-                        return $file->save();
-                    }),
+                $fileUploadField,
             ]);
     }
 
@@ -124,39 +139,40 @@ class UploadModal extends Component implements HasForms
                 $md5 = md5_file($upload->getRealPath());
 
                 $this->meta[$md5] = [
-                    'filename' => $this->meta[$md5]['filename'] ?? Str::replace(
-                        ".{$upload->getClientOriginalExtension()}",
-                        '',
-                        $upload->getClientOriginalName()
-                    ),
-                    'alt' => $this->meta[$md5]['alt'] ?? null,
-                    'caption' => $this->meta[$md5]['caption'] ?? null,
                     'tags' => $this->meta[$md5]['tags'] ?? null,
                 ];
 
                 $section = Section::make($upload->getClientOriginalName())
-                    ->schema([
-                        TextInput::make("meta.$md5.filename")
-                            ->suffix('.' . $upload->getClientOriginalExtension())
-                            ->dehydrateStateUsing(fn ($state) => Str::slug($state))
-                            ->reactive(),
-
-                        TextInput::make("meta.$md5.alt")
-                            ->reactive(),
-
-                        TextInput::make("meta.$md5.caption")
-                            ->reactive(),
-
-                        Select::make("meta.$md5.tags")
-                            ->label(__('filament_media.tags'))
-                            ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
-                            ->searchable()
-                            ->reactive()
-                            ->multiple(),
-                    ])
                     ->collapsible()
                     ->collapsed(! $this->firstCollapsable)
-                    ->columns();
+                    ->columns()
+                    ->schema([
+                        TranslatableTabs::make('Translations')
+                            ->statePath("meta.{$md5}")
+                            ->icon('heroicon-o-status-online')
+                            ->iconColor('success')
+                            ->columnSpan(['lg' => 2])
+                            ->defaultFields([
+                                Placeholder::make('name')
+                                    ->content(fn () => $upload->getClientOriginalName()),
+
+                                Select::make('tags')
+                                    ->label(__('filament_media.tags'))
+                                    ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
+                                    ->searchable()
+                                    ->multiple(),
+                            ])
+                            ->translatableFields(fn () => [
+                                // TextInput::make('translated_name')
+                                //     ->suffix('.' . $upload->getClientOriginalExtension())
+                                //     ->dehydrateStateUsing(fn ($state) => Str::slug($state)),
+
+                                TextInput::make('alt')
+                                    ->label('Alt text'),
+
+                                TextInput::make('caption'),
+                            ]),
+                    ]);
 
                 $this->firstCollapsable = false;
 
@@ -166,5 +182,10 @@ class UploadModal extends Component implements HasForms
         return Wizard\Step::make(__('filament_media.attachment information step title'))
             ->description(__('filament_media.attachment information step intro'))
             ->schema($collapsableTabs->flatten()->toArray());
+    }
+
+    protected function getModel()
+    {
+        return Attachment::class;
     }
 }

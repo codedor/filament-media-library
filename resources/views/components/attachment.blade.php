@@ -16,15 +16,8 @@
     @class(['flex flex-col h-full', $containerClass])
     x-data="{
         openFormatterModal (id) {
-            $dispatch('open-modal', { id: 'laravel-attachment::formatter-attachment-modal' })
-            $wire.emit('laravel-attachment::open-formatter-attachment-modal', id)
-        },
-        openEditModal (id) {
-            $dispatch('open-modal', { id: 'laravel-attachment::edit-attachment-modal' })
-            $wire.emit('laravel-attachment::open-edit-attachment-modal', id)
-        },
-        closeEditModal () {
-            $wire.emit('laravel-attachment::close-edit-attachment-modal')
+            $dispatch('open-modal', { id: 'filament-media-library::formatter-attachment-modal' })
+            $wire.emit('filament-media-library::open-formatter-attachment-modal', id)
         }
     }"
 >

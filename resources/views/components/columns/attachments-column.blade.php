@@ -33,7 +33,7 @@
         @else
             @foreach ($state->take($getLimit()) as $attachment)
                 <div class="w-16">
-                    <x-laravel-attachments::attachment
+                    <x-filament-media-library::attachment
                         :$attachment
                         :show-title="false"
                         :show-tooltip="false"

@@ -1,19 +1,22 @@
 {
-    "name": "codedor/laravel-attachments",
-    "description": "Attachments package for Filament",
+    "name": "codedor/filament-media-library",
+    "description": "Media Library package for Filament",
     "keywords": [
         "codedor",
         "laravel",
-        "laravel-attachments"
+        "filamentphp",
+        "media",
+        "attachments"
     ],
-    "homepage": "https://github.com/codedor/laravel-attachments",
+    "homepage": "https://github.com/codedor/filament-media-library",
     "license": "MIT",
     "require": {
         "php": "^8.2",
         "blade-ui-kit/blade-icons": "^1.5",
+        "codedor/filament-translatable-tabs": "dev-master",
         "filament/filament": "^2.16",
         "filament/spatie-laravel-translatable-plugin": "^2.0",
-        "illuminate/contracts": "^9.0 || ^10.0",
+        "illuminate/contracts": "^10.0",
         "livewire/livewire": "^2.11",
         "owenvoke/blade-fontawesome": "^2.2",
         "spatie/image": "^2.2",
@@ -22,19 +25,19 @@
     },
     "require-dev": {
         "laravel/pint": "^1.0",
-        "nunomaduro/collision": "^6.0",
+        "nunomaduro/collision": "^7.0",
         "nunomaduro/larastan": "^2.0.1",
-        "orchestra/testbench": "^7.0",
-        "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.2",
+        "orchestra/testbench": "^8.0",
+        "pestphp/pest": "^2.0",
+        "pestphp/pest-plugin-laravel": "^2.0",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-deprecation-rules": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "Codedor\\Attachments\\": "src",
-            "Codedor\\Attachments\\Database\\Factories\\": "database/factories"
+            "Codedor\\MediaLibrary\\": "src",
+            "Codedor\\MediaLibrary\\Database\\Factories\\": "database/factories"
         },
         "files": [
             "src/helpers.php"
@@ -42,13 +45,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Codedor\\Attachments\\Tests\\": "tests"
+            "Codedor\\MediaLibrary\\Tests\\": "tests"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Codedor\\Attachments\\Providers\\AttachmentServiceProvider"
+                "Codedor\\MediaLibrary\\Providers\\MediaLibraryServiceProvider"
             ]
         }
     },
@@ -60,5 +63,11 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://codedor.repo.repman.codedor.online"
+        }
+    ]
 }

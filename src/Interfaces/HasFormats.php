@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\Attachments\Interfaces;
+namespace Codedor\MediaLibrary\Interfaces;
 
 use Illuminate\Support\Collection;
 

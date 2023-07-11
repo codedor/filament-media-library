@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Http\Livewire;
+namespace Codedor\MediaLibrary\Http\Livewire;
 
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Models\AttachmentTag;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -24,8 +24,8 @@ class EditModal extends Component implements HasForms
     protected bool $isCachingForms = false;
 
     protected $listeners = [
-        'laravel-attachment::open-edit-attachment-modal' => 'setAttachment',
-        'laravel-attachment::close-edit-attachment-modal' => 'setAttachment',
+        'filament-media-library::open-edit-attachment-modal' => 'setAttachment',
+        'filament-media-library::close-edit-attachment-modal' => 'setAttachment',
     ];
 
     public function mount()
@@ -50,7 +50,7 @@ class EditModal extends Component implements HasForms
 
     public function render()
     {
-        return view('laravel-attachments::livewire.edit-modal');
+        return view('filament-media-library::livewire.edit-modal');
     }
 
     public function submit()
@@ -60,9 +60,9 @@ class EditModal extends Component implements HasForms
         $this->attachment->update($this->fields);
         $this->attachment->tags()->sync($this->fields['tags'] ?? []);
 
-        $this->emit('laravel-attachment::update-library');
+        $this->emit('filament-media-library::update-library');
         $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'laravel-attachment::edit-attachment-modal',
+            'id' => 'filament-media-library::edit-attachment-modal',
         ]);
 
         Notification::make()

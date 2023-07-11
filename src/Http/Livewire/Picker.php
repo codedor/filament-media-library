@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Http\Livewire;
+namespace Codedor\MediaLibrary\Http\Livewire;
 
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Models\AttachmentTag;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
 use Filament\Forms\Components as Fields;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -29,8 +29,18 @@ class Picker extends Component implements HasForms
     ];
 
     protected $listeners = [
-        'laravel-attachments::open-picker' => 'openPicker',
+        'filament-media-library::open-picker' => 'openPicker',
+        'filament-media-library::update-library' => 'addToAttachmentList',
     ];
+
+    public function addToAttachmentList()
+    {
+        $this->attachmentsList = Attachment::latest()
+            ->pluck('id')
+            ->diff($this->attachmentsList)
+            ->merge($this->attachmentsList)
+            ->toArray();
+    }
 
     public function render()
     {
@@ -51,7 +61,7 @@ class Picker extends Component implements HasForms
             })
             ->paginate(18);
 
-        return view('laravel-attachments::livewire.picker', [
+        return view('filament-media-library::livewire.picker', [
             'attachments' => $attachments,
         ]);
     }

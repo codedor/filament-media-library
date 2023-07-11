@@ -1,34 +1,32 @@
 <?php
 
-namespace Codedor\Attachments\Providers;
+namespace Codedor\MediaLibrary\Providers;
 
 use BladeUI\Icons\Factory;
-use Codedor\Attachments\Collections\Formats;
-use Codedor\Attachments\Conversions\Conversion;
-use Codedor\Attachments\Conversions\LocalConversion;
-use Codedor\Attachments\Facades\Models;
-use Codedor\Attachments\Http\Livewire;
-use Codedor\Attachments\Mixins\UploadedFileMixin;
-use Codedor\Attachments\Pages\Library;
-use Codedor\Attachments\Resources\AttachmentTagResource;
-use Codedor\Attachments\Views\Picture;
+use Codedor\MediaLibrary\Collections\Formats;
+use Codedor\MediaLibrary\Conversions\Conversion;
+use Codedor\MediaLibrary\Conversions\LocalConversion;
+use Codedor\MediaLibrary\Facades\Models;
+use Codedor\MediaLibrary\Http\Livewire;
+use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
+use Codedor\MediaLibrary\Resources;
+use Codedor\MediaLibrary\Views\Picture;
+use Codedor\MediaLibrary\Views\Placeholder;
 use Filament\Facades\Filament;
 use Filament\PluginServiceProvider;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire as LivewireCore;
 use Spatie\LaravelPackageTools\Package;
 
-class AttachmentServiceProvider extends PluginServiceProvider
+class MediaLibraryServiceProvider extends PluginServiceProvider
 {
-    protected const PACKAGE_NAME = 'laravel-attachments';
-
-    protected array $pages = [
-        Library::class,
-    ];
+    protected const PACKAGE_NAME = 'filament-media-library';
 
     protected array $resources = [
-        AttachmentTagResource::class,
+        Resources\AttachmentResource::class,
+        Resources\AttachmentTagResource::class,
     ];
 
     protected array $livewireComponents = [
@@ -36,6 +34,11 @@ class AttachmentServiceProvider extends PluginServiceProvider
         'upload-modal' => Livewire\UploadModal::class,
         'edit-modal' => Livewire\EditModal::class,
         'picker' => Livewire\Picker::class,
+    ];
+
+    protected array $bladeComponents = [
+        Picture::class => 'picture',
+        Placeholder::class => 'placeholder',
     ];
 
     public function configurePackage(Package $package): void
@@ -78,7 +81,9 @@ class AttachmentServiceProvider extends PluginServiceProvider
 
     protected function registerBladeComponents()
     {
-        Blade::component(Picture::class, "{$this->packageName()}::picture");
+        foreach ($this->bladeComponents as $class => $view) {
+            Blade::component($class, "{$this->packageName()}::$view");
+        }
     }
 
     public function boot()
@@ -94,6 +99,11 @@ class AttachmentServiceProvider extends PluginServiceProvider
             Filament::registerScripts([
                 __DIR__ . '/../../dist/js/cropper.min.js',
             ]);
+
+            Filament::registerRenderHook(
+                'body.end',
+                fn (): View => view(self::PACKAGE_NAME . '::components.modals')
+            );
         });
     }
 

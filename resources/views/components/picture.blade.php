@@ -1,20 +1,5 @@
-@props([
-    'placeholder' => false,
-    'image' => null,
-    'format' => '',
-    'formats' => [],
-    'pictureClass' => '',
-    'class' => '',
-    'alt' => '',
-    'title' => '',
-    'lazyload' => true,
-    // TODO BE: get the width and height from the format
-    'width' => '',
-    'height' => '',
-])
-
 @if ($placeholder)
-    <x-laravel-attachments::placeholder-picture
+    <x-filament-media-library::placeholder
         :format="$format"
         :formats="$formats"
         :picture-class="$pictureClass"
@@ -23,7 +8,7 @@
     />
 @elseif ($image)
     <picture class="{{ $pictureClass }}">
-        @if ($image->getWebpFormatOrOriginal($format))
+        @if (method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format))
             @foreach ($formats as $breakpoint => $mobileFormat)
                 <source
                     media="(max-width: {{ $breakpoint ?? '576' }}px)"
@@ -56,8 +41,8 @@
                 'lazyload' => $lazyload,
             ])
             src="{{ $image->getFormatOrOriginal($format) }}"
-            width="{{ $width }}"
-            height="{{ $height }}"
+            width="{{ $width() }}"
+            height="{{ $height() }}"
         >
     </picture>
 @endif

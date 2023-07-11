@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\Attachments\Models;
+namespace Codedor\MediaLibrary\Models;
 
-use Codedor\Attachments\Database\Factories\AttachmentFactory;
-use Codedor\Attachments\Exceptions\FormatNotFound;
-use Codedor\Attachments\Facades\Formats;
+use Codedor\MediaLibrary\Database\Factories\AttachmentFactory;
+use Codedor\MediaLibrary\Exceptions\FormatNotFound;
+use Codedor\MediaLibrary\Facades\Formats;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -143,5 +143,10 @@ class Attachment extends Model
     public function getFormattedInMbSizeAttribute(): string
     {
         return round($this->size / 1000000, 2);
+    }
+
+    public function isImage(): bool
+    {
+        return $this->type === 'image';
     }
 }

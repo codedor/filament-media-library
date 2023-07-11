@@ -1,10 +1,9 @@
 <?php
 
-namespace Codedor\Attachments\Mixins;
+namespace Codedor\MediaLibrary\Mixins;
 
-use Codedor\Attachments\Entities\Dimension;
-use Codedor\Attachments\Facades\Formats;
-use Codedor\Attachments\Models\Attachment;
+use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -14,7 +13,6 @@ class UploadedFileMixin
     public function save()
     {
         return function (string $disk = 'public') {
-            /** @var Dimension $dimensions */
             $dimensions = $this->dimensions();
 
             $data = [
@@ -23,8 +21,8 @@ class UploadedFileMixin
                 'md5' => $this->getMd5(),
                 'type' => $this->fileType(),
                 'size' => $this->getSize(),
-                'width' => $dimensions[0] ?? $dimensions->width ?? null,
-                'height' => $dimensions[1] ?? $dimensions->height ?? null,
+                'width' => $dimensions[0] ?? 0,
+                'height' => $dimensions[1] ?? 0,
                 'disk' => $disk,
                 'name' => Str::replace(
                     ".{$this->getClientOriginalExtension()}",
@@ -33,7 +31,7 @@ class UploadedFileMixin
                 ),
             ];
 
-            /** @var \Codedor\Attachments\Models\Attachment $attachment */
+            /** @var \Codedor\MediaLibrary\Models\Attachment $attachment */
             $attachment = Attachment::firstOrCreate([
                 'md5' => $data['md5'],
             ], $data);
@@ -47,19 +45,6 @@ class UploadedFileMixin
             Formats::dispatchGeneration($attachment);
 
             return $attachment;
-        };
-    }
-
-    public function dimensions()
-    {
-        return function (): Dimension|null {
-            if (
-                ! $this->isImage() ||
-                in_array($this->getMimeType(), ['image/svg+xml', 'image/svg'])) {
-                return null;
-            }
-
-            return Dimension::for($this->path());
         };
     }
 
@@ -82,7 +67,7 @@ class UploadedFileMixin
     public function fileType()
     {
         return function (): string {
-            foreach (config('laravel-attachments.extensions', []) as $type => $extensions) {
+            foreach (config('filament-media-library.extensions', []) as $type => $extensions) {
                 if (in_array($this->getClientOriginalExtension(), $extensions)) {
                     return $type;
                 }

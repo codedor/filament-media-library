@@ -21,11 +21,11 @@
             initial: @js($attachments->pluck('id')->toArray()),
             multiple: @js($isMultiple()),
             dragging: false,
-            pickerModalID: 'laravel-attachment::attachment-picker-modal-{{ $getStatePath() }}',
+            pickerModalID: 'filament-media-library::attachment-picker-modal-{{ $getStatePath() }}',
             init () {
                 this.state = [...this.initial]
 
-                window.addEventListener('laravel-attachment::uploaded-images', (event) => {
+                window.addEventListener('filament-media-library::uploaded-images', (event) => {
                     if (event.detail.statePath !== '{{ $getStatePath() }}') {
                         return
                     }
@@ -39,7 +39,7 @@
                     this.updateState()
                 })
 
-                window.addEventListener('laravel-attachment::picked-attachments', (event) => {
+                window.addEventListener('filament-media-library::picked-attachments', (event) => {
                     if (event.detail.statePath !== '{{ $getStatePath() }}') {
                         return
                     }
@@ -51,13 +51,21 @@
             openPicker () {
                 $dispatch('open-modal', { id: this.pickerModalID })
 
-                $wire.emit('laravel-attachments::open-picker', {
+                $wire.emit('filament-media-library::open-picker', {
                     statePath: '{{ $getStatePath() }}',
                     attachments: this.state || this.state || [],
                 })
             },
             closePicker () {
                 $dispatch('close-modal', { id: this.pickerModalID })
+            },
+            openUploadModal () {
+                $dispatch('open-modal', { id: 'filament-media-library::upload-attachment-modal' })
+
+                $wire.emit('filament-media-library::open-upload-modal', {
+                    statePath: '{{ $getStatePath() }}',
+                    multiple: this.multiple,
+                })
             },
             remove (id) {
                 if (! this.multiple) {
@@ -112,7 +120,7 @@
                                 />
                             @endif
 
-                            <x-laravel-attachments::attachment
+                            <x-filament-media-library::attachment
                                 :$attachment
                                 :is-disabled="$isDisabled()"
                                 container-class="flex flex-col w-full h-full justify-end transition-opacity"
@@ -128,7 +136,10 @@
                                 "
                                 delete-action="remove('{{ $attachment->id }}')"
                                 delete-button-title="{{ __('filament_media.remove attachment') }}"
-                                edit-action="openEditModal('{{ $attachment->id }}')"
+                                edit-action="window.open(
+                                    '{{ \Codedor\MediaLibrary\Resources\AttachmentResource::getUrl('edit', $attachment) }}',
+                                    '_blank'
+                                )"
                                 :formatter-action="
                                     count($getAllowedFormats()) > 0
                                         ? 'openFormatterModal(\'' . $attachment->id . '\')'
@@ -147,9 +158,7 @@
                         <button
                             type="button"
                             class="filament-button filament-button-size-sm inline-flex items-center justify-center py-1 gap-1 font-medium rounded-lg border transition-colors outline-none focus:ring-offset-2 focus:ring-2 focus:ring-inset min-h-[2rem] px-3 text-sm text-white shadow focus:ring-white border-transparent bg-primary-600 hover:bg-primary-500 focus:bg-primary-700 focus:ring-offset-primary-700"
-                            x-on:click.prevent="$dispatch('open-modal', {
-                                id: 'laravel-attachment::upload-attachment-modal{{ $getStatePath() }}'
-                            })"
+                            x-on:click.prevent="openUploadModal()"
                         >
                             {{ __('filament_media.upload attachment') }}
                         </button>
@@ -168,25 +177,13 @@
 
         @unless ($isDisabled())
             <div class="overflow-hidden h-0">
-                <livewire:laravel-attachments::picker
+                <livewire:filament-media-library::picker
                     wire:key="picker-{{ $getStatePath() }}"
                     :state-path="$getStatePath()"
                     :attachments-list="$getAttachmentsList()->pluck('id')->toArray()"
                     :is-multiple="$isMultiple()"
                 />
-
-                <livewire:laravel-attachments::upload-modal
-                    wire:key="upload-{{ $getStatePath() }}"
-                    :state-path="$getStatePath()"
-                />
             </div>
         @endunless
     </div>
 </x-dynamic-component>
-
-@once
-    <div class="overflow-hidden h-0">
-        @livewire('laravel-attachments::edit-modal')
-        @livewire('laravel-attachments::formatter-modal')
-    </div>
-@endonce

@@ -1,8 +1,8 @@
 <?php
 
-namespace Codedor\Attachments\Models;
+namespace Codedor\MediaLibrary\Models;
 
-use Codedor\Attachments\Database\Factories\AttachmentTagFactory;
+use Codedor\MediaLibrary\Database\Factories\AttachmentTagFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

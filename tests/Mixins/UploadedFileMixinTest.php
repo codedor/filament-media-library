@@ -1,10 +1,9 @@
 <?php
 
-use Codedor\Attachments\Entities\Dimension;
-use Codedor\Attachments\Facades\Models;
-use Codedor\Attachments\Jobs\GenerateAttachmentFormat;
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Facades\Models;
+use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
@@ -14,7 +13,7 @@ use function Pest\Laravel\assertDatabaseHas;
 
 uses(RefreshDatabase::class);
 
-it('Dispatches format generation', function () {
+it('dispatches format generation', function () {
     Queue::fake();
     Storage::fake('public');
     Models::add(TestModel::class);
@@ -102,29 +101,6 @@ it('does a check if file is an image', function () {
         'application/pdf'
     );
     expect($file->isImage())->toBeFalse();
-});
-
-it('returns the dimensions for an image', function () {
-    $file = UploadedFile::fake()->image('test.jpg', 100, 100);
-
-    expect($file->dimensions())
-        ->toBeInstanceOf(Dimension::class)
-        ->height->toBe(100)
-        ->width->toBe(100);
-});
-
-it('returns no dimensions if mimetype is image/svg+xml', function () {
-    $file = UploadedFile::fake()->create('test.svg', 10, 'image/svg+xml');
-
-    expect($file->dimensions())
-        ->toBeNull();
-});
-
-it('returns no dimensions if mimetype is image/svg', function () {
-    $file = UploadedFile::fake()->create('test.svg', 10, 'image/svg');
-
-    expect($file->dimensions())
-        ->toBeNull();
 });
 
 it('returns right file type', function ($type, $extension) {

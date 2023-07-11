@@ -1,10 +1,10 @@
 <?php
 
-use Codedor\Attachments\Conversions\LocalConversion;
-use Codedor\Attachments\Facades\Formats;
-use Codedor\Attachments\Facades\Models;
-use Codedor\Attachments\Models\Attachment;
-use Codedor\Attachments\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Conversions\LocalConversion;
+use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Facades\Models;
+use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -21,7 +21,7 @@ it('skips generation if attachment is not an image', function () {
         'type' => 'not-an-image',
     ])->create();
 
-    /** @var \Codedor\Attachments\Conversions\Conversion $conversion */
+    /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
     $conversion = app(LocalConversion::class);
 
     expect($conversion->convert($attachment, Formats::exists('test-hero')))
@@ -36,7 +36,7 @@ it('skips generation if attachment is a gif', function () {
         'extension' => 'gif',
     ])->create();
 
-    /** @var \Codedor\Attachments\Conversions\Conversion $conversion */
+    /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
     $conversion = app(LocalConversion::class);
 
     expect($conversion->convert($attachment, Formats::exists('test-hero')))
@@ -58,7 +58,7 @@ it('skips generation if force is false and format image exists', function () {
         File::get(__DIR__ . '/../../TestFiles/test.jpg')
     );
 
-    /** @var \Codedor\Attachments\Conversions\Conversion $conversion */
+    /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
     $conversion = app(LocalConversion::class);
 
     expect($conversion->convert($attachment, Formats::exists('test-hero')))
@@ -87,10 +87,10 @@ it('converts image', function () {
         File::get(__DIR__ . '/../../TestFiles/test.jpg')
     );
 
-    /** @var \Codedor\Attachments\Formats\Format $format */
+    /** @var \Codedor\MediaLibrary\Formats\Format $format */
     $format = Formats::exists('test-hero');
 
-    /** @var \Codedor\Attachments\Conversions\Conversion $conversion */
+    /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
     $conversion = app(LocalConversion::class);
 
     expect($conversion->convert($attachment, $format, true))
@@ -122,10 +122,10 @@ it('converts image to webp', function () {
         File::get(__DIR__ . '/../../TestFiles/test.jpg')
     );
 
-    /** @var \Codedor\Attachments\Formats\Format $format */
+    /** @var \Codedor\MediaLibrary\Formats\Format $format */
     $format = Formats::exists('test-hero-webp');
 
-    /** @var \Codedor\Attachments\Conversions\Conversion $conversion */
+    /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
     $conversion = app(LocalConversion::class);
 
     expect($conversion->convert($attachment, $format, true))
