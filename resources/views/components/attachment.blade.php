@@ -81,13 +81,16 @@
                     @endif
                 </template>
 
-                <button x-tooltip="{
-                    content: () => $refs['attachment-tooltip-{{ $attachment->id }}'].innerHTML,
-                    allowHTML: true,
-                    appendTo: $root
-                }">
+                <div
+                    x-tooltip="{
+                        content: () => $refs['attachment-tooltip-{{ $attachment->id }}'].innerHTML,
+                        allowHTML: true,
+                        appendTo: $root
+                    }"
+                    class="inline-block"
+                >
                     <x-heroicon-o-information-circle class="h-[1em] text-gray-300 attachment-tooltip"/>
-                </button>
+                </div>
             </div>
         @endif
     </div>
