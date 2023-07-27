@@ -117,7 +117,7 @@ class Attachment extends Model
         return $this->getFormat($name) ?: $this->url;
     }
 
-    public function getFormat(string $name): string|null
+    public function getFormat(string $name): ?string
     {
         $format = Formats::exists($name);
 

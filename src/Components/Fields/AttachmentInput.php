@@ -26,7 +26,7 @@ class AttachmentInput extends Field implements HasForms
 
     public Closure $attachmentsListQuery;
 
-    public null|array $allowedFormats = null;
+    public ?array $allowedFormats = null;
 
     public function setUp(): void
     {
@@ -133,19 +133,19 @@ class AttachmentInput extends Field implements HasForms
         return $this;
     }
 
-    public function getSortField(): null|string
+    public function getSortField(): ?string
     {
         return $this->evaluate($this->sortField);
     }
 
-    public function allowedFormats(null|array $allowedFormats): static
+    public function allowedFormats(?array $allowedFormats): static
     {
         $this->allowedFormats = $allowedFormats;
 
         return $this;
     }
 
-    public function getAllowedFormats(): null|array
+    public function getAllowedFormats(): ?array
     {
         $formats = $this->evaluate($this->allowedFormats);
 

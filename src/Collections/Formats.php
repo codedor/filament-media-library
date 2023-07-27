@@ -17,7 +17,7 @@ class Formats extends Collection
         return $this;
     }
 
-    public function exists(string $name): null|Format
+    public function exists(string $name): ?Format
     {
         return $this->mapToKebab()->get($name);
     }
@@ -40,7 +40,7 @@ class Formats extends Collection
             });
     }
 
-    public function findByKey(string $key): null|Format
+    public function findByKey(string $key): ?Format
     {
         return $this->flatten(1)->firstWhere(fn ($format) => get_class($format) === $key);
     }

@@ -11,14 +11,14 @@ class FormatterModal extends Component
 {
     public Attachment $attachment;
 
-    public null|array $modelFormats = null;
+    public ?array $modelFormats = null;
 
     protected $listeners = [
         'filament-media-library::open-formatter-attachment-modal' => 'setAttachment',
         'cropped' => 'saveCrop',
     ];
 
-    public function setAttachment(string $uuid = '', null|array $formats = null)
+    public function setAttachment(string $uuid = '', array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
         $this->modelFormats = $formats;
