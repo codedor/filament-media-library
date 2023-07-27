@@ -11,10 +11,10 @@
     {{ $this->form }}
 
     <x-slot name="footer">
-        <x-filament::modal.actions>
+{{--        <x-filament::modal.actions>--}}
             <x-filament::button wire:click.prevent="submit" type="submit">
                 {{ __('filament_media.submit') }}
             </x-filament::button>
-        </x-filament::modal.actions>
+{{--        </x-filament::modal.actions>--}}
     </x-slot>
 </x-filament::modal>

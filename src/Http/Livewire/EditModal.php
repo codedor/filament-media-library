@@ -9,13 +9,13 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Resources\Concerns\Translatable;
+//use Filament\Resources\Concerns\Translatable;
 use Livewire\Component;
 
 class EditModal extends Component implements HasForms
 {
     use InteractsWithForms;
-    use Translatable;
+//    use Translatable;
 
     public ?Attachment $attachment = null;
 
@@ -61,9 +61,10 @@ class EditModal extends Component implements HasForms
         $this->attachment->tags()->sync($this->fields['tags'] ?? []);
 
         $this->emit('filament-media-library::update-library');
-        $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'filament-media-library::edit-attachment-modal',
-        ]);
+        $this->dispatch(
+            'close-modal',
+            id: 'filament-media-library::edit-attachment-modal',
+        );
 
         Notification::make()
             ->title(__('filament_media.successfully updated'))

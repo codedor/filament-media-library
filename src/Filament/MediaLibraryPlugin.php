@@ -5,7 +5,12 @@ namespace Codedor\MediaLibrary\Filament;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Contracts\Plugin;
+use Filament\Facades\Filament;
 use Filament\Panel;
+use Filament\Support\Assets\Css;
+use Filament\Support\Assets\Js;
+use Filament\Support\Facades\FilamentAsset;
+use Illuminate\Contracts\View\View;
 
 class MediaLibraryPlugin implements Plugin
 {
@@ -36,6 +41,17 @@ class MediaLibraryPlugin implements Plugin
                 AttachmentTagResource::class,
             ]);
         }
+
+        $panel->renderHook(
+            'body.end',
+            fn (): View => view($this->getId() . '::components.modals')
+        );
+
+        FilamentAsset::register([
+//            Css::make('filament-media-library-stylesheet', __DIR__ . '/../../dist/css/laravel-media.css'),
+//            Css::make('filament-media-library-cropper-stylesheet', __DIR__ . '/../../dist/css/cropper.min.css'),
+//            Js::make('filament-media-library-script', __DIR__ . '/../../dist/js/cropper.min.js')
+        ]);
     }
 
     public function boot(Panel $panel): void

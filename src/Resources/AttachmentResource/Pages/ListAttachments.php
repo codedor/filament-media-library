@@ -6,7 +6,7 @@ use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Pages\Actions;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Pages\ListRecords;
 
 class ListAttachments extends ListRecords
@@ -26,16 +26,17 @@ class ListAttachments extends ListRecords
                 ->model(AttachmentTag::class)
                 ->outlined()
                 ->form(
-                    AttachmentTagResource::form(Form::make())
+                    AttachmentTagResource::form(Form::make($this))
                         ->columns(2)
-                        ->getSchema()
+                        ->getComponents()
                 ),
 
             Actions\Action::make('upload')
                 ->label(__('filament_media.upload attachment'))
-                ->action(fn () => $this->dispatchBrowserEvent('open-modal', [
-                    'id' => 'filament-media-library::upload-attachment-modal',
-                ])),
+                ->action(fn () => $this->dispatch(
+                    'open-modal',
+                    id: 'filament-media-library::upload-attachment-modal',
+                )),
         ];
     }
 

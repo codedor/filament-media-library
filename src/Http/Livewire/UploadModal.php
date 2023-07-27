@@ -73,18 +73,21 @@ class UploadModal extends Component implements HasForms
 
         $this->emit('filament-media-library::update-library');
 
-        $this->dispatchBrowserEvent('filament-media-library::uploaded-images', [
-            'statePath' => $this->statePath,
-            'attachments' => $attachments->pluck('id'),
-        ]);
+        $this->dispatch(
+            'filament-media-library::uploaded-images',
+            statePath: $this->statePath,
+            attachments: $attachments->pluck('id'),
+        );
 
-        $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'filament-media-library::upload-attachment-modal',
-        ]);
+        $this->dispatch(
+            'close-modal',
+            id: 'filament-media-library::upload-attachment-modal',
+        );
 
-        $this->dispatchBrowserEvent('close-modal', [
-            'id' => 'filament-media-library::edit-attachment-modal',
-        ]);
+        $this->dispatch(
+            'close-modal',
+            id: 'filament-media-library::edit-attachment-modal',
+        );
 
         $this->form->fill();
     }

@@ -17,7 +17,7 @@
 
     <div
         x-data="{
-            state: $wire.entangle(@js($getStatePath())).defer,
+            state: $wire.entangle(@js($getStatePath())),
             initial: @js($attachments->pluck('id')->toArray()),
             multiple: @js($isMultiple()),
             dragging: false,

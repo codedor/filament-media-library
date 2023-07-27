@@ -26,7 +26,7 @@ class FormatterModal extends Component
 
     public function render()
     {
-        $this->dispatchBrowserEvent('filament-media-library::load-formatter');
+        $this->dispatch('filament-media-library::load-formatter');
 
         $formats = Formats::mapToKebab();
 

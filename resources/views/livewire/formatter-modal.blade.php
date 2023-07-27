@@ -94,14 +94,14 @@
                                 x-on:click.prevent="window.cropper.zoom(-0.1)"
                                 title="{{ __('filament_media.zoom in') }}"
                             >
-                                <x-heroicon-o-zoom-in class="h-5" />
+                                <x-heroicon-o-magnifying-glass-plus class="h-5" />
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.zoom(0.1)"
                                 title="{{ __('filament_media.zoom out') }}"
                             >
-                                <x-heroicon-o-zoom-out class="h-5" />
+                                <x-heroicon-o-magnifying-glass-minus class="h-5" />
                             </x-filament::button>
                         </div>
 
@@ -192,7 +192,7 @@
             </div>
 
             <x-slot name="footer">
-                <x-filament::modal.actions>
+{{--                <x-filament::modal.actions>--}}
                     <x-filament::button x-on:click.prevent="window.dispatchEvent(new Event('filament-media-library::submit-formatter'))">
                         {{ __('filament_media.save format') }}
                     </x-filament::button>
@@ -200,16 +200,16 @@
                     <x-filament::button color="secondary" x-on:click.prevent="close() && $wire.set('attachment', null)">
                         {{ __('filament_media.close modal') }}
                     </x-filament::button>
-                </x-filament::modal.actions>
+{{--                </x-filament::modal.actions>--}}
             </x-slot>
         </div>
 
         <div class="w-full justify-center py-8" wire:loading.flex>
-            <x-filament-support::loading-indicator class="w-10 h-10" />
+            <x-filament::loading-indicator class="w-10 h-10" />
         </div>
     @else
         <div class="w-full flex justify-center py-8">
-            <x-filament-support::loading-indicator class="w-10 h-10" />
+            <x-filament::loading-indicator class="w-10 h-10" />
         </div>
     @endif
 </x-filament::modal>

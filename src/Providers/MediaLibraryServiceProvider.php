@@ -11,8 +11,6 @@ use Codedor\MediaLibrary\Http\Livewire;
 use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
 use Codedor\MediaLibrary\Views\Picture;
 use Codedor\MediaLibrary\Views\Placeholder;
-use Filament\Facades\Filament;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire as LivewireCore;
@@ -83,22 +81,6 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
     public function boot()
     {
         parent::boot();
-
-        Filament::serving(function () {
-            Filament::registerStyles([
-                __DIR__ . '/../../dist/css/laravel-media.css',
-                __DIR__ . '/../../dist/css/cropper.min.css',
-            ]);
-
-            Filament::registerScripts([
-                __DIR__ . '/../../dist/js/cropper.min.js',
-            ]);
-
-            Filament::registerRenderHook(
-                'body.end',
-                fn (): View => view(self::PACKAGE_NAME . '::components.modals')
-            );
-        });
     }
 
     public function packageRegistered(): void

@@ -10,9 +10,9 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
+use Filament\Tables\Table;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters;
@@ -26,7 +26,7 @@ class AttachmentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-paper-clip';
 
-    protected static function getNavigationLabel(): string
+    public static function getNavigationLabel(): string
     {
         return __('filament_media.dashboard navigation title');
     }
@@ -150,9 +150,10 @@ class AttachmentResource extends Resource
                             $action->getRecord()->id
                         );
 
-                        $livewire->dispatchBrowserEvent('open-modal', [
-                            'id' => 'filament-media-library::formatter-attachment-modal',
-                        ]);
+                        $livewire->dispatch(
+                            'open-modal',
+                            id: 'filament-media-library::formatter-attachment-modal',
+                        );
                     }),
 
                 Tables\Actions\EditAction::make(),

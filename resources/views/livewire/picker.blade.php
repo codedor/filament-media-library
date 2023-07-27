@@ -1,5 +1,5 @@
 <div x-data="{
-    selected: $wire.entangle('selected').defer,
+    selected: $wire.entangle('selected'),
     selectAttachment (id = null) {
         // Only one attachment can be selected if not multiple
         id ? this.selected = [id] : null
@@ -57,7 +57,7 @@
                     wire:loading.flex
                     class="absolute inset-0 z-50 rounded-lg items-center justify-center bg-white"
                 >
-                    <x-filament-support::loading-indicator
+                    <x-filament::loading-indicator
                         class="w-10 h-10"
                     />
                 </div>
@@ -101,7 +101,7 @@
 
         @if ($isMultiple)
             <x-slot name="footer">
-                <x-filament::modal.actions>
+{{--                <x-filament::modal.actions>--}}
                     <x-filament::button color="secondary" x-on:click.prevent="closePicker()">
                         {{ __('filament_media.cancel') }}
                     </x-filament::button>
@@ -109,7 +109,7 @@
                     <x-filament::button x-on:click.prevent="selectAttachment()">
                         {{ __('filament_media.select these attachments') }}
                     </x-filament::button>
-                </x-filament::modal.actions>
+{{--                </x-filament::modal.actions>--}}
             </x-slot>
         @endif
     </x-filament::modal>

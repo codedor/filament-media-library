@@ -18,11 +18,11 @@
         </div>
 
         <div class="w-full justify-center py-8" wire:loading.flex>
-            <x-filament-support::loading-indicator class="w-10 h-10" />
+            <x-filament::loading-indicator class="w-10 h-10" />
         </div>
 
         <x-slot name="footer">
-            <x-filament::modal.actions>
+{{--            <x-filament::modal.actions>--}}
                 <x-filament::button color="secondary" x-on:click.prevent="close()">
                     {{ __('filament_media.cancel') }}
                 </x-filament::button>
@@ -30,11 +30,11 @@
                 <x-filament::button x-on:click.prevent="$wire.submit()">
                     {{ __('filament_media.confirm') }}
                 </x-filament::button>
-            </x-filament::modal.actions>
+{{--            </x-filament::modal.actions>--}}
         </x-slot>
     @else
         <div class="w-full flex justify-center py-8">
-            <x-filament-support::loading-indicator class="w-10 h-10" />
+            <x-filament::loading-indicator class="w-10 h-10" />
         </div>
     @endif
 </x-filament::modal>

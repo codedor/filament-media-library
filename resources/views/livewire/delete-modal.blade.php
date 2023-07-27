@@ -11,7 +11,7 @@
         </p>
     </x-slot>
 
-    <x-filament::modal.actions :full-width="true">
+{{--    <x-filament::modal.actions :full-width="true">--}}
         <x-filament::button color="secondary" x-on:click.prevent="close()">
             {{ __('filament_media.cancel') }}
         </x-filament::button>
@@ -19,5 +19,5 @@
         <x-filament::button color="danger" outlined x-on:click.prevent="$wire.deleteAttachment() && close()">
             {{ __('filament_media.confirm') }}
         </x-filament::button>
-    </x-filament::modal.actions>
+{{--    </x-filament::modal.actions>--}}
 </x-filament::modal>
