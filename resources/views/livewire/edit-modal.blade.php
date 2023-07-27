@@ -1,6 +1,6 @@
 <x-filament::modal
     id="filament-media-library::edit-attachment-modal"
-    x-on:modal-closed="$wire.emit('filament-media-library::close-edit-attachment-modal')"
+    x-on:modal-closed="$wire.dispatch('filament-media-library::close-edit-attachment-modal')"
     width="4xl"
 >
     @if ($attachment)

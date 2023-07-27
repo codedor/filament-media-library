@@ -17,7 +17,7 @@
     x-data="{
         openFormatterModal (id) {
             $dispatch('open-modal', { id: 'filament-media-library::formatter-attachment-modal' })
-            $wire.emit('filament-media-library::open-formatter-attachment-modal', id)
+            $wire.dispatch('filament-media-library::open-formatter-attachment-modal', id)
         }
     }"
 >

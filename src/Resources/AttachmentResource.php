@@ -35,7 +35,7 @@ class AttachmentResource extends Resource
     {
         return $form->schema([
             TranslatableTabs::make('Translations')
-                ->icon('heroicon-o-status-online')
+                ->icon('heroicon-o-signal')
                 ->iconColor('success')
                 ->columnSpan(['lg' => 2])
                 ->defaultFields([
@@ -104,6 +104,9 @@ class AttachmentResource extends Resource
         return $table
             ->defaultSort('created_at', 'desc')
             ->columns([
+                Tables\Columns\Layout\Grid::make([
+                    'lg' => 2,
+                ])->schema([]),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable()
@@ -145,7 +148,7 @@ class AttachmentResource extends Resource
                         /** @var Component $livewire */
                         $livewire = $action->getTable()->getLivewire();
 
-                        $livewire->emit(
+                        $livewire->dispatch(
                             'filament-media-library::open-formatter-attachment-modal',
                             $action->getRecord()->id
                         );

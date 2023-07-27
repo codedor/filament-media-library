@@ -54,7 +54,7 @@
                     this.previousFormats[this.currentFormat.key] = window.cropper.getData()
                     window.currentFormat = this.currentFormat
 
-                    $wire.emit('cropped', {
+                    $wire.dispatch('cropped', {
                         crop: this.getCroppedCanvas().toDataURL('{{ $attachment->mime_type }}'),
                         format: this.currentFormat,
                         data: window.cropper.getData(),

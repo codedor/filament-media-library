@@ -51,7 +51,7 @@
             openPicker () {
                 $dispatch('open-modal', { id: this.pickerModalID })
 
-                $wire.emit('filament-media-library::open-picker', {
+                $wire.dispatch('filament-media-library::open-picker', {
                     statePath: '{{ $getStatePath() }}',
                     attachments: this.state || this.state || [],
                 })
@@ -62,7 +62,7 @@
             openUploadModal () {
                 $dispatch('open-modal', { id: 'filament-media-library::upload-attachment-modal' })
 
-                $wire.emit('filament-media-library::open-upload-modal', {
+                $wire.dispatch('filament-media-library::open-upload-modal', {
                     statePath: '{{ $getStatePath() }}',
                     multiple: this.multiple,
                 })

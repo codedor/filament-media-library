@@ -60,7 +60,7 @@ class EditModal extends Component implements HasForms
         $this->attachment->update($this->fields);
         $this->attachment->tags()->sync($this->fields['tags'] ?? []);
 
-        $this->emit('filament-media-library::update-library');
+        $this->dispatch('filament-media-library::update-library');
         $this->dispatch(
             'close-modal',
             id: 'filament-media-library::edit-attachment-modal',

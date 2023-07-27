@@ -17,7 +17,7 @@ use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\TemporaryUploadedFile;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class UploadModal extends Component implements HasForms
 {
@@ -71,7 +71,7 @@ class UploadModal extends Component implements HasForms
             ->success()
             ->send();
 
-        $this->emit('filament-media-library::update-library');
+        $this->dispatch('filament-media-library::update-library');
 
         $this->dispatch(
             'filament-media-library::uploaded-images',
@@ -152,7 +152,7 @@ class UploadModal extends Component implements HasForms
                     ->schema([
                         TranslatableTabs::make('Translations')
                             ->statePath("meta.{$md5}")
-                            ->icon('heroicon-o-status-online')
+                            ->icon('heroicon-o-signal')
                             ->iconColor('success')
                             ->columnSpan(['lg' => 2])
                             ->defaultFields([
