@@ -17,7 +17,7 @@ class EditModal extends Component implements HasForms
     use InteractsWithForms;
     use Translatable;
 
-    public null|Attachment $attachment = null;
+    public ?Attachment $attachment = null;
 
     public array $fields = [];
 
