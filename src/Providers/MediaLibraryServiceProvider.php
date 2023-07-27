@@ -13,14 +13,14 @@ use Codedor\MediaLibrary\Resources;
 use Codedor\MediaLibrary\Views\Picture;
 use Codedor\MediaLibrary\Views\Placeholder;
 use Filament\Facades\Filament;
-use Filament\PluginServiceProvider;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire as LivewireCore;
 use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class MediaLibraryServiceProvider extends PluginServiceProvider
+class MediaLibraryServiceProvider extends PackageServiceProvider
 {
     protected const PACKAGE_NAME = 'filament-media-library';
 
