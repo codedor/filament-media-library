@@ -24,11 +24,6 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
 {
     protected const PACKAGE_NAME = 'filament-media-library';
 
-    protected array $resources = [
-        Resources\AttachmentResource::class,
-        Resources\AttachmentTagResource::class,
-    ];
-
     protected array $livewireComponents = [
         'formatter-modal' => Livewire\FormatterModal::class,
         'upload-modal' => Livewire\UploadModal::class,
@@ -37,8 +32,8 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
     ];
 
     protected array $bladeComponents = [
-        Picture::class => 'picture',
-        Placeholder::class => 'placeholder',
+        'picture' => Picture::class,
+        'placeholder' => Placeholder::class,
     ];
 
     public function configurePackage(Package $package): void
@@ -81,7 +76,7 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
 
     protected function registerBladeComponents()
     {
-        foreach ($this->bladeComponents as $class => $view) {
+        foreach ($this->bladeComponents as $view => $class) {
             Blade::component($class, "{$this->packageName()}::$view");
         }
     }
