@@ -9,7 +9,6 @@ use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Models;
 use Codedor\MediaLibrary\Http\Livewire;
 use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
-use Codedor\MediaLibrary\Resources;
 use Codedor\MediaLibrary\Views\Picture;
 use Codedor\MediaLibrary\Views\Placeholder;
 use Filament\Facades\Filament;
