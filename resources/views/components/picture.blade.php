@@ -6,6 +6,18 @@
         :class="$class"
         :alt="$alt"
     />
+@elseif (! $formats && ! $formats)
+    <img
+        alt="{{ $alt }}"
+        title="{{ $title }}"
+        @class([
+            $class ?? 'img-fluid',
+            'lazyload' => $lazyload,
+        ])
+        src="{{ $image->url }}"
+        width="{{ $width() }}"
+        height="{{ $height() }}"
+    >
 @elseif ($image)
     <picture class="{{ $pictureClass }}">
         @if (method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format))

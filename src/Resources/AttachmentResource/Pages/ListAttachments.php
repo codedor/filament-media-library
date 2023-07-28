@@ -5,8 +5,8 @@ namespace Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
-use Filament\Forms\Form;
 use Filament\Pages\Actions;
+use Filament\Forms\Form;
 use Filament\Resources\Pages\ListRecords;
 
 class ListAttachments extends ListRecords

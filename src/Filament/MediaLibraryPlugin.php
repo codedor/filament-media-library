@@ -48,10 +48,10 @@ class MediaLibraryPlugin implements Plugin
         );
 
         FilamentAsset::register([
-            //            Css::make('filament-media-library-stylesheet', __DIR__ . '/../../dist/css/laravel-media.css'),
-            //            Css::make('filament-media-library-cropper-stylesheet', __DIR__ . '/../../dist/css/cropper.min.css'),
-            //            Js::make('filament-media-library-script', __DIR__ . '/../../dist/js/cropper.min.js')
-        ]);
+            Css::make('filament-media-library-stylesheet', __DIR__ . '/../../dist/css/laravel-media.css'),
+            Css::make('filament-media-library-cropper-stylesheet', __DIR__ . '/../../dist/css/cropper.min.css'),
+            Js::make('filament-media-library-script', __DIR__ . '/../../dist/js/cropper.min.js')
+        ], 'codedor/filament-media-library');
     }
 
     public function boot(Panel $panel): void

@@ -9,6 +9,7 @@
     class="
         attachment-visual flex relative w-full aspect-square rounded-lg
         overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 media mt-4
+        h-32
     "
 >
     @if ($attachment->type !== 'image')
@@ -21,5 +22,7 @@
                 <x-heroicon-o-question-mark-circle class="w-16 h-16 opacity-50"/>
             @endif
         </div>
+    @else
+        <x-filament-media-library::picture :image="$attachment" />
     @endif
 </div>

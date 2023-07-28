@@ -5,6 +5,7 @@ namespace Codedor\MediaLibrary\Http\Livewire;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Notifications\Notification;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class FormatterModal extends Component
@@ -13,11 +14,7 @@ class FormatterModal extends Component
 
     public ?array $modelFormats = null;
 
-    protected $listeners = [
-        'filament-media-library::open-formatter-attachment-modal' => 'setAttachment',
-        'cropped' => 'saveCrop',
-    ];
-
+    #[On('filament-media-library::open-formatter-attachment-modal')]
     public function setAttachment(string $uuid = '', array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
