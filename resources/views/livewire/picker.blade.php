@@ -40,7 +40,7 @@
                         class="inline-flex gap-2 items-center px-2 py-1"
                         wire:click.prevent="resetFilters()"
                     >
-                        <x-heroicon-o-x class="w-5 h-5" />
+                        <x-heroicon-o-x-mark class="w-5 h-5" />
                         {{ __('filament_media.reset filters') }}
                     </button>
                 @endif

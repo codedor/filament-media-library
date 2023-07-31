@@ -32,12 +32,12 @@ class Picture extends Component
         $this->formatClass = Formats::exists($this->format);
     }
 
-    public function width(): ?string
+    public function width(): string|null
     {
         return $this->formatClass ? $this->formatClass->width() : $this->image->width;
     }
 
-    public function height(): ?string
+    public function height(): string|null
     {
         return $this->formatClass ? $this->formatClass->height() : $this->image->height;
     }

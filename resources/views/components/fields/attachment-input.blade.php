@@ -1,16 +1,4 @@
-<x-dynamic-component
-    :component="$getFieldWrapperView()"
-    :id="$getId()"
-    :label="$getLabel()"
-    :label-sr-only="$isLabelHidden()"
-    :helper-text="$getHelperText()"
-    :hint="$getHint()"
-    :hint-action="$getHintAction()"
-    :hint-color="$getHintColor()"
-    :hint-icon="$getHintIcon()"
-    :required="$isRequired()"
-    :state-path="$getStatePath()"
->
+<x-dynamic-component :component="$getFieldWrapperView()" :field="$field">
     @php
         $attachments = $getPickedAttachments();
     @endphp
@@ -77,7 +65,7 @@
                 this.updateState()
             },
             updateState () {
-                $wire.$refresh()
+{{--                $wire.$refresh()--}}
             },
             reorder (event) {
                 this.dragging = false
@@ -137,7 +125,7 @@
                                 delete-action="remove('{{ $attachment->id }}')"
                                 delete-button-title="{{ __('filament_media.remove attachment') }}"
                                 edit-action="window.open(
-                                    '{{ \Codedor\MediaLibrary\Resources\AttachmentResource::getUrl('edit', $attachment) }}',
+                                    '{{ \Codedor\MediaLibrary\Resources\AttachmentResource::getUrl('edit', [$attachment]) }}',
                                     '_blank'
                                 )"
                                 :formatter-action="

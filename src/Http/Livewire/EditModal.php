@@ -15,7 +15,7 @@ use Livewire\Component;
 class EditModal extends Component implements HasForms
 {
     use InteractsWithForms;
-    //    use Translatable;
+//    use Translatable;
 
     public ?Attachment $attachment = null;
 

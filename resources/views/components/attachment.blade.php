@@ -4,9 +4,8 @@
     'formats' => [],
     'isDisabled' => false,
     'deleteAction' => null,
-    'deleteButtonTitle' => __('filament_media.delete attachment'),
     'editAction' => null,
-    'formatterAction' => null,
+    'formatAction' => null,
     'extendedTooltip' => false,
     'showTitle' => true,
     'showTooltip' => true
@@ -115,39 +114,18 @@
         @unless($isDisabled)
             <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3">
                 @if ($deleteAction)
-                    <button
-                        x-on:click.prevent="{{ $deleteAction }}"
-                        type="button"
-                        class="bg-white rounded text-red-700 hover:text-white hover:bg-red-700 shadow-lg"
-                        title="{{ $deleteButtonTitle }}"
-                    >
-                        <x-heroicon-o-trash class="p-1 w-6 h-6"/>
-                    </button>
+                    {{ ($deleteAction)(['attachmentId' => $attachment->id]) }}
                 @endif
 
                 <div class=" flex justify-end gap-1">
                     {{ $slot }}
 
-                    @if ($formatterAction && $attachment->type === 'image')
-                        <button
-                            x-on:click.prevent="{{ $formatterAction }}"
-                            type="button"
-                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                            title="{{ __('filament_media.format attachment') }}"
-                        >
-                            <x-attachments-crop-regular class="p-1 w-6 h-6"/>
-                        </button>
+                    @if ($formatAction && $attachment->type === 'image')
+                        {{ ($formatAction)(['attachmentId' => $attachment->id]) }}
                     @endif
 
                     @if ($editAction)
-                        <button
-                            x-on:click.prevent="{{ $editAction }}"
-                            type="button"
-                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                            title="{{ __('filament_media.edit attachment') }}"
-                        >
-                            <x-heroicon-s-pencil class="p-1 w-6 h-6"/>
-                        </button>
+                        {{ ($editAction)(['attachmentId' => $attachment->id]) }}
                     @endif
                 </div>
             </div>
