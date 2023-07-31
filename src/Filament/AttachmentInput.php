@@ -10,7 +10,6 @@ use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Set;
-use Filament\Support\Colors\Color;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -24,7 +23,6 @@ class AttachmentInput extends Field
     protected null|string|Closure $sortField = null;
 
     protected ?array $allowedFormats = null;
-
 
     protected function setUp(): void
     {
@@ -60,7 +58,7 @@ class AttachmentInput extends Field
                 }, true),
 
             UploadAttachmentAction::make('attachment-upload')
-                ->multiple(fn() => $this->isMultiple()),
+                ->multiple(fn () => $this->isMultiple()),
 
             Action::make('attachment-picker')
                 ->label(__('filament_media.select existing media'))

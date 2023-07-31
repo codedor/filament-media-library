@@ -32,8 +32,8 @@ class UploadAttachmentAction extends Action
         $this->label(__('filament_media.upload attachment'));
 
         $this->steps([
-                $this->getUploadStep(),
-                $this->getAttachmentInformationStep(),
+            $this->getUploadStep(),
+            $this->getAttachmentInformationStep(),
         ]);
 
         $this->action(function (array $data, Set $set, Component $component) {

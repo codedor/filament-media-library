@@ -6,8 +6,8 @@ use Codedor\MediaLibrary\Filament\Actions\UploadAttachmentAction;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
-use Filament\Pages\Actions;
 use Filament\Forms\Form;
+use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListAttachments extends ListRecords
@@ -38,8 +38,8 @@ class ListAttachments extends ListRecords
                     'open-modal',
                     id: 'filament-media-library::upload-attachment-modal',
                 )),
-//
-//            UploadAttachmentAction::make('test'),
+            //
+            //            UploadAttachmentAction::make('test'),
         ];
     }
 
