@@ -127,7 +127,6 @@ trait CanUploadAttachment
                                 TranslatableTabs::make('Translations')
                                     ->statePath("meta.{$md5}")
                                     ->icon('heroicon-o-signal')
-                                    ->iconColor('success')
                                     ->columnSpan(['lg' => 2])
                                     ->persistInQueryString(false)
                                     ->defaultFields([

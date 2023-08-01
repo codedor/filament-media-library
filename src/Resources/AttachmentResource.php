@@ -36,7 +36,6 @@ class AttachmentResource extends Resource
         return $form->schema([
             TranslatableTabs::make('Translations')
                 ->icon('heroicon-o-signal')
-                ->iconColor('success')
                 ->columnSpan(['lg' => 2])
                 ->defaultFields([
                     Placeholder::make('name')
