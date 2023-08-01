@@ -7,7 +7,6 @@ use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
-use Filament\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
