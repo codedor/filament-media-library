@@ -21,6 +21,7 @@ class GenerateAttachmentFormat implements ShouldQueue
         public Attachment $attachment,
         public Format $format
     ) {
+        //
     }
 
     public function handle()

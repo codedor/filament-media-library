@@ -4,7 +4,7 @@ namespace Codedor\MediaLibrary\Filament;
 
 use Closure;
 use Codedor\MediaLibrary\Facades\Formats;
-use Codedor\MediaLibrary\Filament\Actions\UploadAttachmentAction;
+use Codedor\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Filament\Forms\Components\Actions\Action;
@@ -13,6 +13,7 @@ use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Livewire\Component;
 
 class AttachmentInput extends Field
 {
@@ -28,6 +29,30 @@ class AttachmentInput extends Field
     {
         parent::setUp();
 
+        $this->saveRelationshipsUsing(static function (self $component, $state) {
+            if (! $component->isMultiple()) {
+                return;
+            }
+
+            // If the state is null, it means that the field has not been touched (and the state was never set)
+            // So we don't want to sync the relationship, because it would remove all the existing attachments
+            if ($state === null) {
+                return;
+            }
+
+            $state = Collection::wrap($state ?? []);
+            $sortField = $component->getSortField();
+
+            if (is_string($sortField)) {
+                $state = $state->mapWithKeys(function ($item, $index) use ($sortField) {
+                    return [$item => [$sortField => $index + 10000]];
+                });
+            }
+
+            $component->getRelationship()->detach();
+            $component->getRelationship()->sync($state->toArray());
+        });
+
         $this->registerActions([
             Action::make('remove-attachment')
                 ->icon('heroicon-o-x-circle')
@@ -36,7 +61,8 @@ class AttachmentInput extends Field
                 ->size('sm')
                 ->action(function (Set $set, array $arguments, $state) {
                     if ($this->isMultiple()) {
-                        // TODO: delete $arguments['attachmentId'] from $state
+                        $state = Arr::where($state, fn ($id) => $id !== $arguments['attachmentId']);
+                        $set($this->getStatePath(false), $state);
                     } else {
                         $set($this->getStatePath(false), null);
                     }
@@ -46,7 +72,18 @@ class AttachmentInput extends Field
                 ->icon('heroicon-o-scissors')
                 ->iconButton()
                 ->color('gray')
-                ->size('sm'),
+                ->size('sm')
+                ->action(function (array $arguments, Component $livewire) {
+                    $livewire->dispatch(
+                        'filament-media-library::open-formatter-attachment-modal',
+                        $arguments['attachmentId'],
+                    );
+
+                    $livewire->dispatch(
+                        'open-modal',
+                        id: 'filament-media-library::formatter-attachment-modal',
+                    );
+                }),
 
             Action::make('edit-attachment')
                 ->icon('heroicon-s-pencil')
@@ -81,14 +118,6 @@ class AttachmentInput extends Field
     public function getAttachments(): Collection
     {
         $state = $this->getState();
-
-        if ($this->isMultiple() && $state === null) {
-            $relationship = $this->getRelationship();
-
-            $state = $relationship->getResults()
-                ->pluck($relationship->getRelatedKeyName())
-                ->toArray();
-        }
 
         if (blank($state) || empty($state)) {
             return collect();
@@ -146,5 +175,23 @@ class AttachmentInput extends Field
     public function getRelationship(): BelongsToMany
     {
         return $this->getModelInstance()->{$this->getName()}();
+    }
+
+    public function getState(): mixed
+    {
+        $state = parent::getState();
+
+        if ($this->isMultiple() && $state === null) {
+            $relationship = $this->getRelationship();
+
+            $state = $relationship->getResults()
+                ->pluck($relationship->getRelatedKeyName())
+                ->toArray();
+
+            // Set the state
+            $this->state($state);
+        }
+
+        return $state;
     }
 }

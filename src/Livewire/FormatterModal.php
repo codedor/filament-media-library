@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\MediaLibrary\Http\Livewire;
+namespace Codedor\MediaLibrary\Livewire;
 
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;

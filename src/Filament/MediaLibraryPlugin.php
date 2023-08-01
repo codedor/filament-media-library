@@ -42,7 +42,7 @@ class MediaLibraryPlugin implements Plugin
         }
 
         $panel->renderHook(
-            'body.end',
+            'panels::body.end',
             fn (): View => view($this->getId() . '::components.modals')
         );
 

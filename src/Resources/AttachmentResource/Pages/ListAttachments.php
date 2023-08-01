@@ -2,12 +2,12 @@
 
 namespace Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
 
-use Codedor\MediaLibrary\Filament\Actions\UploadAttachmentAction;
+use Codedor\MediaLibrary\Filament\Actions\Tables\TableUploadAttachmentAction;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
+use Filament\Actions;
 use Filament\Forms\Form;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListAttachments extends ListRecords
@@ -32,14 +32,8 @@ class ListAttachments extends ListRecords
                         ->getComponents()
                 ),
 
-            Actions\Action::make('upload')
-                ->label(__('filament_media.upload attachment'))
-                ->action(fn () => $this->dispatch(
-                    'open-modal',
-                    id: 'filament-media-library::upload-attachment-modal',
-                )),
-            //
-            //            UploadAttachmentAction::make('test'),
+            TableUploadAttachmentAction::make('upload')
+                ->multiple(),
         ];
     }
 

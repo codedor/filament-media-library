@@ -1,13 +1,13 @@
 <?php
 
-namespace Codedor\MediaLibrary\Filament\Actions;
+namespace Codedor\MediaLibrary\Filament\Actions\Traits;
 
 use Closure;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
-use Filament\Forms\Components\Actions\Action;
+use Filament\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
@@ -15,11 +15,12 @@ use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard\Step;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
-class UploadAttachmentAction extends Action
+trait CanUploadAttachment
 {
     use HasTranslations;
 
@@ -36,7 +37,7 @@ class UploadAttachmentAction extends Action
             $this->getAttachmentInformationStep(),
         ]);
 
-        $this->action(function (array $data, Set $set, Component $component) {
+        $this->action(function (array $data, Get $get, Set $set, Component $component) {
             $attachmentIds = collect($data['attachments'] ?? [])
                 ->map(function (string $attachmentId) use ($data) {
                     $attachment = Attachment::find($attachmentId);
@@ -66,17 +67,19 @@ class UploadAttachmentAction extends Action
                 ->success()
                 ->send();
 
-            dd($component);
-            $set(
-                $component->getStatePath(false),
-                $this->isMultiple()
-                    ? collect($component->getState())->merge($attachmentIds)
-                    : $attachmentIds->first()
-            );
+            // Set the state if this is a field
+            if ($this instanceof \Filament\Forms\Components\Actions\Action) {
+                $set(
+                    $component->getStatePath(false),
+                    $this->isMultiple()
+                        ? collect($component->getState())->concat($attachmentIds)->toArray()
+                        : $attachmentIds->first()
+                );
+            }
         });
     }
 
-    public function multiple(Closure $multiple): static
+    public function multiple(bool|Closure $multiple = true): static
     {
         $this->multiple = $multiple;
 
@@ -95,7 +98,7 @@ class UploadAttachmentAction extends Action
             ->schema([
                 FileUpload::make('attachments')
                     ->live()
-                    ->disableLabel()
+                    ->hiddenLabel()
                     ->required()
                     ->multiple(fn () => $this->isMultiple())
                     ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): string {
@@ -153,10 +156,5 @@ class UploadAttachmentAction extends Action
                     ->flatten()
                     ->toArray();
             });
-    }
-
-    protected function getModel()
-    {
-        return Attachment::class;
     }
 }
