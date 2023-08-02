@@ -12,18 +12,7 @@
                 dragging: false,
                 reorder (event) {
                     this.dragging = false
-
-                    const state = Alpine.raw(this.state)
-                    const reorderedRow = state.splice(event.oldIndex, 1)[0]
-
-                    state.splice(event.newIndex, 0, reorderedRow)
-                    this.state = state
-
                     this.state = event.to.sortable.toArray()
-
-                    // HACK update prevKeys to new sort order
-                    // https://github.com/alpinejs/alpine/discussions/1635
-                    $refs.selected_template._x_prevKeys = this.state
                 },
             }"
         >
