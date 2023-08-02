@@ -7,7 +7,6 @@ use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
-use Filament\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
@@ -128,7 +127,6 @@ trait CanUploadAttachment
                                 TranslatableTabs::make('Translations')
                                     ->statePath("meta.{$md5}")
                                     ->icon('heroicon-o-signal')
-                                    ->iconColor('success')
                                     ->columnSpan(['lg' => 2])
                                     ->persistInQueryString(false)
                                     ->defaultFields([

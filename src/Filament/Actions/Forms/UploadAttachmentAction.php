@@ -10,7 +10,7 @@ class UploadAttachmentAction extends Action
 {
     use CanUploadAttachment;
 
-    protected function getModel(): null|string
+    protected function getModel(): ?string
     {
         return Attachment::class;
     }
