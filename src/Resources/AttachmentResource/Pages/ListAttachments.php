@@ -19,7 +19,7 @@ class ListAttachments extends ListRecords
         'filament-media-library::update-library' => '$refresh',
     ];
 
-    public function getTitle(): string | Htmlable
+    public function getTitle(): string|Htmlable
     {
         return __('filament-media-library::attachment.dashboard navigation title');
     }
