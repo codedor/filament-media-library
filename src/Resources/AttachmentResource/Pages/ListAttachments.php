@@ -9,6 +9,7 @@ use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Actions;
 use Filament\Forms\Form;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Contracts\Support\Htmlable;
 
 class ListAttachments extends ListRecords
 {
@@ -17,6 +18,11 @@ class ListAttachments extends ListRecords
     protected $listeners = [
         'filament-media-library::update-library' => '$refresh',
     ];
+
+    public function getTitle(): string | Htmlable
+    {
+        return __('filament-media-library::attachment.dashboard navigation title');
+    }
 
     protected function getActions(): array
     {

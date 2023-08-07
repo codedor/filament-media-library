@@ -10,7 +10,6 @@ use Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\MultiSelect;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -176,6 +175,7 @@ class AttachmentResource extends Resource
                     ->label('Generate formats')
                     ->icon('heroicon-o-scissors')
                     ->deselectRecordsAfterCompletion()
+                    ->hidden(fn () => ! config('filament-media-library.enable-format-generate-action', false))
                     ->form([
                         Checkbox::make('generate_all')
                             ->label(__('filament-media-library::formatter.generate all'))
