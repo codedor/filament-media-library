@@ -29,7 +29,7 @@ trait CanUploadAttachment
     {
         parent::setUp();
 
-        $this->label(__('filament_media.upload attachment'));
+        $this->label(__('filament-media-library::upload.upload attachment'));
 
         $this->steps([
             $this->getUploadStep(),
@@ -62,7 +62,7 @@ trait CanUploadAttachment
                 ->filter();
 
             Notification::make()
-                ->title(__('filament_media.uploaded'))
+                ->title(__('filament-media-library::upload.upload successful'))
                 ->success()
                 ->send();
 
@@ -92,8 +92,8 @@ trait CanUploadAttachment
 
     protected function getUploadStep(): Step
     {
-        return Step::make(__('filament_media.upload step title'))
-            ->description(__('filament_media.upload step intro'))
+        return Step::make(__('filament-media-library::upload.upload step title'))
+            ->description(__('filament-media-library::upload.upload step intro'))
             ->schema([
                 FileUpload::make('attachments')
                     ->live()
@@ -111,8 +111,8 @@ trait CanUploadAttachment
     protected function getAttachmentInformationStep(): Step
     {
 
-        return Step::make(__('filament_media.attachment information step title'))
-            ->description(__('filament_media.attachment information step intro'))
+        return Step::make(__('filament-media-library::upload.attachment information step title'))
+            ->description(__('filament-media-library::upload.attachment information step intro'))
             ->schema(function ($state) {
                 return collect($state['attachments'] ?? [])
                     ->filter(fn ($upload) => $upload instanceof TemporaryUploadedFile)
@@ -134,7 +134,7 @@ trait CanUploadAttachment
                                             ->content(fn () => $upload->getClientOriginalName()),
 
                                         Select::make('tags')
-                                            ->label(__('filament_media.tags'))
+                                            ->label(__('filament-media-library::upload.select tags'))
                                             ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
                                             ->searchable()
                                             ->multiple(),

@@ -46,7 +46,8 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
                 '2023_04_27_120359_create_attachment_formats',
             ])
             ->runsMigrations()
-            ->hasViews($this->packageName());
+            ->hasViews($this->packageName())
+            ->hasTranslations();
     }
 
     public function packageName(): string

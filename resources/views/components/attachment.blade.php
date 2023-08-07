@@ -34,39 +34,37 @@
                 <template x-ref="attachment-tooltip-{{ $attachment->id }}">
                     @if ($attachment->type === 'image' && !$extendedTooltip)
                         <div>
-                            <p class="text-sm font-bold">{{ __('filament_media.formats') }}</p>
-                            <p class="text-sm">
-                            <ul>
-                                <li>{{ __('filament_media.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
+                            <ul class="text-sm">
+                                <li>{{ __('filament-media-library::attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
 
                                 @foreach ($formats as $format)
                                     <li>{{ $format->name }}: {{ $format->width }}px x {{ $format->height }}px</li>
                                 @endforeach
                             </ul>
-                            </p>
                         </div>
                     @else
                         <div>
                             <dl>
-                                <dt class="text-sm font-bold">{{ __('filament_media.filename') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.filename') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->filename }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.type') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.type') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->type }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.tags') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->tags->count() ? $attachment->tags->implode('title', ', ') : __('filament_media.no tags for this attachment') }}</dd>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.tags') }}</dt>
+                                <dd class="mb-2 text-sm">{{
+                                    $attachment->tags->count()
+                                        ? $attachment->tags->implode('title', ', ')
+                                        : __('filament-media-library::attachment.no tags for this attachment')
+                                }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.size') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.size') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->formatted_in_mb_size }} MB</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.created at') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.created at') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->created_at->format('d-m-Y') }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.updated at') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->updated_at->format('d-m-Y') }}</dd>
-
-                                <dt class="text-sm font-bold">{{ __('filament_media.original format') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.original format') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->width }}px x {{ $attachment->height }}px</dd>
                             </dl>
                         </div>

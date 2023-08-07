@@ -19,15 +19,13 @@ class AttachmentTagResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                TextInput::make('title')
-                    ->label(__('filament_media.tag title'))
-                    ->required(),
+        return $form->schema([
+            TextInput::make('title')
+                ->required(),
 
-                Select::make('parent')
-                    ->relationship('parent', 'title'),
-            ]);
+            Select::make('parent')
+                ->relationship('parent', 'title'),
+        ]);
     }
 
     public static function table(Table $table): Table

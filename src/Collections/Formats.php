@@ -29,15 +29,13 @@ class Formats extends Collection
         ]);
     }
 
-    public function dispatchGeneration(Attachment $attachment): void
+    public function dispatchGeneration(Attachment $attachment, bool $force = false): void
     {
-        $this->flatten()
-            ->each(function (Format $format) use ($attachment) {
-                dispatch(new GenerateAttachmentFormat(
-                    attachment: $attachment,
-                    format: $format
-                ));
-            });
+        $this->flatten()->each(fn (Format $format) => dispatch(new GenerateAttachmentFormat(
+            attachment: $attachment,
+            format: $format,
+            force: $force,
+        )));
     }
 
     public function findByKey(string $key): ?Format

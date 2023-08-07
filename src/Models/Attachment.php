@@ -3,15 +3,13 @@
 namespace Codedor\MediaLibrary\Models;
 
 use Codedor\MediaLibrary\Database\Factories\AttachmentFactory;
-use Codedor\MediaLibrary\Exceptions\FormatNotFound;
-use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Models\Traits\HasFormats;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
@@ -20,6 +18,7 @@ class Attachment extends Model
     use HasFactory;
     use HasUuids;
     use HasTranslations;
+    use HasFormats;
 
     protected $keyType = 'string';
 
@@ -88,11 +87,6 @@ class Attachment extends Model
         return $this->belongsToMany(AttachmentTag::class);
     }
 
-    public function formats(): HasMany
-    {
-        return $this->hasMany(AttachmentFormat::class);
-    }
-
     public function getRootDirectoryAttribute(): string
     {
         return 'attachments';
@@ -106,28 +100,6 @@ class Attachment extends Model
     public function getFilePathAttribute(): string
     {
         return "{$this->directory}/{$this->filename}";
-    }
-
-    public function getFormatOrOriginal(?string $name): string
-    {
-        if (! $name) {
-            return $this->url;
-        }
-
-        return $this->getFormat($name) ?: $this->url;
-    }
-
-    public function getFormat(string $name): ?string
-    {
-        $format = Formats::exists($name);
-
-        if (! $format) {
-            FormatNotFound::throw($name);
-
-            return null;
-        }
-
-        return $this->getStorage()->url("{$this->directory}/{$format->filename($this)}");
     }
 
     public function getAbsoluteDirectoryPathAttribute(): string

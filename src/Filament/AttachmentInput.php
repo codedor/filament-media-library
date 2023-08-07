@@ -98,7 +98,7 @@ class AttachmentInput extends Field
                 ->multiple(fn () => $this->isMultiple()),
 
             Action::make('attachment-picker')
-                ->label(__('filament_media.select existing media'))
+                ->label(__('filament-media-library::picker.select existing media'))
                 ->color('gray'),
         ]);
     }

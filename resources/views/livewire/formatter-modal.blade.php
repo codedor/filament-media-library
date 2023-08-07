@@ -5,7 +5,7 @@
     @if ($attachment)
         <x-slot name="header">
             <x-filament::modal.heading>
-                {{ __('filament_media.formatter modal heading :name', [
+                {{ __('filament-media-library::formatter.formatter modal heading :name', [
                     'name' => $attachment->name,
                 ]) }}
             </x-filament::modal.heading>
@@ -92,14 +92,14 @@
                         <div class="flex gap-1">
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.zoom(-0.1)"
-                                title="{{ __('filament_media.zoom in') }}"
+                                title="{{ __('filament-media-library::formatter.zoom in') }}"
                             >
                                 <x-heroicon-o-magnifying-glass-plus class="h-5" />
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.zoom(0.1)"
-                                title="{{ __('filament_media.zoom out') }}"
+                                title="{{ __('filament-media-library::formatter.zoom out') }}"
                             >
                                 <x-heroicon-o-magnifying-glass-minus class="h-5" />
                             </x-filament::button>
@@ -108,14 +108,14 @@
                         <div class="flex gap-1">
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.rotate(45)"
-                                title="{{ __('filament_media.rotate 45 degrees clockwise') }}"
+                                title="{{ __('filament-media-library::formatter.rotate 45 degrees clockwise') }}"
                             >
                                 <x-fas-rotate-right class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button
                                 x-on:click.prevent="window.cropper.rotate(-45)"
-                                title="{{ __('filament_media.rotate 45 degrees counterclockwise') }}"
+                                title="{{ __('filament-media-library::formatter.rotate 45 degrees counterclockwise') }}"
                             >
                                 <x-fas-rotate-left class="h-4" />
                             </x-filament::button>
@@ -124,19 +124,19 @@
                         <div class="flex gap-1">
                             <x-filament::button x-on:click.prevent="window.cropper.scaleX(
                                 window.cropper.imageData.scaleX === -1 ? 1 : -1
-                            )" title="{{ __('filament_media.flip horizontally') }}">
+                            )" title="{{ __('filament-media-library::formatter.flip horizontally') }}">
                                 <x-attachments-flip-horizontal class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button x-on:click.prevent="window.cropper.scaleY(
                                 window.cropper.imageData.scaleY === -1 ? 1 : -1
-                            )" title="{{ __('filament_media.flip vertically') }}">
+                            )" title="{{ __('filament-media-library::formatter.flip vertically') }}">
                                 <x-attachments-flip-vertical class="h-4" />
                             </x-filament::button>
                         </div>
 
-                        <x-filament::button x-on:click.prevent="window.cropper.reset()">
-                            {{ __('filament_media.reset format') }}
+                        <x-filament::button color="gray" x-on:click.prevent="window.cropper.reset()">
+                            {{ __('filament-media-library::formatter.reset format') }}
                         </x-filament::button>
                     </div>
                 </div>
@@ -192,15 +192,13 @@
             </div>
 
             <x-slot name="footer">
-{{--                <x-filament::modal.actions>--}}
-                    <x-filament::button x-on:click.prevent="window.dispatchEvent(new Event('filament-media-library::submit-formatter'))">
-                        {{ __('filament_media.save format') }}
-                    </x-filament::button>
+                <x-filament::button x-on:click.prevent="window.dispatchEvent(new Event('filament-media-library::submit-formatter'))">
+                    {{ __('filament-media-library::formatter.save format') }}
+                </x-filament::button>
 
-                    <x-filament::button color="secondary" x-on:click.prevent="close() && $wire.set('attachment', null)">
-                        {{ __('filament_media.close modal') }}
-                    </x-filament::button>
-{{--                </x-filament::modal.actions>--}}
+                <x-filament::button color="gray" x-on:click.prevent="close() && $wire.set('attachment', null)">
+                    {{ __('filament-media-library::formatter.close modal') }}
+                </x-filament::button>
             </x-slot>
         </div>
 

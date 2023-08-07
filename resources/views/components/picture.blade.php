@@ -14,9 +14,7 @@
             $class ?? 'img-fluid',
             'lazyload' => $lazyload,
         ])
-        src="{{ $image->url }}"
-        width="{{ $width() }}"
-        height="{{ $height() }}"
+        src="{{ $image->getFormatOrOriginal('thumbnail') }}"
     >
 @elseif ($image)
     <picture class="{{ $pictureClass }}">

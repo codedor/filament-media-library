@@ -2,16 +2,11 @@
     $attachment = $getRecord();
 @endphp
 
-<div
-    @if ($attachment->type === 'image')
-        style="background-image: url('{{ $attachment->url }}')"
-    @endif
-    class="
-        attachment-visual flex relative w-full aspect-square rounded-lg
-        overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 media mt-4
-        h-32
-    "
->
+<div class="
+    attachment-visual flex relative w-full aspect-square rounded-lg
+    overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 media mt-4
+    h-32
+">
     @if ($attachment->type !== 'image')
         <div class="w-full aspect-square flex items-center justify-center bg-gray-100 rounded-lg">
             @if($attachment->type === 'document')

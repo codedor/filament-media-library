@@ -22,7 +22,7 @@ class ListAttachments extends ListRecords
     {
         return [
             Actions\CreateAction::make()
-                ->label(__('filament_media.create new attachment tag'))
+                ->label(__('filament-media-library::tags.create new attachment tag'))
                 ->authorize(AttachmentTagResource::canCreate())
                 ->model(AttachmentTag::class)
                 ->outlined()
@@ -35,10 +35,5 @@ class ListAttachments extends ListRecords
             TableUploadAttachmentAction::make('upload')
                 ->multiple(),
         ];
-    }
-
-    protected function getTableRecordsPerPageSelectOptions(): array
-    {
-        return [12, 24, 48, 96];
     }
 }

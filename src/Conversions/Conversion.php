@@ -7,5 +7,5 @@ use Codedor\MediaLibrary\Models\Attachment;
 
 interface Conversion
 {
-    public function convert(Attachment $attachment, Format $format): bool;
+    public function convert(Attachment $attachment, Format $format, bool $force = false): bool;
 }

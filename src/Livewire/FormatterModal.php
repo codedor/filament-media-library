@@ -3,6 +3,7 @@
 namespace Codedor\MediaLibrary\Livewire;
 
 use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Notifications\Notification;
 use Livewire\Attributes\On;
@@ -25,7 +26,8 @@ class FormatterModal extends Component
     {
         $this->dispatch('filament-media-library::load-formatter');
 
-        $formats = Formats::mapToKebab();
+        $formats = Formats::mapToKebab()
+            ->filter(fn (Format $format) => $format->shownInFormatter());
 
         if (! is_null($this->modelFormats)) {
             $formats = $formats->filter(fn ($format) => in_array(
@@ -65,7 +67,7 @@ class FormatterModal extends Component
         );
 
         Notification::make()
-            ->title(__('filament_media.successfully formatted'))
+            ->title(__('filament-media-library::formatter.successfully formatted'))
             ->success()
             ->send();
     }

@@ -12,22 +12,25 @@ abstract class Format implements Arrayable
 {
     public Manipulations $manipulations;
 
+    public bool $shownInFormatter = true;
+
     protected string $name;
 
     protected string $description;
 
-    public function __construct(
-        protected string $column
-    ) {
-        $this->manipulations = new Manipulations();
-        $this->definition();
-
-        $this->name = Str::headline(class_basename(static::class));
-    }
+    abstract public function definition(): Manipulations;
 
     public static function make(string $column = ''): static
     {
         return new static($column);
+    }
+
+    public function __construct(protected string $column)
+    {
+        $this->manipulations = new Manipulations();
+        $this->definition();
+
+        $this->name = Str::headline(class_basename(static::class));
     }
 
     public function filename(Attachment $attachment): string
@@ -47,15 +50,12 @@ abstract class Format implements Arrayable
             'name' => $this->name(),
             'description' => $this->description(),
             'manipulations' => $this->definition(),
-
-            // Formatter details
             'width' => $this->width(),
             'height' => $this->height(),
             'aspectRatio' => $this->aspectRatio(),
+            'shownInFormatter' => $this->shownInFormatter(),
         ];
     }
-
-    abstract public function definition(): Manipulations;
 
     public function name(): string
     {
@@ -90,6 +90,11 @@ abstract class Format implements Arrayable
     public function description(): string
     {
         return $this->description;
+    }
+
+    public function shownInFormatter(): bool
+    {
+        return $this->shownInFormatter;
     }
 
     public function conversion(): Conversion
