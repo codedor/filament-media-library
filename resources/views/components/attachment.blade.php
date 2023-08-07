@@ -11,15 +11,7 @@
     'showTooltip' => true
 ])
 
-<div
-    @class(['flex flex-col h-full', $containerClass])
-    x-data="{
-        openFormatterModal (id) {
-            $dispatch('open-modal', { id: 'filament-media-library::formatter-attachment-modal' })
-            $wire.dispatch('filament-media-library::open-formatter-attachment-modal', id)
-        }
-    }"
->
+<div @class(['flex flex-col h-full', $containerClass])>
     <div class="flex-grow flex justify-between gap-2">
         {{-- Title --}}
         @if ($showTitle)
@@ -111,18 +103,18 @@
         {{-- Buttons --}}
         @unless($isDisabled)
             <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3">
-                @if ($deleteAction)
+                @if ($deleteAction && $deleteAction->isVisible())
                     {{ ($deleteAction)(['attachmentId' => $attachment->id]) }}
                 @endif
 
                 <div class=" flex justify-end gap-1">
                     {{ $slot }}
 
-                    @if ($formatAction && $attachment->type === 'image')
+                    @if ($formatAction && $formatAction->isVisible() && $attachment->type === 'image')
                         {{ ($formatAction)(['attachmentId' => $attachment->id]) }}
                     @endif
 
-                    @if ($editAction)
+                    @if ($editAction && $editAction->isVisible())
                         {{ ($editAction)(['attachmentId' => $attachment->id]) }}
                     @endif
                 </div>

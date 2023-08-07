@@ -16,7 +16,7 @@
             wire:loading.remove
             wire:key="filament-media-library::formatter-attachment-modal-{{ $attachment->id }}"
             x-data="{
-                formats: @js($formats),
+                formats: @entangle('formats'),
                 previousFormats: @js($previousFormats),
                 currentFormat: null,
                 init () {
@@ -25,7 +25,12 @@
                         || null
 
                     this.loadFormatter()
-                    window.addEventListener('filament-media-library::load-formatter', () => this.loadFormatter())
+                    window.addEventListener('filament-media-library::load-formatter', (e) => {
+                        this.currentFormat = Object.values(e.detail[0].formats)[0] || null
+                        this.loadFormatter()
+                    })
+
+                    // Because the submit is nested in the modal, we do it like this
                     window.addEventListener('filament-media-library::submit-formatter', () => this.submit())
                 },
                 loadFormatter () {

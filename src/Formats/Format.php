@@ -46,15 +46,19 @@ abstract class Format implements Arrayable
     public function toArray()
     {
         return [
-            'key' => get_class($this),
+            'key' => $this->key(),
             'name' => $this->name(),
             'description' => $this->description(),
-            'manipulations' => $this->definition(),
             'width' => $this->width(),
             'height' => $this->height(),
             'aspectRatio' => $this->aspectRatio(),
             'shownInFormatter' => $this->shownInFormatter(),
         ];
+    }
+
+    public function key(): string
+    {
+        return get_class($this);
     }
 
     public function name(): string

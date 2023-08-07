@@ -13,28 +13,27 @@ class FormatterModal extends Component
 {
     public Attachment $attachment;
 
-    public ?array $modelFormats = null;
+    public array $formats = [];
 
     #[On('filament-media-library::open-formatter-attachment-modal')]
-    public function setAttachment(string $uuid = '', array $formats = null)
+    public function setAttachment(string $uuid, null|array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
-        $this->modelFormats = $formats;
+
+        $this->formats = Formats::mapToKebab()
+            ->when(! is_null($formats), fn ($allFormats) => $allFormats->filter(function (Format $format) use ($formats) {
+                return in_array($format->key(), $formats);
+            }))
+            ->filter(fn (Format $format) => $format->shownInFormatter())
+            ->map->toArray()
+            ->toArray();
     }
 
     public function render()
     {
-        $this->dispatch('filament-media-library::load-formatter');
-
-        $formats = Formats::mapToKebab()
-            ->filter(fn (Format $format) => $format->shownInFormatter());
-
-        if (! is_null($this->modelFormats)) {
-            $formats = $formats->filter(fn ($format) => in_array(
-                get_class($format),
-                $this->modelFormats
-            ));
-        }
+        $this->dispatch('filament-media-library::load-formatter', [
+            'formats' => $this->formats,
+        ]);
 
         $previousFormats = [];
         if (isset($this->attachment)) {
@@ -42,7 +41,6 @@ class FormatterModal extends Component
         }
 
         return view('filament-media-library::livewire.formatter-modal', [
-            'formats' => $formats->map->toArray(),
             'previousFormats' => $previousFormats,
         ]);
     }
