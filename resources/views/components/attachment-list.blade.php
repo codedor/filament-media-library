@@ -4,8 +4,8 @@
 
 <div class="
     attachment-visual flex relative w-full aspect-square rounded-lg
-    overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 media mt-4
-    h-32
+    overflow-hidden bg-gray-200 media mt-4
+    h-32 w-32 justify-center my-2
 ">
     @if ($attachment->type !== 'image')
         <div class="w-full aspect-square flex items-center justify-center bg-gray-100 rounded-lg">
@@ -18,6 +18,6 @@
             @endif
         </div>
     @else
-        <x-filament-media-library::picture :image="$attachment" />
+        <img src="{{ $attachment->getFormatOrOriginal('thumbnail') }}" />
     @endif
 </div>
