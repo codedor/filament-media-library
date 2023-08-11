@@ -43,12 +43,10 @@ class Attachment extends Model
         'caption',
     ];
 
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
-        static::deleted(function (Attachment $attachment) {
-            $attachment->getStorage()->deleteDirectory($attachment->directory);
+        static::created(function (Attachment $attachment) {
+            $attachment->generateFormats();
         });
     }
 

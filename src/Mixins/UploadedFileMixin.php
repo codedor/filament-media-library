@@ -3,6 +3,8 @@
 namespace Codedor\MediaLibrary\Mixins;
 
 use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Formats\Thumbnail;
+use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -43,6 +45,12 @@ class UploadedFileMixin
             );
 
             Formats::dispatchGeneration($attachment);
+
+            // Create the thumbnail now, so we don't have an empty preview in the next response
+            GenerateAttachmentFormat::dispatchAfterResponse(
+                $attachment,
+                Formats::findByKey(Thumbnail::class),
+            );
 
             return $attachment;
         };

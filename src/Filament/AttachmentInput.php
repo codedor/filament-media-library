@@ -161,7 +161,7 @@ class AttachmentInput extends Field
         if (is_null($formats)) {
             $model = $this->getModelInstance();
 
-            if ($model) {
+            if ($model && method_exists($model, 'getFormats')) {
                 $formats = $model->getFormats(collect())->filter(
                     fn ($format) => $format->column() === $this->getStatePath(false)
                 );
