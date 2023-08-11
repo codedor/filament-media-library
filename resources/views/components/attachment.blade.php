@@ -80,7 +80,7 @@
     {{-- Media --}}
     <div
         @if($attachment->type === 'image')
-            style="background-image: url('{{ $attachment->url }}')"
+            style="background-image: url('{{ $attachment->getFormatOrOriginal('thumbnail') }}')"
         @endif
 
         {{ $attributes->except(['slot', 'attachment'])->merge(['class' => '
