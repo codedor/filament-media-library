@@ -16,8 +16,9 @@ class UploadedFileMixin
     {
         return function (string $disk = 'public') {
             $fileType = $this->fileType();
+            $extension = $this->getClientOriginalExtension();
 
-            if ($fileType === 'image') {
+            if (is_image_with_dimensions($extension)) {
                 $dimensions = $this->dimensions();
             } else {
                 $dimensions = [];

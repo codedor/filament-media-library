@@ -11,7 +11,7 @@ class LocalConversion implements Conversion
 {
     public function convert(Attachment $attachment, Format $format, bool $force = false): bool
     {
-        if ($attachment->type !== 'image' || $attachment->extension === 'gif') {
+        if (is_convertable_image($attachment->extension)) {
             return false;
         }
 
