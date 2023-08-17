@@ -96,14 +96,14 @@
                     <div class="flex gap-4 flex-wrap justify-center mt-2">
                         <div class="flex gap-1">
                             <x-filament::button
-                                x-on:click.prevent="window.cropper.zoom(-0.1)"
+                                x-on:click.prevent="window.cropper.zoom(0.1)"
                                 title="{{ __('filament-media-library::formatter.zoom in') }}"
                             >
                                 <x-heroicon-o-magnifying-glass-plus class="h-5" />
                             </x-filament::button>
 
                             <x-filament::button
-                                x-on:click.prevent="window.cropper.zoom(0.1)"
+                                x-on:click.prevent="window.cropper.zoom(-0.1)"
                                 title="{{ __('filament-media-library::formatter.zoom out') }}"
                             >
                                 <x-heroicon-o-magnifying-glass-minus class="h-5" />

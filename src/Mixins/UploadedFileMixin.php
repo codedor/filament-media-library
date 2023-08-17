@@ -15,16 +15,22 @@ class UploadedFileMixin
     public function save()
     {
         return function (string $disk = 'public') {
-            $dimensions = $this->dimensions();
+            $fileType = $this->fileType();
+
+            if ($fileType === 'image') {
+                $dimensions = $this->dimensions();
+            } else {
+                $dimensions = [];
+            }
 
             $data = [
                 'extension' => $this->getClientOriginalExtension(),
                 'mime_type' => $this->getMimeType(),
                 'md5' => $this->getMd5(),
-                'type' => $this->fileType(),
+                'type' => $fileType,
                 'size' => $this->getSize(),
-                'width' => $dimensions[0] ?? 0,
-                'height' => $dimensions[1] ?? 0,
+                'width' => $dimensions[0] ?? null,
+                'height' => $dimensions[1] ?? null,
                 'disk' => $disk,
                 'name' => Str::replace(
                     ".{$this->getClientOriginalExtension()}",
