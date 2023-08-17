@@ -110,7 +110,7 @@
                 <div class=" flex justify-end gap-1">
                     {{ $slot }}
 
-                    @if ($formatAction && $formatAction->isVisible() && $attachment->type === 'image')
+                    @if ($formatAction && $formatAction->isVisible() && is_convertable_image($attachment->extension))
                         {{ ($formatAction)(['attachmentId' => $attachment->id]) }}
                     @endif
 

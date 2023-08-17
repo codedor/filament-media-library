@@ -27,6 +27,10 @@ trait HasFormats
 
     public function getFormat(string $name): ?string
     {
+        if (! is_convertable_image($this->extension)) {
+            return $this->url;
+        }
+
         $format = Formats::exists($name);
 
         if (! $format) {
