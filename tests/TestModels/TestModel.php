@@ -2,7 +2,6 @@
 
 namespace Codedor\MediaLibrary\Tests\TestModels;
 
-use Codedor\MediaLibrary\Formats\Thumbnail;
 use Codedor\MediaLibrary\Interfaces\HasFormats;
 use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
 use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
