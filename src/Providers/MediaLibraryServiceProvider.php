@@ -2,7 +2,6 @@
 
 namespace Codedor\MediaLibrary\Providers;
 
-use BladeUI\Icons\Factory;
 use Codedor\MediaLibrary\Collections\Formats;
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Conversions\LocalConversion;
@@ -103,12 +102,5 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
                 LocalConversion::class
             )
         );
-
-        $this->callAfterResolving(Factory::class, function (Factory $factory) {
-            $factory->add('attachments', [
-                'path' => __DIR__ . '/../../resources/svg',
-                'prefix' => 'attachments',
-            ]);
-        });
     }
 }

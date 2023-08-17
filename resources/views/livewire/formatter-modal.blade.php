@@ -130,13 +130,13 @@
                             <x-filament::button x-on:click.prevent="window.cropper.scaleX(
                                 window.cropper.imageData.scaleX === -1 ? 1 : -1
                             )" title="{{ __('filament-media-library::formatter.flip horizontally') }}">
-                                <x-attachments-flip-horizontal class="h-4" />
+                                <x-heroicon-o-arrows-right-left class="h-4" />
                             </x-filament::button>
 
                             <x-filament::button x-on:click.prevent="window.cropper.scaleY(
                                 window.cropper.imageData.scaleY === -1 ? 1 : -1
                             )" title="{{ __('filament-media-library::formatter.flip vertically') }}">
-                                <x-attachments-flip-vertical class="h-4" />
+                                <x-heroicon-o-arrows-up-down class="h-4" />
                             </x-filament::button>
                         </div>
 
