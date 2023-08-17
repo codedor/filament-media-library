@@ -17,9 +17,10 @@ uses(RefreshDatabase::class);
 it('skips generation if attachment is not an image', function () {
     Models::add(TestModel::class);
 
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'not-an-image',
-    ])->create();
+        'extension' => 'txt',
+    ]);
 
     /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
     $conversion = app(LocalConversion::class);
@@ -31,10 +32,10 @@ it('skips generation if attachment is not an image', function () {
 it('skips generation if attachment is a gif', function () {
     Models::add(TestModel::class);
 
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'gif',
-    ])->create();
+    ]);
 
     /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
     $conversion = app(LocalConversion::class);
@@ -47,11 +48,11 @@ it('skips generation if force is false and format image exists', function () {
     Storage::fake('public');
     Models::add(TestModel::class);
 
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     $attachment->getStorage()->put(
         "$attachment->directory/test_hero__$attachment->filename",
@@ -76,11 +77,11 @@ it('converts image', function () {
     Models::add(TestModel::class);
 
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     $attachment->getStorage()->put(
         $attachment->file_path,
@@ -111,11 +112,11 @@ it('converts image to webp', function () {
     Models::add(TestModel::class);
 
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     $attachment->getStorage()->put(
         $attachment->file_path,

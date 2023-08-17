@@ -18,6 +18,7 @@ it('dispatches format generation', function () {
     Queue::fake();
     Storage::fake('public');
     Models::add(TestModel::class);
+    Models::add(Attachment::class);
 
     $file = UploadedFile::fake()->image('test.jpg', 100, 100);
     $file->save();
@@ -33,6 +34,8 @@ it('dispatches format generation', function () {
 it('can save an image on default public disk', function () {
     Queue::fake();
     Storage::fake('public');
+    Models::add(TestModel::class);
+    Models::add(Attachment::class);
 
     assertDatabaseCount(Attachment::class, 0);
 
@@ -57,12 +60,14 @@ it('can save an image on default public disk', function () {
     $attachment = Attachment::first();
 
     Storage::disk('public')->assertExists($attachment->directory);
-    Queue::assertNothingPushed();
+    Queue::assertPushed(GenerateAttachmentFormat::class);
 });
 
 it('can save an image on default other disk', function () {
     Queue::fake();
     $disk = 'local';
+    Models::add(TestModel::class);
+    Models::add(Attachment::class);
 
     Storage::fake($disk);
 
@@ -89,7 +94,7 @@ it('can save an image on default other disk', function () {
     $attachment = Attachment::first();
 
     Storage::disk($disk)->assertExists($attachment->directory);
-    Queue::assertNothingPushed();
+    Queue::assertPushed(GenerateAttachmentFormat::class);
 });
 
 it('does a check if file is an image', function () {
