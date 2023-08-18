@@ -2,6 +2,7 @@
 
 namespace Codedor\MediaLibrary\Models;
 
+use Carbon\Carbon;
 use Codedor\MediaLibrary\Database\Factories\AttachmentFactory;
 use Codedor\MediaLibrary\Models\Traits\HasFormats;
 use Illuminate\Contracts\Filesystem\Filesystem;
@@ -13,6 +14,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @property string $name
+ * @property Carbon $created_at
+ * @property string $mime_type
+ * @property string $type
+ * @property string $disk
+ * @property string $md5
+ * @property int $size
+ * @property string $extension
+ * @property int|null $width
+ * @property int|null $height
+ */
 class Attachment extends Model
 {
     use HasFactory;
@@ -112,7 +125,7 @@ class Attachment extends Model
 
     public function getFormattedInMbSizeAttribute(): string
     {
-        return round($this->size / 1000000, 2);
+        return (string) round($this->size / 1000000, 2);
     }
 
     public function isImage(): bool

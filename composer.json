@@ -13,7 +13,7 @@
     "require": {
         "php": "^8.2",
         "blade-ui-kit/blade-icons": "^1.5",
-        "codedor/filament-translatable-tabs": "dev-filament-v3",
+        "codedor/filament-translatable-tabs": "^0.1",
         "filament/filament": "^3.0",
         "illuminate/contracts": "^10.0",
         "livewire/livewire": "^3.0",
@@ -62,11 +62,5 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://codedor.repo.repman.codedor.online"
-        }
-    ]
+    "prefer-stable": true
 }

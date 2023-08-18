@@ -40,7 +40,7 @@ class AttachmentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form->schema([
-            TranslatableTabs::make('Translations')
+            TranslatableTabs::make()
                 ->icon('heroicon-o-signal')
                 ->columnSpan(['lg' => 2])
                 ->defaultFields([

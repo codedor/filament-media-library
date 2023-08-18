@@ -25,7 +25,7 @@ abstract class Format implements Arrayable
         return new static($column);
     }
 
-    public function __construct(protected string $column)
+    final public function __construct(protected string $column)
     {
         $this->manipulations = new Manipulations();
         $this->definition();
@@ -86,9 +86,9 @@ abstract class Format implements Arrayable
         return $this->argument('height');
     }
 
-    public function aspectRatio(): string
+    public function aspectRatio(): int
     {
-        return $this->width() / $this->height();
+        return (int) $this->width() / (int) $this->height();
     }
 
     public function description(): string

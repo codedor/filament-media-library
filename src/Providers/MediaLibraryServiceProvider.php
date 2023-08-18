@@ -22,9 +22,6 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
 
     protected array $livewireComponents = [
         'formatter-modal' => Livewire\FormatterModal::class,
-        'upload-modal' => Livewire\UploadModal::class,
-        'edit-modal' => Livewire\EditModal::class,
-        'picker' => Livewire\Picker::class,
     ];
 
     protected array $bladeComponents = [

@@ -124,7 +124,7 @@ trait CanUploadAttachment
                             ->collapsed()
                             ->columns()
                             ->schema([
-                                TranslatableTabs::make('Translations')
+                                TranslatableTabs::make()
                                     ->statePath("meta.{$md5}")
                                     ->icon('heroicon-o-signal')
                                     ->columnSpan(['lg' => 2])

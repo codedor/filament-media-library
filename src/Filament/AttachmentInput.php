@@ -40,7 +40,7 @@ class AttachmentInput extends Field
                 return;
             }
 
-            $state = Collection::wrap($state ?? []);
+            $state = Collection::wrap($state);
             $sortField = $component->getSortField();
 
             if (is_string($sortField)) {
@@ -186,8 +186,10 @@ class AttachmentInput extends Field
 
         if ($this->isMultiple() && $state === null) {
             $relationship = $this->getRelationship();
+            /** @var \Illuminate\Database\Eloquent\Collection $results */
+            $results = $relationship->getResults();
 
-            $state = $relationship->getResults()
+            $state = $results
                 ->pluck($relationship->getRelatedKeyName())
                 ->toArray();
 
