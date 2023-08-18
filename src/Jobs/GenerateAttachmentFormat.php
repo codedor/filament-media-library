@@ -19,15 +19,18 @@ class GenerateAttachmentFormat implements ShouldQueue
 
     public function __construct(
         public Attachment $attachment,
-        public Format $format
+        public Format $format,
+        public bool $force = false,
     ) {
+        //
     }
 
     public function handle()
     {
         $this->format->conversion()->convert(
             attachment: $this->attachment,
-            format: $this->format
+            format: $this->format,
+            force: $this->force,
         );
     }
 }

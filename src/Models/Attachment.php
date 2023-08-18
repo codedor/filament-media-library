@@ -2,24 +2,36 @@
 
 namespace Codedor\MediaLibrary\Models;
 
+use Carbon\Carbon;
 use Codedor\MediaLibrary\Database\Factories\AttachmentFactory;
-use Codedor\MediaLibrary\Exceptions\FormatNotFound;
-use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Models\Traits\HasFormats;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
+/**
+ * @property string $name
+ * @property Carbon $created_at
+ * @property string $mime_type
+ * @property string $type
+ * @property string $disk
+ * @property string $md5
+ * @property int $size
+ * @property string $extension
+ * @property int|null $width
+ * @property int|null $height
+ */
 class Attachment extends Model
 {
     use HasFactory;
     use HasUuids;
     use HasTranslations;
+    use HasFormats;
 
     protected $keyType = 'string';
 
@@ -44,12 +56,10 @@ class Attachment extends Model
         'caption',
     ];
 
-    protected static function boot()
+    protected static function booted()
     {
-        parent::boot();
-
-        static::deleted(function (Attachment $attachment) {
-            $attachment->getStorage()->deleteDirectory($attachment->directory);
+        static::created(function (Attachment $attachment) {
+            $attachment->generateFormats();
         });
     }
 
@@ -88,11 +98,6 @@ class Attachment extends Model
         return $this->belongsToMany(AttachmentTag::class);
     }
 
-    public function formats(): HasMany
-    {
-        return $this->hasMany(AttachmentFormat::class);
-    }
-
     public function getRootDirectoryAttribute(): string
     {
         return 'attachments';
@@ -108,28 +113,6 @@ class Attachment extends Model
         return "{$this->directory}/{$this->filename}";
     }
 
-    public function getFormatOrOriginal(?string $name): string
-    {
-        if (! $name) {
-            return $this->url;
-        }
-
-        return $this->getFormat($name) ?: $this->url;
-    }
-
-    public function getFormat(string $name): string|null
-    {
-        $format = Formats::exists($name);
-
-        if (! $format) {
-            FormatNotFound::throw($name);
-
-            return null;
-        }
-
-        return $this->getStorage()->url("{$this->directory}/{$format->filename($this)}");
-    }
-
     public function getAbsoluteDirectoryPathAttribute(): string
     {
         return $this->getStorage()->path($this->directory);
@@ -142,7 +125,7 @@ class Attachment extends Model
 
     public function getFormattedInMbSizeAttribute(): string
     {
-        return round($this->size / 1000000, 2);
+        return (string) round($this->size / 1000000, 2);
     }
 
     public function isImage(): bool

@@ -3,6 +3,8 @@
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 
 return [
+    'conversion' => LocalConversion::class,
+    'enable-format-generate-action' => true,
     'extensions' => [
         'image' => [
             'jpg',
@@ -31,5 +33,4 @@ return [
             'ogg',
         ],
     ],
-    'conversion' => LocalConversion::class,
 ];

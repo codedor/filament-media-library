@@ -6,10 +6,10 @@ use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource\Pages\ManageAttachmentTags;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Resources\Form;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
 use Filament\Tables;
+use Filament\Tables\Table;
 
 class AttachmentTagResource extends Resource
 {
@@ -19,15 +19,13 @@ class AttachmentTagResource extends Resource
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                TextInput::make('title')
-                    ->label(__('filament_media.tag title'))
-                    ->required(),
+        return $form->schema([
+            TextInput::make('title')
+                ->required(),
 
-                Select::make('parent')
-                    ->relationship('parent', 'title'),
-            ]);
+            Select::make('parent')
+                ->relationship('parent', 'title'),
+        ]);
     }
 
     public static function table(Table $table): Table

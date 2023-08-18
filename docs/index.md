@@ -55,11 +55,9 @@ Follow the [Formats](##formats) section to create and use formats.
 The basic config file consists of the following contents:
 
 ```php
-<?php
-
-use Codedor\MediaLibrary\Facades\Models;
-
 return [
+    'conversion' => \Codedor\MediaLibrary\Conversions\LocalConversion::class,
+    'enable-format-generate-action' => true,
     'extensions' => [
         'image' => [
             'jpg',
@@ -88,8 +86,8 @@ return [
             'ogg',
         ],
     ],
-    'models' => Models::add(),
 ];
+
 
 ```
 
@@ -102,6 +100,11 @@ This configuration also decides which files can be uploaded. An extension that i
 be uploaded.
 
 This configuration can be adjusted as desired.
+
+### Showing the format generation action
+
+The format generation action is a button that will generate all the formats for the given attachment.
+This can be used on the Media Library as a bulk action. This action can be disabled by setting the `enable-format-generate-action` to false.
 
 ## Formats
 

@@ -17,7 +17,7 @@ class Formats extends Collection
         return $this;
     }
 
-    public function exists(string $name): null|Format
+    public function exists(string $name): ?Format
     {
         return $this->mapToKebab()->get($name);
     }
@@ -29,18 +29,16 @@ class Formats extends Collection
         ]);
     }
 
-    public function dispatchGeneration(Attachment $attachment): void
+    public function dispatchGeneration(Attachment $attachment, bool $force = false): void
     {
-        $this->flatten()
-            ->each(function (Format $format) use ($attachment) {
-                dispatch(new GenerateAttachmentFormat(
-                    attachment: $attachment,
-                    format: $format
-                ));
-            });
+        $this->flatten()->each(fn (Format $format) => dispatch(new GenerateAttachmentFormat(
+            attachment: $attachment,
+            format: $format,
+            force: $force,
+        )));
     }
 
-    public function findByKey(string $key): null|Format
+    public function findByKey(string $key): ?Format
     {
         return $this->flatten(1)->firstWhere(fn ($format) => get_class($format) === $key);
     }

@@ -2,43 +2,31 @@
 
 namespace Codedor\MediaLibrary\Providers;
 
-use BladeUI\Icons\Factory;
 use Codedor\MediaLibrary\Collections\Formats;
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Models;
-use Codedor\MediaLibrary\Http\Livewire;
+use Codedor\MediaLibrary\Livewire;
 use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
-use Codedor\MediaLibrary\Resources;
 use Codedor\MediaLibrary\Views\Picture;
 use Codedor\MediaLibrary\Views\Placeholder;
-use Filament\Facades\Filament;
-use Filament\PluginServiceProvider;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Blade;
 use Livewire\Livewire as LivewireCore;
 use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 
-class MediaLibraryServiceProvider extends PluginServiceProvider
+class MediaLibraryServiceProvider extends PackageServiceProvider
 {
     protected const PACKAGE_NAME = 'filament-media-library';
 
-    protected array $resources = [
-        Resources\AttachmentResource::class,
-        Resources\AttachmentTagResource::class,
-    ];
-
     protected array $livewireComponents = [
         'formatter-modal' => Livewire\FormatterModal::class,
-        'upload-modal' => Livewire\UploadModal::class,
-        'edit-modal' => Livewire\EditModal::class,
-        'picker' => Livewire\Picker::class,
     ];
 
     protected array $bladeComponents = [
-        Picture::class => 'picture',
-        Placeholder::class => 'placeholder',
+        'picture' => Picture::class,
+        'placeholder' => Placeholder::class,
     ];
 
     public function configurePackage(Package $package): void
@@ -54,7 +42,8 @@ class MediaLibraryServiceProvider extends PluginServiceProvider
                 '2023_04_27_120359_create_attachment_formats',
             ])
             ->runsMigrations()
-            ->hasViews($this->packageName());
+            ->hasViews($this->packageName())
+            ->hasTranslations();
     }
 
     public function packageName(): string
@@ -81,7 +70,7 @@ class MediaLibraryServiceProvider extends PluginServiceProvider
 
     protected function registerBladeComponents()
     {
-        foreach ($this->bladeComponents as $class => $view) {
+        foreach ($this->bladeComponents as $view => $class) {
             Blade::component($class, "{$this->packageName()}::$view");
         }
     }
@@ -89,22 +78,6 @@ class MediaLibraryServiceProvider extends PluginServiceProvider
     public function boot()
     {
         parent::boot();
-
-        Filament::serving(function () {
-            Filament::registerStyles([
-                __DIR__ . '/../../dist/css/laravel-media.css',
-                __DIR__ . '/../../dist/css/cropper.min.css',
-            ]);
-
-            Filament::registerScripts([
-                __DIR__ . '/../../dist/js/cropper.min.js',
-            ]);
-
-            Filament::registerRenderHook(
-                'body.end',
-                fn (): View => view(self::PACKAGE_NAME . '::components.modals')
-            );
-        });
     }
 
     public function packageRegistered(): void
@@ -126,12 +99,5 @@ class MediaLibraryServiceProvider extends PluginServiceProvider
                 LocalConversion::class
             )
         );
-
-        $this->callAfterResolving(Factory::class, function (Factory $factory) {
-            $factory->add('attachments', [
-                'path' => __DIR__ . '/../../resources/svg',
-                'prefix' => 'attachments',
-            ]);
-        });
     }
 }

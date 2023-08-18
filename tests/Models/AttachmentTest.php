@@ -7,9 +7,9 @@ uses(RefreshDatabase::class);
 
 it('returns the directory', function () {
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'id' => 1,
-    ])->create();
+    ]);
 
     expect($attachment->directory)
         ->toBe('attachments/1');
@@ -17,9 +17,9 @@ it('returns the directory', function () {
 
 it('returns the filename', function () {
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'name' => 'test-file',
-    ])->create();
+    ]);
 
     expect($attachment->filename)
         ->toBe("test-file.$attachment->extension");

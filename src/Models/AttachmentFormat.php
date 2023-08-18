@@ -5,6 +5,10 @@ namespace Codedor\MediaLibrary\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property uuid $attachment_id
+ * @property string $format
+ */
 class AttachmentFormat extends Model
 {
     protected $fillable = [

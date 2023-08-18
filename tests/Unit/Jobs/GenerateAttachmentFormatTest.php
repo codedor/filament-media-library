@@ -13,18 +13,18 @@ it('dispatches conversions for all formats', function () {
     $format = new TestHero('test');
 
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     $this->mock(Conversion::class, function (MockInterface $mock) use (
         $format, $attachment
     ) {
         $mock->shouldReceive('convert')
             ->once()
-            ->withArgs([$attachment, $format]);
+            ->withArgs([$attachment, $format, false]);
     });
 
     $job = new GenerateAttachmentFormat($attachment, $format);

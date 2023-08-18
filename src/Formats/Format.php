@@ -12,22 +12,25 @@ abstract class Format implements Arrayable
 {
     public Manipulations $manipulations;
 
+    public bool $shownInFormatter = true;
+
     protected string $name;
 
     protected string $description;
 
-    public function __construct(
-        protected string $column
-    ) {
-        $this->manipulations = new Manipulations();
-        $this->definition();
-
-        $this->name = Str::headline(class_basename(static::class));
-    }
+    abstract public function definition(): Manipulations;
 
     public static function make(string $column = ''): static
     {
         return new static($column);
+    }
+
+    final public function __construct(protected string $column)
+    {
+        $this->manipulations = new Manipulations();
+        $this->definition();
+
+        $this->name = Str::headline(class_basename(static::class));
     }
 
     public function filename(Attachment $attachment): string
@@ -43,19 +46,20 @@ abstract class Format implements Arrayable
     public function toArray()
     {
         return [
-            'key' => get_class($this),
+            'key' => $this->key(),
             'name' => $this->name(),
             'description' => $this->description(),
-            'manipulations' => $this->definition(),
-
-            // Formatter details
             'width' => $this->width(),
             'height' => $this->height(),
             'aspectRatio' => $this->aspectRatio(),
+            'shownInFormatter' => $this->shownInFormatter(),
         ];
     }
 
-    abstract public function definition(): Manipulations;
+    public function key(): string
+    {
+        return get_class($this);
+    }
 
     public function name(): string
     {
@@ -82,14 +86,19 @@ abstract class Format implements Arrayable
         return $this->argument('height');
     }
 
-    public function aspectRatio(): string
+    public function aspectRatio(): int
     {
-        return $this->width() / $this->height();
+        return (int) $this->width() / (int) $this->height();
     }
 
     public function description(): string
     {
         return $this->description;
+    }
+
+    public function shownInFormatter(): bool
+    {
+        return $this->shownInFormatter;
     }
 
     public function conversion(): Conversion

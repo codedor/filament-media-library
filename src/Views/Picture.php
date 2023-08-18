@@ -22,7 +22,9 @@ class Picture extends Component
         public string $title = '',
         public bool $lazyload = true,
     ) {
-        $this->getFormatClass();
+        if ($this->format) {
+            $this->getFormatClass();
+        }
     }
 
     protected function getFormatClass()
@@ -30,12 +32,12 @@ class Picture extends Component
         $this->formatClass = Formats::exists($this->format);
     }
 
-    public function width(): string
+    public function width(): ?string
     {
         return $this->formatClass ? $this->formatClass->width() : $this->image->width;
     }
 
-    public function height(): string
+    public function height(): ?string
     {
         return $this->formatClass ? $this->formatClass->height() : $this->image->height;
     }

@@ -4,23 +4,14 @@
     'formats' => [],
     'isDisabled' => false,
     'deleteAction' => null,
-    'deleteButtonTitle' => __('filament_media.delete attachment'),
     'editAction' => null,
-    'formatterAction' => null,
+    'formatAction' => null,
     'extendedTooltip' => false,
     'showTitle' => true,
     'showTooltip' => true
 ])
 
-<div
-    @class(['flex flex-col h-full', $containerClass])
-    x-data="{
-        openFormatterModal (id) {
-            $dispatch('open-modal', { id: 'filament-media-library::formatter-attachment-modal' })
-            $wire.emit('filament-media-library::open-formatter-attachment-modal', id)
-        }
-    }"
->
+<div @class(['flex flex-col h-full', $containerClass])>
     <div class="flex-grow flex justify-between gap-2">
         {{-- Title --}}
         @if ($showTitle)
@@ -35,39 +26,37 @@
                 <template x-ref="attachment-tooltip-{{ $attachment->id }}">
                     @if ($attachment->type === 'image' && !$extendedTooltip)
                         <div>
-                            <p class="text-sm font-bold">{{ __('filament_media.formats') }}</p>
-                            <p class="text-sm">
-                            <ul>
-                                <li>{{ __('filament_media.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
+                            <ul class="text-sm">
+                                <li>{{ __('filament-media-library::attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
 
                                 @foreach ($formats as $format)
                                     <li>{{ $format->name }}: {{ $format->width }}px x {{ $format->height }}px</li>
                                 @endforeach
                             </ul>
-                            </p>
                         </div>
                     @else
                         <div>
                             <dl>
-                                <dt class="text-sm font-bold">{{ __('filament_media.filename') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.filename') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->filename }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.type') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.type') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->type }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.tags') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->tags->count() ? $attachment->tags->implode('title', ', ') : __('filament_media.no tags for this attachment') }}</dd>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.tags') }}</dt>
+                                <dd class="mb-2 text-sm">{{
+                                    $attachment->tags->count()
+                                        ? $attachment->tags->implode('title', ', ')
+                                        : __('filament-media-library::attachment.no tags for this attachment')
+                                }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.size') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.size') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->formatted_in_mb_size }} MB</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.created at') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.created at') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->created_at->format('d-m-Y') }}</dd>
 
-                                <dt class="text-sm font-bold">{{ __('filament_media.updated at') }}</dt>
-                                <dd class="mb-2 text-sm">{{ $attachment->updated_at->format('d-m-Y') }}</dd>
-
-                                <dt class="text-sm font-bold">{{ __('filament_media.original format') }}</dt>
+                                <dt class="text-sm font-bold">{{ __('filament-media-library::attachment.original format') }}</dt>
                                 <dd class="mb-2 text-sm">{{ $attachment->width }}px x {{ $attachment->height }}px</dd>
                             </dl>
                         </div>
@@ -91,7 +80,7 @@
     {{-- Media --}}
     <div
         @if($attachment->type === 'image')
-            style="background-image: url('{{ $attachment->url }}')"
+            style="background-image: url('{{ $attachment->getFormatOrOriginal('thumbnail') }}')"
         @endif
 
         {{ $attributes->except(['slot', 'attachment'])->merge(['class' => '
@@ -114,40 +103,19 @@
         {{-- Buttons --}}
         @unless($isDisabled)
             <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3">
-                @if ($deleteAction)
-                    <button
-                        x-on:click.prevent="{{ $deleteAction }}"
-                        type="button"
-                        class="bg-white rounded text-red-700 hover:text-white hover:bg-red-700 shadow-lg"
-                        title="{{ $deleteButtonTitle }}"
-                    >
-                        <x-heroicon-o-trash class="p-1 w-6 h-6"/>
-                    </button>
+                @if ($deleteAction && $deleteAction->isVisible())
+                    {{ ($deleteAction)(['attachmentId' => $attachment->id]) }}
                 @endif
 
                 <div class=" flex justify-end gap-1">
                     {{ $slot }}
 
-                    @if ($formatterAction && $attachment->type === 'image')
-                        <button
-                            x-on:click.prevent="{{ $formatterAction }}"
-                            type="button"
-                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                            title="{{ __('filament_media.format attachment') }}"
-                        >
-                            <x-attachments-crop-regular class="p-1 w-6 h-6"/>
-                        </button>
+                    @if ($formatAction && $formatAction->isVisible() && is_convertable_image($attachment->extension))
+                        {{ ($formatAction)(['attachmentId' => $attachment->id]) }}
                     @endif
 
-                    @if ($editAction)
-                        <button
-                            x-on:click.prevent="{{ $editAction }}"
-                            type="button"
-                            class=" bg-white rounded hover:text-primary-700 hover:bg-gray-50 shadow-lg"
-                            title="{{ __('filament_media.edit attachment') }}"
-                        >
-                            <x-heroicon-s-pencil class="p-1 w-6 h-6"/>
-                        </button>
+                    @if ($editAction && $editAction->isVisible())
+                        {{ ($editAction)(['attachmentId' => $attachment->id]) }}
                     @endif
                 </div>
             </div>

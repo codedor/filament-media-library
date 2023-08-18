@@ -3,26 +3,39 @@
 namespace Codedor\MediaLibrary\Mixins;
 
 use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Formats\Thumbnail;
+use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+/**
+ * @mixin UploadedFile
+ */
 class UploadedFileMixin
 {
     public function save()
     {
         return function (string $disk = 'public') {
-            $dimensions = $this->dimensions();
+            $fileType = $this->fileType();
+            $extension = $this->getClientOriginalExtension();
+
+            if (is_image_with_dimensions($extension)) {
+                $dimensions = $this->dimensions();
+            } else {
+                $dimensions = [];
+            }
 
             $data = [
                 'extension' => $this->getClientOriginalExtension(),
                 'mime_type' => $this->getMimeType(),
                 'md5' => $this->getMd5(),
-                'type' => $this->fileType(),
+                'type' => $fileType,
                 'size' => $this->getSize(),
-                'width' => $dimensions[0] ?? 0,
-                'height' => $dimensions[1] ?? 0,
+                'width' => $dimensions[0] ?? null,
+                'height' => $dimensions[1] ?? null,
                 'disk' => $disk,
                 'name' => Str::replace(
                     ".{$this->getClientOriginalExtension()}",
@@ -43,6 +56,12 @@ class UploadedFileMixin
             );
 
             Formats::dispatchGeneration($attachment);
+
+            // Create the thumbnail now, so we don't have an empty preview in the next response
+            GenerateAttachmentFormat::dispatchAfterResponse(
+                $attachment,
+                Formats::findByKey(Thumbnail::class),
+            );
 
             return $attachment;
         };

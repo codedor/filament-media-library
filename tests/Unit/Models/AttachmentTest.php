@@ -13,11 +13,11 @@ it('deletes root directory when attachment is removed from db', function () {
     Storage::fake('public');
 
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     $attachment->getStorage()->put(
         $attachment->file_path,
@@ -33,11 +33,11 @@ it('returns the right url for a format', function () {
     Models::add(TestModel::class);
 
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     expect($attachment->getFormat('test-hero'))
         ->toEndWith("test_hero__$attachment->filename");
@@ -45,11 +45,11 @@ it('returns the right url for a format', function () {
 
 it('returns null for a format that does not exist', function () {
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     expect($attachment->getFormat('format-does-not-exist'))
         ->toBeNull();
@@ -57,11 +57,11 @@ it('returns null for a format that does not exist', function () {
 
 it('returns the original image when unknown format is requested', function () {
     /** @var Attachment $attachment */
-    $attachment = Attachment::factory([
+    $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
-    ])->create();
+    ]);
 
     expect($attachment->getFormatOrOriginal('test-hero'))
         ->toEndWith("$attachment->filename");
