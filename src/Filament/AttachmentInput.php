@@ -116,12 +116,13 @@ class AttachmentInput extends Field
                 ->modalContent(function (self $component) {
                     return view('filament-resource-picker::picker', [
                         'resources' => Attachment::get(),
-                        'displayType' => 'list',
+                        'displayType' => 'filament-media-library::resource-picker.item',
                         'statePath' => $component->getStatePath(),
                         'state' => $component->getState() ?? [],
                         'keyField' => 'id',
                         'labelField' => 'id',
                         'isMultiple' => $component->isMultiple(),
+                        'isGrid' => true,
                     ]);
                 }),
         ]);
