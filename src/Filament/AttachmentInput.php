@@ -53,6 +53,14 @@ class AttachmentInput extends Field
             $component->getRelationship()->sync($state->toArray());
         });
 
+        $this->dehydrateStateUsing(function (self $component, $state) {
+            if ($component->isMultiple()) {
+                return;
+            }
+
+            return $state[0] ?? null;
+        });
+
         $this->registerActions([
             Action::make('remove-attachment')
                 ->icon('heroicon-o-x-circle')
@@ -101,7 +109,21 @@ class AttachmentInput extends Field
 
             Action::make('attachment-picker')
                 ->label(__('filament-media-library::picker.select existing media'))
-                ->color('gray'),
+                ->modalHeading(__('filament-media-library::picker.select existing media'))
+                ->color('gray')
+                ->modalSubmitAction(false)
+                ->modalCancelAction(false)
+                ->modalContent(function (self $component) {
+                    return view('filament-resource-picker::picker', [
+                        'resources' => Attachment::get(),
+                        'displayType' => 'list',
+                        'statePath' => $component->getStatePath(),
+                        'state' => $component->getState() ?? [],
+                        'keyField' => 'id',
+                        'labelField' => 'id',
+                        'isMultiple' => $component->isMultiple(),
+                    ]);
+                }),
         ]);
     }
 
