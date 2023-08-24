@@ -281,7 +281,7 @@ This package provides a `<x-filament-media-library::picture />` component which 
 
 ```php
 <x-filament-media-library::picture
-    :attachment="$attachment"
+    :image="$attachment"
     format="thumb"
     alt="alt text"
     class="img"
