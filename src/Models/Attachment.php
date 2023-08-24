@@ -58,8 +58,8 @@ class Attachment extends Model
 
     protected static function booted()
     {
-        static::created(function (Attachment $attachment) {
-            $attachment->generateFormats();
+        static::deleted(function (Attachment $attachment) {
+            $attachment->getStorage()->deleteDirectory($attachment->directory);
         });
     }
 
