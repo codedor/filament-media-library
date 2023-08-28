@@ -176,6 +176,8 @@ public static function getFormats(Collection $formats): Collection
 }
 ```
 
+Formats will be available in kebab-case format to call them. So the `HeroHeader` class becomes `header-hero`.
+
 ## Attachment model methods and attributes
 
 ### Methods
