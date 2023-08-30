@@ -113,18 +113,22 @@ This can be used on the Media Library as a bulk action. This action can be disab
 Any model that contains formats should be registered and implement the `Codedor\MediaLibrary\Interfaces\HasFormats`
 interface.
 
-Models can be registered via the `Codedor\MediaLibrary\Facades\Models` facade.
+Models can be registered via the `Codedor\MediaLibrary\Facades\Formats` facade.
 
 ```php
-use App\Models\BlogPost;
-use App\Models\NewsItem;
-use Codedor\MediaLibrary\Facades\Models;
+use App\Models;
+use Codedor\MediaLibrary\Facades\Formats;
 
 public function boot()
 {
     ...
-    Models::add(BlogPost::class)
-        ->add(NewsItem::class);
+
+    Formats::registerForModel(Models\NewsItem::class);
+
+    Formats::registerForModels([
+        Models\NewsItem::class,
+        Models\Page::class,
+    ]);
 }
 ```
 

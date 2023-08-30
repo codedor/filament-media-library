@@ -5,7 +5,6 @@ namespace Codedor\MediaLibrary\Providers;
 use Codedor\MediaLibrary\Collections\Formats;
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Conversions\LocalConversion;
-use Codedor\MediaLibrary\Facades\Models;
 use Codedor\MediaLibrary\Livewire;
 use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
 use Codedor\MediaLibrary\Views\Picture;
@@ -75,29 +74,15 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
         }
     }
 
-    public function boot()
-    {
-        parent::boot();
-    }
-
     public function packageRegistered(): void
     {
         parent::packageRegistered();
 
-        $this->app->singleton(Formats::class, function () {
-            return new Formats();
-        });
+        $this->app->singleton(Formats::class, fn () => new Formats());
 
-        $this->app->singleton(Models::class, function () {
-            return new Models();
-        });
-
-        $this->app->bind(
-            Conversion::class,
-            config(
-                "{$this->packageName()}.conversion",
-                LocalConversion::class
-            )
-        );
+        $this->app->bind(Conversion::class, config(
+            "{$this->packageName()}.conversion",
+            LocalConversion::class
+        ));
     }
 }

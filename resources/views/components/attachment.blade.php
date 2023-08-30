@@ -24,7 +24,7 @@
         @if ($showTooltip && ($attachment->type === 'image' || $extendedTooltip))
             <div>
                 <template x-ref="attachment-tooltip-{{ $attachment->id }}">
-                    @if ($attachment->type === 'image' && !$extendedTooltip)
+                    @if ($attachment->type === 'image' && ! $extendedTooltip)
                         <div>
                             <ul class="text-sm">
                                 <li>{{ __('filament-media-library::attachment.original format') }}: {{ $attachment->width }}px x {{ $attachment->height }}px</li>
@@ -79,7 +79,7 @@
 
     {{-- Media --}}
     <div
-        @if($attachment->type === 'image')
+        @if ($attachment->type === 'image')
             style="background-image: url('{{ $attachment->getFormatOrOriginal('thumbnail') }}')"
         @endif
 

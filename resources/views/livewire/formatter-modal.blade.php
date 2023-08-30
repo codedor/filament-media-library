@@ -43,7 +43,7 @@
                     }
 
                     let previousData = this.previousFormats[this.currentFormat.key] || {}
-
+console.log(this.previousFormats)
                     window.cropper = new Cropper(document.getElementById('filament-media-library::formatter'), {
                         viewMode: 1,
                         dragMode: 'move',
@@ -68,7 +68,7 @@
                 getCroppedCanvas () {
                     return window.cropper.getCroppedCanvas({
                         width: this.currentFormat.width,
-                        height: this.currentFormat.height
+                        height: this.currentFormat.height,
                     })
                 },
                 setFormat (key) {

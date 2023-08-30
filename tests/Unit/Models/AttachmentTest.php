@@ -1,6 +1,6 @@
 <?php
 
-use Codedor\MediaLibrary\Facades\Models;
+use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -30,7 +30,9 @@ it('deletes root directory when attachment is removed from db', function () {
 });
 
 it('returns the right url for a format', function () {
-    Models::add(TestModel::class);
+    Formats::registerForModels([
+        TestModel::class,
+    ]);
 
     /** @var Attachment $attachment */
     $attachment = createAttachment([

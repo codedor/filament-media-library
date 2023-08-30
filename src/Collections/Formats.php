@@ -17,6 +17,15 @@ class Formats extends Collection
         return $this;
     }
 
+    public function registerForModels(array $models): static
+    {
+        foreach ($models as $model) {
+            $this->registerForModel($model);
+        }
+
+        return $this;
+    }
+
     public function exists(string $name): ?Format
     {
         return $this->mapToKebab()->get($name);
