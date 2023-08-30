@@ -29,9 +29,9 @@ use Spatie\Translatable\HasTranslations;
 class Attachment extends Model
 {
     use HasFactory;
-    use HasUuids;
-    use HasTranslations;
     use HasFormats;
+    use HasTranslations;
+    use HasUuids;
 
     protected $keyType = 'string';
 
