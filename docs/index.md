@@ -27,6 +27,9 @@
     * [AttachmentInput](#attachmentinput)
     * [Multiple attachments](#multiple-attachments)
     * [allowedFormats](#allowedformats)
+- [UploadedFile Mixin]('#uploaded-file-mixin)
+    * [Save Attachment]('#save-attachment)
+    * [Create from URL]('#create-from-url)
 
 ## Installation
 
@@ -344,4 +347,45 @@ AttachmentInput::make('profile_image_id')
     ->allowedFormats([
         Hero::make()
     ])
+```
+
+## UploadedFile Mixin
+
+We add some methods to the UploadedFile class to make it easier to work with our attachments.
+
+### Save Attachment
+
+To convert an uploaded file to an attachment, you simply call the `save()` method on the UploadedFile.
+
+```php
+<?php
+ 
+namespace App\Livewire;
+ 
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\Rule;
+ 
+class UploadPhoto extends Component
+{
+    use WithFileUploads;
+ 
+    #[Rule('image|max:1024')] // 1MB Max
+    public $photo;
+ 
+    public function save()
+    {
+        $this->photo->save();
+    }
+}
+```
+
+### Create from URL
+
+To convert an url to an attachment, you simply call the `createFromUrl()` method on the UploadedFile.
+
+```php
+$uploadedFile = \Illuminate\Http\UploadedFile::createFromUrl('https://example.com/image.jpg');
+
+$attachment = $uploadedFile->save();
 ```
