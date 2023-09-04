@@ -61,7 +61,7 @@ class AttachmentInput extends Field
             if (is_string($state)) {
                 return $state;
             }
-            
+
             return $state[0] ?? null;
         });
 
