@@ -58,6 +58,10 @@ class AttachmentInput extends Field
                 return;
             }
 
+            if (is_string($state)) {
+                return $state;
+            }
+            
             return $state[0] ?? null;
         });
 
@@ -115,7 +119,7 @@ class AttachmentInput extends Field
                 ->modalCancelAction(false)
                 ->modalContent(function (self $component) {
                     return view('filament-resource-picker::picker', [
-                        'resources' => Attachment::get(),
+                        'resourceClass' => AttachmentResource::class,
                         'displayType' => 'filament-media-library::resource-picker.item',
                         'statePath' => $component->getStatePath(),
                         'state' => $component->getState() ?? [],

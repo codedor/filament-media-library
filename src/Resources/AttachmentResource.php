@@ -22,6 +22,7 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -225,5 +226,14 @@ class AttachmentResource extends Resource
             'index' => Pages\ListAttachments::route('/'),
             'edit' => Pages\EditAttachment::route('/{record}/edit'),
         ];
+    }
+
+    public static function searchQuery(Builder $query, ?string $search = null): Builder
+    {
+        return $query
+            ->when(
+                $search,
+                fn () => $query->where('name', 'like', '%' . $search . '%')
+            );
     }
 }
