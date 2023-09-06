@@ -2,6 +2,7 @@
 
 namespace Codedor\MediaLibrary\Mixins;
 
+use Codedor\MediaLibrary\Exceptions\CantOpenFileFromUrlException;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Thumbnail;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
@@ -93,6 +94,35 @@ class UploadedFileMixin
             }
 
             return 'other';
+        };
+    }
+
+    public static function createFromUrl()
+    {
+        return static function (
+            string $url,
+            string $originalName = '',
+            string $mimeType = null,
+            int $error = null,
+            bool $test = false
+        ): self {
+            if (! $stream = @fopen($url, 'r')) {
+                throw new CantOpenFileFromUrlException($url);
+            }
+
+            $tempFile = tempnam(sys_get_temp_dir(), 'url-file-');
+
+            file_put_contents($tempFile, $stream);
+
+            if (! $originalName) {
+                $originalName = basename($url);
+            }
+
+            if (! $mimeType) {
+                $mimeType = mime_content_type($tempFile);
+            }
+
+            return new static($tempFile, $originalName, $mimeType, $error, $test);
         };
     }
 }

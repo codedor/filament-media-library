@@ -2,7 +2,6 @@
 
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Formats;
-use Codedor\MediaLibrary\Facades\Models;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +14,9 @@ use Spatie\Image\Image;
 uses(RefreshDatabase::class);
 
 it('skips generation if attachment is not an image', function () {
-    Models::add(TestModel::class);
+    Formats::registerForModels([
+        TestModel::class,
+    ]);
 
     $attachment = createAttachment([
         'type' => 'not-an-image',
@@ -30,7 +31,9 @@ it('skips generation if attachment is not an image', function () {
 });
 
 it('skips generation if attachment is a gif', function () {
-    Models::add(TestModel::class);
+    Formats::registerForModels([
+        TestModel::class,
+    ]);
 
     $attachment = createAttachment([
         'type' => 'image',
@@ -46,7 +49,9 @@ it('skips generation if attachment is a gif', function () {
 
 it('skips generation if force is false and format image exists', function () {
     Storage::fake('public');
-    Models::add(TestModel::class);
+    Formats::registerForModels([
+        TestModel::class,
+    ]);
 
     $attachment = createAttachment([
         'type' => 'image',
@@ -74,7 +79,9 @@ it('converts image', function () {
             ->andReturn('sdf');
     });
 
-    Models::add(TestModel::class);
+    Formats::registerForModels([
+        TestModel::class,
+    ]);
 
     /** @var Attachment $attachment */
     $attachment = createAttachment([
@@ -109,7 +116,9 @@ it('converts image to webp', function () {
             ->andReturn('sdf');
     });
 
-    Models::add(TestModel::class);
+    Formats::registerForModels([
+        TestModel::class,
+    ]);
 
     /** @var Attachment $attachment */
     $attachment = createAttachment([

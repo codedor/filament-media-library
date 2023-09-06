@@ -76,19 +76,24 @@ abstract class Format implements Arrayable
         return $this->manipulations->getManipulationArgument($argument);
     }
 
-    public function width(): string
+    public function width(): ?string
     {
         return $this->argument('width');
     }
 
-    public function height(): string
+    public function height(): ?string
     {
         return $this->argument('height');
     }
 
-    public function aspectRatio(): int
+    public function aspectRatio(): float
     {
-        return (int) $this->width() / (int) $this->height();
+        $height = (int) $this->height();
+        if ($height === 0) {
+            return 0;
+        }
+
+        return (int) $this->width() / $height;
     }
 
     public function description(): string

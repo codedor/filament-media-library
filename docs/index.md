@@ -27,6 +27,9 @@
     * [AttachmentInput](#attachmentinput)
     * [Multiple attachments](#multiple-attachments)
     * [allowedFormats](#allowedformats)
+- [UploadedFile Mixin]('#uploaded-file-mixin)
+    * [Save Attachment]('#save-attachment)
+    * [Create from URL]('#create-from-url)
 
 ## Installation
 
@@ -113,18 +116,22 @@ This can be used on the Media Library as a bulk action. This action can be disab
 Any model that contains formats should be registered and implement the `Codedor\MediaLibrary\Interfaces\HasFormats`
 interface.
 
-Models can be registered via the `Codedor\MediaLibrary\Facades\Models` facade.
+Models can be registered via the `Codedor\MediaLibrary\Facades\Formats` facade.
 
 ```php
-use App\Models\BlogPost;
-use App\Models\NewsItem;
-use Codedor\MediaLibrary\Facades\Models;
+use App\Models;
+use Codedor\MediaLibrary\Facades\Formats;
 
 public function boot()
 {
     ...
-    Models::add(BlogPost::class)
-        ->add(NewsItem::class);
+
+    Formats::registerForModel(Models\NewsItem::class);
+
+    Formats::registerForModels([
+        Models\NewsItem::class,
+        Models\Page::class,
+    ]);
 }
 ```
 
@@ -175,6 +182,8 @@ public static function getFormats(Collection $formats): Collection
         ->add(...);
 }
 ```
+
+Formats will be available in kebab-case format to call them. So the `HeroHeader` class becomes `header-hero`.
 
 ## Attachment model methods and attributes
 
@@ -281,7 +290,7 @@ This package provides a `<x-filament-media-library::picture />` component which 
 
 ```php
 <x-filament-media-library::picture
-    :attachment="$attachment"
+    :image="$attachment"
     format="thumb"
     alt="alt text"
     class="img"
@@ -338,4 +347,45 @@ AttachmentInput::make('profile_image_id')
     ->allowedFormats([
         Hero::make()
     ])
+```
+
+## UploadedFile Mixin
+
+We add some methods to the UploadedFile class to make it easier to work with our attachments.
+
+### Save Attachment
+
+To convert an uploaded file to an attachment, you simply call the `save()` method on the UploadedFile.
+
+```php
+<?php
+ 
+namespace App\Livewire;
+ 
+use Livewire\Component;
+use Livewire\WithFileUploads;
+use Livewire\Attributes\Rule;
+ 
+class UploadPhoto extends Component
+{
+    use WithFileUploads;
+ 
+    #[Rule('image|max:1024')] // 1MB Max
+    public $photo;
+ 
+    public function save()
+    {
+        $this->photo->save();
+    }
+}
+```
+
+### Create from URL
+
+To convert an url to an attachment, you simply call the `createFromUrl()` method on the UploadedFile.
+
+```php
+$uploadedFile = \Illuminate\Http\UploadedFile::createFromUrl('https://example.com/image.jpg');
+
+$attachment = $uploadedFile->save();
 ```

@@ -1,6 +1,5 @@
 <?php
 
-use Codedor\MediaLibrary\Facades\Models;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
@@ -17,8 +16,11 @@ uses(RefreshDatabase::class);
 it('dispatches format generation', function () {
     Queue::fake();
     Storage::fake('public');
-    Models::add(TestModel::class);
-    Models::add(Attachment::class);
+
+    \Codedor\MediaLibrary\Facades\Formats::registerForModels([
+        TestModel::class,
+        Attachment::class,
+    ]);
 
     $file = UploadedFile::fake()->image('test.jpg', 100, 100);
     $file->save();
@@ -34,8 +36,11 @@ it('dispatches format generation', function () {
 it('can save an image on default public disk', function () {
     Queue::fake();
     Storage::fake('public');
-    Models::add(TestModel::class);
-    Models::add(Attachment::class);
+
+    \Codedor\MediaLibrary\Facades\Formats::registerForModels([
+        TestModel::class,
+        Attachment::class,
+    ]);
 
     assertDatabaseCount(Attachment::class, 0);
 
@@ -66,8 +71,11 @@ it('can save an image on default public disk', function () {
 it('can save an image on default other disk', function () {
     Queue::fake();
     $disk = 'local';
-    Models::add(TestModel::class);
-    Models::add(Attachment::class);
+
+    \Codedor\MediaLibrary\Facades\Formats::registerForModels([
+        TestModel::class,
+        Attachment::class,
+    ]);
 
     Storage::fake($disk);
 
