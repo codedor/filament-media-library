@@ -6,7 +6,7 @@
         :class="$class"
         :alt="$alt"
     />
-@elseif (! $formats && ! $formats)
+@elseif ($format && ! $formats)
     <img
         alt="{{ $alt }}"
         title="{{ $title }}"
@@ -14,7 +14,7 @@
             $class ?? 'img-fluid',
             'lazyload' => $lazyload,
         ])
-        src="{{ $image->getFormatOrOriginal('thumbnail') }}"
+        src="{{ $image->getFormatOrOriginal($format) }}"
     >
 @elseif ($image)
     <picture class="{{ $pictureClass }}">
