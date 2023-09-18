@@ -6,7 +6,6 @@ use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
 
@@ -17,6 +16,7 @@ abstract class Format implements Arrayable
     public bool $shownInFormatter = true;
 
     protected string $name;
+
     protected string $description;
 
     abstract public function definition(): Manipulations;
@@ -114,7 +114,7 @@ abstract class Format implements Arrayable
         return app(Conversion::class);
     }
 
-    public function registerFor(string $class, null|string|array $fields = null): void
+    public function registerFor(string $class, string|array $fields = null): void
     {
         Formats::registerFor($this::class, $class, $fields);
     }

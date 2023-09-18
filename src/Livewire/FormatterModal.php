@@ -15,10 +15,10 @@ class FormatterModal extends Component
 
     public array $formats = [];
 
-    public null|array $currentFormat = null;
+    public ?array $currentFormat = null;
 
     #[On('filament-media-library::open-formatter-attachment-modal')]
-    public function setAttachment(string $uuid, null|array $formats = null)
+    public function setAttachment(string $uuid, array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
 
