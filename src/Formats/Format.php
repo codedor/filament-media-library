@@ -3,8 +3,10 @@
 namespace Codedor\MediaLibrary\Formats;
 
 use Codedor\MediaLibrary\Conversions\Conversion;
+use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
 
@@ -15,17 +17,18 @@ abstract class Format implements Arrayable
     public bool $shownInFormatter = true;
 
     protected string $name;
-
     protected string $description;
 
     abstract public function definition(): Manipulations;
+
+    abstract public function registerModelsForFormatter(): void;
 
     public static function make(string $column = ''): static
     {
         return new static($column);
     }
 
-    final public function __construct(protected string $column)
+    final public function __construct(protected string $column = '')
     {
         $this->manipulations = new Manipulations();
         $this->definition();
@@ -109,5 +112,10 @@ abstract class Format implements Arrayable
     public function conversion(): Conversion
     {
         return app(Conversion::class);
+    }
+
+    public function registerFor(string $class, null|string|array $fields = null): void
+    {
+        Formats::registerFor($this::class, $class, $fields);
     }
 }

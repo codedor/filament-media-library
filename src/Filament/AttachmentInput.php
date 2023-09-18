@@ -85,7 +85,7 @@ class AttachmentInput extends Field
                 ->iconButton()
                 ->color('gray')
                 ->size('sm')
-                ->hidden(fn () => count($this->getAllowedFormats()) === 0)
+                // ->hidden(fn () => count($this->getAllowedFormats()) === 0)
                 ->action(function (array $arguments, Component $livewire) {
                     $livewire->dispatch(
                         'filament-media-library::open-formatter-attachment-modal',
@@ -184,15 +184,13 @@ class AttachmentInput extends Field
     {
         $formats = $this->evaluate($this->allowedFormats);
 
-        // Get the model that we are editing/viewing
         if (is_null($formats)) {
+            // Get the model that we are editing/viewing
             $model = $this->getModelInstance();
 
-            if ($model && method_exists($model, 'getFormats')) {
-                $formats = $model->getFormats(collect())->filter(
-                    fn ($format) => $format->column() === $this->getStatePath(false)
-                );
-            } else {
+            try {
+                $formats = Formats::when($model, fn ($formats) => $formats->get($model::class));
+            } catch (\Throwable $th) {
                 $formats = Formats::all();
             }
         }

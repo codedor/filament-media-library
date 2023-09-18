@@ -15,8 +15,8 @@ if (! function_exists('get_placeholder_url_by_format')) {
     }
 }
 
-if (! function_exists('is_convertable_image')) {
-    function is_convertable_image(string $extension): bool
+if (! function_exists('is_convertible_image')) {
+    function is_convertible_image(string $extension): bool
     {
         return in_array($extension, config('filament-media-library.extensions.image', [])) && $extension !== 'gif' && $extension !== 'svg';
     }

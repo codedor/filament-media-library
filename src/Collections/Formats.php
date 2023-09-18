@@ -5,22 +5,33 @@ namespace Codedor\MediaLibrary\Collections;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class Formats extends Collection
 {
-    public function registerForModel(string $model): static
+    public function registerFor(string $format, string $model, null|string|array $fields = null)
     {
-        $this->put($model, $model::getFormats(new Collection()));
+        $formats = $this->get($model) ?? collect();
+
+        if (is_null($fields)) {
+            $formats->push(new $format);
+        }
+
+        foreach (Arr::wrap($fields) as $field) {
+            $formats->push(new $format($field));
+        }
+
+        $this->put($model, $formats);
 
         return $this;
     }
 
-    public function registerForModels(array $models): static
+    public function register(string|array $formats): static
     {
-        foreach ($models as $model) {
-            $this->registerForModel($model);
+        foreach (Arr::wrap($formats) as $format) {
+            (new $format)->registerModelsForFormatter();
         }
 
         return $this;

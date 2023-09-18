@@ -116,21 +116,19 @@ This can be used on the Media Library as a bulk action. This action can be disab
 Any model that contains formats should be registered and implement the `Codedor\MediaLibrary\Interfaces\HasFormats`
 interface.
 
-Models can be registered via the `Codedor\MediaLibrary\Facades\Formats` facade.
+Formats must be registered via the `Codedor\MediaLibrary\Facades\Formats` facade to be visible in the formatter.
 
 ```php
-use App\Models;
+use App\Formats;
 use Codedor\MediaLibrary\Facades\Formats;
 
 public function boot()
 {
     ...
 
-    Formats::registerForModel(Models\NewsItem::class);
-
-    Formats::registerForModels([
-        Models\NewsItem::class,
-        Models\Page::class,
+    Formats::register([
+        Formats\Thumbnail::class,
+        Formats\FullWidth::class,
     ]);
 }
 ```
@@ -359,20 +357,20 @@ To convert an uploaded file to an attachment, you simply call the `save()` metho
 
 ```php
 <?php
- 
+
 namespace App\Livewire;
- 
+
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Rule;
- 
+
 class UploadPhoto extends Component
 {
     use WithFileUploads;
- 
+
     #[Rule('image|max:1024')] // 1MB Max
     public $photo;
- 
+
     public function save()
     {
         $this->photo->save();

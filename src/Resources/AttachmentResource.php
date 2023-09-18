@@ -150,7 +150,7 @@ class AttachmentResource extends Resource
             ->actions([
                 Tables\Actions\Action::make('format')
                     ->icon('heroicon-o-scissors')
-                    ->hidden(fn (Attachment $record) => ! is_convertable_image($record->extension))
+                    ->hidden(fn (Attachment $record) => ! is_convertible_image($record->extension))
                     ->action(function (Tables\Actions\Action $action) {
                         /** @var Component $livewire */
                         $livewire = $action->getTable()->getLivewire();

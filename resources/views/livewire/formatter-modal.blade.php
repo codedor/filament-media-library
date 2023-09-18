@@ -18,20 +18,9 @@
             x-data="{
                 formats: @entangle('formats'),
                 previousFormats: @js($previousFormats),
-                currentFormat: null,
+                currentFormat: @entangle('currentFormat'),
                 init () {
-                    this.currentFormat = window.currentFormat
-                        || Object.values(this.formats)[0]
-                        || null
-
                     this.loadFormatter()
-                    window.addEventListener('filament-media-library::load-formatter', (e) => {
-                        this.currentFormat = Object.values(e.detail[0].formats)[0] || null
-                        this.loadFormatter()
-                    })
-
-                    // Because the submit is nested in the modal, we do it like this
-                    window.addEventListener('filament-media-library::submit-formatter', () => this.submit())
                 },
                 loadFormatter () {
                     if (! this.currentFormat) {
@@ -43,15 +32,13 @@
                     }
 
                     let previousData = this.previousFormats[this.currentFormat.key] || {}
-console.log(this.previousFormats)
+
                     window.cropper = new Cropper(document.getElementById('filament-media-library::formatter'), {
                         viewMode: 1,
                         dragMode: 'move',
                         aspectRatio: this.currentFormat.aspectRatio,
                         ready() {
-                            if (previousData) {
-                                window.cropper.setData(previousData)
-                            }
+                            window.cropper.setData(previousData || {})
                         },
                     })
                 },
@@ -60,15 +47,14 @@ console.log(this.previousFormats)
                     window.currentFormat = this.currentFormat
 
                     $wire.saveCrop({
-                        crop: this.getCroppedCanvas().toDataURL('{{ $attachment->mime_type }}'),
                         format: this.currentFormat,
                         data: window.cropper.getData(),
-                    })
-                },
-                getCroppedCanvas () {
-                    return window.cropper.getCroppedCanvas({
-                        width: this.currentFormat.width,
-                        height: this.currentFormat.height,
+                        crop: window.cropper
+                            .getCroppedCanvas({
+                                width: this.currentFormat.width,
+                                height: this.currentFormat.height,
+                            })
+                            .toDataURL('{{ $attachment->mime_type }}'),
                     })
                 },
                 setFormat (key) {
@@ -80,6 +66,8 @@ console.log(this.previousFormats)
                     }
                 }
             }"
+            x-on:filament-media-library::load-formatter.window="loadFormatter()"
+            x-on:filament-media-library::submit-formatter.window="submit()"
         >
             {{-- Actual formatter --}}
             <div class="w-full flex flex-col lg:flex-row gap-6">

@@ -4,10 +4,8 @@ namespace Codedor\MediaLibrary\Models\Traits;
 
 use Codedor\MediaLibrary\Exceptions\FormatNotFound;
 use Codedor\MediaLibrary\Facades\Formats;
-use Codedor\MediaLibrary\Formats\Thumbnail;
 use Codedor\MediaLibrary\Models\AttachmentFormat;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Support\Collection;
 
 trait HasFormats
 {
@@ -22,12 +20,12 @@ trait HasFormats
             return $this->url;
         }
 
-        return $this->getFormat($name) ?: $this->url;
+        return $this->getFormat($name) ?? $this->url;
     }
 
     public function getFormat(string $name): ?string
     {
-        if (! is_convertable_image($this->extension)) {
+        if (! is_convertible_image($this->extension)) {
             return $this->url;
         }
 
@@ -45,10 +43,5 @@ trait HasFormats
     public function generateFormats(bool $force = false)
     {
         Formats::dispatchGeneration($this, $force);
-    }
-
-    public static function getFormats(Collection $formats): Collection
-    {
-        return $formats->add(Thumbnail::make('thumbnail'));
     }
 }

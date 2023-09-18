@@ -15,18 +15,32 @@ class FormatterModal extends Component
 
     public array $formats = [];
 
+    public null|array $currentFormat = null;
+
     #[On('filament-media-library::open-formatter-attachment-modal')]
-    public function setAttachment(string $uuid, array $formats = null)
+    public function setAttachment(string $uuid, null|array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
 
-        $this->formats = Formats::mapToKebab()
-            ->when(! is_null($formats), fn ($allFormats) => $allFormats->filter(function (Format $format) use ($formats) {
-                return in_array($format->key(), $formats);
-            }))
+        $formats = Formats::mapToKebab()
+            ->when(
+                ! is_null($formats),
+                fn ($allFormats) => $allFormats->filter(fn (Format $format) => in_array(
+                    $format->key(),
+                    $formats,
+                ))
+            )
             ->filter(fn (Format $format) => $format->shownInFormatter())
-            ->map->toArray()
-            ->toArray();
+            ->map->toArray();
+
+        // Make sure we have the correct format selected when switching fields
+        if ($this->currentFormat && ! $formats->pluck('key')->contains($this->currentFormat['key'])) {
+            $this->currentFormat = null;
+        }
+
+        $this->currentFormat ??= $formats->first();
+
+        $this->formats = $formats->toArray();
     }
 
     public function render()
@@ -56,13 +70,12 @@ class FormatterModal extends Component
         $this->attachment->getStorage()->put("{$this->attachment->directory}/{$filename}", $crop);
 
         // Save the crop on the attachment, for later adjustments
-        $this->attachment->formats()->updateOrCreate(
-            [
-                'attachment_id' => $this->attachment->id,
-                'format' => $event['format']['key'],
-            ],
-            ['data' => $event['data']]
-        );
+        $this->attachment->formats()->updateOrCreate([
+            'attachment_id' => $this->attachment->id,
+            'format' => $event['format']['key'],
+        ], [
+            'data' => $event['data'],
+        ]);
 
         Notification::make()
             ->title(__('filament-media-library::formatter.successfully formatted'))
