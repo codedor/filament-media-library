@@ -5,6 +5,8 @@ namespace Codedor\MediaLibrary\Providers;
 use Codedor\MediaLibrary\Collections\Formats;
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Conversions\LocalConversion;
+use Codedor\MediaLibrary\Facades\Formats as FacadesFormats;
+use Codedor\MediaLibrary\Formats\Thumbnail;
 use Codedor\MediaLibrary\Livewire;
 use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
 use Codedor\MediaLibrary\Views\Picture;
@@ -84,5 +86,9 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
             "{$this->packageName()}.conversion",
             LocalConversion::class
         ));
+
+        FacadesFormats::register([
+            Thumbnail::class,
+        ]);
     }
 }

@@ -7,7 +7,7 @@ use Spatie\Image\Manipulations;
 
 class Thumbnail extends Format
 {
-    public bool $shownInFormatter = true;
+    public bool $shownInFormatter = false;
 
     protected string $name = 'Thumbnail';
     protected string $description = 'Used in the CMS to display low-res images';
@@ -20,9 +20,5 @@ class Thumbnail extends Format
     public function registerModelsForFormatter(): void
     {
         $this->registerFor(Attachment::class);
-
-        $this->registerFor(\App\Models\Page::class, [
-            'attachment_id',
-        ]);
     }
 }
