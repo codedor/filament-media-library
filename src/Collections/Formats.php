@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 
 class Formats extends Collection
 {
-    public function registerFor(string $format, string $model, null|string|array $fields = null)
+    public function registerFor(string $format, string $model, string|array $fields = null)
     {
         $formats = $this->get($model) ?? collect();
 

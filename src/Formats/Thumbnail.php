@@ -10,6 +10,7 @@ class Thumbnail extends Format
     public bool $shownInFormatter = false;
 
     protected string $name = 'Thumbnail';
+
     protected string $description = 'Used in the CMS to display low-res images';
 
     public function definition(): Manipulations
