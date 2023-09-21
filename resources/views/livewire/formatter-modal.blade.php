@@ -72,12 +72,12 @@
             {{-- Actual formatter --}}
             <div class="w-full flex flex-col lg:flex-row gap-6">
                 <div class="lg:w-4/6 order-last lg:order-first">
-                    <div class="w-full h-[70vh]">
+                    <div class="w-full h-[68vh]">
                         <img
                             src="{{ $attachment->url }}"
                             id="filament-media-library::formatter"
                             wire:key="filament-media-library::formatter-{{ $attachment->id }}"
-                            style="max-width: 100%; max-height: 70vh"
+                            style="max-width: 100%; max-height: 68vh"
                         >
                     </div>
 
