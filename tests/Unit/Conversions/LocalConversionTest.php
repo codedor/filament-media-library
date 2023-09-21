@@ -5,7 +5,6 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
 use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
-use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
