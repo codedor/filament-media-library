@@ -10,9 +10,5 @@ use Illuminate\Support\Collection;
 
 class TestModel extends Model implements HasFormats
 {
-    public static function getFormats(Collection $formats): Collection
-    {
-        return $formats->add(TestHero::make('test_id'))
-            ->add(TestHeroWebp::make('test_id'));
-    }
+
 }

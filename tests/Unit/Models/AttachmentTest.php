@@ -2,6 +2,8 @@
 
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
@@ -30,9 +32,7 @@ it('deletes root directory when attachment is removed from db', function () {
 });
 
 it('returns the right url for a format', function () {
-    Formats::registerForModels([
-        TestModel::class,
-    ]);
+    Formats::register([TestHero::class, TestHeroWebp::class]);
 
     /** @var Attachment $attachment */
     $attachment = createAttachment([

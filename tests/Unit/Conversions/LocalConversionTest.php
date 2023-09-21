@@ -3,6 +3,8 @@
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
@@ -14,9 +16,7 @@ use Spatie\Image\Image;
 uses(RefreshDatabase::class);
 
 it('skips generation if attachment is not an image', function () {
-    Formats::registerForModels([
-        TestModel::class,
-    ]);
+    Formats::register([TestHero::class, TestHeroWebp::class]);
 
     $attachment = createAttachment([
         'type' => 'not-an-image',
@@ -31,9 +31,7 @@ it('skips generation if attachment is not an image', function () {
 });
 
 it('skips generation if attachment is a gif', function () {
-    Formats::registerForModels([
-        TestModel::class,
-    ]);
+    Formats::register([TestHero::class, TestHeroWebp::class]);
 
     $attachment = createAttachment([
         'type' => 'image',
@@ -49,9 +47,7 @@ it('skips generation if attachment is a gif', function () {
 
 it('skips generation if force is false and format image exists', function () {
     Storage::fake('public');
-    Formats::registerForModels([
-        TestModel::class,
-    ]);
+    Formats::register([TestHero::class, TestHeroWebp::class]);
 
     $attachment = createAttachment([
         'type' => 'image',
@@ -79,9 +75,7 @@ it('converts image', function () {
             ->andReturn('sdf');
     });
 
-    Formats::registerForModels([
-        TestModel::class,
-    ]);
+    Formats::register([TestHero::class, TestHeroWebp::class]);
 
     /** @var Attachment $attachment */
     $attachment = createAttachment([
@@ -116,9 +110,7 @@ it('converts image to webp', function () {
             ->andReturn('sdf');
     });
 
-    Formats::registerForModels([
-        TestModel::class,
-    ]);
+    Formats::register([TestHero::class, TestHeroWebp::class]);
 
     /** @var Attachment $attachment */
     $attachment = createAttachment([

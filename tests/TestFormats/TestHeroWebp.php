@@ -3,6 +3,7 @@
 namespace Codedor\MediaLibrary\Tests\TestFormats;
 
 use Codedor\MediaLibrary\Formats\Format;
+use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Spatie\Image\Manipulations;
 
 class TestHeroWebp extends Format
@@ -15,5 +16,12 @@ class TestHeroWebp extends Format
             ->fit(Manipulations::FIT_CROP, 100, 100)
             ->format(Manipulations::FORMAT_WEBP)
             ->sepia();
+    }
+
+    public function registerModelsForFormatter(): void
+    {
+        $this->registerFor(TestModel::class, [
+            'test_id',
+        ]);
     }
 }

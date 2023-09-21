@@ -2,6 +2,8 @@
 
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -17,9 +19,9 @@ it('dispatches format generation', function () {
     Queue::fake();
     Storage::fake('public');
 
-    \Codedor\MediaLibrary\Facades\Formats::registerForModels([
-        TestModel::class,
-        Attachment::class,
+    \Codedor\MediaLibrary\Facades\Formats::register([
+        TestHero::class,
+        TestHeroWebp::class,
     ]);
 
     $file = UploadedFile::fake()->image('test.jpg', 100, 100);
@@ -37,9 +39,9 @@ it('can save an image on default public disk', function () {
     Queue::fake();
     Storage::fake('public');
 
-    \Codedor\MediaLibrary\Facades\Formats::registerForModels([
-        TestModel::class,
-        Attachment::class,
+    \Codedor\MediaLibrary\Facades\Formats::register([
+        TestHero::class,
+        TestHeroWebp::class,
     ]);
 
     assertDatabaseCount(Attachment::class, 0);
@@ -72,9 +74,9 @@ it('can save an image on default other disk', function () {
     Queue::fake();
     $disk = 'local';
 
-    \Codedor\MediaLibrary\Facades\Formats::registerForModels([
-        TestModel::class,
-        Attachment::class,
+    \Codedor\MediaLibrary\Facades\Formats::register([
+        TestHero::class,
+        TestHeroWebp::class,
     ]);
 
     Storage::fake($disk);
