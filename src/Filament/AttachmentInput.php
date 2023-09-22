@@ -128,6 +128,9 @@ class AttachmentInput extends Field
                         'isMultiple' => $component->isMultiple(),
                         'isGrid' => true,
                     ]);
+                })
+                ->action(function (array $arguments, Component $livewire) {
+                    data_set($livewire, $arguments['statePath'], $arguments['resources']);
                 }),
         ]);
     }
