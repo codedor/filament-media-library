@@ -49,6 +49,14 @@ class Formats extends Collection
         ]);
     }
 
+    public function mapToClasses(): Collection
+    {
+        return $this->flatten()
+            ->map(fn (Format $format) => get_class($format))
+            ->unique()
+            ->values();
+    }
+
     public function dispatchGeneration(Attachment $attachment, bool $force = false): void
     {
         $this->flatten()->each(fn (Format $format) => dispatch(new GenerateAttachmentFormat(
@@ -56,10 +64,5 @@ class Formats extends Collection
             format: $format,
             force: $force,
         )));
-    }
-
-    public function findByKey(string $key): ?Format
-    {
-        return $this->flatten(1)->firstWhere(fn ($format) => get_class($format) === $key);
     }
 }

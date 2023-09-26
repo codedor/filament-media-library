@@ -6,6 +6,7 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -22,14 +23,8 @@ class FormatterModal extends Component
     {
         $this->attachment = Attachment::find($uuid);
 
-        $formats = Formats::mapToKebab()
-            ->when(
-                ! is_null($formats),
-                fn ($allFormats) => $allFormats->filter(fn (Format $format) => in_array(
-                    $format->key(),
-                    $formats,
-                ))
-            )
+        $formats = Collection::wrap($formats ?? Formats::mapToClasses())
+            ->map(fn ($format) => $format::make())
             ->filter(fn (Format $format) => $format->shownInFormatter())
             ->map->toArray();
 
@@ -61,7 +56,7 @@ class FormatterModal extends Component
 
     public function saveCrop($event)
     {
-        $format = Formats::findByKey($event['format']['key']);
+        $format = $event['format']['key']::make();
         $filename = $format->filename($this->attachment);
 
         // Save the crop in the storage

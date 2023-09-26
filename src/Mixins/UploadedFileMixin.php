@@ -61,7 +61,7 @@ class UploadedFileMixin
             // Create the thumbnail now, so we don't have an empty preview in the next response
             GenerateAttachmentFormat::dispatchAfterResponse(
                 $attachment,
-                Formats::findByKey(Thumbnail::class),
+                Thumbnail::make(),
             );
 
             return $attachment;

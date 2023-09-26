@@ -171,6 +171,11 @@ class AttachmentInput extends Field
         return $this;
     }
 
+    public function disableFormatter(): static
+    {
+        return $this->allowedFormats([]);
+    }
+
     public function getSortField(): ?string
     {
         return $this->evaluate($this->sortField);
