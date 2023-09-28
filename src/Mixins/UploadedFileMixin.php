@@ -38,11 +38,9 @@ class UploadedFileMixin
                 'width' => $dimensions[0] ?? null,
                 'height' => $dimensions[1] ?? null,
                 'disk' => $disk,
-                'name' => Str::replace(
-                    ".{$this->getClientOriginalExtension()}",
-                    '',
-                    $this->getClientOriginalName()
-                ),
+                'name' => Str::of($this->getClientOriginalName())
+                    ->replace(".{$this->getClientOriginalExtension()}", '')
+                    ->slug(),
             ];
 
             /** @var \Codedor\MediaLibrary\Models\Attachment $attachment */
