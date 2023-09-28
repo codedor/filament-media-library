@@ -128,6 +128,9 @@ class AttachmentInput extends Field
                         'isMultiple' => $component->isMultiple(),
                         'isGrid' => true,
                     ]);
+                })
+                ->action(function (array $arguments, Component $livewire) {
+                    data_set($livewire, $arguments['statePath'], $arguments['resources']);
                 }),
         ]);
     }
@@ -166,6 +169,11 @@ class AttachmentInput extends Field
         $this->sortField = $sortField;
 
         return $this;
+    }
+
+    public function disableFormatter(): static
+    {
+        return $this->allowedFormats([]);
     }
 
     public function getSortField(): ?string
