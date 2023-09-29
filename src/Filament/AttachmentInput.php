@@ -5,6 +5,7 @@ namespace Codedor\MediaLibrary\Filament;
 use Closure;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
+use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Filament\Forms\Components\Actions\Action;
@@ -192,18 +193,18 @@ class AttachmentInput extends Field
     {
         $formats = $this->evaluate($this->allowedFormats);
 
+        // Get the model that we are editing/viewing
         if (is_null($formats)) {
-            // Get the model that we are editing/viewing
-            try {
-                $model = $this->getModelInstance();
-                $formats = Formats::when($model, fn ($formats) => $formats->get($model::class) ?? collect());
-            } catch (\Throwable $th) {
-                $formats = Formats::all();
+            $model = $this->getModelInstance();
+            if (is_null($model)) {
+                $formats = Formats::flatten(1)->unique(fn (Format $format) => $format::class);
+            } else {
+                $formats = Formats::get($model::class);
             }
         }
 
         return Collection::wrap($formats)
-            ->map(fn ($format) => is_string($format) ? $format : get_class($format))
+            ->map(fn (string|Format $format) => is_string($format) ? $format : $format::class)
             ->toArray();
     }
 
