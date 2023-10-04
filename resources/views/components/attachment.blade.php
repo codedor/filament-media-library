@@ -102,7 +102,7 @@
 
         {{-- Buttons --}}
         @unless($isDisabled)
-            <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3">
+            <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3 attachment__btn-block">
                 @if ($deleteAction && $deleteAction->isVisible())
                     {{ ($deleteAction)(['attachmentId' => $attachment->id]) }}
                 @endif

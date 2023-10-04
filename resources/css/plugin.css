@@ -19,6 +19,10 @@
     @apply opacity-0;
   }
 
+  .attachment__btn-block .fi-icon-btn {
+    @apply bg-gray-100/90 hover:bg-gray-100 rounded-lg cursor-pointer;
+  }
+
   .gallery--dragging .sortable-icon {
     opacity: 0 !important;
   }
@@ -46,4 +50,13 @@
     background: linear-gradient(to bottom, transparent 50%, #e5e7eb 50%);
     background-size: 4px 20px;
   }
+
+  .fi-ta-record .fi-ta-actions {
+    flex-wrap: wrap !important;
+  }
+
+  .fi-ta-record .fi-ta-text {
+    word-break: break-word;
+  }
+
 }
