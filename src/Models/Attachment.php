@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
@@ -79,7 +80,7 @@ class Attachment extends Model
             return $query;
         }
 
-        return $query->where('name', 'like', "%$search%");
+        return $query->where(DB::raw('CONCAT(`name`, ".", `extension`)'), 'LIKE', "%$search%");
     }
 
     public function getUrlAttribute(): string

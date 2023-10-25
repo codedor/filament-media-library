@@ -99,13 +99,19 @@ class AttachmentResource extends Resource
             ->groupBy('type')
             ->orderBy('type')
             ->pluck('type')
-            ->mapWithKeys(fn ($type) => [$type => $type]);
+            ->mapWithKeys(fn ($type) => [$type => Str::headline($type)]);
 
         $mimeTypes = Attachment::select('mime_type')
             ->groupBy('mime_type')
             ->orderBy('mime_type')
             ->pluck('mime_type')
             ->mapWithKeys(fn ($mime) => [$mime => $mime]);
+
+        $disks = Attachment::select('disk')
+            ->groupBy('disk')
+            ->orderBy('disk')
+            ->pluck('disk')
+            ->mapWithKeys(fn ($disk) => [$disk => Str::headline($disk)]);
 
         return $table
             ->defaultSort('created_at', 'desc')
@@ -119,8 +125,10 @@ class AttachmentResource extends Resource
                 ])->schema([]),
 
                 TextColumn::make('name')
-                    ->searchable()
                     ->sortable()
+                    ->searchable(query: function ($query, string $search) {
+                        return $query->search($search);
+                    })
                     ->getStateUsing(fn (Attachment $record) => new HtmlString(
                         '<strong>' . Str::limit($record->name, 20) . '</strong>'
                     )),
@@ -135,6 +143,10 @@ class AttachmentResource extends Resource
                     ->view('filament-media-library::components.attachment-list'),
             ])
             ->filters([
+                Filters\SelectFilter::make('disk')
+                    ->options($disks)
+                    ->multiple(),
+
                 Filters\SelectFilter::make('type')
                     ->options($types)
                     ->multiple(),
@@ -231,9 +243,7 @@ class AttachmentResource extends Resource
     public static function resourcePickerQuery(Builder $query, string $search = null): Builder
     {
         return $query
-            ->when(
-                $search,
-                fn () => $query->where('name', 'like', '%' . $search . '%')
-            );
+            ->search($search)
+            ->whereDisk('public');
     }
 }
