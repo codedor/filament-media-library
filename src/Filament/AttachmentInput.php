@@ -128,6 +128,7 @@ class AttachmentInput extends Field
                         'labelField' => 'id',
                         'isMultiple' => $component->isMultiple(),
                         'isGrid' => true,
+                        'gridColumns' => 6,
                     ]);
                 })
                 ->action(function (array $arguments, Component $livewire) {
