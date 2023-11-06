@@ -357,7 +357,7 @@ This column for a table will render the image with the thumbnail format or an ic
 \Codedor\MediaLibrary\Tables\Columns\AttachmentColumn::make('image_id'),
 ```
 
-### AttachmentColumn
+### AttachmentEntry
 
 This entry for an info list will render the image with the thumbnail format or an icon if attachment is not an image.
 
