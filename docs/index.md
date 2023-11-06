@@ -25,8 +25,10 @@
 - [Usage in Blade](#usage-in-blade)
 - [Usage in Filament](#usage-in-filament)
     * [AttachmentInput](#attachmentinput)
-    * [Multiple attachments](#multiple-attachments)
-    * [allowedFormats](#allowedformats)
+      * [Multiple attachments](#multiple-attachments)
+      * [allowedFormats](#allowedformats)
+    * [AttachmentColumn](#attachmentcolumn)
+    * [AttachmentEntry](#attachmententry)
 - [UploadedFile Mixin]('#uploaded-file-mixin)
     * [Save Attachment]('#save-attachment)
     * [Create from URL]('#create-from-url)
@@ -323,7 +325,7 @@ AttachmentInput::make('profile_image_id')
 
 This field inherits the `Filament\Forms\Components\Field` class which means that this field can do all the things other fields can do too.
 
-### Multiple attachments
+#### Multiple attachments
 
 ```php
 use Codedor\MediaLibrary\Components\Fields\AttachmentInput;
@@ -332,7 +334,7 @@ AttachmentInput::make('profile_image_id')
     ->multiple()
 ```
 
-### allowedFormats
+#### allowedFormats
 
 The allowed formats in the cropper are based on the `getFormats` method in the model.
 If you want to override this, you can use the `allowedFormats` method.
@@ -346,6 +348,23 @@ AttachmentInput::make('profile_image_id')
         Hero::make()
     ])
 ```
+
+### AttachmentColumn
+
+This column for a table will render the image with the thumbnail format or an icon if attachment is not an image.
+
+```php
+\Codedor\MediaLibrary\Tables\Columns\AttachmentColumn::make('image_id'),
+```
+
+### AttachmentColumn
+
+This entry for an info list will render the image with the thumbnail format or an icon if attachment is not an image.
+
+```php
+\Codedor\MediaLibrary\Filament\Entries\AttachmentEntry::make('image'),
+```
+
 
 ## UploadedFile Mixin
 
