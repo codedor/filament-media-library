@@ -23,7 +23,7 @@ trait HasFormats
         return $this->getFormat($name) ?? $this->url;
     }
 
-    public function getFormat(string $name, ?string $extension = null): ?string
+    public function getFormat(string $name, string $extension = null): ?string
     {
         if (! is_convertible_image($this->extension)) {
             return $this->url;
@@ -52,7 +52,7 @@ trait HasFormats
         Formats::dispatchGeneration($this, $force);
     }
 
-    public function getWebpFormatOrOriginal(string $format) : ?string
+    public function getWebpFormatOrOriginal(string $format): ?string
     {
         return $this->getFormat($format, 'webp') ?? $this->getFormatOrOriginal($format);
     }
