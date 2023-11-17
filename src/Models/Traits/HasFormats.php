@@ -45,7 +45,7 @@ trait HasFormats
         Formats::dispatchGeneration($this, $force);
     }
 
-    public function getWebpFormatOrOriginal(string $format) : ?string
+    public function getWebpFormatOrOriginal(string $format): ?string
     {
         return $this->getFormat($format, 'webp') ?? $this->getFormatOrOriginal($format);
     }

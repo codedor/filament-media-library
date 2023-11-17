@@ -5,7 +5,6 @@ namespace Codedor\MediaLibrary\Conversions;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\WebP;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 
