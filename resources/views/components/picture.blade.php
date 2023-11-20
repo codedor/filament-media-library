@@ -7,15 +7,31 @@
         :alt="$alt"
     />
 @elseif ($format && ! $formats)
-    <img
-        alt="{{ $alt }}"
-        title="{{ $title }}"
-        @class([
-            $class ?? 'img-fluid',
-            'lazyload' => $lazyload,
-        ])
-        src="{{ $image->getFormatOrOriginal($format) }}"
-    >
+    <picture class="{{ $pictureClass }}">
+        @if (method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format))
+            <source
+                type="image/webp"
+                srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
+            >
+        @endif
+        <img
+            alt="{{ $alt }}"
+            title="{{ $title }}"
+            @class([
+                $class ?? 'img-fluid',
+                'lazyload' => $lazyload,
+            ])
+            src="{{ $image->getFormatOrOriginal($format) }}"
+
+            @if (! empty($width()))
+                width="{{ $width() }}"
+            @endif
+
+            @if (! empty($height()))
+                height="{{ $height() }}"
+            @endif
+        >
+    </picture>
 @elseif ($image)
     <picture class="{{ $pictureClass }}">
         @if (method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format))
@@ -51,8 +67,14 @@
                 'lazyload' => $lazyload,
             ])
             src="{{ $image->getFormatOrOriginal($format) }}"
-            width="{{ $width() }}"
-            height="{{ $height() }}"
+
+            @if (! empty($width()))
+                width="{{ $width() }}"
+            @endif
+
+            @if (! empty($height()))
+                height="{{ $height() }}"
+            @endif
         >
     </picture>
 @endif
