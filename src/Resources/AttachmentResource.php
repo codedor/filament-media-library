@@ -240,7 +240,7 @@ class AttachmentResource extends Resource
         ];
     }
 
-    public static function resourcePickerQuery(Builder $query, string $search = null): Builder
+    public static function resourcePickerQuery(Builder $query, ?string $search = null): Builder
     {
         return $query
             ->search($search)
