@@ -100,8 +100,8 @@ class UploadedFileMixin
         return static function (
             string $url,
             string $originalName = '',
-            string $mimeType = null,
-            int $error = null,
+            ?string $mimeType = null,
+            ?int $error = null,
             bool $test = false
         ): self {
             if (! $stream = @fopen($url, 'r')) {
