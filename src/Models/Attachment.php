@@ -74,7 +74,7 @@ class Attachment extends Model
         return AttachmentFactory::new();
     }
 
-    public function scopeSearch(Builder $query, string $search = ''): Builder
+    public function scopeSearch(Builder $query, ?string $search = ''): Builder
     {
         if (! $search) {
             return $query;

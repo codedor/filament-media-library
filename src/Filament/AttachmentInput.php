@@ -130,9 +130,6 @@ class AttachmentInput extends Field
                         'isGrid' => true,
                         'gridColumns' => 6,
                     ]);
-                })
-                ->action(function (array $arguments, Component $livewire) {
-                    data_set($livewire, $arguments['statePath'], $arguments['resources']);
                 }),
         ]);
     }

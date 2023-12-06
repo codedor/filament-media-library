@@ -1,6 +1,11 @@
 <x-dynamic-component
     :component="$getFieldWrapperView()"
     :field="$field"
+    x-on:picked-resource.window="(event) => {
+        // Set the state only if the event is for this resource picker
+        if (event.detail.statePath !== '{{ $getStatePath() }}') return
+        $wire.$set(event.detail.statePath, event.detail.resources)
+    }"
 >
     @php
         $attachments = $getAttachments();
