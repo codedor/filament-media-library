@@ -9,6 +9,7 @@
         + [Format definition](#format-definition)
     * [Registering formats](#registering-formats)
         + [Preparing your model](#preparing-your-model)
+    * [Webp formats](#webp-formats)
 - [Attachment model methods and attributes](#attachment-model-methods-and-attributes)
     * [Methods](#methods)
         + [getStorage](#getstorage)
@@ -63,6 +64,7 @@ The basic config file consists of the following contents:
 return [
     'conversion' => \Codedor\MediaLibrary\Conversions\LocalConversion::class,
     'enable-format-generate-action' => true,
+    'enable-webp-generation' => true,
     'extensions' => [
         'image' => [
             'jpg',
@@ -183,7 +185,10 @@ public static function getFormats(Collection $formats): Collection
 }
 ```
 
-Formats will be available in kebab-case format to call them. So the `HeroHeader` class becomes `header-hero`.
+#### Webp formats
+
+In the config you can enable webp formats. This will generate a webp versions of the formats and save them seperatly.
+You can fetch a webp format by using `->getWebpFormatOrOriginal($format)` function.
 
 ## Attachment model methods and attributes
 
