@@ -8,3 +8,11 @@ parameters:
 			message: "#^Unsafe usage of new static\\(\\)\\.$#"
 			count: 1
 			path: src/Exceptions/FormatNotFound.php
+		-
+			message: "#^Unsafe usage of new static\\(\\)\\.$#"
+			count: 1
+			path: src/Mixins/UploadedFileMixin.php
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:search\\(\\).$#"
+			count: 1
+			path: src/Resources/AttachmentResource.php
