@@ -24,6 +24,8 @@ use Spatie\Translatable\HasTranslations;
  * @property string $md5
  * @property int $size
  * @property string $extension
+ * @property string $alt
+ * @property string $translated_name
  * @property int|null $width
  * @property int|null $height
  */
