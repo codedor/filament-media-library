@@ -3,8 +3,10 @@
 namespace Codedor\MediaLibrary\Filament\Actions\Traits;
 
 use Closure;
+use Codedor\FilamentResourcePicker\Filament\Forms\Components\ResourcePickerInput;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
+use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
 use Filament\Forms\Components\Component;
@@ -36,7 +38,7 @@ trait CanUploadAttachment
             $this->getAttachmentInformationStep(),
         ]);
 
-        $this->action(function (array $data, Get $get, Set $set, Component $component) {
+        $this->action(function (array $data, Set $set, Component $component) {
             $attachmentIds = collect($data['attachments'] ?? [])
                 ->map(function (string $attachmentId) use ($data) {
                     $attachment = Attachment::find($attachmentId);
@@ -110,7 +112,6 @@ trait CanUploadAttachment
 
     protected function getAttachmentInformationStep(): Step
     {
-
         return Step::make(__('filament-media-library::upload.attachment information step title'))
             ->description(__('filament-media-library::upload.attachment information step intro'))
             ->schema(function ($state) {
@@ -133,10 +134,10 @@ trait CanUploadAttachment
                                         Placeholder::make('name')
                                             ->content(fn () => $upload->getClientOriginalName()),
 
-                                        Select::make('tags')
+                                        ResourcePickerInput::make('tags')
                                             ->label(__('filament-media-library::upload.select tags'))
-                                            ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
-                                            ->searchable()
+                                            ->resource(AttachmentTagResource::class)
+                                            ->labelField('title')
                                             ->multiple(),
                                     ])
                                     ->translatableFields(fn () => [
