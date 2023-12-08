@@ -5,17 +5,23 @@ namespace Codedor\MediaLibrary\Filament\Actions\Traits;
 use Closure;
 use Codedor\FilamentResourcePicker\Filament\Forms\Components\ResourcePickerInput;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
+use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Wizard\Step;
+use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Arr;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 trait CanUploadAttachment
@@ -93,13 +99,23 @@ trait CanUploadAttachment
     {
         return Step::make(__('filament-media-library::upload.upload step title'))
             ->description(__('filament-media-library::upload.upload step intro'))
+            ->afterValidation(function (Get $get, Set $set) {
+                foreach (Arr::wrap($get('attachments')) as $file) {
+                    if ($file instanceof TemporaryUploadedFile) {
+                        $md5 = md5_file($file->getRealPath());
+
+                        $set("meta.{$md5}.name", '');
+                        $set("meta.{$md5}.tags", []);
+                    }
+                }
+            })
             ->schema([
                 FileUpload::make('attachments')
                     ->live()
                     ->hiddenLabel()
                     ->required()
                     ->multiple(fn () => $this->isMultiple())
-                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): string {
+                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file, Set $set): string {
                         $attachment = $file->save();
 
                         return $attachment->id;
@@ -111,11 +127,24 @@ trait CanUploadAttachment
     {
         return Step::make(__('filament-media-library::upload.attachment information step title'))
             ->description(__('filament-media-library::upload.attachment information step intro'))
-            ->schema(function ($state) {
+            ->schema(function ($state, Get $get) {
                 return collect($state['attachments'] ?? [])
                     ->filter(fn ($upload) => $upload instanceof TemporaryUploadedFile)
-                    ->map(function ($upload) {
+                    ->map(function ($upload) use ($get) {
                         $md5 = md5_file($upload->getRealPath());
+
+                        $defaultFields = [
+                            Placeholder::make('name')
+                                ->content(fn () => $upload->getClientOriginalName()),
+                        ];
+
+                        if (! is_null($get("meta.{$md5}.tags"))) {
+                            $defaultFields[] = Select::make('tags')
+                                ->label(__('filament-media-library::upload.select tags'))
+                                ->multiple()
+                                ->default([])
+                                ->options(AttachmentTag::all()->pluck('title', 'id')->toArray());
+                        }
 
                         return Section::make($upload->getClientOriginalName())
                             ->collapsible()
@@ -127,16 +156,7 @@ trait CanUploadAttachment
                                     ->icon('heroicon-o-signal')
                                     ->columnSpan(['lg' => 2])
                                     ->persistInQueryString(false)
-                                    ->defaultFields([
-                                        Placeholder::make('name')
-                                            ->content(fn () => $upload->getClientOriginalName()),
-
-                                        ResourcePickerInput::make('tags')
-                                            ->label(__('filament-media-library::upload.select tags'))
-                                            ->resource(AttachmentTagResource::class)
-                                            ->labelField('title')
-                                            ->multiple(),
-                                    ])
+                                    ->defaultFields($defaultFields)
                                     ->translatableFields(fn () => [
                                         // TextInput::make('translated_name')
                                         //     ->suffix('.' . $upload->getClientOriginalExtension())
