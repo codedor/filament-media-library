@@ -3,16 +3,12 @@
 namespace Codedor\MediaLibrary\Filament\Actions\Traits;
 
 use Closure;
-use Codedor\FilamentResourcePicker\Filament\Forms\Components\ResourcePickerInput;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
-use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
