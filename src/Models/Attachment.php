@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
 
@@ -23,6 +24,8 @@ use Spatie\Translatable\HasTranslations;
  * @property string $md5
  * @property int $size
  * @property string $extension
+ * @property string $alt
+ * @property string $translated_name
  * @property int|null $width
  * @property int|null $height
  */
@@ -73,13 +76,13 @@ class Attachment extends Model
         return AttachmentFactory::new();
     }
 
-    public function scopeSearch(Builder $query, string $search = ''): Builder
+    public function scopeSearch(Builder $query, ?string $search = ''): Builder
     {
         if (! $search) {
             return $query;
         }
 
-        return $query->where('name', 'like', "%$search%");
+        return $query->where(DB::raw('CONCAT(`name`, ".", `extension`)'), 'LIKE', "%$search%");
     }
 
     public function getUrlAttribute(): string

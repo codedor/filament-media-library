@@ -119,7 +119,7 @@ abstract class Format implements Arrayable
         return app(Conversion::class);
     }
 
-    public function registerFor(string $class, string|array $fields = null): void
+    public function registerFor(string $class, string|array|null $fields = null): void
     {
         Formats::registerFor($this::class, $class, $fields);
     }
