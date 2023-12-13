@@ -8,7 +8,6 @@ use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\WebP;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use Livewire\Attributes\On;
 use Livewire\Component;
