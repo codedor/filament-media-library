@@ -45,7 +45,7 @@ class Formats extends Collection
     public function mapToKebab(): Collection
     {
         return $this->flatten()->mapWithKeys(fn (Format $format) => [
-            Str::kebab(class_basename($format)) => $format,
+            $format->kebab() => $format,
         ]);
     }
 
