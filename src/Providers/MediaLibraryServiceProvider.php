@@ -3,6 +3,7 @@
 namespace Codedor\MediaLibrary\Providers;
 
 use Codedor\MediaLibrary\Collections\Formats;
+use Codedor\MediaLibrary\Commands\GenerateFormats;
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Formats as FacadesFormats;
@@ -44,6 +45,9 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
             ])
             ->runsMigrations()
             ->hasViews($this->packageName())
+            ->hasCommands([
+                GenerateFormats::class,
+            ])
             ->hasTranslations();
     }
 
