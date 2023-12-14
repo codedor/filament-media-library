@@ -2,13 +2,11 @@
 
 namespace Codedor\MediaLibrary\Commands;
 
-use App\Clients\MeiliSearch;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Console\Command;
-use Laravel\Scout\Console\ImportCommand;
 
 class GenerateFormats extends Command
 {
