@@ -411,3 +411,18 @@ $uploadedFile = \Illuminate\Http\UploadedFile::createFromUrl('https://example.co
 
 $attachment = $uploadedFile->save();
 ```
+
+## Generate new media format
+
+To generate a new media format, you can use the `media:generate-format` command.
+
+```bash
+php artisan media:generate-format {--attachment-id=} {--format=} {--force}
+```
+
+If you do not pass an `attachment-id`, the formats will be generated for all attachments.
+If you do not pass a `format`, all formats will be generated for the attachments.
+With `force` you can force the generation of the formats, even if they already exist. 
+
+> [!WARNING]
+> Using force will also overwrite cropped images!
