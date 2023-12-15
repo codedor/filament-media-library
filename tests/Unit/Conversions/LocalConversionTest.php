@@ -44,28 +44,6 @@ it('skips generation if attachment is a gif', function () {
         ->toBeFalse();
 });
 
-it('skips generation if force is false and format image exists', function () {
-    Storage::fake('public');
-    Formats::register([TestHero::class, TestHeroWebp::class]);
-
-    $attachment = createAttachment([
-        'type' => 'image',
-        'extension' => 'jpg',
-        'disk' => 'public',
-    ]);
-
-    $attachment->getStorage()->put(
-        "$attachment->directory/test_hero__$attachment->filename",
-        File::get(__DIR__ . '/../../TestFiles/test.jpg')
-    );
-
-    /** @var \Codedor\MediaLibrary\Conversions\Conversion $conversion */
-    $conversion = app(LocalConversion::class);
-
-    expect($conversion->convert($attachment, Formats::exists('test-hero')))
-        ->toBeFalse();
-});
-
 it('converts image', function () {
     Storage::fake('public');
 

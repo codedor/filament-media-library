@@ -67,7 +67,7 @@ class FormatterModal extends Component
         $this->attachment->getStorage()->put("{$this->attachment->directory}/{$filename}", $crop);
 
         if (WebP::isEnabled()) {
-            Image::make($this->attachment->getFormat($format->kebab()))
+            Image::make("{$this->attachment->absolute_directory_path}/{$filename}")
                 ->encode('webp')
                 ->save(WebP::path(
                     "{$this->attachment->absolute_directory_path}/{$filename}",
