@@ -9,6 +9,7 @@
         + [Format definition](#format-definition)
     * [Registering formats](#registering-formats)
         + [Preparing your model](#preparing-your-model)
+    * [Webp formats](#webp-formats)
 - [Attachment model methods and attributes](#attachment-model-methods-and-attributes)
     * [Methods](#methods)
         + [getStorage](#getstorage)
@@ -25,8 +26,10 @@
 - [Usage in Blade](#usage-in-blade)
 - [Usage in Filament](#usage-in-filament)
     * [AttachmentInput](#attachmentinput)
-    * [Multiple attachments](#multiple-attachments)
-    * [allowedFormats](#allowedformats)
+      * [Multiple attachments](#multiple-attachments)
+      * [allowedFormats](#allowedformats)
+    * [AttachmentColumn](#attachmentcolumn)
+    * [AttachmentEntry](#attachmententry)
 - [UploadedFile Mixin]('#uploaded-file-mixin)
     * [Save Attachment]('#save-attachment)
     * [Create from URL]('#create-from-url)
@@ -61,6 +64,7 @@ The basic config file consists of the following contents:
 return [
     'conversion' => \Codedor\MediaLibrary\Conversions\LocalConversion::class,
     'enable-format-generate-action' => true,
+    'enable-webp-generation' => true,
     'extensions' => [
         'image' => [
             'jpg',
@@ -181,7 +185,10 @@ public static function getFormats(Collection $formats): Collection
 }
 ```
 
-Formats will be available in kebab-case format to call them. So the `HeroHeader` class becomes `header-hero`.
+#### Webp formats
+
+In the config you can enable webp formats. This will generate a webp versions of the formats and save them seperatly.
+You can fetch a webp format by using `->getWebpFormatOrOriginal($format)` function.
 
 ## Attachment model methods and attributes
 
@@ -323,7 +330,7 @@ AttachmentInput::make('profile_image_id')
 
 This field inherits the `Filament\Forms\Components\Field` class which means that this field can do all the things other fields can do too.
 
-### Multiple attachments
+#### Multiple attachments
 
 ```php
 use Codedor\MediaLibrary\Components\Fields\AttachmentInput;
@@ -332,7 +339,7 @@ AttachmentInput::make('profile_image_id')
     ->multiple()
 ```
 
-### allowedFormats
+#### allowedFormats
 
 The allowed formats in the cropper are based on the `getFormats` method in the model.
 If you want to override this, you can use the `allowedFormats` method.
@@ -346,6 +353,23 @@ AttachmentInput::make('profile_image_id')
         Hero::make()
     ])
 ```
+
+### AttachmentColumn
+
+This column for a table will render the image with the thumbnail format or an icon if attachment is not an image.
+
+```php
+\Codedor\MediaLibrary\Tables\Columns\AttachmentColumn::make('image_id'),
+```
+
+### AttachmentEntry
+
+This entry for an info list will render the image with the thumbnail format or an icon if attachment is not an image.
+
+```php
+\Codedor\MediaLibrary\Filament\Entries\AttachmentEntry::make('image'),
+```
+
 
 ## UploadedFile Mixin
 
@@ -387,3 +411,18 @@ $uploadedFile = \Illuminate\Http\UploadedFile::createFromUrl('https://example.co
 
 $attachment = $uploadedFile->save();
 ```
+
+## Generate new media format
+
+To generate a new media format, you can use the `media:generate-format` command.
+
+```bash
+php artisan media:generate-format {--attachment-id=} {--format=} {--force}
+```
+
+If you do not pass an `attachment-id`, the formats will be generated for all attachments.
+If you do not pass a `format`, all formats will be generated for the attachments.
+With `force` you can force the generation of the formats, even if they already exist. 
+
+> [!WARNING]
+> Using force will also overwrite cropped images!

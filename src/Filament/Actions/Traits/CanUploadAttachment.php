@@ -17,6 +17,7 @@ use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Arr;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 trait CanUploadAttachment
@@ -36,7 +37,7 @@ trait CanUploadAttachment
             $this->getAttachmentInformationStep(),
         ]);
 
-        $this->action(function (array $data, Get $get, Set $set, Component $component) {
+        $this->action(function (array $data, Set $set, Component $component) {
             $attachmentIds = collect($data['attachments'] ?? [])
                 ->map(function (string $attachmentId) use ($data) {
                     $attachment = Attachment::find($attachmentId);
@@ -94,13 +95,23 @@ trait CanUploadAttachment
     {
         return Step::make(__('filament-media-library::upload.upload step title'))
             ->description(__('filament-media-library::upload.upload step intro'))
+            ->afterValidation(function (Get $get, Set $set) {
+                foreach (Arr::wrap($get('attachments')) as $file) {
+                    if ($file instanceof TemporaryUploadedFile) {
+                        $md5 = md5_file($file->getRealPath());
+
+                        $set("meta.{$md5}.name", '');
+                        $set("meta.{$md5}.tags", []);
+                    }
+                }
+            })
             ->schema([
                 FileUpload::make('attachments')
                     ->live()
                     ->hiddenLabel()
                     ->required()
                     ->multiple(fn () => $this->isMultiple())
-                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file): string {
+                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file, Set $set): string {
                         $attachment = $file->save();
 
                         return $attachment->id;
@@ -110,14 +121,26 @@ trait CanUploadAttachment
 
     protected function getAttachmentInformationStep(): Step
     {
-
         return Step::make(__('filament-media-library::upload.attachment information step title'))
             ->description(__('filament-media-library::upload.attachment information step intro'))
-            ->schema(function ($state) {
+            ->schema(function ($state, Get $get) {
                 return collect($state['attachments'] ?? [])
                     ->filter(fn ($upload) => $upload instanceof TemporaryUploadedFile)
-                    ->map(function ($upload) {
+                    ->map(function ($upload) use ($get) {
                         $md5 = md5_file($upload->getRealPath());
+
+                        $defaultFields = [
+                            Placeholder::make('name')
+                                ->content(fn () => $upload->getClientOriginalName()),
+                        ];
+
+                        if (! is_null($get("meta.{$md5}.tags"))) {
+                            $defaultFields[] = Select::make('tags')
+                                ->label(__('filament-media-library::upload.select tags'))
+                                ->multiple()
+                                ->default([])
+                                ->options(AttachmentTag::all()->pluck('title', 'id')->toArray());
+                        }
 
                         return Section::make($upload->getClientOriginalName())
                             ->collapsible()
@@ -129,16 +152,7 @@ trait CanUploadAttachment
                                     ->icon('heroicon-o-signal')
                                     ->columnSpan(['lg' => 2])
                                     ->persistInQueryString(false)
-                                    ->defaultFields([
-                                        Placeholder::make('name')
-                                            ->content(fn () => $upload->getClientOriginalName()),
-
-                                        Select::make('tags')
-                                            ->label(__('filament-media-library::upload.select tags'))
-                                            ->options(AttachmentTag::limit(50)->pluck('title', 'id'))
-                                            ->searchable()
-                                            ->multiple(),
-                                    ])
+                                    ->defaultFields($defaultFields)
                                     ->translatableFields(fn () => [
                                         // TextInput::make('translated_name')
                                         //     ->suffix('.' . $upload->getClientOriginalExtension())

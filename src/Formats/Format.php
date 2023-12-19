@@ -46,6 +46,11 @@ abstract class Format implements Arrayable
         return Str::snake(class_basename(static::class)) . '__';
     }
 
+    public function kebab(): string
+    {
+        return Str::kebab(class_basename(static::class));
+    }
+
     public function toArray()
     {
         return [

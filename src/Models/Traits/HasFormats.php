@@ -23,10 +23,15 @@ trait HasFormats
         return $this->getFormat($name) ?? $this->url;
     }
 
-    public function getFormat(string $name): ?string
+    public function getFormat(string $name, ?string $extension = null): ?string
     {
         if (! is_convertible_image($this->extension)) {
             return $this->url;
+        }
+
+        $attachment = clone $this;
+        if ($extension) {
+            $attachment->extension = $extension;
         }
 
         $format = Formats::exists($name);
@@ -37,11 +42,22 @@ trait HasFormats
             return null;
         }
 
-        return $this->getStorage()->url("{$this->directory}/{$format->filename($this)}");
+        return $attachment->getStorage()->url(
+            "{$attachment->directory}/{$format->filename($attachment)}"
+        );
     }
 
     public function generateFormats(bool $force = false)
     {
         Formats::dispatchGeneration($this, $force);
+    }
+
+    public function getWebpFormatOrOriginal(?string $format): ?string
+    {
+        if (! $format) {
+            return $this->url;
+        }
+
+        return $this->getFormat($format, 'webp') ?? $this->getFormatOrOriginal($format);
     }
 }

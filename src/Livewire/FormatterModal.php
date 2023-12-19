@@ -5,8 +5,10 @@ namespace Codedor\MediaLibrary\Livewire;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\WebP;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
+use Intervention\Image\Facades\Image;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -63,6 +65,15 @@ class FormatterModal extends Component
         $crop = preg_replace('/data:image\/(.*?);base64,/', '', $event['crop']);
         $crop = base64_decode(str_replace(' ', '+', $crop));
         $this->attachment->getStorage()->put("{$this->attachment->directory}/{$filename}", $crop);
+
+        if (WebP::isEnabled()) {
+            Image::make("{$this->attachment->absolute_directory_path}/{$filename}")
+                ->encode('webp')
+                ->save(WebP::path(
+                    "{$this->attachment->absolute_directory_path}/{$filename}",
+                    $this->attachment->extension
+                ));
+        }
 
         // Save the crop on the attachment, for later adjustments
         $this->attachment->formats()->updateOrCreate([

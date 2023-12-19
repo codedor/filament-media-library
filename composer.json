@@ -13,8 +13,8 @@
     "require": {
         "php": "^8.2",
         "blade-ui-kit/blade-icons": "^1.5",
-        "codedor/filament-translatable-tabs": "^0.1",
-        "codedor/filament-resource-picker": "dev-master as 0.1",
+        "codedor/filament-translatable-tabs": "^1.0",
+        "codedor/filament-resource-picker": "^1.0",
         "filament/filament": "^3.0",
         "illuminate/contracts": "^10.0",
         "livewire/livewire": "^3.0",

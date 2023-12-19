@@ -7,7 +7,6 @@ use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 
 class Formats extends Collection
 {
@@ -45,7 +44,7 @@ class Formats extends Collection
     public function mapToKebab(): Collection
     {
         return $this->flatten()->mapWithKeys(fn (Format $format) => [
-            Str::kebab(class_basename($format)) => $format,
+            $format->kebab() => $format,
         ]);
     }
 
