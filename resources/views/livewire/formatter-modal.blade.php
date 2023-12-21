@@ -146,12 +146,12 @@
 
                     <p x-text="currentFormat.description"></p>
 
-                    <hr class="my-6">
+                    <hr class="my-6 dark:border-gray-600">
 
                     <div class="max-lg:flex max-md:h-40 max-lg:h-52 gallery overflow-x-auto lg:overflow-y-auto">
                         <template x-for="(format, key) in formats" :key="key">
                             <div
-                                class="flex-shrink-0 max-lg:aspect-[3/4] flex flex-col gap-2 justify-between rounded-lg bg-gray-200 p-2"
+                                class="flex-shrink-0 max-lg:aspect-[3/4] flex flex-col gap-2 justify-between rounded-lg bg-gray-200 dark:bg-gray-800 p-2"
                                 :class="{'ring-2 ring-primary-500 ring-inset': currentFormat.key === format.key}"
                                 x-on:click="setFormat(key)"
                             >
@@ -168,7 +168,7 @@
                                         x-data="{
                                             aspectRatio: !format.width ? 0.67 : !format.height ? 1.5 : format.aspectRatio
                                         }"
-                                        class="bg-gray-400"
+                                        class="bg-gray-400 dark:bg-gray-600"
                                         :class="{
                                             'w-full': aspectRatio > 1,
                                             'h-full': aspectRatio <= 1,
