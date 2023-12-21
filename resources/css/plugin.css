@@ -20,7 +20,7 @@
   }
 
   .attachment__btn-block .fi-icon-btn {
-    @apply m-0 bg-gray-100 hover:bg-white dark:bg-zinc-900 dark:hover:bg-zinc-700 rounded-md cursor-pointer shadow-lg !important;
+    @apply m-0 bg-gray-100 hover:bg-white dark:bg-zinc-900 dark:hover:bg-zinc-700 rounded-md cursor-pointer shadow-lg;
   }
 
   .attachment__btn-block .fi-icon-btn.fi-color-gray {
