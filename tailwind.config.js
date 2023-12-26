@@ -3,6 +3,9 @@ module.exports = {
     content: ['./resources/views/**/*.blade.php'],
     darkMode: 'class',
     theme: {},
+    safelist: [
+      'fi-ta-record',
+    ],
     corePlugins: {
         preflight: false,
     },

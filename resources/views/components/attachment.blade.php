@@ -85,11 +85,11 @@
 
         {{ $attributes->except(['slot', 'attachment'])->merge(['class' => '
             attachment-visual flex relative w-full aspect-square rounded-lg
-            overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 media
+            overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 dark:bg-gray-800 media
         ']) }}
     >
         @if($attachment->type !== 'image')
-            <div class="w-full aspect-square flex items-center justify-center bg-gray-100 rounded-lg">
+            <div class="w-full aspect-square flex items-center justify-center rounded-lg">
                 @if($attachment->type === 'document')
                     <x-heroicon-o-document-text class="w-16 h-16 opacity-50"/>
                 @elseif($attachment->type === 'video')
@@ -102,7 +102,7 @@
 
         {{-- Buttons --}}
         @unless($isDisabled)
-            <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3">
+            <div class="absolute right-1 bottom-1 left-1 z-10 flex justify-between gap-3 attachment__btn-block">
                 @if ($deleteAction && $deleteAction->isVisible())
                     {{ ($deleteAction)(['attachmentId' => $attachment->id]) }}
                 @endif
