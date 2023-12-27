@@ -5,6 +5,7 @@ namespace Codedor\MediaLibrary\Models\Traits;
 use Codedor\MediaLibrary\Exceptions\FormatNotFound;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\AttachmentFormat;
+use Codedor\MediaLibrary\WebP;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 trait HasFormats
@@ -56,6 +57,10 @@ trait HasFormats
     {
         if (! $format) {
             return $this->url;
+        }
+
+        if (! WebP::isEnabled()) {
+            return $this->getFormatOrOriginal($format);
         }
 
         return $this->getFormat($format, 'webp') ?? $this->getFormatOrOriginal($format);
