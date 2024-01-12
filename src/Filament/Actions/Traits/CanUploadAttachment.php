@@ -76,7 +76,7 @@ trait CanUploadAttachment
                         : $attachmentIds->first()
                 );
             }
-        });
+        })->closeModalByClickingAway(false);
     }
 
     public function multiple(bool|Closure $multiple = true): static
@@ -144,7 +144,6 @@ trait CanUploadAttachment
 
                         return Section::make($upload->getClientOriginalName())
                             ->collapsible()
-                            ->collapsed()
                             ->columns()
                             ->schema([
                                 TranslatableTabs::make()

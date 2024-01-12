@@ -76,7 +76,6 @@ class AttachmentResource extends Resource
                         ->multiple(),
 
                     Section::make('Preview')
-                        ->collapsed()
                         ->schema([
                             Placeholder::make('image')
                                 ->hidden(fn (Attachment $record) => ! $record->isImage())
