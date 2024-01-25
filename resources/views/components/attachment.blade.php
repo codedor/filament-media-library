@@ -88,6 +88,9 @@
             overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 dark:bg-gray-800 media
         ']) }}
     >
+        <abbr title="{{ $attachment->filename }}">
+            <span class="invisible">{{ $attachment->filename }}</span>
+        </abbr>
         @if($attachment->type !== 'image')
             <div class="w-full aspect-square flex items-center justify-center rounded-lg">
                 @if($attachment->type === 'document')
