@@ -28,6 +28,7 @@ class ListAttachments extends ListRecords
     {
         return [
             Actions\CreateAction::make()
+                ->closeModalByClickingAway(false)
                 ->label(__('filament-media-library::tags.create new attachment tag'))
                 ->authorize(AttachmentTagResource::canCreate())
                 ->model(AttachmentTag::class)
