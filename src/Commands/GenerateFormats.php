@@ -26,14 +26,12 @@ class GenerateFormats extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return int
      */
-    public function handle()
+    public function handle(): void
     {
         $formats = Formats::mapToKebab()->when(
             $this->option('format'),
-            fn ($formats) => $formats->only($this->getOption('format'))
+            fn ($formats) => $formats->only($this->option('format'))
         );
 
         $attachments = Attachment::query()
