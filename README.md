@@ -28,12 +28,6 @@ You can install the package via composer:
 composer require codedor/filament-media-library
 ```
 
-Publish the assets with:
-
-```bash
-php artisan vendor:publish --provider "Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider"
-```
-
 Run the migrations with:
 
 ```bash
