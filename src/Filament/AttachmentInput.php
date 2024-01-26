@@ -68,6 +68,7 @@ class AttachmentInput extends Field
 
         $this->registerActions([
             Action::make('remove-attachment')
+                ->closeModalByClickingAway(false)
                 ->icon('heroicon-o-x-circle')
                 ->iconButton()
                 ->color('danger')
@@ -82,6 +83,7 @@ class AttachmentInput extends Field
                 }),
 
             Action::make('format-attachment')
+                ->closeModalByClickingAway(false)
                 ->icon('heroicon-o-scissors')
                 ->iconButton()
                 ->color('gray')
@@ -101,6 +103,7 @@ class AttachmentInput extends Field
                 }),
 
             Action::make('edit-attachment')
+                ->closeModalByClickingAway(false)
                 ->icon('heroicon-s-pencil')
                 ->iconButton()
                 ->color('gray')
@@ -110,9 +113,11 @@ class AttachmentInput extends Field
                 }, true),
 
             UploadAttachmentAction::make('attachment-upload')
+                ->closeModalByClickingAway(false)
                 ->multiple(fn () => $this->isMultiple()),
 
             Action::make('attachment-picker')
+                ->closeModalByClickingAway(false)
                 ->label(__('filament-media-library::picker.select existing media'))
                 ->modalHeading(__('filament-media-library::picker.select existing media'))
                 ->color('gray')

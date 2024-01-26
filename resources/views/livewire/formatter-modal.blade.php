@@ -1,6 +1,7 @@
 <x-filament::modal
     id="filament-media-library::formatter-attachment-modal"
     width="w-6xl"
+    :close-by-clicking-away="false"
 >
     @if ($attachment)
         <x-slot name="header">
