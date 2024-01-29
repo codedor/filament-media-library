@@ -20,4 +20,8 @@
     @else
         <img src="{{ $attachment->getFormatOrOriginal('thumbnail') }}" />
     @endif
+
+    <abbr class="absolute inset-0" title="{{ $attachment->filename }}">
+        <span class="invisible">{{ $attachment->filename }}</span>
+    </abbr>
 </div>
