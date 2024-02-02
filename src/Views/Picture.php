@@ -10,6 +10,7 @@ use Illuminate\View\Component;
 class Picture extends Component
 {
     public ?Format $formatClass = null;
+
     public bool $hasWebp = false;
 
     public function __construct(
