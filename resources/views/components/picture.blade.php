@@ -1,64 +1,43 @@
 @if ($placeholder)
     <x-filament-media-library::placeholder
-        :format="$format"
-        :formats="$formats"
-        :picture-class="$pictureClass"
-        :class="$class"
-        :alt="$alt"
+        :$format
+        :$formats
+        :$pictureClass
+        :$class
+        :$alt
     />
-@elseif ($format && ! $formats)
+@elseif ($image && $format)
     <picture class="{{ $pictureClass }}">
-        @if (method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format))
-            <source
-                type="image/webp"
-                srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-            >
-        @endif
-        <img
-            alt="{{ $alt }}"
-            title="{{ $title }}"
-            @class([
-                $class ?? 'img-fluid',
-                'lazyload' => $lazyload,
-            ])
-            src="{{ $image->getFormatOrOriginal($format) }}"
-
-            @if (! empty($width()))
-                width="{{ $width() }}"
-            @endif
-
-            @if (! empty($height()))
-                height="{{ $height() }}"
-            @endif
-        >
-    </picture>
-@elseif ($image)
-    <picture class="{{ $pictureClass }}">
-        @if (method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format))
+        @if ($formats)
             @foreach ($formats as $breakpoint => $mobileFormat)
+                @if ($hasWebp)
+                    <source
+                        media="(max-width: {{ $breakpoint ?? '576' }}px)"
+                        type="image/webp"
+                        srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
+                    >
+                @endif
+
                 <source
                     media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                    type="image/webp"
-                    srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
-                >
-            @endforeach
-            <source
-                type="image/webp"
-                srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-            >
-        @else
-            @foreach ($formats as $breakpoint => $mobileFormat)
-                <source
-                    media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                    type="image/webp"
+                    type="{{ $image->mime_type }}"
                     srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
                 >
             @endforeach
+        @endif
+
+        @if ($hasWebp)
             <source
                 type="image/webp"
-                srcset="{{ $image->getFormatOrOriginal($format) }}"
+                @if ($lazyload)
+                    srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
+                    data-srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
+                @else
+                    srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
+                @endif
             >
         @endif
+
         <img
             alt="{{ $alt }}"
             title="{{ $title }}"
@@ -66,7 +45,12 @@
                 $class ?? 'img-fluid',
                 'lazyload' => $lazyload,
             ])
-            src="{{ $image->getFormatOrOriginal($format) }}"
+            @if ($lazyload)
+                src="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
+                data-src="{{ $image->getFormatOrOriginal($format) }}"
+            @else
+                src="{{ $image->getFormatOrOriginal($format) }}"
+            @endif
 
             @if (! empty($width()))
                 width="{{ $width() }}"

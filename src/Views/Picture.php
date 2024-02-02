@@ -10,6 +10,7 @@ use Illuminate\View\Component;
 class Picture extends Component
 {
     public ?Format $formatClass = null;
+    public bool $hasWebp = false;
 
     public function __construct(
         public Attachment $image,
@@ -21,10 +22,13 @@ class Picture extends Component
         public string $class = '',
         public ?string $title = '',
         public bool $lazyload = true,
+        public ?string $lazyloadInitialFormat = 'thumbnail',
     ) {
         if ($this->format) {
             $this->getFormatClass();
         }
+
+        $this->hasWebp = method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format);
     }
 
     protected function getFormatClass()
@@ -34,12 +38,30 @@ class Picture extends Component
 
     public function width(): ?string
     {
-        return $this->formatClass ? $this->formatClass->width() : $this->image->width;
+        if (! $this->formatClass) {
+            return $this->image->width;
+        }
+
+        if ($this->formatClass->width() && $this->formatClass->height()) {
+            return $this->formatClass->width();
+        }
+
+        // TODO BE: use width after crop when the format only has a height
+        return null;
     }
 
     public function height(): ?string
     {
-        return $this->formatClass ? $this->formatClass->height() : $this->image->height;
+        if (! $this->formatClass) {
+            return $this->image->height;
+        }
+
+        if ($this->formatClass->width() && $this->formatClass->height()) {
+            return $this->formatClass->height();
+        }
+
+        // TODO BE: use height after crop when the format only has a height
+        return null;
     }
 
     public function render()
