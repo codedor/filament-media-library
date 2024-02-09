@@ -30,7 +30,9 @@ class Picture extends Component
             $this->getFormatClass();
         }
 
-        $this->hasWebp = method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format);
+        if ($image->exists) {
+           $this->hasWebp = method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format);
+        }
     }
 
     protected function getFormatClass()
@@ -38,26 +40,26 @@ class Picture extends Component
         $this->formatClass = Formats::exists($this->format);
     }
 
-    public function width(): ?string
+    public function width(): string|int|null
     {
         if (! $this->formatClass) {
             return $this->image->width;
         }
 
-        if ($this->formatClass->width() && $this->formatClass->height()) {
+        if ($this->formatClass->height() && $this->formatClass->width()) {
             return $this->formatClass->width();
         }
 
         return $this->getDimension('width');
     }
 
-    public function height(): ?string
+    public function height(): string|int|null
     {
         if (! $this->formatClass) {
             return $this->image->height;
         }
 
-        if ($this->formatClass->width() && $this->formatClass->height()) {
+        if ($this->formatClass->height() && $this->formatClass->width()) {
             return $this->formatClass->height();
         }
 

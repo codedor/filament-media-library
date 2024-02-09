@@ -10,6 +10,7 @@ use Filament\Forms\FormsServiceProvider;
 use Filament\Notifications\NotificationsServiceProvider;
 use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
+use Illuminate\Foundation\Testing\Concerns\InteractsWithViews;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
@@ -18,7 +19,14 @@ use Spatie\Translatable\TranslatableServiceProvider;
 
 class TestCase extends Orchestra
 {
+    use InteractsWithViews;
+
     public Manipulations $manipulations;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+    }
 
     public function getEnvironmentSetUp($app)
     {
