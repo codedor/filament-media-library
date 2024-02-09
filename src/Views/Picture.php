@@ -7,7 +7,6 @@ use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\WebP;
 use Illuminate\View\Component;
-use Intervention\Image\Facades\Image;
 
 class Picture extends Component
 {
@@ -70,7 +69,7 @@ class Picture extends Component
         return $this->view('filament-media-library::components.picture');
     }
 
-    public function getDimension(string $dimension): int|null
+    public function getDimension(string $dimension): ?int
     {
         $filename = $this->formatClass->filename($this->image);
         $path = "{$this->image->absolute_directory_path}/{$filename}";
