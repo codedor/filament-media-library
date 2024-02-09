@@ -5,7 +5,9 @@ namespace Codedor\MediaLibrary\Views;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\WebP;
 use Illuminate\View\Component;
+use Intervention\Image\Facades\Image;
 
 class Picture extends Component
 {
@@ -47,8 +49,7 @@ class Picture extends Component
             return $this->formatClass->width();
         }
 
-        // TODO BE: use width after crop when the format only has a height
-        return null;
+        return $this->getDimension('width');
     }
 
     public function height(): ?string
@@ -61,12 +62,36 @@ class Picture extends Component
             return $this->formatClass->height();
         }
 
-        // TODO BE: use height after crop when the format only has a height
-        return null;
+        return $this->getDimension('height');
     }
 
     public function render()
     {
         return $this->view('filament-media-library::components.picture');
+    }
+
+    public function getDimension(string $dimension): int|null
+    {
+        $filename = $this->formatClass->filename($this->image);
+        $path = "{$this->image->absolute_directory_path}/{$filename}";
+
+        if (WebP::isEnabled()) {
+            $path = WebP::path(
+                $path,
+                $this->image->extension
+            );
+        }
+
+        if (file_exists($path)) {
+            $dimensions = getimagesize($path);
+
+            return match ($dimension) {
+                'width' => $dimensions[0],
+                'height' => $dimensions[1],
+                default => null,
+            };
+        }
+
+        return null;
     }
 }
