@@ -7,7 +7,7 @@
         :$alt
     />
 @elseif ($image && $format)
-    <picture class="{{ $pictureClass }}">
+    <picture class="{{ $pictureClass }}" x-data>
         @if ($formats)
             @foreach ($formats as $breakpoint => $mobileFormat)
                 @if ($hasWebp)
@@ -32,6 +32,7 @@
                 @if ($lazyload)
                     srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
                     data-srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
+                    x-intersect.threshold.50="$el.srcset = $el.dataset.srcset"
                 @else
                     srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
                 @endif
@@ -48,6 +49,7 @@
             @if ($lazyload)
                 src="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
                 data-src="{{ $image->getFormatOrOriginal($format) }}"
+                x-intersect.threshold.50="$el.src = $el.dataset.src"
             @else
                 src="{{ $image->getFormatOrOriginal($format) }}"
             @endif
@@ -62,3 +64,7 @@
         >
     </picture>
 @endif
+
+@once
+    @livewireScripts
+@endonce
