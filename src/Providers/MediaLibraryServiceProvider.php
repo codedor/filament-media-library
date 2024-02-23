@@ -64,6 +64,8 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
         $this->registerBladeComponents();
 
         UploadedFile::mixin(new UploadedFileMixin());
+
+        \Livewire\Livewire::forceAssetInjection();
     }
 
     protected function registerLivewireComponents()
