@@ -64,7 +64,3 @@
         >
     </picture>
 @endif
-
-@once
-    @livewireScripts
-@endonce
