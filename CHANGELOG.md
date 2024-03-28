@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.0.14 - 2024-03-28
+
+### What's Changed
+
+* Fix title issues, refs #FIL001-109 by @Thomva in https://github.com/codedor/filament-media-library/pull/28
+* Bump dependabot/fetch-metadata from 1.6.0 to 2.0.0 by @dependabot in https://github.com/codedor/filament-media-library/pull/27
+* Bump ramsey/composer-install from 1 to 3 by @dependabot in https://github.com/codedor/filament-media-library/pull/25
+* Small layout upgrades by @Katrienvh in https://github.com/codedor/filament-media-library/pull/26
+
+### New Contributors
+
+* @Katrienvh made their first contribution in https://github.com/codedor/filament-media-library/pull/26
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v1.0.13...v1.0.14
+
 ## v1.0.13 - 2024-02-09
 
 ### What's Changed
