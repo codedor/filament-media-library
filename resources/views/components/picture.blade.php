@@ -32,7 +32,7 @@
                 @if ($lazyload)
                     srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
                     data-srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-                    x-intersect.{{ $intersectOptions }}="$el.srcset = $el.dataset.srcset"
+                    x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset"
                 @else
                     srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
                 @endif
@@ -49,7 +49,7 @@
             @if ($lazyload)
                 src="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
                 data-src="{{ $image->getFormatOrOriginal($format) }}"
-                x-intersect.{{ $intersectOptions }}="$el.src = $el.dataset.src"
+                x-intersect.{{ $intersectModifier }}="$el.src = $el.dataset.src"
             @else
                 src="{{ $image->getFormatOrOriginal($format) }}"
             @endif
