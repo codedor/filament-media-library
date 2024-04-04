@@ -23,7 +23,7 @@ class Picture extends Component
         public string $pictureClass = '',
         public string $class = '',
         public ?string $title = '',
-        public bool $lazyload = true,
+        public bool $lazyload = false,
         public ?string $lazyloadInitialFormat = 'thumbnail',
     ) {
         if ($this->format) {
