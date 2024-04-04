@@ -5,7 +5,6 @@ use Codedor\MediaLibrary\Conversions\LocalConversion;
 return [
     'conversion' => LocalConversion::class,
     'enable-format-generate-action' => true,
-    'enable-webp-generation' => true,
     'extensions' => [
         'image' => [
             'jpg',
