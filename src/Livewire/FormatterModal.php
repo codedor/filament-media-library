@@ -7,7 +7,6 @@ use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
-use Intervention\Image\Facades\Image;
 use Livewire\Attributes\On;
 use Livewire\Component;
 

@@ -41,7 +41,7 @@ it('returns the right url for a format', function () {
     ]);
 
     expect($attachment->getFormat('test-hero'))
-        ->toEndWith("test_hero__filename.webp");
+        ->toEndWith('test_hero__filename.webp');
 });
 
 it('returns null for a format that does not exist', function () {
