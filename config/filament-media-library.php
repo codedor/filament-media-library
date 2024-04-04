@@ -33,4 +33,5 @@ return [
             'ogg',
         ],
     ],
+    'temporary_directory_path' => storage_path('filament-media-library/tmp'),
 ];
