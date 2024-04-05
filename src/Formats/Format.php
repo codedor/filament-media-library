@@ -38,7 +38,11 @@ abstract class Format implements Arrayable
 
     public function filename(Attachment $attachment): string
     {
-        return $this->prefix() . Str::replaceLast('jpg', 'webp', $attachment->file_name);
+        return $this->prefix() . Str::replaceLast(
+            $attachment->extension,
+            config('filament-media-library.force-format-extension.extension', 'webp'),
+            $attachment->file_name,
+        );
     }
 
     public function prefix(): string
