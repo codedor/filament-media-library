@@ -55,7 +55,7 @@
                                 width: this.currentFormat.width,
                                 height: this.currentFormat.height,
                             })
-                            .toDataURL('{{ $forcedMimeType ?? "image/jpg" }}'),
+                            .toDataURL('{{ $forcedMimeType ?? "image/webp" }}'),
                     })
                 },
                 setFormat (key) {

@@ -26,7 +26,7 @@ class FormatterModal extends Component
         $this->attachment = Attachment::find($uuid);
 
         $this->forcedMimeType = config(
-            'filament-media-library.force-extension.mime-type',
+            'filament-media-library.force-format-extension.mime-type',
             $this->attachment->mime_type,
         );
 
