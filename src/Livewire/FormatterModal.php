@@ -18,10 +18,17 @@ class FormatterModal extends Component
 
     public ?array $currentFormat = null;
 
+    public ?string $forcedMimeType = null;
+
     #[On('filament-media-library::open-formatter-attachment-modal')]
     public function setAttachment(string $uuid, ?array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
+
+        $this->forcedMimeType = config(
+            'filament-media-library.force-extension.mime-type',
+            $this->attachment->mime_type,
+        );
 
         $formats = Collection::wrap($formats ?? Formats::mapToClasses())
             ->map(fn ($format) => $format::make())

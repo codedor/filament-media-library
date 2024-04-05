@@ -55,7 +55,7 @@
                                 width: this.currentFormat.width,
                                 height: this.currentFormat.height,
                             })
-                            .toDataURL('{{ $attachment->mime_type }}'),
+                            .toDataURL('{{ $forcedMimeType ?? "image/jpg" }}'),
                     })
                 },
                 setFormat (key) {
