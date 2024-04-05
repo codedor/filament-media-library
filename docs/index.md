@@ -91,9 +91,8 @@ return [
             'ogg',
         ],
     ],
+    'temporary_directory_path' => storage_path('filament-media-library/tmp'),
 ];
-
-
 ```
 
 ### Extensions
@@ -110,6 +109,37 @@ This configuration can be adjusted as desired.
 
 The format generation action is a button that will generate all the formats for the given attachment.
 This can be used on the Media Library as a bulk action. This action can be disabled by setting the `enable-format-generate-action` to false.
+
+### S3 support
+
+To use S3 as a storage, you can use the `Codedor\MediaLibrary\Conversions\S3Conversion` class.
+
+```php
+return [
+    'conversion' => \Codedor\MediaLibrary\Conversions\S3Conversion::class,
+    // ...
+];
+```
+
+Then switch your filesystem to S3 in the `config/filesystems.php` file.
+
+```php
+return [
+    'disks' => [
+        'public' => [
+            'visibility' => 'public',
+            'driver' => 's3',
+            'endpoint' => env('AWS_ENDPOINT', 'http://127.0.0.1:9000'),
+            'use_path_style_endpoint' => true,
+            'key' => env('AWS_KEY'),
+            'secret' => env('AWS_SECRET'),
+            'region' => env('AWS_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'root' => 'public',
+        ],
+    ],
+];
+```
 
 ## Formats
 

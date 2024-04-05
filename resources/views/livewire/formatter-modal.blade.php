@@ -41,6 +41,7 @@
                         ready() {
                             window.cropper.setData(previousData || {})
                         },
+                        checkCrossOrigin: false,
                     })
                 },
                 submit () {
@@ -79,6 +80,7 @@
                             id="filament-media-library::formatter"
                             wire:key="filament-media-library::formatter-{{ $attachment->id }}"
                             style="max-width: 100%; max-height: 68vh"
+                            crossorigin="anonymous"
                         >
                     </div>
 

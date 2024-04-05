@@ -42,7 +42,16 @@ trait HasFormats
             return null;
         }
 
-        return $attachment->getStorage()->url(
+        $disk = $attachment->getStorage();
+
+        if ($disk->providesTemporaryUrls()) {
+            return $disk->temporaryUrl(
+                "{$attachment->directory}/{$format->filename($attachment)}",
+                now()->addMinutes(5)
+            );
+        }
+
+        return $disk->url(
             "{$attachment->directory}/{$format->filename($attachment)}"
         );
     }
