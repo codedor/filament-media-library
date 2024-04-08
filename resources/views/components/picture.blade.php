@@ -7,21 +7,33 @@
         :$alt
     />
 @elseif ($image && $format)
-    <picture class="{{ $pictureClass }}" x-data>
+    <picture class="{{ $pictureClass }}" x-data="{ intersected: false }">
         @if ($formats)
             @foreach ($formats as $breakpoint => $mobileFormat)
                 @if ($hasWebp)
                     <source
                         media="(max-width: {{ $breakpoint ?? '576' }}px)"
                         type="image/webp"
-                        srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
+                        @if ($lazyload)
+                            srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
+                            data-srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
+                            x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset; intersected = true"
+                        @else
+                            srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
+                        @endif
                     >
                 @endif
 
                 <source
                     media="(max-width: {{ $breakpoint ?? '576' }}px)"
                     type="{{ $image->mime_type }}"
-                    srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
+                    @if ($lazyload)
+                        srcset="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
+                        data-srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
+                        x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset; intersected = true"
+                    @else
+                        srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
+                    @endif
                 >
             @endforeach
         @endif
@@ -32,7 +44,7 @@
                 @if ($lazyload)
                     srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
                     data-srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-                    x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset"
+                    x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset; intersected = true"
                 @else
                     srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
                 @endif
@@ -50,6 +62,7 @@
                 src="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
                 data-src="{{ $image->getFormatOrOriginal($format) }}"
                 x-intersect.{{ $intersectModifier }}="$el.src = $el.dataset.src"
+                x-bind:class="{ 'lazyloaded': intersected }"
             @else
                 src="{{ $image->getFormatOrOriginal($format) }}"
             @endif
