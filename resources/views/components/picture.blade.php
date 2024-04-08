@@ -14,26 +14,14 @@
                     <source
                         media="(max-width: {{ $breakpoint ?? '576' }}px)"
                         type="image/webp"
-                        @if ($lazyload)
-                            srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
-                            data-srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
-                            x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset; intersected = true"
-                        @else
-                            srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
-                        @endif
+                        srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
                     >
                 @endif
 
                 <source
                     media="(max-width: {{ $breakpoint ?? '576' }}px)"
                     type="{{ $image->mime_type }}"
-                    @if ($lazyload)
-                        srcset="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
-                        data-srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
-                        x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset; intersected = true"
-                    @else
-                        srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
-                    @endif
+                    srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
                 >
             @endforeach
         @endif
