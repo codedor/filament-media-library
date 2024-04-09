@@ -1,8 +1,9 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
-        "dev:styles": "npx tailwindcss -i resources/css/plugin.css -o dist/css/laravel-media.css --postcss --watch",
-        "build:styles": "npx tailwindcss -i resources/css/plugin.css -o dist/css/laravel-media.css --postcss --minify && npm run purge",
+        "dev:styles": "npx tailwindcss -i resources/css/plugin.css -o dist/css/laravel-media.css --postcss --watch && vite",
+        "build:styles": "npx tailwindcss -i resources/css/plugin.css -o dist/css/laravel-media.css --postcss --minify && npm run purge && vite build",
         "purge": "filament-purge -i dist/css/laravel-media.css -o dist/css/laravel-media.css",
         "dev": "npm-run-all --parallel dev:*",
         "build": "npm-run-all build:*"
@@ -16,10 +17,13 @@
         "postcss": "^8.4.14",
         "prettier": "^2.7.1",
         "prettier-plugin-tailwindcss": "^0.1.13",
+        "sass": "^1.74.1",
         "tailwindcss": "^3.2.4"
     },
     "dependencies": {
         "@ryangjchandler/alpine-tooltip": "^1.2.0",
-        "cropperjs": "^1.5.13"
+        "cropperjs": "^1.5.13",
+        "laravel-vite-plugin": "^1.0.2",
+        "vite": "^5.2.8"
     }
 }

@@ -7,7 +7,7 @@
         :$alt
     />
 @elseif ($image && $format)
-    <picture class="{{ $pictureClass }}">
+    <picture class="{{ $pictureClass }}" x-data="{ intersected: false }">
         @if ($formats)
             @foreach ($formats as $breakpoint => $mobileFormat)
                 <source
@@ -21,8 +21,9 @@
         <source
             type="image/webp"
             @if ($lazyload)
-                srcset="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
-                data-srcset="{{ $image->getFormatOrOriginal($format) }}"
+                srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
+                data-srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
+                x-intersect.{{ $intersectModifier }}="$el.srcset = $el.dataset.srcset; intersected = true"
             @else
                 srcset="{{ $image->getFormatOrOriginal($format) }}"
             @endif
@@ -38,6 +39,8 @@
             @if ($lazyload)
                 src="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
                 data-src="{{ $image->getFormatOrOriginal($format) }}"
+                x-intersect.{{ $intersectModifier }}="$el.src = $el.dataset.src"
+                x-bind:class="{ 'lazyloaded': intersected }"
             @else
                 src="{{ $image->getFormatOrOriginal($format) }}"
             @endif

@@ -19,8 +19,9 @@ class Picture extends Component
         public array $formats = [],
         public string $pictureClass = '',
         public string $class = '',
+        public bool $lazyload = false,
+        public string $intersectModifier = 'threshold.05',
         public ?string $title = '',
-        public bool $lazyload = true,
         public ?string $lazyloadInitialFormat = 'thumbnail',
     ) {
         if ($this->format) {

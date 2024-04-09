@@ -1,0 +1,7 @@
+{
+  "resources/sass/picture.scss": {
+    "file": "assets/picture.css",
+    "src": "resources/sass/picture.scss",
+    "isEntry": true
+  }
+}
