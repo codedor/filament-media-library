@@ -55,6 +55,10 @@ php artisan migrate
 
 Follow the [Formats](##formats) section to create and use formats.
 
+### Custom css
+
+The picture component uses custom styling, so include `@import 'PATH_TO_VENDOR/codedor/filament-media-library/resources/dist/assets/picture.css';` in your css file.
+
 ## Configuration
 
 The basic config file consists of the following contents:
