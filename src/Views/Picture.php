@@ -5,14 +5,11 @@ namespace Codedor\MediaLibrary\Views;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\WebP;
 use Illuminate\View\Component;
 
 class Picture extends Component
 {
     public ?Format $formatClass = null;
-
-    public bool $hasWebp = false;
 
     public function __construct(
         public Attachment $image,
@@ -29,10 +26,6 @@ class Picture extends Component
     ) {
         if ($this->format) {
             $this->getFormatClass();
-        }
-
-        if ($image->exists) {
-            $this->hasWebp = method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format);
         }
     }
 
@@ -76,13 +69,6 @@ class Picture extends Component
     {
         $filename = $this->formatClass->filename($this->image);
         $path = "{$this->image->absolute_directory_path}/{$filename}";
-
-        if (WebP::isEnabled()) {
-            $path = WebP::path(
-                $path,
-                $this->image->extension
-            );
-        }
 
         if (file_exists($path)) {
             $dimensions = getimagesize($path);

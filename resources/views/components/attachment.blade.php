@@ -88,7 +88,7 @@
             overflow-hidden bg-center bg-contain bg-no-repeat bg-gray-200 dark:bg-gray-800 media
         ']) }}
     >
-        <abbr title="{{ $attachment->filename }}">
+        <abbr class="absolute inset-0 z-[1]" title="{{ $attachment->filename }}">
             <span class="invisible">{{ $attachment->filename }}</span>
         </abbr>
         @if($attachment->type !== 'image')
