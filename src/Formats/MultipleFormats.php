@@ -3,17 +3,14 @@
 namespace Codedor\MediaLibrary\Formats;
 
 use Closure;
-use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Facades\Formats;
-use Codedor\MediaLibrary\Models\Attachment;
-use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Spatie\Image\Manipulations;
 
 abstract class MultipleFormats
 {
     public array $models = [];
+
     public string $descriptionPrefix = '';
 
     abstract public function definitions(): Collection;
@@ -29,7 +26,9 @@ abstract class MultipleFormats
                     $fields = null;
                 }
 
-                $format = new class($fields) extends Format {};
+                $format = new class($fields) extends Format
+                {
+                };
 
                 $format->setName($formatName);
                 $format->setDescription("{$this->descriptionPrefix} {$key}");
