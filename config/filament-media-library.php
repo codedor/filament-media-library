@@ -30,11 +30,5 @@ return [
             'zip',
             'odf',
         ],
-        'video' => [
-            'mp4',
-            'm4v',
-            'webm',
-            'ogg',
-        ],
     ],
 ];
