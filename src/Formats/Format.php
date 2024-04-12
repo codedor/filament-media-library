@@ -6,6 +6,7 @@ use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Spatie\Image\Manipulations;
 
@@ -15,20 +16,25 @@ abstract class Format implements Arrayable
 
     public bool $shownInFormatter = true;
 
-    protected string $name;
+    protected string $name = '';
 
-    protected string $description;
+    protected string $description = '';
 
-    abstract public function definition(): Manipulations;
+    public function definition(): Manipulations
+    {
+        return $this->manipulations;
+    }
 
-    abstract public function registerModelsForFormatter(): void;
+    public function registerModelsForFormatter(): void
+    {
+    }
 
-    public static function make(string $column = ''): static
+    public static function make(?string $column = ''): static
     {
         return new static($column);
     }
 
-    final public function __construct(protected string $column = '')
+    final public function __construct(protected ?string $column = '')
     {
         $this->manipulations = new Manipulations();
         $this->definition();
@@ -78,6 +84,13 @@ abstract class Format implements Arrayable
         return $this->name;
     }
 
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
     public function column(): string
     {
         return $this->column;
@@ -113,6 +126,13 @@ abstract class Format implements Arrayable
         return $this->description;
     }
 
+    public function setDescription(string $description): Format
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
     public function shownInFormatter(): bool
     {
         return $this->shownInFormatter;
@@ -125,6 +145,12 @@ abstract class Format implements Arrayable
 
     public function registerFor(string $class, string|array|null $fields = null): void
     {
-        Formats::registerFor($this::class, $class, $fields);
+        if (! $fields) {
+            Formats::registerFor(new static(), $class);
+        } else {
+            foreach (Arr::wrap($fields) as $field) {
+                Formats::registerFor(new static($field), $class);
+            }
+        }
     }
 }

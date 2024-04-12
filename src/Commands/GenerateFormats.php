@@ -29,6 +29,7 @@ class GenerateFormats extends Command
      */
     public function handle(): void
     {
+        dd(Formats::get(Attachment::class));
         $formats = Formats::mapToKebab()->when(
             $this->option('format'),
             fn ($formats) => $formats->only($this->option('format'))

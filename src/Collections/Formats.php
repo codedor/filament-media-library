@@ -10,17 +10,11 @@ use Illuminate\Support\Collection;
 
 class Formats extends Collection
 {
-    public function registerFor(string $format, string $model, string|array|null $fields = null)
+    public function registerFor(Format|string $format, string $model)
     {
         $formats = $this->get($model) ?? collect();
 
-        if (is_null($fields)) {
-            $formats->push(new $format);
-        }
-
-        foreach (Arr::wrap($fields) as $field) {
-            $formats->push(new $format($field));
-        }
+        $formats->push($format);
 
         $this->put($model, $formats);
 
