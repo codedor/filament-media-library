@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.1.0 - 2024-04-16
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.3.1 to 2.4 by @dependabot in https://github.com/codedor/filament-media-library/pull/33
+* update background & text color placeholder by @jyrkidn in https://github.com/codedor/filament-media-library/pull/34
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v1.0.14...v1.1.0
+
 ## v1.0.14 - 2024-03-28
 
 ### What's Changed
