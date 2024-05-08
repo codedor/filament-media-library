@@ -4,7 +4,6 @@ namespace Codedor\MediaLibrary\Conversions;
 
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\WebP;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 
@@ -34,17 +33,6 @@ class LocalConversion implements Conversion
             Image::load($attachment->absolute_file_path)
                 ->manipulate($format->definition())
                 ->save($savePath);
-        }
-
-        if (
-            WebP::isEnabled() && (
-                $force ||
-                ! $attachment->getStorage()->exists(WebP::path($savePath, $attachment->extension))
-            )
-        ) {
-            Image::load($attachment->absolute_file_path)
-                ->manipulate($format->definition())
-                ->save(WebP::path($savePath, $attachment->extension));
         }
 
         return true;

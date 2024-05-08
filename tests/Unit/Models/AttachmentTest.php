@@ -3,7 +3,6 @@
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -31,17 +30,18 @@ it('deletes root directory when attachment is removed from db', function () {
 });
 
 it('returns the right url for a format', function () {
-    Formats::register([TestHero::class, TestHeroWebp::class]);
+    Formats::register([TestHero::class]);
 
     /** @var Attachment $attachment */
     $attachment = createAttachment([
         'type' => 'image',
         'extension' => 'jpg',
         'disk' => 'public',
+        'name' => 'filename',
     ]);
 
     expect($attachment->getFormat('test-hero'))
-        ->toEndWith("test_hero__$attachment->filename");
+        ->toEndWith('test_hero__filename.webp');
 });
 
 it('returns null for a format that does not exist', function () {
@@ -64,6 +64,6 @@ it('returns the original image when unknown format is requested', function () {
         'disk' => 'public',
     ]);
 
-    expect($attachment->getFormatOrOriginal('test-hero'))
+    expect($attachment->getFormatOrOriginal('test-notfound'))
         ->toEndWith("$attachment->filename");
 });

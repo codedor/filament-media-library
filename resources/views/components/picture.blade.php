@@ -10,33 +10,23 @@
     <picture class="{{ $pictureClass }}">
         @if ($formats)
             @foreach ($formats as $breakpoint => $mobileFormat)
-                @if ($hasWebp)
-                    <source
-                        media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                        type="image/webp"
-                        srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
-                    >
-                @endif
-
                 <source
                     media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                    type="{{ $image->mime_type }}"
+                    type="image/webp"
                     srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
                 >
             @endforeach
         @endif
 
-        @if ($hasWebp)
-            <source
-                type="image/webp"
-                @if ($lazyload)
-                    srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
-                    data-srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-                @else
-                    srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-                @endif
-            >
-        @endif
+        <source
+            type="image/webp"
+            @if ($lazyload)
+                srcset="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
+                data-srcset="{{ $image->getFormatOrOriginal($format) }}"
+            @else
+                srcset="{{ $image->getFormatOrOriginal($format) }}"
+            @endif
+        >
 
         <img
             alt="{{ $alt }}"

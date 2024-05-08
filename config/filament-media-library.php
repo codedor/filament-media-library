@@ -5,7 +5,10 @@ use Codedor\MediaLibrary\Conversions\LocalConversion;
 return [
     'conversion' => LocalConversion::class,
     'enable-format-generate-action' => true,
-    'enable-webp-generation' => true,
+    'force-format-extension' => [
+        'extension' => 'webp',
+        'mime-type' => 'image/webp',
+    ],
     'extensions' => [
         'image' => [
             'jpg',
