@@ -53,9 +53,7 @@ class MediaLibraryPlugin implements Plugin
         ], 'codedor/filament-media-library');
     }
 
-    public function boot(Panel $panel): void
-    {
-    }
+    public function boot(Panel $panel): void {}
 
     public function attachmentResource(bool $condition = true): static
     {

@@ -8,7 +8,5 @@ use Codedor\MediaLibrary\Models\Attachment;
 
 class TestConversion implements Conversion
 {
-    public function convert(Attachment $attachment, Format $format, bool $force = false): bool
-    {
-    }
+    public function convert(Attachment $attachment, Format $format, bool $force = false): bool {}
 }
