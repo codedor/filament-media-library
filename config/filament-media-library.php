@@ -6,6 +6,7 @@ return [
     'conversion' => LocalConversion::class,
     'enable-format-generate-action' => true,
     'enable-webp-generation' => true,
+    'format-queue' => 'default',
     'extensions' => [
         'image' => [
             'jpg',

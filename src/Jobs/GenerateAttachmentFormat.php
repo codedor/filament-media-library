@@ -22,7 +22,7 @@ class GenerateAttachmentFormat implements ShouldQueue
         public Format $format,
         public bool $force = false,
     ) {
-        //
+        $this->onQueue(config('filament-media-library.format-queue', 'default'));
     }
 
     public function handle()
