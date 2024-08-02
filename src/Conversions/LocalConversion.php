@@ -19,7 +19,7 @@ class LocalConversion implements Conversion
         $formatName = $format->filename($attachment);
         $savePath = $attachment->absolute_directory_path . '/' . $formatName;
 
-        if (!empty($format->definition()->toArray()['format'])) {
+        if (! empty($format->definition()->toArray()['format'])) {
             $savePath = Str::replaceLast(
                 $attachment->extension,
                 $format->definition()->toArray()['format'],
