@@ -3,7 +3,7 @@
 namespace Codedor\MediaLibrary\Formats;
 
 use Codedor\MediaLibrary\Models\Attachment;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
 
 class Thumbnail extends Format
 {
@@ -15,7 +15,7 @@ class Thumbnail extends Format
 
     public function definition(): Manipulations
     {
-        return $this->manipulations->fit(Manipulations::FIT_CROP, 350, 350);
+        return $this->manipulations->fit(Fit::Crop, 350, 350);
     }
 
     public function registerModelsForFormatter(): void

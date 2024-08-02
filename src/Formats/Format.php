@@ -7,7 +7,6 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
-use Spatie\Image\Manipulations;
 
 abstract class Format implements Arrayable
 {
