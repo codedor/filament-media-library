@@ -86,12 +86,16 @@ abstract class Format implements Arrayable
 
     public function width(): ?string
     {
-        return $this->argument('fit')[1] ?? $this->argument('width');
+        return $this->argument('fit')[1]
+            ?? $this->argument('width')[0]
+            ?? null;
     }
 
     public function height(): ?string
     {
-        return $this->argument('fit')[2] ?? $this->argument('height');
+        return $this->argument('fit')[2]
+            ?? $this->argument('height')[0]
+            ?? null;
     }
 
     public function aspectRatio(): float
