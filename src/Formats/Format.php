@@ -7,6 +7,7 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
+use Spatie\Image\Drivers\ImageDriver;
 
 abstract class Format implements Arrayable
 {
@@ -18,7 +19,7 @@ abstract class Format implements Arrayable
 
     protected string $description;
 
-    abstract public function definition(): Manipulations;
+    abstract public function definition(): Manipulations|ImageDriver;
 
     abstract public function registerModelsForFormatter(): void;
 
