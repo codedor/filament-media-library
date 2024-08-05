@@ -8,9 +8,9 @@ use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\WebP;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
-use Intervention\Image\Facades\Image;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Spatie\Image\Image;
 
 class FormatterModal extends Component
 {
@@ -67,8 +67,8 @@ class FormatterModal extends Component
         $this->attachment->getStorage()->put("{$this->attachment->directory}/{$filename}", $crop);
 
         if (WebP::isEnabled()) {
-            Image::make("{$this->attachment->absolute_directory_path}/{$filename}")
-                ->encode('webp')
+            Image::load("{$this->attachment->absolute_directory_path}/{$filename}")
+                ->format('webp')
                 ->save(WebP::path(
                     "{$this->attachment->absolute_directory_path}/{$filename}",
                     $this->attachment->extension

@@ -3,8 +3,9 @@
 namespace Codedor\MediaLibrary\Tests\TestFormats;
 
 use Codedor\MediaLibrary\Formats\Format;
+use Codedor\MediaLibrary\Formats\Manipulations;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Enums\Fit;
 
 class TestNoHeight extends Format
 {
@@ -13,7 +14,7 @@ class TestNoHeight extends Format
     public function definition(): Manipulations
     {
         return $this->manipulations
-            ->fit(Manipulations::FIT_CROP, 100)
+            ->fit(Fit::Crop, 100)
             ->sepia();
     }
 

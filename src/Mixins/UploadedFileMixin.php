@@ -7,13 +7,13 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Thumbnail;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 /**
- * @mixin UploadedFile
+ * @mixin TemporaryUploadedFile
  */
 class UploadedFileMixin
 {

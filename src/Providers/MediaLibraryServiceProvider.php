@@ -63,7 +63,7 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
         $this->registerLivewireComponents();
         $this->registerBladeComponents();
 
-        UploadedFile::mixin(new UploadedFileMixin());
+        UploadedFile::mixin(new UploadedFileMixin);
     }
 
     protected function registerLivewireComponents()
@@ -84,7 +84,7 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
     {
         parent::packageRegistered();
 
-        $this->app->singleton(Formats::class, fn () => new Formats());
+        $this->app->singleton(Formats::class, fn () => new Formats);
 
         $this->app->bind(Conversion::class, config(
             "{$this->packageName()}.conversion",
