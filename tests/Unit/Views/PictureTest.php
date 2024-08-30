@@ -22,7 +22,7 @@ it('can render the picture component with placeholder', function () {
         'pictureClass' => 'test',
         'image' => createAttachment(),
     ])
-        ->assertSee('https://via.placeholder.com/100x100/21348c/ffffff.webp?text=Test Hero 100 x 100');
+        ->assertSee('https://via.placeholder.com/100x100/edeced/edeced.webp');
 });
 
 it('can render the picture component with an image and format', function () {
