@@ -22,8 +22,6 @@ use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 trait CanUploadAttachment
 {
-    use HasTranslations;
-
     protected bool|Closure $multiple = false;
 
     protected function setUp(): void
@@ -52,7 +50,7 @@ trait CanUploadAttachment
                         return $attachmentId;
                     }
 
-                    $attachment->update($this->mutateFormDataBeforeSave($meta));
+                    $attachment->update($this->mutateData($meta));
 
                     if (array_key_exists('tags', $meta)) {
                         $attachment->tags()->sync($meta['tags']);
@@ -167,5 +165,21 @@ trait CanUploadAttachment
                     ->flatten()
                     ->toArray();
             });
+    }
+
+    protected function mutateData(array $data): array
+    {
+        $model = app($this->getModel());
+        foreach (Arr::except($data, $model->getFillable()) as $locale => $values) {
+            if (! is_array($values)) {
+                continue;
+            }
+
+            foreach (Arr::only($values, $model->getTranslatableAttributes()) as $key => $value) {
+                $data[$key][$locale] = $value;
+            }
+        }
+
+        return $data;
     }
 }
