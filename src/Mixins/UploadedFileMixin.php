@@ -86,7 +86,7 @@ class UploadedFileMixin
     {
         return function (): string {
             foreach (config('filament-media-library.extensions', []) as $type => $extensions) {
-                if (in_array($this->getClientOriginalExtension(), $extensions)) {
+                if (in_array(Str::lower($this->getClientOriginalExtension()), $extensions)) {
                     return $type;
                 }
             }
