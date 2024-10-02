@@ -26,6 +26,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Codedor\MediaLibrary\Actions\AttachmentActions;
+use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
+use Illuminate\Support\Collection;
 
 class AttachmentResource extends Resource
 {
@@ -179,10 +182,24 @@ class AttachmentResource extends Resource
 
                 Tables\Actions\EditAction::make(),
 
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make()
+                    ->using(function (Attachment $record) {
+                        try {
+                            AttachmentActions::delete($record);
+                        } catch (DeleteFailedException $e) {
+                            static::handleDeleteFailedException($e);
+                        }
+                    }),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->action(function (Collection $records) {
+                        try {
+                            AttachmentActions::delete($records);
+                        } catch (DeleteFailedException $e) {
+                            static::handleDeleteFailedException($e);
+                        }
+                    }),
                 Tables\Actions\BulkAction::make('generate-formats')
                     ->label('Generate formats')
                     ->icon('heroicon-o-scissors')
@@ -244,5 +261,25 @@ class AttachmentResource extends Resource
         return $query
             ->search($search)
             ->whereDisk('public');
+    }
+
+    public static function handleDeleteFailedException(DeleteFailedException $exception)
+    {
+        Notification::make()
+            ->title(__('filament-media-library::attachment.delete failed'))
+            ->warning()
+            ->body(function () use ($exception) {
+                $body = '';
+                foreach ($exception->getFailedRecords() as $attachment => $relatedRecords) {
+                    $body .= "Failed to delete: " . $attachment->name . "<br>";
+                    foreach ($relatedRecords as $record) {
+                        $resource = class_basename($record);
+                        $body .= "- <strong>$resource:</strong> $record->working_title<br>";
+                    }
+                    $body .= "<br>";
+                }
+                return $body;
+            })
+            ->send();
     }
 }
