@@ -5,9 +5,8 @@ namespace Codedor\MediaLibrary\Actions;
 use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
-use Filament\Notifications\Notification;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Schema;
 
 class AttachmentActions
 {
@@ -31,7 +30,6 @@ class AttachmentActions
         }
     }
 
-
     private static function findRelatedRecords(Attachment $record)
     {
         $records = collect();
@@ -41,7 +39,7 @@ class AttachmentActions
             $columns = Schema::getColumnListing($table);
 
             $model->fields->each(function ($field) use ($modelInstance, $record, $columns, &$records) {
-                if (!in_array($field, $columns)) {
+                if (! in_array($field, $columns)) {
                     return;
                 }
 
@@ -50,7 +48,7 @@ class AttachmentActions
                     ->each(fn ($record1) => $records->push($record1));
             });
         });
+
         return $records;
     }
-
 }

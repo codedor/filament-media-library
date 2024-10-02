@@ -2,6 +2,8 @@
 
 namespace Codedor\MediaLibrary\Resources;
 
+use Codedor\MediaLibrary\Actions\AttachmentActions;
+use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
@@ -23,12 +25,10 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Codedor\MediaLibrary\Actions\AttachmentActions;
-use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
-use Illuminate\Support\Collection;
 
 class AttachmentResource extends Resource
 {
@@ -271,13 +271,14 @@ class AttachmentResource extends Resource
             ->body(function () use ($exception) {
                 $body = '';
                 foreach ($exception->getFailedRecords() as $attachment => $relatedRecords) {
-                    $body .= "Failed to delete: " . $attachment->name . "<br>";
+                    $body .= 'Failed to delete: ' . $attachment->name . '<br>';
                     foreach ($relatedRecords as $record) {
                         $resource = class_basename($record);
                         $body .= "- <strong>$resource:</strong> $record->working_title<br>";
                     }
-                    $body .= "<br>";
+                    $body .= '<br>';
                 }
+
                 return $body;
             })
             ->send();
