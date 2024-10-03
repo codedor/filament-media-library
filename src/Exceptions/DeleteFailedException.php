@@ -5,7 +5,7 @@ namespace Codedor\MediaLibrary\Exceptions;
 use Illuminate\Support\Collection;
 use Throwable;
 
-class DeleteFailedException
+class DeleteFailedException extends \Exception
 {
     protected $failedRecords;
 

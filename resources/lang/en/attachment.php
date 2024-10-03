@@ -9,4 +9,5 @@ return [
     'no tags for this attachment' => 'No tags selected',
     'size' => 'Filesize',
     'created at' => 'Created',
+    'delete failed' => 'Failed to delete attachment',
 ];

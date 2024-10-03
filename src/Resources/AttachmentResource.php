@@ -270,8 +270,7 @@ class AttachmentResource extends Resource
             ->warning()
             ->body(function () use ($exception) {
                 $body = '';
-                foreach ($exception->getFailedRecords() as $attachment => $relatedRecords) {
-                    $body .= 'Failed to delete: ' . $attachment->name . '<br>';
+                foreach ($exception->getFailedRecords() as $relatedRecords) {
                     foreach ($relatedRecords as $record) {
                         $resource = class_basename($record);
                         $body .= "- <strong>$resource:</strong> $record->working_title<br>";

@@ -19,7 +19,7 @@ class AttachmentActions
             $relatedRecords = self::findRelatedRecords($record);
 
             if ($relatedRecords->isNotEmpty()) {
-                $failedRecords->put($record, $relatedRecords);
+                $failedRecords->put($record->getKey(), $relatedRecords);
             } else {
                 $record->delete();
             }
