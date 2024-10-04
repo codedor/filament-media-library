@@ -7,7 +7,7 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Drivers\ImageDriver;
 
 abstract class Format implements Arrayable
 {
@@ -19,7 +19,7 @@ abstract class Format implements Arrayable
 
     protected string $description;
 
-    abstract public function definition(): Manipulations;
+    abstract public function definition(): Manipulations|ImageDriver;
 
     abstract public function registerModelsForFormatter(): void;
 
@@ -86,12 +86,16 @@ abstract class Format implements Arrayable
 
     public function width(): ?string
     {
-        return $this->argument('width');
+        return $this->argument('fit')[1]
+            ?? $this->argument('width')[0]
+            ?? null;
     }
 
     public function height(): ?string
     {
-        return $this->argument('height');
+        return $this->argument('fit')[2]
+            ?? $this->argument('height')[0]
+            ?? null;
     }
 
     public function aspectRatio(): float

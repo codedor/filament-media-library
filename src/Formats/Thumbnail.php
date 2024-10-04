@@ -3,7 +3,8 @@
 namespace Codedor\MediaLibrary\Formats;
 
 use Codedor\MediaLibrary\Models\Attachment;
-use Spatie\Image\Manipulations;
+use Spatie\Image\Drivers\ImageDriver;
+use Spatie\Image\Enums\Fit;
 
 class Thumbnail extends Format
 {
@@ -13,9 +14,9 @@ class Thumbnail extends Format
 
     protected string $description = 'Used in the CMS to display low-res images';
 
-    public function definition(): Manipulations
+    public function definition(): Manipulations|ImageDriver
     {
-        return $this->manipulations->fit(Manipulations::FIT_CROP, 350, 350);
+        return $this->manipulations->fit(Fit::Crop, 350, 350);
     }
 
     public function registerModelsForFormatter(): void
