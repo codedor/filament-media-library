@@ -38,7 +38,7 @@ if (! function_exists('get_resource_url_by_model')) {
         $resourceClass = get_class($model);
 
         $filamentResource = collect(Filament::getResources())
-            ->first(function (Resource $filamentResource) use ($resourceClass) {
+            ->first(function ($filamentResource) use ($resourceClass) {
                 return $filamentResource::getModel() === $resourceClass;
             });
 
