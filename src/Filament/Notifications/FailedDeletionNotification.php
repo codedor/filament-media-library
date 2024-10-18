@@ -3,7 +3,6 @@
 namespace Codedor\MediaLibrary\Filament\Notifications;
 
 use Filament\Notifications\Notification;
-use Illuminate\Support\Collection;
 
 class FailedDeletionNotification extends Notification
 {
@@ -41,7 +40,7 @@ class FailedDeletionNotification extends Notification
 
     protected static function formatRecordLink(string $resource, ?string $url, string $title): string
     {
-        if (!$url) {
+        if (! $url) {
             return "- <strong>{$resource}:</strong> {$title}<br>";
         }
 
