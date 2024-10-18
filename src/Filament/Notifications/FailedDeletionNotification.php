@@ -9,9 +9,10 @@ class FailedDeletionNotification extends Notification
 {
     protected DeleteFailedException $exception;
 
-    public function exception(DeleteFailedException $exception) : static
+    public function exception(DeleteFailedException $exception): static
     {
         $this->exception = $exception;
+
         return $this;
     }
 
