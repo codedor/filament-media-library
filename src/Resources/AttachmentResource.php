@@ -188,7 +188,9 @@ class AttachmentResource extends Resource
                         try {
                             AttachmentActions::delete($record);
                         } catch (DeleteFailedException $e) {
-                            FailedDeletionNotification::make($e)->send();
+                            FailedDeletionNotification::make()
+                                ->exception($e)
+                                ->send();
                         }
                     }),
             ])
@@ -198,7 +200,9 @@ class AttachmentResource extends Resource
                         try {
                             AttachmentActions::delete($records);
                         } catch (DeleteFailedException $e) {
-                            FailedDeletionNotification::make($e)->send();
+                            FailedDeletionNotification::make()
+                                ->exception($e)
+                                ->send();
                         }
                     }),
                 Tables\Actions\BulkAction::make('generate-formats')
