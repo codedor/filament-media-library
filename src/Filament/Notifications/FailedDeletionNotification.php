@@ -4,6 +4,7 @@ namespace Codedor\MediaLibrary\Filament\Notifications;
 
 use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Collection;
 
 class FailedDeletionNotification extends Notification
 {
@@ -21,10 +22,10 @@ class FailedDeletionNotification extends Notification
         $this
             ->title(__('filament-media-library::attachment.delete failed'))
             ->warning()
-            ->body(fn () => static::formatFailedRecords($this->exception->getFailedRecords() ?? []));
+            ->body(fn () => static::formatFailedRecords($this->exception->getFailedRecords() ?? collect()));
     }
 
-    protected static function formatFailedRecords(array $failedRecords): string
+    protected static function formatFailedRecords(Collection $failedRecords): string
     {
         return collect($failedRecords)
             ->map(function ($relatedRecords) {
