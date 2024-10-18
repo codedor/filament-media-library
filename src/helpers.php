@@ -2,8 +2,8 @@
 
 use Codedor\MediaLibrary\Facades\Formats;
 use Filament\Facades\Filament;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Resources\Resource;
+use Illuminate\Database\Eloquent\Model;
 
 if (! function_exists('get_placeholder_url_by_format')) {
     function get_placeholder_url_by_format($format)
