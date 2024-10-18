@@ -5,6 +5,7 @@ namespace Codedor\MediaLibrary\Resources;
 use Codedor\MediaLibrary\Actions\AttachmentActions;
 use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
 use Codedor\MediaLibrary\Facades\Formats;
+use Codedor\MediaLibrary\Filament\Notifications\FailedDeletionNotification;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
@@ -187,7 +188,7 @@ class AttachmentResource extends Resource
                         try {
                             AttachmentActions::delete($record);
                         } catch (DeleteFailedException $e) {
-                            static::handleDeleteFailedException($e);
+                            FailedDeletionNotification::make($e)->send();
                         }
                     }),
             ])
@@ -197,7 +198,7 @@ class AttachmentResource extends Resource
                         try {
                             AttachmentActions::delete($records);
                         } catch (DeleteFailedException $e) {
-                            static::handleDeleteFailedException($e);
+                            FailedDeletionNotification::make($e)->send();
                         }
                     }),
                 Tables\Actions\BulkAction::make('generate-formats')
@@ -261,25 +262,5 @@ class AttachmentResource extends Resource
         return $query
             ->search($search)
             ->whereDisk('public');
-    }
-
-    public static function handleDeleteFailedException(DeleteFailedException $exception)
-    {
-        Notification::make()
-            ->title(__('filament-media-library::attachment.delete failed'))
-            ->warning()
-            ->body(function () use ($exception) {
-                $body = '';
-                foreach ($exception->getFailedRecords() as $relatedRecords) {
-                    foreach ($relatedRecords as $record) {
-                        $resource = class_basename($record);
-                        $body .= "- <strong>$resource:</strong> $record->working_title<br>";
-                    }
-                    $body .= '<br>';
-                }
-
-                return $body;
-            })
-            ->send();
     }
 }
