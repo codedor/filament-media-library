@@ -22,7 +22,7 @@ class FailedDeletionNotification extends Notification
         $this
             ->title(__('filament-media-library::attachment.delete failed'))
             ->warning()
-            ->body(fn () => static::formatFailedRecords($this->exception->getFailedRecords() ?? collect()));
+            ->body(fn () => static::formatFailedRecords($this->exception->getFailedRecords()));
     }
 
     protected static function formatFailedRecords(Collection $failedRecords): string
