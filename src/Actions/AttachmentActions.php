@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Schema;
 
 class AttachmentActions
 {
-    public static function delete($records)
+    public static function delete($records): void
     {
         $records = $records instanceof Collection ? $records : collect([$records]);
         $failedRecords = collect();
@@ -30,7 +30,7 @@ class AttachmentActions
         }
     }
 
-    private static function findRelatedRecords(Attachment $record)
+    private static function findRelatedRecords(Attachment $record): Collection
     {
         $records = collect();
         Formats::getRegisteredModelsWithFields()->each(function ($model) use ($record, &$records) {
