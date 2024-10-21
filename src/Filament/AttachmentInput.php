@@ -202,7 +202,8 @@ class AttachmentInput extends Field
             if (is_null($model)) {
                 $formats = Formats::flatten(1)->unique(fn (Format $format) => $format::class);
             } else {
-                $formats = Formats::get($model::class);
+                $formats = Formats::get($model::class)
+                    ->filter(fn (Format $format) => $format->column() === $this->getName());
             }
         }
 
