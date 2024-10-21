@@ -26,6 +26,7 @@ class FormatterModal extends Component
         $this->attachment = Attachment::find($uuid);
 
         $formats = Collection::wrap($formats ?? Formats::mapToClasses())
+            ->unique()
             ->map(fn ($format) => $format::make())
             ->filter(fn (Format $format) => $format->shownInFormatter())
             ->map->toArray();
