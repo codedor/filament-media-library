@@ -31,8 +31,8 @@ if (! function_exists('is_image_with_dimensions')) {
     }
 }
 
-if (! function_exists('get_resource_url_by_model')) {
-    function get_resource_url_by_model(Model $model, $action = 'index')
+if (! function_exists('get_resource_by_model')) {
+    function get_resource_by_model(Model $model)
     {
         $resourceClass = get_class($model);
 
@@ -45,10 +45,23 @@ if (! function_exists('get_resource_url_by_model')) {
             return null;
         }
 
+        return $filamentResource;
+    }
+}
+
+if (! function_exists('get_resource_url_by_model')) {
+    function get_resource_url_by_model(Model $model, $action = 'index')
+    {
+        $filamentResource = get_resource_by_model($model);
+
+        if (! $filamentResource) {
+            return null;
+        }
+
         if ($action === 'index') {
             return $filamentResource::getUrl();
         }
 
-        return $filamentResource::getUrl($action, $model);
+        return $filamentResource::getUrl($action, ['record' => $model]);
     }
 }
