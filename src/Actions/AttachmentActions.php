@@ -43,7 +43,7 @@ class AttachmentActions
                     return;
                 }
 
-                $modelRecords = $modelInstance->where($field, $record->id)
+                $modelInstance->where($field, $record->id)
                     ->get()
                     ->each(fn ($record1) => $records->push($record1));
             });

@@ -7,7 +7,7 @@ use Throwable;
 
 class DeleteFailedException extends \Exception
 {
-    protected $failedRecords;
+    protected Collection $failedRecords;
 
     public function __construct(Collection $failedRecords, $message = 'Delete operation failed for some records', $code = 0, ?Throwable $previous = null)
     {
@@ -15,7 +15,7 @@ class DeleteFailedException extends \Exception
         $this->failedRecords = $failedRecords;
     }
 
-    public function getFailedRecords()
+    public function getFailedRecords(): Collection
     {
         return $this->failedRecords;
     }
