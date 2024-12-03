@@ -75,7 +75,10 @@ class AttachmentInput extends Field
                 ->size('sm')
                 ->action(function (Set $set, array $arguments, $state) {
                     if ($this->isMultiple()) {
-                        $state = Arr::where($state, fn ($id) => $id !== $arguments['attachmentId']);
+                        $state = collect($state)
+                            ->reject(fn ($id) => $id === $arguments['attachmentId'])
+                            ->values();
+
                         $set($this->getStatePath(false), $state);
                     } else {
                         $set($this->getStatePath(false), null);
