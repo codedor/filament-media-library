@@ -79,7 +79,7 @@ class AttachmentInput extends Field
                             ->reject(fn ($id) => $id === $arguments['attachmentId'])
                             ->values();
 
-                        $set($this->getStatePath(false), $state);
+                        $set($this->getStatePath(false), $state->toArray());
                     } else {
                         $set($this->getStatePath(false), null);
                     }
