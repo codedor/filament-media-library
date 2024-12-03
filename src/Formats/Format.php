@@ -30,7 +30,7 @@ abstract class Format implements Arrayable
 
     final public function __construct(protected string $column = '')
     {
-        $this->manipulations = new Manipulations();
+        $this->manipulations = new Manipulations;
         $this->definition();
 
         $this->name = Str::headline(class_basename(static::class));
