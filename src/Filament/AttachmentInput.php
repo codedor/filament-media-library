@@ -7,6 +7,7 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Field;
@@ -137,6 +138,10 @@ class AttachmentInput extends Field
                         'isMultiple' => $component->isMultiple(),
                         'isGrid' => true,
                         'gridColumns' => 6,
+                        'relationFilters' => ['tags' => AttachmentTag::all()->map(fn ($tag) => [
+                            'id' => $tag->id,
+                            'name' => $tag->title,
+                        ])->toArray()],
                     ]);
                 }),
         ]);
