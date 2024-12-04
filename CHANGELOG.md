@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.0.3 - 2024-12-04
+
+### What's Changed
+
+* FIL001-147 add tags filter by @thibautdeg in https://github.com/codedor/filament-media-library/pull/45
+
+### New Contributors
+
+* @thibautdeg made their first contribution in https://github.com/codedor/filament-media-library/pull/45
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v2.0.2...v2.0.3
+
 ## v2.0.2 - 2024-12-03
 
 ### What's Changed
