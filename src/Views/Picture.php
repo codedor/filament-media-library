@@ -20,11 +20,12 @@ class Picture extends Component
         public ?string $alt = '',
         public bool $placeholder = false,
         public array $formats = [],
+        public string $containerClass = '',
         public string $pictureClass = '',
         public string $class = '',
         public ?string $title = '',
         public bool $lazyload = true,
-        public ?string $lazyloadInitialFormat = 'thumbnail',
+        public ?string $lazyloadInitialFormat = 'lazyload',
     ) {
         if ($this->format) {
             $this->getFormatClass();
