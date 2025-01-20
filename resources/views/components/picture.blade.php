@@ -29,7 +29,7 @@
                             type="image/webp"
                             srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
                             width={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->width() }}
-                            height={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->width() }}
+                            height={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->height() }}
                         >
                     @endif
 
@@ -38,7 +38,7 @@
                         type="{{ $image->mime_type }}"
                         srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
                         width={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->width() }}
-                        height={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->width() }}
+                        height={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->height() }}
                     >
                 @endforeach
             @endif
