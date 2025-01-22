@@ -28,8 +28,8 @@
                             media="(max-width: {{ $breakpoint ?? '576' }}px)"
                             type="image/webp"
                             srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
-                            width={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->width() }}
-                            height={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->height() }}
+                            width={{ $width($mobileFormat) }}
+                            height={{ $height($mobileFormat) }}
                         >
                     @endif
 
@@ -37,8 +37,8 @@
                         media="(max-width: {{ $breakpoint ?? '576' }}px)"
                         type="{{ $image->mime_type }}"
                         srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
-                        width={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->width() }}
-                        height={{ Codedor\MediaLibrary\Facades\Formats::exists($mobileFormat)->height() }}
+                        width={{ $width($mobileFormat) }}
+                        height={{ $height($mobileFormat) }}
                     >
                 @endforeach
             @endif
@@ -53,23 +53,19 @@
             <img
                 alt="{{ $alt }}"
                 title="{{ $title }}"
+
                 @class([
                     'image',
                     $class ?? 'img-fluid',
                 ])
+
                 @if ($lazyload)
                     loading="lazy"
                 @endif
 
                 src="{{ $image->getFormatOrOriginal($format) }}"
-
-                @if (! empty($width()))
-                    width="{{ $width() }}"
-                @endif
-
-                @if (! empty($height()))
-                    height="{{ $height() }}"
-                @endif
+                width={{ $width() }}
+                height={{ $height() }}
             >
         </picture>
     </div>

@@ -41,30 +41,34 @@ class Picture extends Component
         $this->formatClass = Formats::exists($this->format);
     }
 
-    public function width(): string|int|null
+    public function width(?string $format = null): string|int|null
     {
-        if (! $this->formatClass) {
+        $formatClass = Formats::exists($format ?? $this->format);
+
+        if (! $formatClass) {
             return $this->image->width;
         }
 
-        if ($this->formatClass->height() && $this->formatClass->width()) {
-            return $this->formatClass->width();
+        if ($formatClass->height() && $formatClass->width()) {
+            return $formatClass->width();
         }
 
-        return $this->getDimension('width');
+        return $this->getDimension('width', $format);
     }
 
-    public function height(): string|int|null
+    public function height(?string $format = null): string|int|null
     {
-        if (! $this->formatClass) {
+        $formatClass = Formats::exists($format ?? $this->format);
+
+        if (! $formatClass) {
             return $this->image->height;
         }
 
-        if ($this->formatClass->height() && $this->formatClass->width()) {
-            return $this->formatClass->height();
+        if ($formatClass->height() && $formatClass->width()) {
+            return $formatClass->height();
         }
 
-        return $this->getDimension('height');
+        return $this->getDimension('height', $format);
     }
 
     public function render()
@@ -72,9 +76,11 @@ class Picture extends Component
         return $this->view('filament-media-library::components.picture');
     }
 
-    public function getDimension(string $dimension): ?int
+    public function getDimension(string $dimension, ?string $format = null): ?int
     {
-        $filename = $this->formatClass->filename($this->image);
+        $formatClass = Formats::exists($format ?? $this->format);
+
+        $filename = $formatClass->filename($this->image);
         $path = "{$this->image->absolute_directory_path}/{$filename}";
 
         if (WebP::isEnabled()) {
