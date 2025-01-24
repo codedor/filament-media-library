@@ -7,48 +7,48 @@
         :$alt
     />
 @elseif ($image && $format)
-    <picture class="{{ $pictureClass }}">
-        @if ($formats)
-            @foreach ($formats as $breakpoint => $mobileFormat)
-                <source
-                    media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                    type="image/webp"
-                    srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
-                >
-            @endforeach
+    <div
+        @class([
+            'image-container',
+            'image-container--lazyload' => $lazyload,
+            $containerClass,
+        ])
+        @style([
+            '--lazyload-image: url(' . $image->getFormatOrOriginal($lazyloadInitialFormat) . ')' => $lazyload,
+        ])
+        @if ($lazyload)
+            data-image-container-lazyload
         @endif
-
-        <source
-            type="image/webp"
-            @if ($lazyload)
-                srcset="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
-                data-srcset="{{ $image->getFormatOrOriginal($format) }}"
-            @else
-                srcset="{{ $image->getFormatOrOriginal($format) }}"
+    >
+        <picture class="{{ $pictureClass }}">
+            @if ($formats)
+                @foreach ($formats as $breakpoint => $mobileFormat)
+                    <source
+                        media="(max-width: {{ $breakpoint ?? '576' }}px)"
+                        type="{{ config('filament-media-library.force-format-extension.mime-type') }}"
+                        srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
+                        width={{ $width($mobileFormat) }}
+                        height={{ $height($mobileFormat) }}
+                    >
+                @endforeach
             @endif
-        >
+            <img
+                alt="{{ $alt }}"
+                title="{{ $title }}"
 
-        <img
-            alt="{{ $alt }}"
-            title="{{ $title }}"
-            @class([
-                $class ?? 'img-fluid',
-                'lazyload' => $lazyload,
-            ])
-            @if ($lazyload)
-                src="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
-                data-src="{{ $image->getFormatOrOriginal($format) }}"
-            @else
+                @class([
+                    'image',
+                    $class ?? 'img-fluid',
+                ])
+
+                @if ($lazyload)
+                    loading="lazy"
+                @endif
+
                 src="{{ $image->getFormatOrOriginal($format) }}"
-            @endif
-
-            @if (! empty($width()))
-                width="{{ $width() }}"
-            @endif
-
-            @if (! empty($height()))
-                height="{{ $height() }}"
-            @endif
-        >
-    </picture>
+                width={{ $width() }}
+                height={{ $height() }}
+            >
+        </picture>
+    </div>
 @endif
