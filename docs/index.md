@@ -84,15 +84,21 @@ return [
             'zip',
             'odf',
         ],
-        'video' => [
-            'mp4',
-            'm4v',
-            'webm',
-            'ogg',
-        ],
     ],
     'temporary_directory_path' => storage_path('filament-media-library/tmp'),
 ];
+```
+
+If you want to be able to upload video's just add this to the extensions in the config file:
+
+```php
+'video' => [
+    'mp4',
+    'm4v',
+    'webm',
+    'ogg',
+],
+
 ```
 
 ### Extensions
