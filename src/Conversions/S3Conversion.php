@@ -39,9 +39,11 @@ class S3Conversion implements Conversion
 
             file_put_contents($tempPath, $disk->readStream($attachment->file_path));
 
-            Image::load($tempPath)
-                ->manipulate($format->definition())
-                ->save();
+            $image = Image::load($attachment->absolute_file_path);
+
+            $format->definition()->apply($image);
+
+            $image->save($savePath);
 
             $file = fopen($tempPath, 'r');
 

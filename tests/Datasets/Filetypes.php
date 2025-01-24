@@ -17,9 +17,9 @@ dataset('filetypes', [
     ['document', 'pptx'],
     ['document', 'zip'],
     ['document', 'odf'],
-    ['video', 'mp4'],
-    ['video', 'm4v'],
-    ['video', 'webm'],
-    ['video', 'ogg'],
+    ['other', 'mp4'],
+    ['other', 'm4v'],
+    ['other', 'webm'],
+    ['other', 'ogg'],
     ['other', 'a-non-defined-extension'],
 ]);

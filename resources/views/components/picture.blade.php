@@ -46,8 +46,14 @@
                 @endif
 
                 src="{{ $image->getFormatOrOriginal($format) }}"
-                width={{ $width() }}
-                height={{ $height() }}
+
+                @if (! empty($width()))
+                    width="{{ $width() }}"
+                @endif
+
+                @if (! empty($height()))
+                    height="{{ $height() }}"
+                @endif
             >
         </picture>
     </div>
