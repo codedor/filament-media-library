@@ -9,7 +9,6 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Spatie\Image\Image;
 
 class FormatterModal extends Component
 {
