@@ -18,10 +18,10 @@ class LocalConversion implements Conversion
         $formatName = $format->filename($attachment);
         $savePath = $attachment->absolute_directory_path . '/' . $formatName;
 
-        if (array_key_exists('format', $format->definition()->toArray()[0])) {
+        if (! empty($format->definition()->toArray()['format'])) {
             $savePath = Str::replaceLast(
                 $attachment->extension,
-                $format->definition()->toArray()[0]['format'],
+                $format->definition()->toArray()['format'],
                 $savePath
             );
         }
@@ -30,9 +30,11 @@ class LocalConversion implements Conversion
             $force ||
             ! $attachment->getStorage()->exists("$attachment->directory/$formatName")
         ) {
-            Image::load($attachment->absolute_file_path)
-                ->manipulate($format->definition())
-                ->save($savePath);
+            $image = Image::load($attachment->absolute_file_path);
+
+            $format->definition()->apply($image);
+
+            $image->save($savePath);
         }
 
         return true;

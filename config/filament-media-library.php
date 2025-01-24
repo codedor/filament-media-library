@@ -9,6 +9,7 @@ return [
         'extension' => 'webp',
         'mime-type' => 'image/webp',
     ],
+    'format-queue' => 'default',
     'extensions' => [
         'image' => [
             'jpg',
