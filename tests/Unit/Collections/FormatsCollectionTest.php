@@ -3,7 +3,6 @@
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHeroWebp;
 use Codedor\MediaLibrary\Tests\TestModels\TestModel;
 
 it('registers model', function () {
@@ -16,7 +15,7 @@ it('registers model', function () {
 });
 
 it('returns format if format is registered', function () {
-    Formats::register([TestHero::class, TestHeroWebp::class]);
+    Formats::register([TestHero::class]);
 
     expect(Formats::exists('test-hero'))
         ->toBeInstanceOf(TestHero::class);
@@ -26,16 +25,15 @@ it('returns format if format is registered', function () {
 });
 
 it('returns null if format is not registered', function () {
-    Formats::register([TestHero::class, TestHeroWebp::class]);
+    Formats::register([TestHero::class]);
 
     expect(Formats::exists('format-does-not-exist'))
         ->toBeNull();
 });
 
 it('returns collection with kebab keys', function () {
-    Formats::register([TestHero::class, TestHeroWebp::class]);
+    Formats::register([TestHero::class]);
 
     expect(Formats::mapToKebab())
-        ->toHaveKey('test-hero')
-        ->toHaveKey('test-hero-webp');
+        ->toHaveKey('test-hero');
 });

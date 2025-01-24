@@ -9,7 +9,6 @@
         + [Format definition](#format-definition)
     * [Registering formats](#registering-formats)
         + [Preparing your model](#preparing-your-model)
-    * [Webp formats](#webp-formats)
 - [Attachment model methods and attributes](#attachment-model-methods-and-attributes)
     * [Methods](#methods)
         + [getStorage](#getstorage)
@@ -64,7 +63,6 @@ The basic config file consists of the following contents:
 return [
     'conversion' => \Codedor\MediaLibrary\Conversions\LocalConversion::class,
     'enable-format-generate-action' => true,
-    'enable-webp-generation' => true,
     'extensions' => [
         'image' => [
             'jpg',
@@ -86,15 +84,20 @@ return [
             'zip',
             'odf',
         ],
-        'video' => [
-            'mp4',
-            'm4v',
-            'webm',
-            'ogg',
-        ],
     ],
+    'temporary_directory_path' => storage_path('filament-media-library/tmp'),
 ];
+```
 
+If you want to be able to upload video's just add this to the extensions in the config file:
+
+```php
+'video' => [
+    'mp4',
+    'm4v',
+    'webm',
+    'ogg',
+],
 
 ```
 
@@ -112,6 +115,37 @@ This configuration can be adjusted as desired.
 
 The format generation action is a button that will generate all the formats for the given attachment.
 This can be used on the Media Library as a bulk action. This action can be disabled by setting the `enable-format-generate-action` to false.
+
+### S3 support
+
+To use S3 as a storage, you can use the `Codedor\MediaLibrary\Conversions\S3Conversion` class.
+
+```php
+return [
+    'conversion' => \Codedor\MediaLibrary\Conversions\S3Conversion::class,
+    // ...
+];
+```
+
+Then switch your filesystem to S3 in the `config/filesystems.php` file.
+
+```php
+return [
+    'disks' => [
+        'public' => [
+            'visibility' => 'public',
+            'driver' => 's3',
+            'endpoint' => env('AWS_ENDPOINT', 'http://127.0.0.1:9000'),
+            'use_path_style_endpoint' => true,
+            'key' => env('AWS_KEY'),
+            'secret' => env('AWS_SECRET'),
+            'region' => env('AWS_REGION'),
+            'bucket' => env('AWS_BUCKET'),
+            'root' => 'public',
+        ],
+    ],
+];
+```
 
 ## Formats
 
@@ -184,11 +218,6 @@ public static function getFormats(Collection $formats): Collection
         ->add(...);
 }
 ```
-
-#### Webp formats
-
-In the config you can enable webp formats. This will generate a webp versions of the formats and save them seperatly.
-You can fetch a webp format by using `->getWebpFormatOrOriginal($format)` function.
 
 ## Attachment model methods and attributes
 

@@ -23,33 +23,15 @@
         <picture class="{{ $pictureClass }}">
             @if ($formats)
                 @foreach ($formats as $breakpoint => $mobileFormat)
-                    @if ($hasWebp)
-                        <source
-                            media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                            type="image/webp"
-                            srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
-                            width={{ $width($mobileFormat) }}
-                            height={{ $height($mobileFormat) }}
-                        >
-                    @endif
-
                     <source
                         media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                        type="{{ $image->mime_type }}"
+                        type="{{ config('filament-media-library.force-format-extension.mime-type') }}"
                         srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
                         width={{ $width($mobileFormat) }}
                         height={{ $height($mobileFormat) }}
                     >
                 @endforeach
             @endif
-
-            @if ($hasWebp)
-                <source
-                    type="image/webp"
-                    srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-                >
-            @endif
-
             <img
                 alt="{{ $alt }}"
                 title="{{ $title }}"
