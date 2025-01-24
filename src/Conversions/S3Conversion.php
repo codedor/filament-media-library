@@ -19,10 +19,10 @@ class S3Conversion implements Conversion
         $formatName = $format->filename($attachment);
         $savePath = $attachment->directory . '/' . $formatName;
 
-        if (array_key_exists('format', $format->definition()->toArray()[0])) {
+        if (! empty($format->definition()->toArray()['format'])) {
             $savePath = Str::replaceLast(
                 $attachment->extension,
-                $format->definition()->toArray()[0]['format'],
+                $format->definition()->toArray()['format'],
                 $savePath
             );
         }
@@ -39,11 +39,11 @@ class S3Conversion implements Conversion
 
             file_put_contents($tempPath, $disk->readStream($attachment->file_path));
 
-            $image = Image::load($attachment->absolute_file_path);
+            $image = Image::load($tempPath);
 
             $format->definition()->apply($image);
 
-            $image->save($savePath);
+            $image->save($tempPath);
 
             $file = fopen($tempPath, 'r');
 
