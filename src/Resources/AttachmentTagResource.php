@@ -6,6 +6,7 @@ use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource\Pages\ManageAttachmentTags;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,6 +26,10 @@ class AttachmentTagResource extends Resource
 
             Select::make('parent')
                 ->relationship('parent', 'title'),
+
+            Toggle::make('is_hidden')
+                ->helperText('Hide images with this tag from the media library and picker')
+                ->default(false),
         ]);
     }
 
@@ -34,6 +39,7 @@ class AttachmentTagResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title'),
                 Tables\Columns\TextColumn::make('parent.title'),
+                Tables\Columns\IconColumn::make('is_hidden')->boolean(),
             ])
             ->filters([
                 //
