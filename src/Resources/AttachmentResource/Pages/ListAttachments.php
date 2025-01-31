@@ -8,8 +8,10 @@ use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Actions;
 use Filament\Forms\Form;
+use Filament\Tables\Table;
 use Filament\Resources\Pages\ListRecords;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Builder;
 
 class ListAttachments extends ListRecords
 {
@@ -42,5 +44,16 @@ class ListAttachments extends ListRecords
             TableUploadAttachmentAction::make('upload')
                 ->multiple(),
         ];
+    }
+
+    public function table(Table $table): Table
+    {
+        return parent::table($table)->modifyQueryUsing(function (Builder $query, Table $table) {
+            if ($table->getActiveFiltersCount() !== 0 || filled($table->getLivewire()->tableSearch)) {
+                return;
+            }
+
+            $query->whereDoesntHave('tags', fn ($q) => $q->where('is_hidden', true));
+        });
     }
 }

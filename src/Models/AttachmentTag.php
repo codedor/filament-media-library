@@ -16,6 +16,11 @@ class AttachmentTag extends Model
 
     protected $fillable = [
         'title',
+        'is_hidden',
+    ];
+
+    protected $casts = [
+        'is_hidden' => 'boolean',
     ];
 
     protected static function newFactory()
