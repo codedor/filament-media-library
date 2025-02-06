@@ -87,8 +87,16 @@ class Attachment extends Model
 
     public function getUrlAttribute(): string
     {
-        return $this->getStorage()
-            ->url("{$this->directory}/{$this->filename}");
+        $disk = $this->getStorage();
+
+        if ($disk->providesTemporaryUrls()) {
+            return $disk->temporaryUrl(
+                "{$this->directory}/{$this->filename}",
+                now()->addMinutes(5)
+            );
+        }
+
+        return $disk->url("{$this->directory}/{$this->filename}");
     }
 
     public function getFilenameAttribute(): string

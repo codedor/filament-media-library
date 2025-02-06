@@ -31,7 +31,6 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
-        config()->set('filament-media-library.enable-webp-generation', false);
     }
 
     protected function getPackageProviders($app)

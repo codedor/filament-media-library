@@ -7,58 +7,54 @@
         :$alt
     />
 @elseif ($image && $format)
-    <picture class="{{ $pictureClass }}">
-        @if ($formats)
-            @foreach ($formats as $breakpoint => $mobileFormat)
-                @if ($hasWebp)
+    <div
+        @class([
+            'image-container',
+            'image-container--lazyload' => $lazyload,
+            $containerClass,
+        ])
+        @style([
+            '--lazyload-image: url(' . $image->getFormatOrOriginal($lazyloadInitialFormat) . ')' => $lazyload,
+        ])
+        @if ($lazyload)
+            data-image-container-lazyload
+        @endif
+    >
+        <picture class="{{ $pictureClass }}">
+            @if ($formats)
+                @foreach ($formats as $breakpoint => $mobileFormat)
                     <source
                         media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                        type="image/webp"
-                        srcset="{{ $image->getWebpFormatOrOriginal($mobileFormat) }}"
+                        type="{{ config('filament-media-library.force-format-extension.mime-type') }}"
+                        srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
+                        width={{ $width($mobileFormat) }}
+                        height={{ $height($mobileFormat) }}
                     >
+                @endforeach
+            @endif
+            <img
+                alt="{{ $alt }}"
+                title="{{ $title }}"
+
+                @class([
+                    'image',
+                    $class ?? 'img-fluid',
+                ])
+
+                @if ($lazyload)
+                    loading="lazy"
                 @endif
 
-                <source
-                    media="(max-width: {{ $breakpoint ?? '576' }}px)"
-                    type="{{ $image->mime_type }}"
-                    srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
-                >
-            @endforeach
-        @endif
+                src="{{ $image->getFormatOrOriginal($format) }}"
 
-        @if ($hasWebp)
-            <source
-                type="image/webp"
-                @if ($lazyload)
-                    srcset="{{ $image->getWebpFormatOrOriginal($lazyloadInitialFormat) }}"
-                    data-srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
-                @else
-                    srcset="{{ $image->getWebpFormatOrOriginal($format) }}"
+                @if (! empty($width()))
+                    width="{{ $width() }}"
+                @endif
+
+                @if (! empty($height()))
+                    height="{{ $height() }}"
                 @endif
             >
-        @endif
-
-        <img
-            alt="{{ $alt }}"
-            title="{{ $title }}"
-            @class([
-                $class ?? 'img-fluid',
-                'lazyload' => $lazyload,
-            ])
-            @if ($lazyload)
-                src="{{ $image->getFormatOrOriginal($lazyloadInitialFormat) }}"
-                data-src="{{ $image->getFormatOrOriginal($format) }}"
-            @else
-                src="{{ $image->getFormatOrOriginal($format) }}"
-            @endif
-
-            @if (! empty($width()))
-                width="{{ $width() }}"
-            @endif
-
-            @if (! empty($height()))
-                height="{{ $height() }}"
-            @endif
-        >
-    </picture>
+        </picture>
+    </div>
 @endif

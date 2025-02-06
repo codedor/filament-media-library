@@ -7,6 +7,7 @@ use Codedor\MediaLibrary\Commands\GenerateFormats;
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Formats as FacadesFormats;
+use Codedor\MediaLibrary\Formats\Lazyload;
 use Codedor\MediaLibrary\Formats\Thumbnail;
 use Codedor\MediaLibrary\Livewire;
 use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
@@ -92,6 +93,7 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
         ));
 
         FacadesFormats::register([
+            Lazyload::class,
             Thumbnail::class,
         ]);
     }
