@@ -31,7 +31,7 @@ class Picture extends Component
         }
 
         if ($image->exists) {
-            $this->hasWebp = method_exists($image, 'getWebpFormatOrOriginal') && $image->getWebpFormatOrOriginal($format);
+            $this->hasWebp = (bool) $image->getWebpFormatOrOriginal($format);
         }
     }
 

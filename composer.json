@@ -11,12 +11,12 @@
     "homepage": "https://github.com/codedor/filament-media-library",
     "license": "MIT",
     "require": {
-        "php": "^8.2|^8.3",
+        "php": "^8.2",
         "blade-ui-kit/blade-icons": "^1.5",
-        "codedor/filament-resource-picker": "^1.0",
-        "codedor/filament-translatable-tabs": "^1.2",
+        "codedor/filament-resource-picker": "dev-laravel-12 as 1.1.0",
+        "codedor/filament-translatable-tabs": "dev-laravel-12 as 1.3.0",
         "filament/filament": "^3.0",
-        "illuminate/contracts": "^10.0|^11.0",
+        "illuminate/contracts": "^10.0|^11.0|^12.0",
         "livewire/livewire": "^3.0",
         "owenvoke/blade-fontawesome": "^2.2",
         "spatie/image": "^3.0",
@@ -26,13 +26,13 @@
     "require-dev": {
         "laravel/pint": "^1.0",
         "nunomaduro/collision": "^7.0|^8.0",
-        "larastan/larastan": "^2.0.1",
-        "orchestra/testbench": "^8.0|^9.0",
-        "pestphp/pest": "^2.0",
-        "pestphp/pest-plugin-laravel": "^2.2",
-        "phpstan/extension-installer": "^1.1",
-        "phpstan/phpstan-deprecation-rules": "^1.0",
-        "phpstan/phpstan-phpunit": "^1.0"
+        "larastan/larastan": "^2.0|^3.0",
+        "orchestra/testbench": "^8.0|^9.0|^10.0",
+        "pestphp/pest": "^2.0|^3.0",
+        "pestphp/pest-plugin-laravel": "^2.2|^3.0",
+        "phpstan/extension-installer": "^1.1|^2.0",
+        "phpstan/phpstan-deprecation-rules": "^1.0|^2.0",
+        "phpstan/phpstan-phpunit": "^1.0|^2.0"
     },
     "autoload": {
         "psr-4": {

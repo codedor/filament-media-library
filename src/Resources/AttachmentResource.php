@@ -163,7 +163,7 @@ class AttachmentResource extends Resource
                     ->icon('heroicon-o-scissors')
                     ->hidden(fn (Attachment $record) => ! is_convertible_image($record->extension))
                     ->action(function (Tables\Actions\Action $action) {
-                        /** @var Component $livewire */
+                        /** @var Component&Tables\Contracts\HasTable $livewire */
                         $livewire = $action->getTable()->getLivewire();
 
                         $livewire->dispatch(
