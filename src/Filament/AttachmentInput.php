@@ -138,10 +138,15 @@ class AttachmentInput extends Field
                         'isMultiple' => $component->isMultiple(),
                         'isGrid' => true,
                         'gridColumns' => 6,
-                        'relationFilters' => ['tags' => AttachmentTag::all()->map(fn ($tag) => [
-                            'id' => $tag->id,
-                            'name' => $tag->title,
-                        ])->toArray()],
+                        'relationFilters' => collect([
+                            'tags' => AttachmentTag::where('is_hidden', false)
+                                ->cursor()
+                                ->map(fn ($tag) => [
+                                    'id' => $tag->id,
+                                    'name' => $tag->title,
+                                ])
+                                ->toArray(),
+                        ])->filter()->toArray(),
                     ]);
                 }),
         ]);

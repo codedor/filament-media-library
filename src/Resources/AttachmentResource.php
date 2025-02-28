@@ -45,10 +45,13 @@ class AttachmentResource extends Resource
                 ->icon('heroicon-o-signal')
                 ->columnSpan(['lg' => 2])
                 ->defaultFields([
-                    Placeholder::make('name')
-                        ->content(fn (Attachment $record) => $record->name),
-
                     Grid::make(2)->schema([
+                        Placeholder::make('name')
+                            ->content(fn (Attachment $record) => $record->name),
+
+                        Placeholder::make('created_at')
+                            ->content(fn (Attachment $record) => $record->created_at->format('Y-m-d H:i:s')),
+
                         Placeholder::make('extension')
                             ->content(fn (Attachment $record) => $record->extension),
 
@@ -129,14 +132,13 @@ class AttachmentResource extends Resource
                         return $query->search($search);
                     })
                     ->getStateUsing(fn (Attachment $record) => new HtmlString(
-                        '<strong>' . Str::limit($record->name, 20) . '</strong>'
+                        '<strong>' . Str::limit($record->name, 20) . '</strong>',
                     )),
 
-                TextColumn::make('created_at')
-                    ->label('Uploaded at')
+                TextColumn::make('tags')
                     ->searchable()
                     ->sortable()
-                    ->getStateUsing(fn (Attachment $record) => $record->created_at->diffForHumans()),
+                    ->getStateUsing(fn (Attachment $record) => $record->tags->implode('title', ', ')),
 
                 TextColumn::make('image')
                     ->view('filament-media-library::components.attachment-list'),
@@ -152,6 +154,7 @@ class AttachmentResource extends Resource
 
                 Filters\SelectFilter::make('tags')
                     ->relationship('tags', 'title')
+                    ->preload()
                     ->multiple(),
 
                 Filters\SelectFilter::make('mime_type')
@@ -163,7 +166,7 @@ class AttachmentResource extends Resource
                     ->icon('heroicon-o-scissors')
                     ->hidden(fn (Attachment $record) => ! is_convertible_image($record->extension))
                     ->action(function (Tables\Actions\Action $action) {
-                        /** @var Component $livewire */
+                        /** @var Component&Tables\Contracts\HasTable $livewire */
                         $livewire = $action->getTable()->getLivewire();
 
                         $livewire->dispatch(
@@ -243,6 +246,10 @@ class AttachmentResource extends Resource
     {
         return $query
             ->search($search)
-            ->whereDisk('public');
+            ->whereDisk('public')
+            ->when(empty($search), fn ($q) => $q->whereDoesntHave(
+                'tags',
+                fn ($q) => $q->where('is_hidden', true)
+            ));
     }
 }
