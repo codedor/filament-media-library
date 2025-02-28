@@ -1,22 +1,34 @@
 parameters:
-	ignoreErrors:
-		-
-			message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
-			count: 1
-			path: src/Resources/AttachmentResource.php
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: src/Exceptions/FormatNotFound.php
-		-
-			message: "#^Unsafe usage of new static\\(\\)\\.$#"
-			count: 1
-			path: src/Mixins/UploadedFileMixin.php
-		-
-			message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:search\\(\\).$#"
-			count: 1
-			path: src/Resources/AttachmentResource.php
-		-
-			message: "#^Call to an undefined method Livewire\\\\Features\\\\SupportFileUploads\\\\TemporaryUploadedFile\\:\\:save\\(\\).$#"
-			count: 2
-			path: src/Filament/Actions/Traits/CanUploadAttachment.php
+    ignoreErrors:
+        -
+            message: "#^Access to an undefined property Illuminate\\\\Database\\\\Eloquent\\\\Model\\:\\:\\$id\\.$#"
+            count: 1
+            path: src/Resources/AttachmentResource.php
+        -
+            message: "#^Unsafe usage of new static\\(\\)\\.$#"
+            count: 1
+            path: src/Exceptions/FormatNotFound.php
+        -
+            message: "#^Unsafe usage of new static\\(\\)\\.$#"
+            count: 1
+            path: src/Mixins/UploadedFileMixin.php
+        -
+            message: "#^Call to an undefined method Illuminate\\\\Database\\\\Eloquent\\\\Builder\\:\\:search\\(\\).$#"
+            count: 1
+            path: src/Resources/AttachmentResource.php
+        -
+            message: "#^Call to an undefined method Livewire\\\\Features\\\\SupportFileUploads\\\\TemporaryUploadedFile\\:\\:save\\(\\).$#"
+            count: 2
+            path: src/Filament/Actions/Traits/CanUploadAttachment.php
+        -
+            message: "#^Property Codedor\\\\MediaLibrary\\\\Filament\\\\AttachmentInput\\:\\:\\$view \\(view-string\\) does not accept default value of type string.$#"
+            count: 1
+            path: src/Filament/AttachmentInput.php
+        -
+            message: "#^Property Codedor\\\\MediaLibrary\\\\Tables\\\\Columns\\\\AttachmentColumn\\:\\:\\$view \\(view-string\\) does not accept default value of type string.$#"
+            count: 1
+            path: src/Tables/Columns/AttachmentColumn.php
+        -
+            message: "#^Property Codedor\\\\MediaLibrary\\\\Filament\\\\Entries\\\\AttachmentEntry\\:\\:\\$view \\(view-string\\) does not accept default value of type string.$#"
+            count: 1
+            path: src/Filament/Entries/AttachmentEntry.php
