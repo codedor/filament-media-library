@@ -63,6 +63,11 @@ The basic config file consists of the following contents:
 return [
     'conversion' => \Codedor\MediaLibrary\Conversions\LocalConversion::class,
     'enable-format-generate-action' => true,
+    'force-format-extension' => [
+        'extension' => 'webp',
+        'mime-type' => 'image/webp',
+    ],
+    'format-queue' => 'default',
     'extensions' => [
         'image' => [
             'jpg',
@@ -98,8 +103,11 @@ If you want to be able to upload video's just add this to the extensions in the 
     'webm',
     'ogg',
 ],
-
 ```
+
+### WebP by default
+
+WebP is the default, if there is a new media type you want to use, this can be adjusted in the `force-format-extension` key.
 
 ### Extensions
 
