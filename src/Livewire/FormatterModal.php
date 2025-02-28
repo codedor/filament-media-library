@@ -5,12 +5,10 @@ namespace Codedor\MediaLibrary\Livewire;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\WebP;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
 use Livewire\Component;
-use Spatie\Image\Image;
 
 class FormatterModal extends Component
 {
@@ -20,10 +18,17 @@ class FormatterModal extends Component
 
     public ?array $currentFormat = null;
 
+    public ?string $forcedMimeType = null;
+
     #[On('filament-media-library::open-formatter-attachment-modal')]
     public function setAttachment(string $uuid, ?array $formats = null)
     {
         $this->attachment = Attachment::find($uuid);
+
+        $this->forcedMimeType = config(
+            'filament-media-library.force-format-extension.mime-type',
+            $this->attachment->mime_type,
+        );
 
         $formats = Collection::wrap($formats ?? Formats::mapToClasses())
             ->map(fn ($format) => $format::make())
@@ -65,15 +70,6 @@ class FormatterModal extends Component
         $crop = preg_replace('/data:image\/(.*?);base64,/', '', $event['crop']);
         $crop = base64_decode(str_replace(' ', '+', $crop));
         $this->attachment->getStorage()->put("{$this->attachment->directory}/{$filename}", $crop);
-
-        if (WebP::isEnabled()) {
-            Image::load("{$this->attachment->absolute_directory_path}/{$filename}")
-                ->format('webp')
-                ->save(WebP::path(
-                    "{$this->attachment->absolute_directory_path}/{$filename}",
-                    $this->attachment->extension
-                ));
-        }
 
         // Save the crop on the attachment, for later adjustments
         $this->attachment->formats()->updateOrCreate([

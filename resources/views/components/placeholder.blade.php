@@ -16,7 +16,6 @@
         alt="{{ $alt }}"
         @class([
             $class ?? 'img-fluid',
-            'lazyload' => $lazyload,
         ])
         src="{{ get_placeholder_url_by_format($format) }}"
         width="{{ $width() }}"
