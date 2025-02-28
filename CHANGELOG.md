@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.1.0 - 2025-02-28
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/codedor/filament-media-library/pull/50
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/codedor/filament-media-library/pull/52
+* Upgrade to L12 by @jyrkidn in https://github.com/codedor/filament-media-library/pull/53
+* FIL001-162 Hide certain tags in the overview & resource picker by @jyrkidn in https://github.com/codedor/filament-media-library/pull/51
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v2.0.3...v2.1.0
+
 ## v2.0.3 - 2024-12-04
 
 ### What's Changed
