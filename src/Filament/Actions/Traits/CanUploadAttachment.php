@@ -95,7 +95,7 @@ trait CanUploadAttachment
             ->afterValidation(function (Get $get, Set $set) {
                 foreach (Arr::wrap($get('attachments')) as $file) {
                     if ($file instanceof TemporaryUploadedFile) {
-                        $md5 = md5_file($file->getRealPath());
+                        $md5 = md5($file->hashName());
 
                         $set("meta.{$md5}.name", '');
                         $set("meta.{$md5}.tags", []);
@@ -124,7 +124,7 @@ trait CanUploadAttachment
                 return collect($state['attachments'] ?? [])
                     ->filter(fn ($upload) => $upload instanceof TemporaryUploadedFile)
                     ->map(function ($upload) use ($get) {
-                        $md5 = md5_file($upload->getRealPath());
+                        $md5 = md5($upload->hashName());
 
                         $defaultFields = [
                             Placeholder::make('name')

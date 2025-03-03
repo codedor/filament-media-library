@@ -48,10 +48,10 @@ class UploadedFileMixin
                 'md5' => $data['md5'],
             ], $data);
 
-            Storage::disk($disk)->putFileAs(
+            $this->storeAs(
                 $attachment->directory,
-                $this,
-                $attachment->filename
+                $attachment->filename,
+                ['disk' => $disk]
             );
 
             Formats::dispatchGeneration($attachment);
@@ -78,7 +78,12 @@ class UploadedFileMixin
         return function () {
             $path = $this->getRealPath();
 
-            return md5_file($path);
+            if (file_exists($path)) {
+                return md5_file($path);
+            }
+
+            // If file does not exists, we are probably on a S3 disk and then we can't use md5_file
+            return Str::random(32);
         };
     }
 
