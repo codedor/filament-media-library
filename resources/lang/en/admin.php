@@ -16,4 +16,10 @@ return [
     'disk' => 'Disk',
     'format' => 'Format',
     'generate formats' => 'Generate formats',
+    'title' => 'Title',
+    'parent' => 'Parent',
+    'is hidden' => 'Is Hidden',
+    'is hidden help text' => 'Hide images with this tag from the media library and picker',
+    'attachment tags title' => 'Attachment tags',
+    'attachment tags title singular' => 'Attachment tag',
 ];

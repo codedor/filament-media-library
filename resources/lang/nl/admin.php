@@ -16,4 +16,10 @@ return [
     'disk' => 'Schijf',
     'format' => 'Formatteer',
     'generate formats' => 'Formaten genereren',
+    'title' => 'Titel',
+    'parent' => 'Parent',
+    'is hidden' => 'Is Verborgen',
+    'is hidden help text' => 'Verberg bestanden met deze tag uit de mediabibliotheek en picker',
+    'attachment tags title' => 'Media tags',
+    'attachment tags title singular' => 'Media tag',
 ];
