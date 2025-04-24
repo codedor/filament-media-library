@@ -27,8 +27,12 @@
                         media="(max-width: {{ $breakpoint ?? '576' }}px)"
                         type="{{ config('filament-media-library.force-format-extension.mime-type') }}"
                         srcset="{{ $image->getFormatOrOriginal($mobileFormat) }}"
-                        width={{ $width($mobileFormat) }}
-                        height={{ $height($mobileFormat) }}
+                        @if (! empty($width($mobileFormat)))
+                            width="{{ $width($mobileFormat) }}"
+                        @endif
+                        @if (! empty($height($mobileFormat)))
+                            height="{{ $height($mobileFormat) }}"
+                        @endif
                     >
                 @endforeach
             @endif
