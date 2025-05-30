@@ -9,12 +9,8 @@ use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\Checkbox;
-use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Form;
-use Filament\Forms\Get;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
@@ -32,7 +28,7 @@ class AttachmentResource extends Resource
 {
     protected static ?string $model = Attachment::class;
 
-    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-paper-clip';
+    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-paper-clip';
 
     public static function getNavigationLabel(): string
     {
