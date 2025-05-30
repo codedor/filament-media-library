@@ -13,7 +13,7 @@ class ManageAttachmentTags extends ManageRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            \Filament\Actions\CreateAction::make(),
         ];
     }
 }

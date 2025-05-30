@@ -16,7 +16,7 @@ class EditAttachment extends EditRecord
     protected function getActions(): array
     {
         return [
-            Actions\DeleteAction::make(),
+            \Filament\Actions\DeleteAction::make(),
         ];
     }
 }

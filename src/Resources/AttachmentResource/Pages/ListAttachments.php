@@ -35,8 +35,8 @@ class ListAttachments extends ListRecords
                 ->authorize(AttachmentTagResource::canCreate())
                 ->model(AttachmentTag::class)
                 ->outlined()
-                ->form(
-                    AttachmentTagResource::form(Form::make($this))
+                ->schema(
+                    AttachmentTagResource::form(\Filament\Schemas\Schema::make($this))
                         ->columns(2)
                         ->getComponents()
                 ),

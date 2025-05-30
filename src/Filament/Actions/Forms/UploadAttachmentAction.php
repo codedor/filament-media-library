@@ -6,11 +6,11 @@ use Codedor\MediaLibrary\Filament\Actions\Traits\CanUploadAttachment;
 use Codedor\MediaLibrary\Models\Attachment;
 use Filament\Forms\Components\Actions\Action;
 
-class UploadAttachmentAction extends Action
+class UploadAttachmentAction extends \Filament\Actions\Action
 {
     use CanUploadAttachment;
 
-    protected function getModel(): ?string
+    public function getModel(): ?string
     {
         return Attachment::class;
     }

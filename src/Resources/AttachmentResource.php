@@ -10,12 +10,12 @@ use Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Grid;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,6 +23,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -31,45 +32,45 @@ class AttachmentResource extends Resource
 {
     protected static ?string $model = Attachment::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-paper-clip';
+    protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-paper-clip';
 
     public static function getNavigationLabel(): string
     {
         return __('filament-media-library::attachment.dashboard navigation title');
     }
 
-    public static function form(Form $form): Form
+    public static function form(\Filament\Schemas\Schema $schema): \Filament\Schemas\Schema
     {
-        return $form->schema([
+        return $schema->components([
             TranslatableTabs::make()
                 ->icon('heroicon-o-signal')
                 ->columnSpan(['lg' => 2])
                 ->defaultFields([
-                    Grid::make(2)->schema([
-                        Placeholder::make('name')
-                            ->content(fn (Attachment $record) => $record->name),
+                    \Filament\Schemas\Components\Grid::make(2)->schema([
+                        TextEntry::make('name')
+                            ->state(fn (Attachment $record) => $record->name),
 
-                        Placeholder::make('created_at')
-                            ->content(fn (Attachment $record) => $record->created_at->format('Y-m-d H:i:s')),
+                        TextEntry::make('created_at')
+                            ->state(fn (Attachment $record) => $record->created_at->format('Y-m-d H:i:s')),
 
-                        Placeholder::make('extension')
-                            ->content(fn (Attachment $record) => $record->extension),
+                        TextEntry::make('extension')
+                            ->state(fn (Attachment $record) => $record->extension),
 
-                        Placeholder::make('mime_type')
-                            ->content(fn (Attachment $record) => $record->mime_type),
+                        TextEntry::make('mime_type')
+                            ->state(fn (Attachment $record) => $record->mime_type),
 
-                        Placeholder::make('type')
-                            ->content(fn (Attachment $record) => $record->type),
+                        TextEntry::make('type')
+                            ->state(fn (Attachment $record) => $record->type),
 
-                        Placeholder::make('size')
-                            ->content(fn (Attachment $record) => "{$record->formattedInMbSize} MB"),
+                        TextEntry::make('size')
+                            ->state(fn (Attachment $record) => "{$record->formattedInMbSize} MB"),
 
-                        Placeholder::make('width')
-                            ->content(fn (Attachment $record) => $record->width)
+                        TextEntry::make('width')
+                            ->state(fn (Attachment $record) => $record->width)
                             ->hidden(fn (Attachment $record) => ! $record->isImage()),
 
-                        Placeholder::make('height')
-                            ->content(fn (Attachment $record) => $record->height)
+                        TextEntry::make('height')
+                            ->state(fn (Attachment $record) => $record->height)
                             ->hidden(fn (Attachment $record) => ! $record->isImage()),
                     ]),
 
@@ -78,11 +79,11 @@ class AttachmentResource extends Resource
                         ->preload()
                         ->multiple(),
 
-                    Section::make('Preview')
+                    \Filament\Schemas\Components\Section::make('Preview')
                         ->schema([
-                            Placeholder::make('image')
+                            TextEntry::make('image')
                                 ->hidden(fn (Attachment $record) => ! $record->isImage())
-                                ->content(fn (Attachment $record) => new HtmlString(
+                                ->state(fn (Attachment $record) => new HtmlString(
                                     "<a href=\"$record->url\" target=\"_blank\"><img src=\"{$record->url}\" /></a>"
                                 )),
                         ]),
@@ -164,10 +165,10 @@ class AttachmentResource extends Resource
                     ->multiple(),
             ])
             ->actions([
-                Tables\Actions\Action::make('format')
+                \Filament\Actions\Action::make('format')
                     ->icon('heroicon-o-scissors')
                     ->hidden(fn (Attachment $record) => ! is_convertible_image($record->extension))
-                    ->action(function (Tables\Actions\Action $action) {
+                    ->action(function (\Filament\Actions\Action $action) {
                         /** @var Component&Tables\Contracts\HasTable $livewire */
                         $livewire = $action->getTable()->getLivewire();
 
@@ -182,18 +183,18 @@ class AttachmentResource extends Resource
                         );
                     }),
 
-                Tables\Actions\EditAction::make(),
+                \Filament\Actions\EditAction::make(),
 
-                Tables\Actions\DeleteAction::make(),
+                \Filament\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
-                Tables\Actions\BulkAction::make('generate-formats')
+                \Filament\Actions\DeleteBulkAction::make(),
+                \Filament\Actions\BulkAction::make('generate-formats')
                     ->label('Generate formats')
                     ->icon('heroicon-o-scissors')
                     ->deselectRecordsAfterCompletion()
                     ->hidden(fn () => ! config('filament-media-library.enable-format-generate-action', false))
-                    ->form([
+                    ->schema([
                         Checkbox::make('generate_all')
                             ->label(__('filament-media-library::formatter.generate all'))
                             ->helperText('This will generate all formats but will take longer.')
@@ -202,7 +203,7 @@ class AttachmentResource extends Resource
 
                         Select::make('formats')
                             ->label(__('filament-media-library::formatter.formats to generate'))
-                            ->hidden(fn (Get $get) => $get('generate_all'))
+                            ->hidden(fn (\Filament\Schemas\Components\Utilities\Get $get) => $get('generate_all'))
                             ->multiple()
                             ->options(fn () => Formats::mapToKebab()->mapWithKeys(fn (Format $format, $key) => [
                                 $key => $format->name(),
@@ -213,13 +214,13 @@ class AttachmentResource extends Resource
                             ->helperText(__('filament-media-library::formatter.force generate help'))
                             ->default(true),
                     ])
-                    ->action(function (Tables\Actions\BulkAction $action, array $data) {
+                    ->action(function (\Filament\Actions\BulkAction $action, array $data, Collection $selectedRecords) {
                         $formats = Formats::mapToKebab()->when(
                             ! ($data['generate_all'] ?? false),
                             fn ($formats) => $formats->only($data['formats'] ?? [])
                         );
 
-                        $action->getRecords()->each(function (Attachment $attachment) use ($formats, $data) {
+                        $selectedRecords->each(function (Attachment $attachment) use ($formats, $data) {
                             $formats->each(fn (Format $format) => dispatch(new GenerateAttachmentFormat(
                                 attachment: $attachment,
                                 format: $format,
