@@ -12,8 +12,6 @@ class Thumbnail extends Format
 
     protected string $name = 'Thumbnail';
 
-    protected string $description = 'Used in the CMS to display low-res images';
-
     public function definition(): Manipulations|ImageDriver
     {
         return $this->manipulations->fit(Fit::Crop, 350, 350);
@@ -22,5 +20,10 @@ class Thumbnail extends Format
     public function registerModelsForFormatter(): void
     {
         $this->registerFor(Attachment::class);
+    }
+
+    public function description(): string
+    {
+        return __('filament-media-library::formats.thumbnail description');
     }
 }
