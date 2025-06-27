@@ -9,7 +9,6 @@ use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
-use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

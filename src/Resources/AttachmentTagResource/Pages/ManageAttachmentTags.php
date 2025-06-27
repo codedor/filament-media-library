@@ -3,7 +3,6 @@
 namespace Codedor\MediaLibrary\Resources\AttachmentTagResource\Pages;
 
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageAttachmentTags extends ManageRecords
