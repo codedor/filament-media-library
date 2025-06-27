@@ -1,6 +1,4 @@
-@import 'tailwindcss';
-
-@config '../../tailwind.config.js';
+@source '../views/**';
 
 @utility gallery-container {
   @apply @container/gallery;
