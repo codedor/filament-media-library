@@ -9,7 +9,6 @@ use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Set;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Arr;
@@ -143,13 +142,9 @@ trait CanUploadAttachment
                                     ->statePath("meta.{$md5}")
                                     ->icon('heroicon-o-signal')
                                     ->columnSpan(['lg' => 2])
-                                    ->persistInQueryString(false)
+                                    ->persistTabInQueryString(false)
                                     ->defaultFields($defaultFields)
                                     ->translatableFields(fn () => [
-                                        // TextInput::make('translated_name')
-                                        //     ->suffix('.' . $upload->getClientOriginalExtension())
-                                        //     ->dehydrateStateUsing(fn ($state) => Str::slug($state)),
-
                                         TextInput::make('alt')
                                             ->label('Alt text'),
 
