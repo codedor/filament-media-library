@@ -81,5 +81,4 @@ class TestCase extends Orchestra
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations/2023_04_27_120359_create_attachment_formats.php');
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations/2025_01_30_130345_add_is_hidden_to_attachment_tags.php');
     }
-
 }
