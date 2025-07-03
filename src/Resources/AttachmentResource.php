@@ -160,7 +160,7 @@ class AttachmentResource extends Resource
                     ->options($mimeTypes)
                     ->multiple(),
             ])
-            ->actions([
+            ->recordActions([
                 \Filament\Actions\Action::make('format')
                     ->icon('heroicon-o-scissors')
                     ->hidden(fn (Attachment $record) => ! is_convertible_image($record->extension))
@@ -183,7 +183,7 @@ class AttachmentResource extends Resource
 
                 \Filament\Actions\DeleteAction::make(),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 \Filament\Actions\DeleteBulkAction::make(),
                 \Filament\Actions\BulkAction::make('generate-formats')
                     ->label('Generate formats')
