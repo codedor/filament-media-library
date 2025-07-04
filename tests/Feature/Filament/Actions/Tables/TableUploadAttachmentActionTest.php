@@ -7,14 +7,14 @@ use Livewire\Livewire;
 
 it('can render the upload attachment action', function () {
     Livewire::test(ListAttachments::class)
-        ->assertActionExists('uploadAttachment');
+        ->assertActionExists('attachment-upload');
 });
 
 it('can mount the upload attachment action and fill the form', function () {
     $file = TemporaryUploadedFile::fake()->image('avatar.png');
 
     Livewire::test(ListAttachments::class)
-        ->mountAction('uploadAttachment')
+        ->mountAction('attachment-upload')
         ->goToNextWizardStep()
         ->assertHasFormErrors(['attachments'])
         ->fillForm([

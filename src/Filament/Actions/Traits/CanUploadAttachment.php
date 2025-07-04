@@ -26,55 +26,16 @@ trait CanUploadAttachment
 
         $this->label(__('filament-media-library::upload.upload attachment'));
 
-        $this->name('uploadAttachment');
+        $this->name('attachment-upload');
 
         $this->steps([
             $this->getUploadStep(),
             $this->getAttachmentInformationStep(),
         ]);
 
-        $this->action(function (Component $livewire) {
-            $data = collect($livewire->mountedActions)->first(fn (array $action) => $action['name'] === $this->getName())['data'] ?? [];
+        $this->closeModalByClickingAway(false);
 
-            $attachmentIds = collect($data['attachments'] ?? [])
-                ->map(function (string $attachmentId) use ($data) {
-                    $attachment = Attachment::find($attachmentId);
-
-                    if (! $attachment) {
-                        return null;
-                    }
-
-                    $meta = $data['meta'][md5($attachment->filename)] ?? [];
-
-                    if (! $meta) {
-                        return $attachmentId;
-                    }
-
-                    $attachment->update($this->mutateData($meta));
-
-                    if (array_key_exists('tags', $meta)) {
-                        $attachment->tags()->sync($meta['tags']);
-                    }
-
-                    return $attachment->id;
-                })
-                ->filter();
-
-            Notification::make()
-                ->title(__('filament-media-library::upload.upload successful'))
-                ->success()
-                ->send();
-
-            // Set the state if this is a field
-            // if ($this instanceof \Filament\Actions\Action) {
-            //     $set(
-            //         $component->getStatePath(false),
-            //         $this->isMultiple()
-            //             ? collect($component->getState())->concat($attachmentIds)->toArray()
-            //             : $attachmentIds->first()
-            //     );
-            // }
-        })->closeModalByClickingAway(false);
+        $this->action(fn (Component $livewire) => $this->saveAttachmentsAndSendNotification($livewire));
     }
 
     public function multiple(bool|Closure $multiple = true): static
@@ -179,5 +140,39 @@ trait CanUploadAttachment
         }
 
         return Arr::only($data, $model->getTranslatableAttributes());
+    }
+
+    protected function saveAttachmentsAndSendNotification(Component $livewire): void
+    {
+        $data = collect($livewire->mountedActions)->first(fn (array $action) => $action['name'] === $this->getName())['data'] ?? [];
+
+        $attachmentIds = collect($data['attachments'] ?? [])
+            ->map(function (string $attachmentId) use ($data) {
+                $attachment = Attachment::find($attachmentId);
+
+                if (! $attachment) {
+                    return null;
+                }
+
+                $meta = $data['meta'][md5($attachment->filename)] ?? [];
+
+                if (! $meta) {
+                    return $attachmentId;
+                }
+
+                $attachment->update($this->mutateData($meta));
+
+                if (array_key_exists('tags', $meta)) {
+                    $attachment->tags()->sync($meta['tags']);
+                }
+
+                return $attachment->id;
+            })
+            ->filter();
+
+        Notification::make()
+            ->title(__('filament-media-library::upload.upload successful'))
+            ->success()
+            ->send();
     }
 }
