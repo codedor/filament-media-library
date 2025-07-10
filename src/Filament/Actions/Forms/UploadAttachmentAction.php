@@ -4,8 +4,6 @@ namespace Codedor\MediaLibrary\Filament\Actions\Forms;
 
 use Codedor\MediaLibrary\Filament\Actions\Traits\CanUploadAttachment;
 use Codedor\MediaLibrary\Models\Attachment;
-use Filament\Notifications\Notification;
-use Filament\Schemas\Components\Livewire;
 use Filament\Schemas\Components\Utilities\Set;
 use Livewire\Component;
 
