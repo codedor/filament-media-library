@@ -23,18 +23,7 @@ trait CanUploadAttachment
     {
         parent::setUp();
 
-        $this->label(__('filament-media-library::upload.upload attachment'));
-
-        $this->name('attachment-upload');
-
-        $this->steps([
-            $this->getUploadStep(),
-            $this->getAttachmentInformationStep(),
-        ]);
-
-        $this->closeModalByClickingAway(false);
-
-        $this->action(fn (Component $livewire) => $this->saveAttachmentsAndSendNotification($livewire));
+        $this->configureAction();
     }
 
     public function multiple(bool|Closure $multiple = true): static
@@ -145,7 +134,7 @@ trait CanUploadAttachment
     {
         $data = collect($livewire->mountedActions)->first(fn (array $action) => $action['name'] === $this->getName())['data'] ?? [];
 
-        $attachmentIds = collect($data['attachments'] ?? [])
+        collect($data['attachments'] ?? [])
             ->map(function (string $attachmentId) use ($data) {
                 $attachment = Attachment::find($attachmentId);
 
@@ -173,5 +162,21 @@ trait CanUploadAttachment
             ->title(__('filament-media-library::upload.upload successful'))
             ->success()
             ->send();
+    }
+
+    public function configureAction(): void
+    {
+        $this->label(__('filament-media-library::upload.upload attachment'));
+
+        $this->name('attachment-upload');
+
+        $this->steps([
+            $this->getUploadStep(),
+            $this->getAttachmentInformationStep(),
+        ]);
+
+        $this->closeModalByClickingAway(false);
+
+        $this->action(fn (Component $livewire) => $this->saveAttachmentsAndSendNotification($livewire));
     }
 }
