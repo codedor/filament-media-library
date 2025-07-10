@@ -124,6 +124,7 @@ class AttachmentInput extends Field
                 ->label(__('filament-media-library::picker.select existing media'))
                 ->modalHeading(__('filament-media-library::picker.select existing media'))
                 ->color('gray')
+                ->outlined()
                 ->modalSubmitAction(false)
                 ->modalCancelAction(false)
                 ->modalContent(function (self $component) {
