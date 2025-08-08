@@ -18,6 +18,10 @@ return [
             'png',
             'webp',
             'gif',
+            'WEBP',
+            'GIF',
+            'PNG',
+            'JPG',
         ],
         'document' => [
             'txt',
