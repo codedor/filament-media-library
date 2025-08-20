@@ -128,6 +128,7 @@ trait CanUploadAttachment
 
                         $defaultFields = [
                             Placeholder::make('name')
+                                ->label(__('filament-media-library::upload.name'))
                                 ->content(fn () => $upload->getClientOriginalName()),
                         ];
 
@@ -155,9 +156,10 @@ trait CanUploadAttachment
                                         //     ->dehydrateStateUsing(fn ($state) => Str::slug($state)),
 
                                         TextInput::make('alt')
-                                            ->label('Alt text'),
+                                            ->label(__('filament-media-library::upload.alt text')),
 
-                                        TextInput::make('caption'),
+                                        TextInput::make('caption')
+                                            ->label(__('filament-media-library::upload.caption')),
                                     ]),
                             ]);
                     })
