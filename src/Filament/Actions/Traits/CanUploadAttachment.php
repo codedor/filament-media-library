@@ -6,7 +6,6 @@ use Closure;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
-use Filament\Actions\Concerns\InteractsWithActions;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
