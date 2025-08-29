@@ -86,7 +86,9 @@ trait CanUploadAttachment
                                 ->label(__('filament-media-library::upload.select tags'))
                                 ->multiple()
                                 ->default([])
-                                ->options(AttachmentTag::all()->pluck('title', 'id')->toArray());
+                                ->hidden(fn (Select $component): bool => ! $component->getOptions())
+                                ->options(AttachmentTag::all()->pluck('title', 'id')->toArray())
+                                ->disabled(fn (Select $component): bool => ! $component->getOptions());
                         }
 
                         return \Filament\Schemas\Components\Section::make()
