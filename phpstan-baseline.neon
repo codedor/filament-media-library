@@ -24,3 +24,8 @@ parameters:
             message: "#^Access to an undefined property Filament\\\\Tables\\\\Contracts\\\\HasTable\\:\\:\\$tableSearch.$#"
             count: 1
             path: src/Resources/AttachmentResource/Pages/ListAttachments.php
+        -
+            message: "#^Access to an undefined property Livewire\\\\Component\\:\\:\\$mountedActions.$#"
+            paths:
+                - src/Filament/Actions/Traits/CanUploadAttachment.php
+                - src/Filament/Actions/Forms/UploadAttachmentAction.php

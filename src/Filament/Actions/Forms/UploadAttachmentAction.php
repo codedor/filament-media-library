@@ -61,7 +61,7 @@ class UploadAttachmentAction extends \Filament\Actions\Action
             });
     }
 
-    public function getModel(): ?string
+    public function getModel(bool $withDefault = false): ?string
     {
         return Attachment::class;
     }
