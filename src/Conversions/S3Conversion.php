@@ -29,9 +29,16 @@ class S3Conversion implements Conversion
 
         $formatPath = "$attachment->directory/$formatName";
 
+        // Check if there's an existing manual crop for this format
+        $existingFormat = $attachment->formats()
+            ->where('format', $format->key())
+            ->first();
+
+        $hasManualCrop = $existingFormat && $existingFormat->data;
+
         if (
-            $force ||
-            ! $attachment->getStorage()->exists($formatPath)
+            ($force || ! $attachment->getStorage()->exists($formatPath)) &&
+            ! $hasManualCrop
         ) {
             $temporaryDirectory = TemporaryDirectory::create();
             $tempPath = $temporaryDirectory->path(Str::random(16) . '.' . $attachment->extension);

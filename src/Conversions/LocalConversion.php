@@ -26,9 +26,16 @@ class LocalConversion implements Conversion
             );
         }
 
+        // Check if there's an existing manual crop for this format
+        $existingFormat = $attachment->formats()
+            ->where('format', $format->key())
+            ->first();
+
+        $hasManualCrop = $existingFormat && $existingFormat->data;
+
         if (
-            $force ||
-            ! $attachment->getStorage()->exists("$attachment->directory/$formatName")
+            ($force || ! $attachment->getStorage()->exists("$attachment->directory/$formatName")) &&
+            ! $hasManualCrop
         ) {
             $image = Image::load($attachment->absolute_file_path);
 
