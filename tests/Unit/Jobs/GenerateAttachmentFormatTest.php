@@ -50,7 +50,7 @@ it('preserves manual crops when regenerating formats', function () {
     // Make sure the relationship is working
     expect($attachment->formats()->count())->toBe(1);
     expect($attachment->formats()->where('format', $format->key())->first())->not()->toBeNull();
-    expect($attachment->formats()->where('format', $format->key())->first()->data)->not()->toBeNull();
+    expect($attachment->formats()->where('format', $format->key())->first()->data)->not()->toBeEmpty();
 
     // Use the real LocalConversion class to test our fix
     $conversion = new \Codedor\MediaLibrary\Conversions\LocalConversion;
