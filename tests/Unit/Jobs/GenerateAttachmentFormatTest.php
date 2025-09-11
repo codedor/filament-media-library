@@ -35,7 +35,7 @@ it('dispatches conversions for all formats', function () {
 
 it('applies manual crops when regenerating formats', function () {
     Storage::fake('public');
-    
+
     $format = new TestHero('test');
 
     /** @var Attachment $attachment */
@@ -56,12 +56,12 @@ it('applies manual crops when regenerating formats', function () {
         'format' => $format->key(),
         'data' => [
             'x' => 10,
-            'y' => 20, 
+            'y' => 20,
             'width' => 300,
             'height' => 200,
             'rotate' => 0,
             'scaleX' => 1,
-            'scaleY' => 1
+            'scaleY' => 1,
         ],
     ]);
 
