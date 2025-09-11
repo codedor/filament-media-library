@@ -34,11 +34,11 @@ class S3Conversion implements Conversion
             ->where('format', $format->key())
             ->first();
 
-        $hasManualCrop = $existingFormat && ! empty($existingFormat->data);
+        $hasManualCrop = $existingFormat && ! empty($existingFormat->data) && is_array($existingFormat->data);
 
         if (
-            ($force || ! $attachment->getStorage()->exists($formatPath)) &&
-            ! $hasManualCrop
+            $force ||
+            ! $attachment->getStorage()->exists($formatPath)
         ) {
             $temporaryDirectory = TemporaryDirectory::create();
             $tempPath = $temporaryDirectory->path(Str::random(16) . '.' . $attachment->extension);
@@ -48,6 +48,22 @@ class S3Conversion implements Conversion
 
             $image = Image::load($tempPath);
 
+            // Apply manual crop coordinates if they exist
+            if ($hasManualCrop) {
+                $cropData = $existingFormat->data;
+                
+                // Apply crop transformation using the saved coordinates
+                if (isset($cropData['x'], $cropData['y'], $cropData['width'], $cropData['height'])) {
+                    $image->manualCrop(
+                        (int) $cropData['width'],
+                        (int) $cropData['height'], 
+                        (int) $cropData['x'],
+                        (int) $cropData['y']
+                    );
+                }
+            }
+
+            // Apply format-specific manipulations
             $format->definition()->apply($image);
 
             $image->save($tempPath);

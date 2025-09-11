@@ -31,14 +31,30 @@ class LocalConversion implements Conversion
             ->where('format', $format->key())
             ->first();
 
-        $hasManualCrop = $existingFormat && ! empty($existingFormat->data);
+        $hasManualCrop = $existingFormat && ! empty($existingFormat->data) && is_array($existingFormat->data);
 
         if (
-            ($force || ! $attachment->getStorage()->exists("$attachment->directory/$formatName")) &&
-            ! $hasManualCrop
+            $force ||
+            ! $attachment->getStorage()->exists("$attachment->directory/$formatName")
         ) {
             $image = Image::load($attachment->absolute_file_path);
 
+            // Apply manual crop coordinates if they exist
+            if ($hasManualCrop) {
+                $cropData = $existingFormat->data;
+                
+                // Apply crop transformation using the saved coordinates
+                if (isset($cropData['x'], $cropData['y'], $cropData['width'], $cropData['height'])) {
+                    $image->manualCrop(
+                        (int) $cropData['width'],
+                        (int) $cropData['height'], 
+                        (int) $cropData['x'],
+                        (int) $cropData['y']
+                    );
+                }
+            }
+
+            // Apply format-specific manipulations
             $format->definition()->apply($image);
 
             $image->save($savePath);

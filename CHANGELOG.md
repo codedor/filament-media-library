@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### What's Fixed
 
-* Fixed `GenerateFormats` command with `--force` flag overwriting manually cropped images. The command now preserves user-adjusted crops stored in the `attachment_formats` table while still regenerating auto-generated formats.
+* Fixed `GenerateFormats` command with `--force` flag overwriting manually cropped images. The command now applies existing crop coordinates from the `attachment_formats` table when regenerating formats, preserving user's manual cropping adjustments.
 
 ## v3.0.3 - 2025-08-08
 

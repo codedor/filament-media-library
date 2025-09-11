@@ -5,6 +5,8 @@ use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Mockery\MockInterface;
 
 uses(RefreshDatabase::class);
@@ -31,7 +33,9 @@ it('dispatches conversions for all formats', function () {
     $job->handle();
 });
 
-it('preserves manual crops when regenerating formats', function () {
+it('applies manual crops when regenerating formats', function () {
+    Storage::fake('public');
+    
     $format = new TestHero('test');
 
     /** @var Attachment $attachment */
@@ -41,10 +45,24 @@ it('preserves manual crops when regenerating formats', function () {
         'disk' => 'public',
     ]);
 
-    // Create a manual crop for this format
+    // Create actual image file for conversion to work
+    $attachment->getStorage()->put(
+        $attachment->file_path,
+        File::get(__DIR__ . '/../../TestFiles/test.jpg')
+    );
+
+    // Create realistic crop coordinates like those saved by the formatter
     $formatRecord = $attachment->formats()->create([
         'format' => $format->key(),
-        'data' => ['crop' => 'manual_crop_data'],
+        'data' => [
+            'x' => 10,
+            'y' => 20, 
+            'width' => 300,
+            'height' => 200,
+            'rotate' => 0,
+            'scaleX' => 1,
+            'scaleY' => 1
+        ],
     ]);
 
     // Make sure the relationship is working
@@ -55,11 +73,11 @@ it('preserves manual crops when regenerating formats', function () {
     // Use the real LocalConversion class to test our fix
     $conversion = new \Codedor\MediaLibrary\Conversions\LocalConversion;
 
-    // The conversion should return true but not actually process because of manual crop
+    // The conversion should return true and process WITH the manual crop applied
     $result = $conversion->convert($attachment, $format, force: true);
 
     expect($result)->toBe(true);
 
-    // The file should not exist because conversion was skipped
-    expect($attachment->getStorage()->exists("$attachment->directory/{$format->filename($attachment)}"))->toBe(false);
+    // The file should exist because conversion proceeded with manual crop
+    expect($attachment->getStorage()->exists("$attachment->directory/{$format->filename($attachment)}"))->toBe(true);
 });
