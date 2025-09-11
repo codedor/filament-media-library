@@ -34,7 +34,7 @@ class S3Conversion implements Conversion
             ->where('format', $format->key())
             ->first();
 
-        $hasManualCrop = $existingFormat && !empty($existingFormat->data);
+        $hasManualCrop = $existingFormat && ! empty($existingFormat->data);
 
         if (
             ($force || ! $attachment->getStorage()->exists($formatPath)) &&
