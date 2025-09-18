@@ -52,8 +52,9 @@ trait HasFormats
         $url = $disk->url($filePath);
 
         // Add cache-busting query parameter based on format's updated_at timestamp
+        /** @var \Codedor\MediaLibrary\Models\AttachmentFormat|null $attachmentFormat */
         $attachmentFormat = $this->formats()->where('format', $format->key())->first();
-        if ($attachmentFormat && $attachmentFormat->updated_at) {
+        if ($attachmentFormat !== null) {
             $timestamp = $attachmentFormat->updated_at->timestamp;
             $url .= (parse_url($url, PHP_URL_QUERY) ? '&' : '?') . "v={$timestamp}";
         }
