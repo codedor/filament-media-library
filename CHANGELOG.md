@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v3.0.4 - 2025-09-11
 
-### What's Fixed
+### What's Changed
 
 * Fixed `GenerateFormats` command with `--force` flag overwriting manually cropped images. The command now applies existing crop coordinates from the `attachment_formats` table when regenerating formats, preserving user's manual cropping adjustments.
+* Add timestamp to format url if the format has been cropped, otherwise the user does not see the changes due to cache
 
 ## v3.0.3 - 2025-08-08
 
