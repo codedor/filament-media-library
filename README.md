@@ -20,6 +20,10 @@ Media Library is also highly customizable, with a flexible configuration system 
 package to your specific needs. Whether you're building a simple blog or a complex web application, Laravel Media
 Library provides a simple and elegant solution for managing your media files.
 
+![Overview page](docs/index.png)
+
+![Formatter modal](docs/formatter.png)
+
 ## Installation
 
 You can install the package via composer:

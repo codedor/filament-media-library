@@ -4,19 +4,20 @@ namespace Codedor\MediaLibrary\Formats;
 
 use Codedor\MediaLibrary\Models\Attachment;
 use Spatie\Image\Drivers\ImageDriver;
-use Spatie\Image\Enums\Fit;
 
-class Thumbnail extends Format
+class Lazyload extends Format
 {
     public bool $shownInFormatter = false;
 
-    protected string $name = 'Thumbnail';
+    protected string $name = 'Lazyload';
 
-    protected string $description = 'Used in the CMS to display low-res images';
+    protected string $description = 'Used as placeholder for lazy loaded images. These will only be
+        shown for a short amount of time (and blurred) before the high quality image is loaded. This improves
+        performance and load times.';
 
     public function definition(): Manipulations|ImageDriver
     {
-        return $this->manipulations->fit(Fit::Crop, 350, 350);
+        return $this->manipulations->width(50);
     }
 
     public function registerModelsForFormatter(): void

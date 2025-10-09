@@ -4,10 +4,11 @@ namespace Codedor\MediaLibrary\Conversions;
 
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Support\TemporaryDirectory;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 
-class LocalConversion implements Conversion
+class S3Conversion implements Conversion
 {
     public function convert(Attachment $attachment, Format $format, bool $force = false): bool
     {
@@ -16,7 +17,7 @@ class LocalConversion implements Conversion
         }
 
         $formatName = $format->filename($attachment);
-        $savePath = $attachment->absolute_directory_path . '/' . $formatName;
+        $savePath = $attachment->directory . '/' . $formatName;
 
         if (! empty($format->definition()->toArray()['format'])) {
             $savePath = Str::replaceLast(
@@ -25,6 +26,8 @@ class LocalConversion implements Conversion
                 $savePath
             );
         }
+
+        $formatPath = "$attachment->directory/$formatName";
 
         // Check if there's an existing manual crop for this format
         $existingFormat = $attachment->formats()
@@ -35,9 +38,15 @@ class LocalConversion implements Conversion
 
         if (
             $force ||
-            ! $attachment->getStorage()->exists("$attachment->directory/$formatName")
+            ! $attachment->getStorage()->exists($formatPath)
         ) {
-            $image = Image::load($attachment->absolute_file_path);
+            $temporaryDirectory = TemporaryDirectory::create();
+            $tempPath = $temporaryDirectory->path(Str::random(16) . '.' . $attachment->extension);
+            $disk = $attachment->getStorage();
+
+            file_put_contents($tempPath, $disk->readStream($attachment->file_path));
+
+            $image = Image::load($tempPath);
 
             // Apply manual crop coordinates if they exist
             if ($hasManualCrop) {
@@ -57,7 +66,20 @@ class LocalConversion implements Conversion
             // Apply format-specific manipulations
             $format->definition()->apply($image);
 
-            $image->save($savePath);
+            $image->save($tempPath);
+
+            $file = fopen($tempPath, 'r');
+
+            $disk->put(
+                $formatPath,
+                $file,
+            );
+
+            if (is_resource($file)) {
+                fclose($file);
+            }
+
+            $temporaryDirectory->delete();
         }
 
         return true;

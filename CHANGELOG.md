@@ -5,6 +5,107 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v3.0.4 - 2025-09-11
+
+### What's Changed
+
+* Fixed `GenerateFormats` command with `--force` flag overwriting manually cropped images. The command now applies existing crop coordinates from the `attachment_formats` table when regenerating formats, preserving user's manual cropping adjustments.
+* Add timestamp to format url if the format has been cropped, otherwise the user does not see the changes due to cache
+
+## v3.0.3 - 2025-08-08
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/56
+* Added support for temporary uploads stored on a s3 disk by @jyrkidn in https://github.com/codedor/filament-media-library/pull/54
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/59
+* INF001-110 Add JPG and PNG (in capital letters) to the allowed image extensions by @jyrkidn in https://github.com/codedor/filament-media-library/pull/60
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v3.0.2...v3.0.3
+
+## v3.0.2 - 2025-04-17
+
+### What's Changed
+
+* Wrap width and height attributes in double quotes
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v3.0.1...v3.0.2
+
+## v3.0.1 - 2025-03-24
+
+### What's Changed
+
+* Fixed broken search
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v3.0.0...v3.0.1
+
+## v3.0.0 - 2025-02-28
+
+### What's Changed
+
+* 3.x by @jyrkidn in https://github.com/codedor/filament-media-library/pull/49
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v2.1.0...v3.0.0
+
+## v2.1.0 - 2025-02-28
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.2.0 to 2.3.0 by @dependabot in https://github.com/codedor/filament-media-library/pull/50
+* Bump aglipanci/laravel-pint-action from 2.4 to 2.5 by @dependabot in https://github.com/codedor/filament-media-library/pull/52
+* Upgrade to L12 by @jyrkidn in https://github.com/codedor/filament-media-library/pull/53
+* FIL001-162 Hide certain tags in the overview & resource picker by @jyrkidn in https://github.com/codedor/filament-media-library/pull/51
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v2.0.3...v2.1.0
+
+## v2.0.3 - 2024-12-04
+
+### What's Changed
+
+* FIL001-147 add tags filter by @thibautdeg in https://github.com/codedor/filament-media-library/pull/45
+
+### New Contributors
+
+* @thibautdeg made their first contribution in https://github.com/codedor/filament-media-library/pull/45
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v2.0.2...v2.0.3
+
+## v2.0.2 - 2024-12-03
+
+### What's Changed
+
+* Fix multiple breaking when deleting first image in list by @AngryMoustache in https://github.com/codedor/filament-media-library/pull/46
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v2.0.1...v2.0.2
+
+## v1.2.1 - 2024-12-03
+
+### What's Changed
+
+* [1.x] Apply fix for multiple attachment input when deleting items by @jyrkidn in https://github.com/codedor/filament-media-library/pull/47
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v1.2.0...v1.2.1
+
+## v2.0.1 - 2024-11-12
+
+### What's Changed
+
+* Fix uppercase extensions not saving properly by @jyrkidn in https://github.com/codedor/filament-media-library/pull/40
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v2.0.0...v2.0.1
+
+## v2.0.0 - 2024-10-04
+
+### What's Changed
+
+* Add Laravel 11 support by @gdebrauwer in https://github.com/codedor/filament-media-library/pull/39
+
+### New Contributors
+
+* @gdebrauwer made their first contribution in https://github.com/codedor/filament-media-library/pull/39
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v1.2.0...v2.0.0
+
 ## v1.2.0 - 2024-08-30
 
 ### What's Changed

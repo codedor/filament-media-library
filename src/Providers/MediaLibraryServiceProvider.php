@@ -7,6 +7,7 @@ use Codedor\MediaLibrary\Commands\GenerateFormats;
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Formats as FacadesFormats;
+use Codedor\MediaLibrary\Formats\Lazyload;
 use Codedor\MediaLibrary\Formats\Thumbnail;
 use Codedor\MediaLibrary\Livewire;
 use Codedor\MediaLibrary\Mixins\UploadedFileMixin;
@@ -42,6 +43,7 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
                 '2022_08_03_120356_create_attachment_tags_table',
                 '2022_08_03_120357_create_attachment_attachment_tags_table',
                 '2023_04_27_120359_create_attachment_formats',
+                '2025_01_30_130345_add_is_hidden_to_attachment_tags',
             ])
             ->runsMigrations()
             ->hasViews($this->packageName())
@@ -92,6 +94,7 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
         ));
 
         FacadesFormats::register([
+            Lazyload::class,
             Thumbnail::class,
         ]);
     }

@@ -7,6 +7,7 @@ use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Models\Attachment;
+use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Filament\Forms\Components\Actions\Action;
 use Filament\Forms\Components\Field;
@@ -75,8 +76,11 @@ class AttachmentInput extends Field
                 ->size('sm')
                 ->action(function (Set $set, array $arguments, $state) {
                     if ($this->isMultiple()) {
-                        $state = Arr::where($state, fn ($id) => $id !== $arguments['attachmentId']);
-                        $set($this->getStatePath(false), $state);
+                        $state = collect($state)
+                            ->reject(fn ($id) => $id === $arguments['attachmentId'])
+                            ->values();
+
+                        $set($this->getStatePath(false), $state->toArray());
                     } else {
                         $set($this->getStatePath(false), null);
                     }
@@ -134,6 +138,15 @@ class AttachmentInput extends Field
                         'isMultiple' => $component->isMultiple(),
                         'isGrid' => true,
                         'gridColumns' => 6,
+                        'relationFilters' => collect([
+                            'tags' => AttachmentTag::where('is_hidden', false)
+                                ->cursor()
+                                ->map(fn ($tag) => [
+                                    'id' => $tag->id,
+                                    'name' => $tag->title,
+                                ])
+                                ->toArray(),
+                        ])->filter()->toArray(),
                     ]);
                 }),
         ]);
