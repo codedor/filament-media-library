@@ -55,6 +55,8 @@
                             .getCroppedCanvas({
                                 width: this.currentFormat.width,
                                 height: this.currentFormat.height,
+                                imageSmoothingEnabled: {{ config('filament-media-library.formatter-smoothing.enabled', false) ? 'true' : 'false' }},
+                                imageSmoothingQuality: '{{ config('filament-media-library.formatter-smoothing.quality', 'high') }}',
                             })
                             .toDataURL('{{ $forcedMimeType ?? "image/webp" }}'),
                     })
