@@ -8,7 +8,7 @@
   }
 
   .gallery {
-    @apply grid @md/gallery:grid-cols-3 @xl/gallery:grid-cols-4 @3xl/gallery:grid-cols-5 @5xl/gallery:grid-cols-6 gap-4;
+    @apply grid grid-cols-1 @md/gallery:grid-cols-3 @xl/gallery:grid-cols-4 @3xl/gallery:grid-cols-5 @5xl/gallery:grid-cols-6 gap-4;
   }
 
   .gallery .sortable-ghost {
