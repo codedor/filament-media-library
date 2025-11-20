@@ -40,7 +40,11 @@ class FileRule implements ValidationRule
             ($imageSize[0] > $maxWidth ||
                 $imageSize[1] > $maxHeight)
         ) {
-            $fail("File `{$value->getClientOriginalName()}` has the dimensions of {$imageSize[0]}x{$imageSize[1]} which is greater than the maximum allowed {$maxWidth}x{$maxHeight}");
+            $fail(__('filament-media-library::validation.image_dimensions :filename :dimensions :max_dimensions', [
+                'filename' => $value->getClientOriginalName(),
+                'dimensions' => "{$imageSize[0]}x{$imageSize[1]}",
+                'max_dimensions' => "{$maxWidth}x{$maxHeight}",
+            ]));
         }
     }
 
@@ -55,7 +59,11 @@ class FileRule implements ValidationRule
             $maxFilesize = Number::fileSize($maxImageFileSize);
             $currentFilesize = Number::fileSize($value->getSize());
 
-            $fail("File `{$value->getClientOriginalName()}` has a size of {$currentFilesize} which is greater than the maximum allowed {$maxFilesize}");
+            $fail(__('filament-media-library::validation.image_file_size :filename :size :max_size', [
+                'filename' => $value->getClientOriginalName(),
+                'size' => $currentFilesize,
+                'max_size' => $maxFilesize,
+            ]));
         }
     }
 
@@ -67,7 +75,11 @@ class FileRule implements ValidationRule
             $currentFilesize = Number::fileSize($value->getSize());
             $maxFilesizeFormatted = Number::fileSize($maxFilesize);
 
-            $fail("File `{$value->getClientOriginalName()}` has a size of {$currentFilesize} which is greater than the maximum allowed {$maxFilesizeFormatted}");
+            $fail(__('filament-media-library::validation.file_size :filename :size :max_size', [
+                'filename' => $value->getClientOriginalName(),
+                'size' => $currentFilesize,
+                'max_size' => $maxFilesizeFormatted,
+            ]));
         }
     }
 
@@ -77,7 +89,10 @@ class FileRule implements ValidationRule
         $fileExtension = $value->guessExtension();
 
         if ($allowedExtensions->doesntContain($fileExtension)) {
-            $fail("File `{$value->getClientOriginalName()}` has a not allowed extension of {$fileExtension}");
+            $fail(__('filament-media-library::validation.extension :filename :extension', [
+                'filename' => $value->getClientOriginalName(),
+                'extension' => $fileExtension,
+            ]));
         }
     }
 
@@ -94,7 +109,9 @@ class FileRule implements ValidationRule
         }
 
         if ($imageInfo['channels'] !== 3) {
-            $fail("Image `{$value->getClientOriginalName()}` must be RGB and not CMYK");
+            $fail(__('filament-media-library::validation.color_type :filename', [
+                'filename' => $value->getClientOriginalName(),
+            ]));
         }
     }
 }

@@ -11,3 +11,4 @@ vendor
 node_modules
 coveraged
 build
+.DS_Store
