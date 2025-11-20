@@ -37,4 +37,10 @@ return [
         ],
     ],
     'temporary_directory_path' => storage_path('filament-media-library/tmp'),
+
+    'validation' => [
+        'max_file_size' => 5, // in KB
+        'max_height' => 2400,
+        'max_width' => 4000,
+    ],
 ];
