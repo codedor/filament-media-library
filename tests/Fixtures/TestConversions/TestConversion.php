@@ -1,6 +1,6 @@
 <?php
 
-namespace Codedor\MediaLibrary\Tests\TestConversions;
+namespace Codedor\MediaLibrary\Tests\Fixtures\TestConversions;
 
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Formats\Format;

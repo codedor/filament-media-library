@@ -1,20 +1,20 @@
 <?php
 
-namespace Codedor\MediaLibrary\Tests\TestFormats;
+namespace Codedor\MediaLibrary\Tests\Fixtures\TestFormats;
 
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Formats\Manipulations;
-use Codedor\MediaLibrary\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Tests\Fixtures\TestModels\TestModel;
 use Spatie\Image\Enums\Fit;
 
-class TestHero extends Format
+class TestNoHeight extends Format
 {
     protected string $description = 'Test format';
 
     public function definition(): Manipulations
     {
         return $this->manipulations
-            ->fit(Fit::Crop, 100, 100)
+            ->fit(Fit::Crop, 100)
             ->sepia();
     }
 

@@ -2,8 +2,8 @@
 
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Formats\Format;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
-use Codedor\MediaLibrary\Tests\TestModels\TestModel;
+use Codedor\MediaLibrary\Tests\Fixtures\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\Fixtures\TestModels\TestModel;
 
 it('registers model', function () {
     expect(Formats::register([TestHero::class]))

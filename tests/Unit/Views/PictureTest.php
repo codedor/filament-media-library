@@ -1,8 +1,8 @@
 <?php
 
 use Codedor\MediaLibrary\Facades\Formats;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
-use Codedor\MediaLibrary\Tests\TestFormats\TestNoHeight;
+use Codedor\MediaLibrary\Tests\Fixtures\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\Fixtures\TestFormats\TestNoHeight;
 use Codedor\MediaLibrary\Views\Picture;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
