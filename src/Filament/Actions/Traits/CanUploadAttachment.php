@@ -111,11 +111,11 @@ trait CanUploadAttachment
                     ->required()
                     ->multiple(fn () => $this->isMultiple())
                     // dimensions validation
-                    ->rule(new FileRule())
+                    ->rule(new FileRule)
                     // image file size validation
                     // ->rule(File::types(collect(config('filament-media-library.extensions', []))->flatten()->toArray())
                     //     ->max('10mb'))
-                        //max:config('media.validation.max_file_size', 5) * 1000000
+                        // max:config('media.validation.max_file_size', 5) * 1000000
                     // file size validation
                     // mime type validation
                     // color type validation
