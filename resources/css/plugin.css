@@ -63,7 +63,11 @@
     flex-wrap: wrap !important;
   }
 
-  .fi-ta-record .fi-ta-text {
-    word-break: break-word;
+  .fi-ta-record .fi-ta-text,
+  .fi-section-header-heading,
+  .fi-modal-heading,
+  .fi-fo-placeholder {
+      word-break: break-word;
+      hyphens: auto;
   }
 }
