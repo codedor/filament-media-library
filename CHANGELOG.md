@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v3.1.0 - 2025-11-20
+
+### What's Changed
+
+* Add translatable strings by @jyrkidn in https://github.com/codedor/filament-media-library/pull/55
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/61
+* Bump stefanzweifel/git-auto-commit-action from 5 to 7 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/65
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v3.0.4...v3.1.0
+
 ## v3.0.4 - 2025-09-11
 
 ### What's Changed
