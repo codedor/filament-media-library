@@ -4,7 +4,6 @@ namespace Codedor\MediaLibrary\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-use Codedor\FilamentRedirects\Filament\RedirectsPlugin;
 use Codedor\MediaLibrary\Filament\MediaLibraryPlugin;
 use Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
@@ -21,7 +20,6 @@ use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Spatie\Image\Manipulations;
-use Spatie\Translatable\TranslatableServiceProvider;
 
 class TestCase extends Orchestra
 {
