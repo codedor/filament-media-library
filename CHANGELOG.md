@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v3.1.0 - 2025-11-20
+
+### What's Changed
+
+* Add translatable strings by @jyrkidn in https://github.com/codedor/filament-media-library/pull/55
+* Bump actions/checkout from 4 to 5 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/61
+* Bump stefanzweifel/git-auto-commit-action from 5 to 7 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/65
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v3.0.4...v3.1.0
+
+## v3.0.4 - 2025-09-11
+
+### What's Changed
+
+* Fixed `GenerateFormats` command with `--force` flag overwriting manually cropped images. The command now applies existing crop coordinates from the `attachment_formats` table when regenerating formats, preserving user's manual cropping adjustments.
+* Add timestamp to format url if the format has been cropped, otherwise the user does not see the changes due to cache
+
+## v3.0.3 - 2025-08-08
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.3.0 to 2.4.0 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/56
+* Added support for temporary uploads stored on a s3 disk by @jyrkidn in https://github.com/codedor/filament-media-library/pull/54
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/codedor/filament-media-library/pull/59
+* INF001-110 Add JPG and PNG (in capital letters) to the allowed image extensions by @jyrkidn in https://github.com/codedor/filament-media-library/pull/60
+
+**Full Changelog**: https://github.com/codedor/filament-media-library/compare/v3.0.2...v3.0.3
+
 ## v3.0.2 - 2025-04-17
 
 ### What's Changed

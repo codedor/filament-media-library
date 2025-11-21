@@ -21,13 +21,16 @@ class AttachmentTagResource extends Resource
     {
         return $schema->components([
             TextInput::make('title')
+                ->label(__('filament-media-library::admin.title'))
                 ->required(),
 
             Select::make('parent')
+                ->label(__('filament-media-library::admin.parent'))
                 ->relationship('parent', 'title'),
 
             Toggle::make('is_hidden')
-                ->helperText('Hide images with this tag from the media library and picker')
+                ->label(__('filament-media-library::admin.is hidden'))
+                ->helperText(__('filament-media-library::admin.is hidden help text'))
                 ->default(false),
         ]);
     }
@@ -36,12 +39,15 @@ class AttachmentTagResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
-                Tables\Columns\TextColumn::make('parent.title'),
-                Tables\Columns\IconColumn::make('is_hidden')->boolean(),
-            ])
-            ->filters([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->label(__('filament-media-library::admin.title')),
+
+                Tables\Columns\TextColumn::make('parent.title')
+                    ->label(__('filament-media-library::admin.parent')),
+
+                Tables\Columns\IconColumn::make('is_hidden')
+                    ->label(__('filament-media-library::admin.is hidden'))
+                    ->boolean(),
             ])
             ->recordActions([
                 \Filament\Actions\EditAction::make(),
@@ -57,5 +63,20 @@ class AttachmentTagResource extends Resource
         return [
             'index' => ManageAttachmentTags::route('/'),
         ];
+    }
+
+    public static function getNavigationLabel(): string
+    {
+        return __('filament-media-library::admin.attachment tags title');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('filament-media-library::admin.attachment tags title');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('filament-media-library::admin.attachment tags title singular');
     }
 }

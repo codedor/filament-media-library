@@ -44,33 +44,42 @@ class AttachmentResource extends Resource
                 ->defaultFields([
                     \Filament\Schemas\Components\Grid::make(2)->schema([
                         TextEntry::make('name')
+                            ->label(__('filament-media-library::admin.name'))
                             ->state(fn (Attachment $record) => $record->name),
 
                         TextEntry::make('created_at')
+                            ->label(__('filament-media-library::admin.created at'))
                             ->state(fn (Attachment $record) => $record->created_at->format('Y-m-d H:i:s')),
 
                         TextEntry::make('extension')
+                            ->label(__('filament-media-library::admin.extension'))
                             ->state(fn (Attachment $record) => $record->extension),
 
                         TextEntry::make('mime_type')
+                            ->label(__('filament-media-library::admin.mime type'))
                             ->state(fn (Attachment $record) => $record->mime_type),
 
                         TextEntry::make('type')
+                            ->label(__('filament-media-library::admin.type'))
                             ->state(fn (Attachment $record) => $record->type),
 
                         TextEntry::make('size')
+                            ->label(__('filament-media-library::admin.size'))
                             ->state(fn (Attachment $record) => "{$record->formattedInMbSize} MB"),
 
                         TextEntry::make('width')
+                            ->label(__('filament-media-library::admin.width'))
                             ->state(fn (Attachment $record) => $record->width)
                             ->hidden(fn (Attachment $record) => ! $record->isImage()),
 
                         TextEntry::make('height')
+                            ->label(__('filament-media-library::admin.height'))
                             ->state(fn (Attachment $record) => $record->height)
                             ->hidden(fn (Attachment $record) => ! $record->isImage()),
                     ]),
 
                     Select::make('tags')
+                        ->label(__('filament-media-library::admin.tags'))
                         ->relationship('tags', 'title')
                         ->preload()
                         ->multiple(),
@@ -78,6 +87,7 @@ class AttachmentResource extends Resource
                     \Filament\Schemas\Components\Section::make('Preview')
                         ->schema([
                             TextEntry::make('image')
+                                ->label(__('filament-media-library::admin.image'))
                                 ->hidden(fn (Attachment $record) => ! $record->isImage())
                                 ->state(fn (Attachment $record) => new HtmlString(
                                     "<a href=\"$record->url\" target=\"_blank\"><img src=\"{$record->url}\" /></a>"
@@ -86,32 +96,16 @@ class AttachmentResource extends Resource
                 ])
                 ->translatableFields(fn () => [
                     // TextInput::make('translated_name'),
-                    TextInput::make('alt')->label('Alt text'),
-                    TextInput::make('caption'),
+                    TextInput::make('alt')
+                        ->label(__('filament-media-library::admin.alt text')),
+                    TextInput::make('caption')
+                        ->label(__('filament-media-library::admin.caption')),
                 ]),
         ]);
     }
 
     public static function table(Table $table): Table
     {
-        $types = Attachment::select('type')
-            ->groupBy('type')
-            ->orderBy('type')
-            ->pluck('type')
-            ->mapWithKeys(fn ($type) => [$type => Str::headline($type)]);
-
-        $mimeTypes = Attachment::select('mime_type')
-            ->groupBy('mime_type')
-            ->orderBy('mime_type')
-            ->pluck('mime_type')
-            ->mapWithKeys(fn ($mime) => [$mime => $mime]);
-
-        $disks = Attachment::select('disk')
-            ->groupBy('disk')
-            ->orderBy('disk')
-            ->pluck('disk')
-            ->mapWithKeys(fn ($disk) => [$disk => Str::headline($disk)]);
-
         return $table
             ->defaultSort('created_at', 'desc')
             ->contentGrid([
@@ -124,6 +118,7 @@ class AttachmentResource extends Resource
                 ])->schema([]),
 
                 TextColumn::make('name')
+                    ->label(__('filament-media-library::admin.name'))
                     ->sortable()
                     ->searchable(query: function ($query, string $search) {
                         return $query->search($search);
@@ -133,6 +128,7 @@ class AttachmentResource extends Resource
                     )),
 
                 TextColumn::make('tags')
+                    ->label(__('filament-media-library::admin.tags'))
                     ->searchable(query: function ($query, string $search) {
                         return $query->whereHas('tags', fn ($query) => $query->where('title', 'like', "%$search%"));
                     })
@@ -140,28 +136,49 @@ class AttachmentResource extends Resource
                     ->getStateUsing(fn (Attachment $record) => $record->tags->implode('title', ', ')),
 
                 TextColumn::make('image')
+                    ->label(__('filament-media-library::admin.image'))
                     ->view('filament-media-library::components.attachment-list'),
             ])
             ->filters([
                 Filters\SelectFilter::make('disk')
-                    ->options($disks)
+                    ->label(__('filament-media-library::admin.disk'))
+                    ->options(fn () => Attachment::select('disk')
+                        ->groupBy('disk')
+                        ->orderBy('disk')
+                        ->pluck('disk')
+                        ->mapWithKeys(fn (string $disk) => [$disk => Str::headline($disk)])
+                    )
                     ->multiple(),
 
                 Filters\SelectFilter::make('type')
-                    ->options($types)
+                    ->label(__('filament-media-library::admin.type'))
+                    ->options(fn () => Attachment::select('type')
+                        ->groupBy('type')
+                        ->orderBy('type')
+                        ->pluck('type')
+                        ->mapWithKeys(fn ($type) => [$type => Str::headline($type)])
+                    )
                     ->multiple(),
 
                 Filters\SelectFilter::make('tags')
+                    ->label(__('filament-media-library::admin.tags'))
                     ->relationship('tags', 'title')
                     ->preload()
                     ->multiple(),
 
                 Filters\SelectFilter::make('mime_type')
-                    ->options($mimeTypes)
+                    ->label(__('filament-media-library::admin.mime type'))
+                    ->options(fn () => Attachment::select('mime_type')
+                        ->groupBy('mime_type')
+                        ->orderBy('mime_type')
+                        ->pluck('mime_type')
+                        ->mapWithKeys(fn ($mime) => [$mime => $mime])
+                    )
                     ->multiple(),
             ])
             ->recordActions([
                 \Filament\Actions\Action::make('format')
+                    ->label(__('filament-media-library::admin.format'))
                     ->icon('heroicon-o-scissors')
                     ->hidden(fn (Attachment $record) => ! is_convertible_image($record->extension))
                     ->action(function (\Filament\Actions\Action $action) {
@@ -186,7 +203,7 @@ class AttachmentResource extends Resource
             ->toolbarActions([
                 \Filament\Actions\DeleteBulkAction::make(),
                 \Filament\Actions\BulkAction::make('generate-formats')
-                    ->label('Generate formats')
+                    ->label(__('filament-media-library::admin.generate formats'))
                     ->icon('heroicon-o-scissors')
                     ->deselectRecordsAfterCompletion()
                     ->hidden(fn () => ! config('filament-media-library.enable-format-generate-action', false))

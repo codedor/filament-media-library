@@ -78,7 +78,8 @@ trait CanUploadAttachment
 
                         $defaultFields = [
                             TextEntry::make('name')
-                                ->state(fn () => $upload->getClientOriginalName()),
+                                ->state(fn () => $upload->getClientOriginalName())
+                                ->label(__('filament-media-library::upload.name')),
                         ];
 
                         if (! is_null($get("meta.{$md5}.tags"))) {
@@ -104,9 +105,10 @@ trait CanUploadAttachment
                                     ->defaultFields($defaultFields)
                                     ->translatableFields(fn () => [
                                         TextInput::make('alt')
-                                            ->label('Alt text'),
+                                            ->label(__('filament-media-library::upload.alt text')),
 
-                                        TextInput::make('caption'),
+                                        TextInput::make('caption')
+                                            ->label(__('filament-media-library::upload.caption')),
                                     ]),
                             ]);
                     })
