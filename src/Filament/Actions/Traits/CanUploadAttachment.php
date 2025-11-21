@@ -5,6 +5,7 @@ namespace Codedor\MediaLibrary\Filament\Actions\Traits;
 use Closure;
 use Codedor\MediaLibrary\Models\Attachment;
 use Codedor\MediaLibrary\Models\AttachmentTag;
+use Codedor\MediaLibrary\Rules\FileRule;
 use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\FileUpload;
@@ -17,6 +18,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Arr;
+use Livewire\Component as Livewire;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 trait CanUploadAttachment
@@ -108,7 +110,23 @@ trait CanUploadAttachment
                     ->hiddenLabel()
                     ->required()
                     ->multiple(fn () => $this->isMultiple())
-                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file, Set $set): string {
+                    // dimensions validation
+                    ->rule(new FileRule)
+                    // image file size validation
+                    // ->rule(File::types(collect(config('filament-media-library.extensions', []))->flatten()->toArray())
+                    //     ->max('10mb'))
+                        // max:config('media.validation.max_file_size', 5) * 1000000
+                    // file size validation
+                    // mime type validation
+                    // color type validation
+                    // $this->validateImageFileSize();
+                    // $this->validateFileSize();
+                    // $this->validateMimeType();
+                    // $this->validateColorType();
+                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file, Set $set, Livewire $livewire): string {
+                        // this does not work
+                        // $livewire->addError($this->getName(), 'Dimensions must be 100x100, is now 200x101');
+
                         $attachment = $file->save();
 
                         return $attachment->id;

@@ -3,7 +3,7 @@
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\Fixtures\TestFormats\TestHero;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -61,7 +61,7 @@ it('converts image to webp', function () {
 
     $attachment->getStorage()->put(
         $attachment->file_path,
-        File::get(__DIR__ . '/../../TestFiles/test.jpg')
+        File::get(__DIR__ . '/../../Fixtures/images/test.jpg')
     );
 
     /** @var \Codedor\MediaLibrary\Formats\Format $format */

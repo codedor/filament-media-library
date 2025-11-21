@@ -2,8 +2,8 @@
 
 use Codedor\MediaLibrary\Conversions\LocalConversion;
 use Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider;
-use Codedor\MediaLibrary\Tests\TestConversions\TestConversion;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\Fixtures\TestConversions\TestConversion;
+use Codedor\MediaLibrary\Tests\Fixtures\TestFormats\TestHero;
 use Illuminate\Support\Facades\Config;
 
 it('returns default conversion', function () {
