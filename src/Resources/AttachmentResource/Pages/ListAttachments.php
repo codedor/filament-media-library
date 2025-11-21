@@ -7,7 +7,6 @@ use Codedor\MediaLibrary\Models\AttachmentTag;
 use Codedor\MediaLibrary\Resources\AttachmentResource;
 use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Actions;
-use Filament\Forms\Form;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
@@ -35,8 +34,8 @@ class ListAttachments extends ListRecords
                 ->authorize(AttachmentTagResource::canCreate())
                 ->model(AttachmentTag::class)
                 ->outlined()
-                ->form(
-                    AttachmentTagResource::form(Form::make($this))
+                ->schema(
+                    AttachmentTagResource::form(\Filament\Schemas\Schema::make($this))
                         ->columns(2)
                         ->getComponents()
                 ),

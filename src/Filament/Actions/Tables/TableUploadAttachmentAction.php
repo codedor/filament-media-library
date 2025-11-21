@@ -10,7 +10,7 @@ class TableUploadAttachmentAction extends Action
 {
     use CanUploadAttachment;
 
-    public function getModel(): ?string
+    public function getModel(bool $withDefault = true): ?string
     {
         return Attachment::class;
     }
