@@ -70,6 +70,7 @@ class MediaLibraryServiceProvider extends PackageServiceProvider
 
     protected function registerLivewireComponents()
     {
+        LivewireCore::addNamespace($this->packageName(), classNamespace: 'Codedor\MediaLibrary\Livewire');
         foreach ($this->livewireComponents as $key => $livewireComponent) {
             LivewireCore::component("{$this->packageName()}::$key", $livewireComponent);
         }
