@@ -32,8 +32,7 @@ class DeleteAttachmentAction extends DeleteAction
                     '</div>'
                 );
             })
-            ->modalSubmitAction(fn (Attachment $record) =>
-                AttachmentActions::findRelatedRecords($record)->isNotEmpty()
+            ->modalSubmitAction(fn (Attachment $record) => AttachmentActions::findRelatedRecords($record)->isNotEmpty()
                     ? false
                     : null
             );
