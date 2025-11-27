@@ -21,19 +21,24 @@ class DeleteAttachmentAction extends DeleteAction
                     return null;
                 }
 
-                return new HtmlString(
-                    '<div class="text-sm">' .
-                    '<p class="font-semibold text-danger-600 dark:text-danger-400">' .
-                    __('filament-media-library::attachment.delete failed description') .
-                    '</p><br>' .
-                    AttachmentActions::formatFailedRecords(
-                        collect([$record->getKey() => $relatedRecords])
-                    ) .
-                    '</div>'
+                $description = __('filament-media-library::attachment.delete failed description');
+                $formattedRecords = AttachmentActions::formatFailedRecords(
+                    collect([$record->getKey() => $relatedRecords])
+                );
+
+                return new HtmlString(<<<HTML
+                    <div class="rounded-lg bg-danger-50 dark:bg-danger-500/10 p-4">
+                        <p class="text-sm font-medium text-danger-600 dark:text-danger-400 mb-3">
+                            {$description}
+                        </p>
+                        <div class="text-sm text-gray-700 dark:text-gray-300">
+                            {$formattedRecords}
+                        </div>
+                    </div>
+                    HTML
                 );
             })
-            ->modalSubmitAction(fn (Attachment $record) =>
-                AttachmentActions::findRelatedRecords($record)->isNotEmpty()
+            ->modalSubmitAction(fn (Attachment $record) => AttachmentActions::findRelatedRecords($record)->isNotEmpty()
                     ? false
                     : null
             );

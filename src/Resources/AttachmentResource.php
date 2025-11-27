@@ -2,9 +2,11 @@
 
 namespace Codedor\MediaLibrary\Resources;
 
+use Codedor\MediaLibrary\Actions\AttachmentActions;
+use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
 use Codedor\MediaLibrary\Facades\Formats;
 use Codedor\MediaLibrary\Filament\Actions\DeleteAttachmentAction;
-use Codedor\MediaLibrary\Filament\Actions\DeleteAttachmentBulkAction;
+use Codedor\MediaLibrary\Filament\Notifications\FailedDeletionNotification;
 use Codedor\MediaLibrary\Formats\Format;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
@@ -25,6 +27,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -189,7 +192,16 @@ class AttachmentResource extends Resource
                 DeleteAttachmentAction::make(),
             ])
             ->bulkActions([
-                DeleteAttachmentBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make()
+                    ->action(function (Collection $records) {
+                        try {
+                            AttachmentActions::delete($records);
+                        } catch (DeleteFailedException $e) {
+                            FailedDeletionNotification::make()
+                                ->exception($e)
+                                ->send();
+                        }
+                    }),
                 Tables\Actions\BulkAction::make('generate-formats')
                     ->label('Generate formats')
                     ->icon('heroicon-o-scissors')
