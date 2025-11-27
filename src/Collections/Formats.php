@@ -64,4 +64,23 @@ class Formats extends Collection
             force: $force,
         )));
     }
+
+    /**
+     * @return Collection<string, array{model: class-string, fields: Collection}>
+     */
+    public function getRegisteredModelsWithFields(): Collection
+    {
+        return $this->map(function ($formats, $model) {
+            $fields = $formats
+                ->map(fn (Format $format) => $format->column())
+                ->filter()
+                ->unique()
+                ->values();
+
+            return [
+                'model' => $model,
+                'fields' => $fields,
+            ];
+        });
+    }
 }
