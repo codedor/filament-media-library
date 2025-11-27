@@ -3,6 +3,7 @@
 namespace Codedor\MediaLibrary\Filament\Notifications;
 
 use Codedor\MediaLibrary\Exceptions\DeleteFailedException;
+use Filament\Facades\Filament;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
 
@@ -27,18 +28,16 @@ class FailedDeletionNotification extends Notification
 
     protected static function formatFailedRecords(Collection $failedRecords): string
     {
-        return collect($failedRecords)
-            ->map(function ($relatedRecords) {
-                return collect($relatedRecords)
-                    ->map(function ($record) {
-                        $resource = class_basename($record);
-                        $url = get_resource_url_by_model($record, 'edit');
-                        $title = $record->working_title;
-
-                        return static::formatRecordLink($resource, $url, $title);
-                    })
-                    ->implode('');
-            })
+        return $failedRecords
+            ->map(fn ($relatedRecords) => collect($relatedRecords)
+                ->map(fn ($record) => static::formatRecordLink(
+                    class_basename($record),
+                    ($resource = Filament::getModelResource($record))
+                        ? $resource::getUrl('edit', ['record' => $record])
+                        : null,
+                    $record->working_title
+                ))
+                ->implode(''))
             ->implode('<br>');
     }
 

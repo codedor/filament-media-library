@@ -65,17 +65,19 @@ class Formats extends Collection
         )));
     }
 
+    /**
+     * @return Collection<string, array{model: class-string, fields: Collection}>
+     */
     public function getRegisteredModelsWithFields(): Collection
     {
         return $this->map(function ($formats, $model) {
-            $fields = $formats->map(function (Format $format) {
-                return $format->column();
-            })
+            $fields = $formats
+                ->map(fn (Format $format) => $format->column())
                 ->filter()
                 ->unique()
                 ->values();
 
-            return (object) [
+            return [
                 'model' => $model,
                 'fields' => $fields,
             ];

@@ -34,19 +34,17 @@ class AttachmentActions
     {
         $records = collect();
         Formats::getRegisteredModelsWithFields()->each(function ($model) use ($record, &$records) {
-            $modelInstance = new $model->model;
+            $modelInstance = new $model['model'];
             $table = $modelInstance->getTable();
             $columns = Schema::getColumnListing($table);
 
-            $model->fields->each(function ($field) use ($modelInstance, $record, $columns, &$records) {
-                if (! in_array($field, $columns)) {
-                    return;
-                }
-
-                $modelInstance->where($field, $record->id)
-                    ->get()
-                    ->each(fn ($record1) => $records->push($record1));
-            });
+            $model['fields']
+                ->filter(fn ($field) => in_array($field, $columns))
+                ->each(function ($field) use ($modelInstance, $record, &$records) {
+                    $modelInstance->where($field, $record->id)
+                        ->get()
+                        ->each(fn ($record1) => $records->push($record1));
+                });
         });
 
         return $records;
