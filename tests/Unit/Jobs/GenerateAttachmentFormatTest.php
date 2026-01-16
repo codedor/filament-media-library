@@ -3,7 +3,7 @@
 use Codedor\MediaLibrary\Conversions\Conversion;
 use Codedor\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Codedor\MediaLibrary\Tests\Fixtures\TestFormats\TestHero;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -48,7 +48,7 @@ it('applies manual crops when regenerating formats', function () {
     // Create actual image file for conversion to work
     $attachment->getStorage()->put(
         $attachment->file_path,
-        File::get(__DIR__ . '/../../TestFiles/test.jpg')
+        File::get(__DIR__ . '/../../Fixtures/images/test.jpg')
     );
 
     // Create realistic crop coordinates like those saved by the formatter
