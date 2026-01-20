@@ -1,11 +1,8 @@
 <?php
 
-namespace Codedor\MediaLibrary\Filament\Actions\Traits;
+namespace Wotz\MediaLibrary\Filament\Actions\Traits;
 
 use Closure;
-use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\Models\AttachmentTag;
-use Codedor\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -14,6 +11,9 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Arr;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Models\AttachmentTag;
+use Wotz\TranslatableTabs\Forms\TranslatableTabs;
 
 trait CanUploadAttachment
 {

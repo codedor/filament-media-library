@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
+namespace Wotz\MediaLibrary\Resources\AttachmentResource\Pages;
 
-use Codedor\MediaLibrary\Resources\AttachmentResource;
-use Codedor\TranslatableTabs\Resources\Traits\HasTranslations;
 use Filament\Resources\Pages\EditRecord;
+use Wotz\MediaLibrary\Resources\AttachmentResource;
+use Wotz\TranslatableTabs\Resources\Traits\HasTranslations;
 
 class EditAttachment extends EditRecord
 {

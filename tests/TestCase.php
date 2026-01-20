@@ -1,12 +1,9 @@
 <?php
 
-namespace Codedor\MediaLibrary\Tests;
+namespace Wotz\MediaLibrary\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
-use Codedor\MediaLibrary\Filament\MediaLibraryPlugin;
-use Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider;
-use Codedor\TranslatableTabs\Providers\TranslatableTabsServiceProvider;
 use Filament\Actions\ActionsServiceProvider;
 use Filament\FilamentServiceProvider;
 use Filament\Forms\FormsServiceProvider;
@@ -22,6 +19,9 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 use Spatie\Image\Manipulations;
 use Spatie\Translatable\TranslatableServiceProvider;
+use Wotz\MediaLibrary\Filament\MediaLibraryPlugin;
+use Wotz\MediaLibrary\Providers\MediaLibraryServiceProvider;
+use Wotz\TranslatableTabs\Providers\TranslatableTabsServiceProvider;
 
 class TestCase extends Orchestra
 {

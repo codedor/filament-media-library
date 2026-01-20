@@ -1,16 +1,16 @@
 <?php
 
-namespace Codedor\MediaLibrary\Resources\AttachmentResource\Pages;
+namespace Wotz\MediaLibrary\Resources\AttachmentResource\Pages;
 
-use Codedor\MediaLibrary\Filament\Actions\Tables\TableUploadAttachmentAction;
-use Codedor\MediaLibrary\Models\AttachmentTag;
-use Codedor\MediaLibrary\Resources\AttachmentResource;
-use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Database\Eloquent\Builder;
+use Wotz\MediaLibrary\Filament\Actions\Tables\TableUploadAttachmentAction;
+use Wotz\MediaLibrary\Models\AttachmentTag;
+use Wotz\MediaLibrary\Resources\AttachmentResource;
+use Wotz\MediaLibrary\Resources\AttachmentTagResource;
 
 class ListAttachments extends ListRecords
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\MediaLibrary\Resources\AttachmentTagResource\Pages;
+namespace Wotz\MediaLibrary\Resources\AttachmentTagResource\Pages;
 
-use Codedor\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Resources\Pages\ManageRecords;
+use Wotz\MediaLibrary\Resources\AttachmentTagResource;
 
 class ManageAttachmentTags extends ManageRecords
 {

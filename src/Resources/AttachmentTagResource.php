@@ -1,15 +1,15 @@
 <?php
 
-namespace Codedor\MediaLibrary\Resources;
+namespace Wotz\MediaLibrary\Resources;
 
-use Codedor\MediaLibrary\Models\AttachmentTag;
-use Codedor\MediaLibrary\Resources\AttachmentTagResource\Pages\ManageAttachmentTags;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Wotz\MediaLibrary\Models\AttachmentTag;
+use Wotz\MediaLibrary\Resources\AttachmentTagResource\Pages\ManageAttachmentTags;
 
 class AttachmentTagResource extends Resource
 {
