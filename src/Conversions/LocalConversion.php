@@ -2,10 +2,10 @@
 
 namespace Wotz\MediaLibrary\Conversions;
 
-use Wotz\MediaLibrary\Formats\Format;
-use Wotz\MediaLibrary\Models\Attachment;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
+use Wotz\MediaLibrary\Formats\Format;
+use Wotz\MediaLibrary\Models\Attachment;
 
 class LocalConversion implements Conversion
 {

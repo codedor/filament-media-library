@@ -3,10 +3,10 @@
 namespace Wotz\MediaLibrary\Tables\Columns;
 
 use Closure;
-use Wotz\MediaLibrary\Models\Attachment;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\Concerns;
 use Illuminate\Support\Collection;
+use Wotz\MediaLibrary\Models\Attachment;
 
 class AttachmentColumn extends Column
 {

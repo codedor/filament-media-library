@@ -1,12 +1,12 @@
 <?php
 
-use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
-use Wotz\MediaLibrary\Models\Attachment;
-use Wotz\MediaLibrary\Tests\TestFormats\TestHero;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Storage;
+use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Tests\TestFormats\TestHero;
 
 use function Pest\Laravel\assertDatabaseCount;
 use function Pest\Laravel\assertDatabaseHas;

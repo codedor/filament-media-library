@@ -2,11 +2,11 @@
 
 namespace Wotz\MediaLibrary\Collections;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Wotz\MediaLibrary\Formats\Format;
 use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Wotz\MediaLibrary\Models\Attachment;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class Formats extends Collection
 {

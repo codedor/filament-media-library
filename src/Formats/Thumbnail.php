@@ -2,9 +2,9 @@
 
 namespace Wotz\MediaLibrary\Formats;
 
-use Wotz\MediaLibrary\Models\Attachment;
 use Spatie\Image\Drivers\ImageDriver;
 use Spatie\Image\Enums\Fit;
+use Wotz\MediaLibrary\Models\Attachment;
 
 class Thumbnail extends Format
 {

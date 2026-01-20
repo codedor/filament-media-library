@@ -2,8 +2,8 @@
 
 namespace Wotz\MediaLibrary\Database\Factories;
 
-use Wotz\MediaLibrary\Models\AttachmentTag;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Wotz\MediaLibrary\Models\AttachmentTag;
 
 class AttachmentTagFactory extends Factory
 {

@@ -3,18 +3,18 @@
 namespace Wotz\MediaLibrary\Filament;
 
 use Closure;
-use Wotz\MediaLibrary\Facades\Formats;
-use Wotz\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
-use Wotz\MediaLibrary\Formats\Format;
-use Wotz\MediaLibrary\Models\Attachment;
-use Wotz\MediaLibrary\Models\AttachmentTag;
-use Wotz\MediaLibrary\Resources\AttachmentResource;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Livewire\Component;
+use Wotz\MediaLibrary\Facades\Formats;
+use Wotz\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
+use Wotz\MediaLibrary\Formats\Format;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Models\AttachmentTag;
+use Wotz\MediaLibrary\Resources\AttachmentResource;
 
 class AttachmentInput extends Field
 {

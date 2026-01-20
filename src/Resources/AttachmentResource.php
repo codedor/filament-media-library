@@ -2,12 +2,6 @@
 
 namespace Wotz\MediaLibrary\Resources;
 
-use Wotz\MediaLibrary\Facades\Formats;
-use Wotz\MediaLibrary\Formats\Format;
-use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
-use Wotz\MediaLibrary\Models\Attachment;
-use Wotz\MediaLibrary\Resources\AttachmentResource\Pages;
-use Wotz\TranslatableTabs\Forms\TranslatableTabs;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -23,6 +17,12 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 use Livewire\Component;
+use Wotz\MediaLibrary\Facades\Formats;
+use Wotz\MediaLibrary\Formats\Format;
+use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Resources\AttachmentResource\Pages;
+use Wotz\TranslatableTabs\Forms\TranslatableTabs;
 
 class AttachmentResource extends Resource
 {

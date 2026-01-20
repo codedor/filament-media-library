@@ -2,12 +2,12 @@
 
 namespace Wotz\MediaLibrary\Formats;
 
-use Wotz\MediaLibrary\Conversions\Conversion;
-use Wotz\MediaLibrary\Facades\Formats;
-use Wotz\MediaLibrary\Models\Attachment;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Str;
 use Spatie\Image\Drivers\ImageDriver;
+use Wotz\MediaLibrary\Conversions\Conversion;
+use Wotz\MediaLibrary\Facades\Formats;
+use Wotz\MediaLibrary\Models\Attachment;
 
 abstract class Format implements Arrayable
 {

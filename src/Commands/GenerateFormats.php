@@ -2,11 +2,11 @@
 
 namespace Wotz\MediaLibrary\Commands;
 
+use Illuminate\Console\Command;
 use Wotz\MediaLibrary\Facades\Formats;
 use Wotz\MediaLibrary\Formats\Format;
 use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Wotz\MediaLibrary\Models\Attachment;
-use Illuminate\Console\Command;
 
 class GenerateFormats extends Command
 {

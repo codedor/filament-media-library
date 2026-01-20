@@ -1,9 +1,9 @@
 <?php
 
-use Wotz\MediaLibrary\Models\Attachment;
-use Wotz\MediaLibrary\Resources\AttachmentResource\Pages\ListAttachments;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Livewire;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Resources\AttachmentResource\Pages\ListAttachments;
 
 it('can render the upload attachment action', function () {
     Livewire::test(ListAttachments::class)

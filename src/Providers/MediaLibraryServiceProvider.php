@@ -2,6 +2,11 @@
 
 namespace Wotz\MediaLibrary\Providers;
 
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Blade;
+use Livewire\Livewire as LivewireCore;
+use Spatie\LaravelPackageTools\Package;
+use Spatie\LaravelPackageTools\PackageServiceProvider;
 use Wotz\MediaLibrary\Collections\Formats;
 use Wotz\MediaLibrary\Commands\GenerateFormats;
 use Wotz\MediaLibrary\Conversions\Conversion;
@@ -13,11 +18,6 @@ use Wotz\MediaLibrary\Livewire;
 use Wotz\MediaLibrary\Mixins\UploadedFileMixin;
 use Wotz\MediaLibrary\Views\Picture;
 use Wotz\MediaLibrary\Views\Placeholder;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Blade;
-use Livewire\Livewire as LivewireCore;
-use Spatie\LaravelPackageTools\Package;
-use Spatie\LaravelPackageTools\PackageServiceProvider;
 
 class MediaLibraryServiceProvider extends PackageServiceProvider
 {

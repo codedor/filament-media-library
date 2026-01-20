@@ -2,14 +2,14 @@
 
 namespace Wotz\MediaLibrary\Mixins;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Wotz\MediaLibrary\Exceptions\CantOpenFileFromUrlException;
 use Wotz\MediaLibrary\Facades\Formats;
 use Wotz\MediaLibrary\Formats\Thumbnail;
 use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
 use Wotz\MediaLibrary\Models\Attachment;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Str;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 /**
  * @mixin TemporaryUploadedFile

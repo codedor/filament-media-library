@@ -1,9 +1,9 @@
 <?php
 
-use Wotz\MediaLibrary\Models\AttachmentTag;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Wotz\MediaLibrary\Models\AttachmentTag;
 
 return new class extends Migration
 {

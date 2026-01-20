@@ -2,11 +2,11 @@
 
 namespace Wotz\MediaLibrary\Conversions;
 
+use Illuminate\Support\Str;
+use Spatie\Image\Image;
 use Wotz\MediaLibrary\Formats\Format;
 use Wotz\MediaLibrary\Models\Attachment;
 use Wotz\MediaLibrary\Support\TemporaryDirectory;
-use Illuminate\Support\Str;
-use Spatie\Image\Image;
 
 class S3Conversion implements Conversion
 {

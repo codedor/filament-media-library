@@ -2,8 +2,8 @@
 
 namespace Wotz\MediaLibrary\Formats;
 
-use Wotz\MediaLibrary\Models\Attachment;
 use Spatie\Image\Drivers\ImageDriver;
+use Wotz\MediaLibrary\Models\Attachment;
 
 class Lazyload extends Format
 {

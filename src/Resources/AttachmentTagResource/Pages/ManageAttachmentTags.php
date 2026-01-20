@@ -2,8 +2,8 @@
 
 namespace Wotz\MediaLibrary\Resources\AttachmentTagResource\Pages;
 
-use Wotz\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Resources\Pages\ManageRecords;
+use Wotz\MediaLibrary\Resources\AttachmentTagResource;
 
 class ManageAttachmentTags extends ManageRecords
 {

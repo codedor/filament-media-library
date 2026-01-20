@@ -2,9 +2,9 @@
 
 namespace Wotz\MediaLibrary\Filament\Actions\Tables;
 
+use Filament\Actions\Action;
 use Wotz\MediaLibrary\Filament\Actions\Traits\CanUploadAttachment;
 use Wotz\MediaLibrary\Models\Attachment;
-use Filament\Actions\Action;
 
 class TableUploadAttachmentAction extends Action
 {

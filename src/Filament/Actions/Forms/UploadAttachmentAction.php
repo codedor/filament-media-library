@@ -2,11 +2,11 @@
 
 namespace Wotz\MediaLibrary\Filament\Actions\Forms;
 
-use Wotz\MediaLibrary\Filament\Actions\Traits\CanUploadAttachment;
-use Wotz\MediaLibrary\Models\Attachment;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Utilities\Set;
 use Livewire\Component;
+use Wotz\MediaLibrary\Filament\Actions\Traits\CanUploadAttachment;
+use Wotz\MediaLibrary\Models\Attachment;
 
 class UploadAttachmentAction extends \Filament\Actions\Action
 {

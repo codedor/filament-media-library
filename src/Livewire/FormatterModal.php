@@ -2,13 +2,13 @@
 
 namespace Wotz\MediaLibrary\Livewire;
 
-use Wotz\MediaLibrary\Facades\Formats;
-use Wotz\MediaLibrary\Formats\Format;
-use Wotz\MediaLibrary\Models\Attachment;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Collection;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Wotz\MediaLibrary\Facades\Formats;
+use Wotz\MediaLibrary\Formats\Format;
+use Wotz\MediaLibrary\Models\Attachment;
 
 class FormatterModal extends Component
 {

@@ -1,13 +1,13 @@
 <?php
 
-use Wotz\MediaLibrary\Conversions\Conversion;
-use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
-use Wotz\MediaLibrary\Models\Attachment;
-use Wotz\MediaLibrary\Tests\TestFormats\TestHero;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Mockery\MockInterface;
+use Wotz\MediaLibrary\Conversions\Conversion;
+use Wotz\MediaLibrary\Jobs\GenerateAttachmentFormat;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Tests\TestFormats\TestHero;
 
 uses(RefreshDatabase::class);
 

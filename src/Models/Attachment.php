@@ -3,8 +3,6 @@
 namespace Wotz\MediaLibrary\Models;
 
 use Carbon\Carbon;
-use Wotz\MediaLibrary\Database\Factories\AttachmentFactory;
-use Wotz\MediaLibrary\Models\Traits\HasFormats;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -14,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Spatie\Translatable\HasTranslations;
+use Wotz\MediaLibrary\Database\Factories\AttachmentFactory;
+use Wotz\MediaLibrary\Models\Traits\HasFormats;
 
 /**
  * @property string $name

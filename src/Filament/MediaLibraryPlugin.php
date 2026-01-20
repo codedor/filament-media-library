@@ -2,14 +2,14 @@
 
 namespace Wotz\MediaLibrary\Filament;
 
-use Wotz\MediaLibrary\Resources\AttachmentResource;
-use Wotz\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Support\Assets\Css;
 use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Illuminate\Contracts\View\View;
+use Wotz\MediaLibrary\Resources\AttachmentResource;
+use Wotz\MediaLibrary\Resources\AttachmentTagResource;
 
 class MediaLibraryPlugin implements Plugin
 {

@@ -2,10 +2,10 @@
 
 namespace Wotz\MediaLibrary\Models\Traits;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Wotz\MediaLibrary\Exceptions\FormatNotFound;
 use Wotz\MediaLibrary\Facades\Formats;
 use Wotz\MediaLibrary\Models\AttachmentFormat;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 trait HasFormats
 {

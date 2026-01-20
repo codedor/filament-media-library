@@ -2,10 +2,10 @@
 
 namespace Wotz\MediaLibrary\Views;
 
+use Illuminate\View\Component;
 use Wotz\MediaLibrary\Facades\Formats;
 use Wotz\MediaLibrary\Formats\Format;
 use Wotz\MediaLibrary\Models\Attachment;
-use Illuminate\View\Component;
 
 class Picture extends Component
 {
