@@ -1,8 +1,8 @@
 <?php
 
-namespace Codedor\MediaLibrary\Formats;
+namespace Wotz\MediaLibrary\Formats;
 
-use Codedor\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Models\Attachment;
 use Spatie\Image\Drivers\ImageDriver;
 use Spatie\Image\Enums\Fit;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\MediaLibrary\Filament\Actions\Tables;
+namespace Wotz\MediaLibrary\Filament\Actions\Tables;
 
-use Codedor\MediaLibrary\Filament\Actions\Traits\CanUploadAttachment;
-use Codedor\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Filament\Actions\Traits\CanUploadAttachment;
+use Wotz\MediaLibrary\Models\Attachment;
 use Filament\Actions\Action;
 
 class TableUploadAttachmentAction extends Action

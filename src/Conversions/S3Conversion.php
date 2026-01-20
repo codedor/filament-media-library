@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\MediaLibrary\Conversions;
+namespace Wotz\MediaLibrary\Conversions;
 
-use Codedor\MediaLibrary\Formats\Format;
-use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\Support\TemporaryDirectory;
+use Wotz\MediaLibrary\Formats\Format;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Support\TemporaryDirectory;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 

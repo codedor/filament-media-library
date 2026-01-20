@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\MediaLibrary\Tests\TestFormats;
+namespace Wotz\MediaLibrary\Tests\TestFormats;
 
-use Codedor\MediaLibrary\Formats\Format;
-use Codedor\MediaLibrary\Formats\Manipulations;
-use Codedor\MediaLibrary\Tests\TestModels\TestModel;
+use Wotz\MediaLibrary\Formats\Format;
+use Wotz\MediaLibrary\Formats\Manipulations;
+use Wotz\MediaLibrary\Tests\TestModels\TestModel;
 use Spatie\Image\Enums\Fit;
 
 class TestNoHeight extends Format

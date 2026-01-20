@@ -1,7 +1,7 @@
 <?php
 
-use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\Resources\AttachmentResource\Pages\ListAttachments;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Resources\AttachmentResource\Pages\ListAttachments;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Livewire;
 

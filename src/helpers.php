@@ -1,6 +1,6 @@
 <?php
 
-use Codedor\MediaLibrary\Facades\Formats;
+use Wotz\MediaLibrary\Facades\Formats;
 use Illuminate\Support\Str;
 
 if (! function_exists('get_placeholder_url_by_format')) {

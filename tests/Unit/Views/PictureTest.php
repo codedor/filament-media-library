@@ -1,9 +1,9 @@
 <?php
 
-use Codedor\MediaLibrary\Facades\Formats;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
-use Codedor\MediaLibrary\Tests\TestFormats\TestNoHeight;
-use Codedor\MediaLibrary\Views\Picture;
+use Wotz\MediaLibrary\Facades\Formats;
+use Wotz\MediaLibrary\Tests\TestFormats\TestHero;
+use Wotz\MediaLibrary\Tests\TestFormats\TestNoHeight;
+use Wotz\MediaLibrary\Views\Picture;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

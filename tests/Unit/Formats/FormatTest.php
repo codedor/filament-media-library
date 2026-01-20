@@ -1,9 +1,9 @@
 <?php
 
-use Codedor\MediaLibrary\Conversions\LocalConversion;
-use Codedor\MediaLibrary\Providers\MediaLibraryServiceProvider;
-use Codedor\MediaLibrary\Tests\TestConversions\TestConversion;
-use Codedor\MediaLibrary\Tests\TestFormats\TestHero;
+use Wotz\MediaLibrary\Conversions\LocalConversion;
+use Wotz\MediaLibrary\Providers\MediaLibraryServiceProvider;
+use Wotz\MediaLibrary\Tests\TestConversions\TestConversion;
+use Wotz\MediaLibrary\Tests\TestFormats\TestHero;
 use Illuminate\Support\Facades\Config;
 
 it('returns default conversion', function () {

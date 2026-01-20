@@ -1,9 +1,9 @@
 <?php
 
-namespace Codedor\MediaLibrary\Filament;
+namespace Wotz\MediaLibrary\Filament;
 
-use Codedor\MediaLibrary\Resources\AttachmentResource;
-use Codedor\MediaLibrary\Resources\AttachmentTagResource;
+use Wotz\MediaLibrary\Resources\AttachmentResource;
+use Wotz\MediaLibrary\Resources\AttachmentTagResource;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Support\Assets\Css;
@@ -49,7 +49,7 @@ class MediaLibraryPlugin implements Plugin
         FilamentAsset::register([
             Css::make('filament-media-library-cropper-stylesheet', __DIR__ . '/../../dist/css/cropper.min.css'),
             Js::make('filament-media-library-script', __DIR__ . '/../../dist/js/cropper.min.js'),
-        ], 'codedor/filament-media-library');
+        ], 'wotz/filament-media-library');
     }
 
     public function boot(Panel $panel): void {}

@@ -1,14 +1,14 @@
 <?php
 
-namespace Codedor\MediaLibrary\Filament;
+namespace Wotz\MediaLibrary\Filament;
 
 use Closure;
-use Codedor\MediaLibrary\Facades\Formats;
-use Codedor\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
-use Codedor\MediaLibrary\Formats\Format;
-use Codedor\MediaLibrary\Models\Attachment;
-use Codedor\MediaLibrary\Models\AttachmentTag;
-use Codedor\MediaLibrary\Resources\AttachmentResource;
+use Wotz\MediaLibrary\Facades\Formats;
+use Wotz\MediaLibrary\Filament\Actions\Forms\UploadAttachmentAction;
+use Wotz\MediaLibrary\Formats\Format;
+use Wotz\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Models\AttachmentTag;
+use Wotz\MediaLibrary\Resources\AttachmentResource;
 use Filament\Forms\Components\Field;
 use Filament\Forms\Set;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

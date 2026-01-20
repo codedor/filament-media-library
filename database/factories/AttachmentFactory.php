@@ -1,8 +1,8 @@
 <?php
 
-namespace Codedor\MediaLibrary\Database\Factories;
+namespace Wotz\MediaLibrary\Database\Factories;
 
-use Codedor\MediaLibrary\Models\Attachment;
+use Wotz\MediaLibrary\Models\Attachment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AttachmentFactory extends Factory

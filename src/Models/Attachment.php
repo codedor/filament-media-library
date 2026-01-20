@@ -1,10 +1,10 @@
 <?php
 
-namespace Codedor\MediaLibrary\Models;
+namespace Wotz\MediaLibrary\Models;
 
 use Carbon\Carbon;
-use Codedor\MediaLibrary\Database\Factories\AttachmentFactory;
-use Codedor\MediaLibrary\Models\Traits\HasFormats;
+use Wotz\MediaLibrary\Database\Factories\AttachmentFactory;
+use Wotz\MediaLibrary\Models\Traits\HasFormats;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
